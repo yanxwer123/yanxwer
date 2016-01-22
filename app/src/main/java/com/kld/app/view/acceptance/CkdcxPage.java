@@ -201,7 +201,9 @@ public class CkdcxPage  extends  JPanel{
             }
             try{
                 AcceptanceOdRegister odRegister= odRegisterService.selectByPrimaryKey(bill.getDeliveryno());
-                if (odRegister!=null){
+                if (odRegister!=null&&
+                        ((bill.getType().equals("1")&&odRegister.getDeliveryno()!=null)
+                                ||(!bill.getType().equals("1")&&bill.getDeliveryno()==null))){
                   JOptionPane.showMessageDialog(this,"处理中的出库单："+bill.getDeliveryno()+"无法建立关联。", "信息提示", JOptionPane.INFORMATION_MESSAGE);
                     return;
                 }

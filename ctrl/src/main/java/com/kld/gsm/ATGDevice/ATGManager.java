@@ -183,6 +183,7 @@ public class ATGManager {
                         stockDataOutT.fWaterBulk = hightoliterDataOutT.fWaterBulk;//水体积
                     }
                 }
+                capacitytableDataInTList.clear();
                 hightoliterInTList.clear();
                 stockRet.add(stockDataOutT);
             }

@@ -1,5 +1,6 @@
 package com.kld.gsm.MacLog.util;
 
+import org.apache.log4j.Logger;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
@@ -20,6 +21,7 @@ import java.util.Properties;
  * @Description:
  */
 public class ApplicationRunSingle {
+    static Logger logger = Logger.getLogger(ApplicationRunSingle.class);
 
     /**
      * 在应用程序的main方法里调用此函数，保证程序只有一个实例在运行
@@ -29,15 +31,9 @@ public class ApplicationRunSingle {
         RandomAccessFile raf = null;
         FileChannel channel = null;
         FileLock lock = null;
-        Resource base=new ClassPathResource("/config/tempdir.properties");
-        Properties tempdir = null;
         try {
-            tempdir= PropertiesLoaderUtils.loadProperties(base);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            File file = new File(tempdir.getProperty("resource.temp.tempdir")+singleId+".tmp");
+            File file = new File("/smc20/gsm/"+singleId+".lck");
+            logger.info("filepath=/smc20/gsm/"+singleId+".lck");
             file.deleteOnExit();
             file.createNewFile();
 
@@ -48,6 +44,7 @@ public class ApplicationRunSingle {
             if(lock==null){
                 //如果没有得到锁，则程序退出
                 //不用手动释放锁和关闭流，当程序退出时会自动被关闭。
+                logger.error("An instance of ctrl is running...");
                 throw new Error("An instance of ctrl is running...");
             }
         } catch (IOException e) {
