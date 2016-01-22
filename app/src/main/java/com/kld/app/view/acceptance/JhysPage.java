@@ -415,11 +415,11 @@ public class JhysPage extends JOptionPane implements Watcher,WindowListener {
                 AcceptanceOdRegister acceptanceOdRegister = new AcceptanceOdRegister();
                 TableModel tableModel = table.getModel();
                 double yfss = Double.parseDouble(tableModel.getValueAt(0, 3).toString());
-                if (!tableModel.getValueAt(0, 4).toString().equals("")){
+                if (tableModel.getValueAt(0, 4)!=null&&!tableModel.getValueAt(0, 4).toString().equals("")){
                     double yfwd=Double.parseDouble(tableModel.getValueAt(0, 4).toString());
                     yfss=getV20L(OIL_TYPE_1,yfss,yfwd);
                 }
-                if (yfss > 0&&!tableModel.getValueAt(0, 4).toString().equals("")) {
+                if (yfss > 0&&tableModel.getValueAt(0, 4)!=null&&!tableModel.getValueAt(0, 4).toString().equals("")) {
                     //获取一堆计算的东西
                     Map result = odRegisterService.getodreglossrate(yfss, tableModel.getValueAt(0, 0).toString());
                     System.out.print(result.toString());
