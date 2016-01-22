@@ -13,6 +13,7 @@ import com.kld.gsm.ATG.service.SysManageDic;
 import com.kld.gsm.ATG.service.SysmanageService;
 import com.kld.gsm.util.DateUtil;
 import org.apache.log4j.Logger;
+import org.jfree.util.Log;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -286,7 +287,10 @@ public class CkdcxPage  extends  JPanel{
                         odRegisterService = Context.getInstance().getBean(IAcceptanceOdRegisterService.class);
                     }
                     try {
+                        LOG.info("get type="+bill.getType());
+
                         AcceptanceOdRegister odRegister = odRegisterService.selectByPrimaryKey(bill.getDeliveryno());
+                        LOG.info("odRegister.getDeliveryno()"+odRegister.getDeliveryno());
                         if (odRegister!=null&& ((bill.getType().equals("1")&&odRegister.getDeliveryno()!=null)
                                 ||(!bill.getType().equals("1")&&odRegister.getDeliveryno()==null))){
                             billArray[i][13]="车进站";
