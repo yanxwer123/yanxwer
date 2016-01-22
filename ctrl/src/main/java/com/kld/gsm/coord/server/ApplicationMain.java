@@ -10,6 +10,7 @@ import com.kld.gsm.ATGDevice.atg_init_in_t;
 import com.kld.gsm.MacLog.GunStatusEnum;
 import com.kld.gsm.MacLog.MacLogInfo;
 import com.kld.gsm.MacLog.MacLogProcessor;
+import com.kld.gsm.MacLog.util.ApplicationRunSingle;
 import com.kld.gsm.MacLog.util.EhCacheHelper;
 import com.kld.gsm.Systemv.MQCanInfo;
 import com.kld.gsm.Systemv.MQDay;
@@ -43,8 +44,9 @@ public class ApplicationMain {
 
     public static void main(String[] args) throws Exception {
 
+        // 保证程序只有一个实例在运行.
+        ApplicationRunSingle.makeSingle("ctrl");
         logger.warn("ctrl.main方法启动................");
-
         final NettyServer nettyServer = new NettyServer();
         ProtocolProcessor protocolProcessor = ProtocolProcessor.getInstance();
         CloudServerHandler handler = new CloudServerHandler(protocolProcessor);
