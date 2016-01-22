@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.kld.gsm.coord.dao.TeamHotoInforDao">
+    <select id="findByDayTime" resultType="com.kld.gsm.coord.domain.TeamHotoInfor">
+    select distinct      teamvouchno from teamhotoinfor  where daytime=#{daytime}
+    order by teamvouchno
+    </select>
+
+    <select id="findByTeamVouchNo" resultType="com.kld.gsm.coord.domain.TeamHotoInfor">
+        select  * from teamhotoinfor  where  teamvouchno = #{teamvouchno}
+    </select>
+
+</mapper>

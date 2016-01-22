@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.kld.gsm.coord.dao.AtgoilinDao">
+    <insert id="insertAtgoilin" parameterType="com.kld.gsm.coord.domain.AtgOilIn">
+        INSERT INTO  atgoilin(
+        oilcanno,opetime,oilno,StartDate,StartTime,EndDate,EndTime,StartCubage,StartStandCubage,StartOilHeight,StartWaterHeight,
+        StartOilTemp,EndCubage,EndStandCubage,EndOilHeight,EndWaterHeight,EndOilTemp,EmptyCubage,ApparentDensity,
+        StandDensity,PayOilLiter,TeamVouchNo,GoodsBillNo,
+        billstatus,tranflag
+        )
+        values(
+       #{oilcanno}, #{opetime}, #{oilno}, #{StartDate}, #{StartTime},#{EndDate}, #{EndTime}, #{StartCubage},
+       #{StartStandCubage}, #{StartOilHeight},#{StartWaterHeight}, #{StartOilTemp}, #{EndCubage}, #{EndStandCubage},
+       #{EndOilHeight},#{EndWaterHeight},#{EndOilTemp},#{EmptyCubage},#{ApparentDensity},
+        #{StandDensity},#{PayOilLiter}, #{TeamVouchNo}, #{GoodsBillNo}, #{billstatus}, #{tranflag}
+        )
+
+    </insert>
+    <update id="updateAtgoilin" parameterType="java.lang.Integer">
+        UPDATE atgoilin set billstatus=1 where oilcanno=#{oilcanno}
+    </update>
+
+</mapper>

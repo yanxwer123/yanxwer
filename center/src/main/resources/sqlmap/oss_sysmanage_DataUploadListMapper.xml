@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_sysmanage_DataUploadListMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_sysmanage_DataUploadList" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <id column="NodeNo" property="nodeno" jdbcType="VARCHAR" />
+    <result column="Result" property="result" jdbcType="INTEGER" />
+    <result column="UploadDate" property="uploaddate" jdbcType="TIMESTAMP" />
+    <result column="Creator" property="creator" jdbcType="VARCHAR" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
+    <result column="FileName" property="filename" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, NodeNo, Result, UploadDate, Creator, CreateTime, TranStatus, OUCode,FileName
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_sysmanage_DataUploadListKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_DataUploadList
+    where ID = #{id,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_sysmanage_DataUploadListKey" >
+    delete from oss_sysmanage_DataUploadList
+    where ID = #{id,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_sysmanage_DataUploadList" >
+    insert into oss_sysmanage_DataUploadList (ID, NodeNo, Result, 
+      UploadDate, Creator, CreateTime, 
+      TranStatus, OUCode,FileName)
+    values (#{id,jdbcType=INTEGER}, #{nodeno,jdbcType=VARCHAR}, #{result,jdbcType=INTEGER}, 
+      #{uploaddate,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{transtatus,jdbcType=VARCHAR}, #{oucode,jdbcType=VARCHAR},#{filename,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_sysmanage_DataUploadList" >
+    insert into oss_sysmanage_DataUploadList
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="result != null" >
+        Result,
+      </if>
+      <if test="uploaddate != null" >
+        UploadDate,
+      </if>
+      <if test="creator != null" >
+        Creator,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+      <if test="filename != null" >
+        FileName,,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=INTEGER},
+      </if>
+      <if test="uploaddate != null" >
+        #{uploaddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="filename != null" >
+        #{filename,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_sysmanage_DataUploadList" >
+    update oss_sysmanage_DataUploadList
+    <set >
+      <if test="result != null" >
+        Result = #{result,jdbcType=INTEGER},
+      </if>
+      <if test="uploaddate != null" >
+        UploadDate = #{uploaddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        Creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="filename != null" >
+        FileName = #{filename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_sysmanage_DataUploadList" >
+    update oss_sysmanage_DataUploadList
+    set Result = #{result,jdbcType=INTEGER},
+      UploadDate = #{uploaddate,jdbcType=TIMESTAMP},
+      Creator = #{creator,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      OUCode = #{oucode,jdbcType=VARCHAR},
+      FileName=#{filename,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <select id="selectbystatus" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_sysmanage_DataUploadList where TranStatus= #{transtatus,jdbcType=VARCHAR}
+  </select>
+</mapper>

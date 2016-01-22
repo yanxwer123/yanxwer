@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.kld.gsm.coord.dao.InoilcheckbillDao">
+    <insert id="insertInoilcheckbill" parameterType="com.kld.gsm.coord.domain.InOilCheckBill" >
+        INSERT INTO  inoilcheckbill(
+          vouchno,oilno ,goodsbillno,origamount,origstdliter,
+          origlitramout,pickupplace,checamount,checcnttemper,
+          checoiwahigh,checairhigh,checwatehigh,checlitramount,checstdliter,
+          deinvolu,deinanalyse,shipdept,chiptrucno,vittaperson,driver,arrivetime,
+          acceptflag,operatorcode,billstatus,transflag,oilcanno
+        )
+        values(#{vouchno}, #{oilno}, #{goodsbillno}, #{origamount}, #{origstdliter},
+#{origlitramout}, #{pickupplace}, #{checamount}, #{checcnttemper}, #{checoiwahigh}, #{checairhigh},
+ #{checwatehigh}, #{checlitramount}, #{checstdliter}, #{ deinvolu}, #{deinanalyse}, #{shipdept},
+ #{chiptrucno}, #{vittaperson}, #{driver}, #{arrivetime}, #{acceptflag}, #{operatorcode}, #{billstatus},
+  #{transflag}, #{oilcanno}
+        )
+    </insert>
+
+    <update id="updateInoilcheckbill" parameterType="java.lang.String">
+        update inoilcheckbill set billstatus=1 where goodsbillno=#{DeliveryNo}
+    </update>
+    <update id="updateManualno" parameterType="hashmap">
+        update inoilcheckbill set goodsbillno=#{manualno} where goodsbillno=#{DeliveryNo}
+    </update>
+
+
+</mapper>

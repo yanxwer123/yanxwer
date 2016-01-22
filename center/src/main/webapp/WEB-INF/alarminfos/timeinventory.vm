@@ -1,0 +1,89 @@
+#set($layout="layout/emptylayout.vm")
+#set($menuTitle="时点库存")
+<div id="query" title="查询条件" collapsible="true" class="easyui-panel search panel-body panel-body-noheader" style="border:0px;padding: 10px; width: 100%;" icon="icon-search">
+    <table width="650px">
+        <tr>
+            <th width="100px">
+                选择油站：
+            </th>
+            <th width="150px">
+                <input id="cc" name="cc"  class="easyui-combobox textbox" type="text"  style="width:150px" data-options="prompt:'--请选择--'"></input>
+            </th>
+            <th width="150px">
+                <input id="aa" name="aa"  class="easyui-combobox textbox" type="text" style="width:150px" data-options="prompt:'--请选择--'"></input>
+            </th>
+            <th width="150px">
+                <input id="ss" name="ss"  class="easyui-combobox textbox" type="text" style="width:150px" data-options="prompt:'--请选择--'"></input>
+            </th>
+            <th width="100px">
+                <a id="searchExchange" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" style="width: 60px" onclick="initData()">查询</a>
+            </th>
+        </tr>
+    </table>
+</div>
+<div id="result">
+    <table id="tt" style=" height: 250px;">
+    </table>
+</div>
+
+<script type="text/javascript">
+
+    function formatDatebox(value) {
+        if (value == null || value == '') {
+            return '';
+        }
+        var dt;
+        if (value instanceof Date) {
+            dt = value;
+        } else {
+            dt = new Date(value);
+        }
+
+        return dt.format("yyyy-MM-dd hh:mm:ss"); //扩展的Date的format方法(上述插件实现)
+    }
+
+    var cols=[[
+        {field:'OUName',title:'油站名称',width:100},
+        {field:'StoreTime',title:'数据更新时间',width:100,formatter: formatDatebox},
+        {field:'oil0',title:'0#车用柴油（V）',width:100},
+        {field:'oil93',title:'93#汽油（V）',width:100},
+        {field:'oil97',title:'97#汽油（V）',width:100},
+        {field:'oil98',title:'98#汽油（V）',width:100}
+    ]];
+
+    var oucode;
+
+    $(function(){
+        Loadcas("cc","aa","ss");
+        var heigth=$(window).height()-160;
+        $("#result").height(heigth);
+        initData();
+    });
+
+
+    var paras;
+    function inittext(){
+        var ss=$('#ss').combobox('getValue');
+        var aa=$('#aa').combobox('getValue');
+        var cc=$('#cc').combobox('getValue');
+        oucode="";
+        if(cc!="")
+        {
+            oucode=cc;
+        }
+        if(aa!="")
+        {
+            oucode=aa;
+        }
+        if(ss!="")
+        {
+            oucode=ss;
+        }
+        paras={"oucode": oucode};
+    }
+
+    function initData() {
+        inittext();
+        BindDataGridAjax('tt','实时库存','/web/alarm/getTimeInventoryInfo',cols,paras,'true',10,[10,20,30]);
+    }
+</script>

@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.SysManageAlarmParameterDao">
+    <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.SysManageAlarmParameter">
+        <id column="OilCan" property="oilcan" jdbcType="INTEGER"/>
+        <result column="LowPreAlarm" property="lowprealarm" jdbcType="DOUBLE"/>
+        <result column="LowAlarm" property="lowalarm" jdbcType="DOUBLE"/>
+        <result column="HighPreAlarm" property="highprealarm" jdbcType="DOUBLE"/>
+        <result column="HighAlarm" property="highalarm" jdbcType="DOUBLE"/>
+        <result column="WaterAlarm" property="wateralarm" jdbcType="DOUBLE"/>
+        <result column="WaterHightAlarm" property="waterhightalarm" jdbcType="DOUBLE"/>
+        <result column="HighTempAlarm" property="hightempalarm" jdbcType="DOUBLE"/>
+        <result column="LowTempAlarm" property="lowtempalarm" jdbcType="DOUBLE"/>
+        <result column="LastOpTime" property="lastoptime" jdbcType="TIMESTAMP"/>
+        <result column="Optime" property="optime" jdbcType="TIMESTAMP"/>
+        <result column="TranStatus" property="transtatus" jdbcType="VARCHAR"/>
+        <result column="StealOilAlarm" property="stealoilalarm" jdbcType="DOUBLE"/>
+        <result column="LeakOilAlarm" property="leakoilalarm" jdbcType="DOUBLE"/>
+        <result column="LeakageOilAlarm" property="leakageoilalarm" jdbcType="DOUBLE"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+    OilCan, LowPreAlarm, LowAlarm, HighPreAlarm, HighAlarm, WaterAlarm,WaterHightAlarm, HighTempAlarm,
+    LowTempAlarm, LastOpTime, Optime, TranStatus, StealOilAlarm, LeakOilAlarm, LeakageOilAlarm
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select 'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from oss_sysmanage_AlarmParameter
+        where OilCan = #{oilcan,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from oss_sysmanage_AlarmParameter
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.kld.gsm.ATG.domain.SysManageAlarmParameter">
+    insert into oss_sysmanage_AlarmParameter (OilCan, LowPreAlarm, LowAlarm, 
+      HighPreAlarm, HighAlarm, WaterAlarm,WaterHightAlarm,
+      HighTempAlarm, LowTempAlarm, LastOpTime, 
+      Optime, TranStatus,NodeNo,OUCode)
+    values (#{oilcan,jdbcType=INTEGER}, #{lowprealarm,jdbcType=DOUBLE}, #{lowalarm,jdbcType=DOUBLE},
+      #{highprealarm,jdbcType=DOUBLE}, #{highalarm,jdbcType=DOUBLE}, #{wateralarm,jdbcType=DOUBLE}, #{waterhightalarm,jdbcType=DOUBLE},
+      #{hightempalarm,jdbcType=DOUBLE}, #{lowtempalarm,jdbcType=DOUBLE}, #{lastoptime,jdbcType=TIMESTAMP}, 
+      #{optime,jdbcType=TIMESTAMP}, #{transtatus,jdbcType=VARCHAR}, #{stealoilalarm,jdbcType=DOUBLE},
+      #{leakoilalarm,jdbcType=DOUBLE}, #{leakageoilalarm,jdbcType=DOUBLE}
+      )
+  </insert>
+    <insert id="insertByKey" parameterType="com.kld.gsm.ATG.domain.SysManageAlarmParameter">
+    insert into oss_sysmanage_AlarmParameter (OilCan)
+    values (#{oilcan,jdbcType=INTEGER})
+  </insert>
+    <insert id="merge" parameterType="com.kld.gsm.ATG.domain.SysManageAlarmParameter">
+        replace into oss_sysmanage_AlarmParameter
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="oilcan != null">
+                OilCan,
+            </if>
+            <if test="lowprealarm != null">
+                LowPreAlarm,
+            </if>
+            <if test="lowalarm != null">
+                LowAlarm,
+            </if>
+            <if test="highprealarm != null">
+                HighPreAlarm,
+            </if>
+            <if test="highalarm != null">
+                HighAlarm,
+            </if>
+            <if test="wateralarm != null">
+                WaterAlarm,
+            </if>
+            <if test="waterhightalarm != null">
+                WaterHightAlarm,
+            </if>
+            <if test="hightempalarm != null">
+                HighTempAlarm,
+            </if>
+            <if test="lowtempalarm != null">
+                LowTempAlarm,
+            </if>
+            <if test="lastoptime != null">
+                LastOpTime,
+            </if>
+            <if test="optime != null">
+                Optime,
+            </if>
+            <if test="transtatus != null">
+                TranStatus,
+            </if>
+            <if test="stealoilalarm != null">
+                StealOilAlarm,
+            </if>
+            <if test="leakoilalarm != null">
+                LeakOilAlarm,
+            </if>
+            <if test="leakageoilalarm != null">
+                LeakageOilAlarm,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="oilcan != null">
+                #{oilcan,jdbcType=INTEGER},
+            </if>
+            <if test="lowprealarm != null">
+                #{lowprealarm,jdbcType=DOUBLE},
+            </if>
+            <if test="lowalarm != null">
+                #{lowalarm,jdbcType=DOUBLE},
+            </if>
+            <if test="highprealarm != null">
+                #{highprealarm,jdbcType=DOUBLE},
+            </if>
+            <if test="highalarm != null">
+                #{highalarm,jdbcType=DOUBLE},
+            </if>
+            <if test="wateralarm != null">
+                #{wateralarm,jdbcType=DOUBLE},
+            </if>
+            <if test="waterhightalarm != null">
+                #{waterhightalarm,jdbcType=DOUBLE},
+            </if>
+            <if test="hightempalarm != null">
+                #{hightempalarm,jdbcType=DOUBLE},
+            </if>
+            <if test="lowtempalarm != null">
+                #{lowtempalarm,jdbcType=DOUBLE},
+            </if>
+            <if test="lastoptime != null">
+                #{lastoptime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="optime != null">
+                #{optime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="transtatus != null">
+                #{transtatus,jdbcType=VARCHAR},
+            </if>
+            <if test="stealoilalarm != null">
+                #{stealoilalarm,jdbcType=DOUBLE},
+            </if>
+            <if test="leakoilalarm != null">
+                #{leakoilalarm,jdbcType=DOUBLE},
+            </if>
+            <if test="leakageoilalarm != null">
+                #{leakageoilalarm,jdbcType=DOUBLE},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.SysManageAlarmParameter">
+        insert into oss_sysmanage_AlarmParameter
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="oilcan != null">
+                OilCan,
+            </if>
+            <if test="lowprealarm != null">
+                LowPreAlarm,
+            </if>
+            <if test="lowalarm != null">
+                LowAlarm,
+            </if>
+            <if test="highprealarm != null">
+                HighPreAlarm,
+            </if>
+            <if test="highalarm != null">
+                HighAlarm,
+            </if>
+            <if test="wateralarm != null">
+                WaterAlarm,
+            </if>
+            <if test="waterhightalarm != null">
+                WaterHightAlarm,
+            </if>
+            <if test="hightempalarm != null">
+                HighTempAlarm,
+            </if>
+            <if test="lowtempalarm != null">
+                LowTempAlarm,
+            </if>
+            <if test="lastoptime != null">
+                LastOpTime,
+            </if>
+            <if test="optime != null">
+                Optime,
+            </if>
+            <if test="transtatus != null">
+                TranStatus,
+            </if>
+            <if test="stealoilalarm != null">
+                StealOilAlarm,
+            </if>
+            <if test="leakoilalarm != null">
+                LeakOilAlarm,
+            </if>
+            <if test="leakageoilalarm != null">
+                LeakageOilAlarm,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="oilcan != null">
+                #{oilcan,jdbcType=INTEGER},
+            </if>
+            <if test="lowprealarm != null">
+                #{lowprealarm,jdbcType=DOUBLE},
+            </if>
+            <if test="lowalarm != null">
+                #{lowalarm,jdbcType=DOUBLE},
+            </if>
+            <if test="highprealarm != null">
+                #{highprealarm,jdbcType=DOUBLE},
+            </if>
+            <if test="highalarm != null">
+                #{highalarm,jdbcType=DOUBLE},
+            </if>
+            <if test="wateralarm != null">
+                #{wateralarm,jdbcType=DOUBLE},
+            </if>
+
+            <if test="waterhightalarm != null">
+                #{waterhightalarm,jdbcType=DOUBLE},
+            </if>
+            <if test="hightempalarm != null">
+                #{hightempalarm,jdbcType=DOUBLE},
+            </if>
+            <if test="lowtempalarm != null">
+                #{lowtempalarm,jdbcType=DOUBLE},
+            </if>
+            <if test="lastoptime != null">
+                #{lastoptime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="optime != null">
+                #{optime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="transtatus != null">
+                #{transtatus,jdbcType=VARCHAR},
+            </if>
+            <if test="stealoilalarm != null">
+                #{stealoilalarm,jdbcType=DOUBLE},
+            </if>
+            <if test="leakoilalarm != null">
+                #{leakoilalarm,jdbcType=DOUBLE},
+            </if>
+            <if test="leakageoilalarm != null">
+                #{leakageoilalarm,jdbcType=DOUBLE},
+            </if>
+
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.SysManageAlarmParameter">
+        update oss_sysmanage_AlarmParameter
+        <set>
+            <if test="lowprealarm != null">
+                LowPreAlarm = #{lowprealarm,jdbcType=DOUBLE},
+            </if>
+            <if test="lowalarm != null">
+                LowAlarm = #{lowalarm,jdbcType=DOUBLE},
+            </if>
+            <if test="highprealarm != null">
+                HighPreAlarm = #{highprealarm,jdbcType=DOUBLE},
+            </if>
+            <if test="highalarm != null">
+                HighAlarm = #{highalarm,jdbcType=DOUBLE},
+            </if>
+            <if test="wateralarm != null">
+                WaterAlarm = #{wateralarm,jdbcType=DOUBLE},
+            </if>
+            <if test="waterhightalarm != null">
+                WaterHightAlarm = #{waterhightalarm,jdbcType=DOUBLE},
+            </if>
+            <if test="hightempalarm != null">
+                HighTempAlarm = #{hightempalarm,jdbcType=DOUBLE},
+            </if>
+            <if test="lowtempalarm != null">
+                LowTempAlarm = #{lowtempalarm,jdbcType=DOUBLE},
+            </if>
+            <if test="lastoptime != null">
+                LastOpTime = #{lastoptime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="optime != null">
+                Optime = #{optime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="transtatus != null">
+                TranStatus = #{transtatus,jdbcType=VARCHAR},
+            </if>
+            <if test="stealoilalarm != null">
+                StealOilAlarm = #{stealoilalarm,jdbcType=DOUBLE},
+            </if>
+            <if test="leakoilalarm != null">
+                LeakOilAlarm = #{leakoilalarm,jdbcType=DOUBLE},
+            </if>
+            <if test="leakageoilalarm != null">
+                LeakageOilAlarm = #{leakageoilalarm,jdbcType=DOUBLE},
+            </if>
+
+        </set>
+        where OilCan = #{oilcan,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.SysManageAlarmParameter">
+    update oss_sysmanage_AlarmParameter
+    set LowPreAlarm = #{lowprealarm,jdbcType=DOUBLE},
+      LowAlarm = #{lowalarm,jdbcType=DOUBLE},
+      HighPreAlarm = #{highprealarm,jdbcType=DOUBLE},
+      HighAlarm = #{highalarm,jdbcType=DOUBLE},
+      WaterAlarm = #{wateralarm,jdbcType=DOUBLE},
+      WaterHightAlarm = #{waterhightalarm,jdbcType=DOUBLE},
+      HighTempAlarm = #{hightempalarm,jdbcType=DOUBLE},
+      LowTempAlarm = #{lowtempalarm,jdbcType=DOUBLE},
+      LastOpTime = #{lastoptime,jdbcType=TIMESTAMP},
+      Optime = #{optime,jdbcType=TIMESTAMP},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      StealOilAlarm = #{stealoilalarm,jdbcType=DOUBLE},
+      LeakOilAlarm = #{leakoilalarm,jdbcType=DOUBLE},
+      LeakageOilAlarm = #{leakageoilalarm,jdbcType=DOUBLE}
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+  </update>
+    <select id="selectAll" resultType="com.kld.gsm.ATG.domain.SysManageAlarmParameter">
+    SELECT * FROM oss_sysmanage_AlarmParameter
+  </select>
+
+    <select id="selectByTrans" parameterType="String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM oss_sysmanage_AlarmParameter WHERE TranStatus=#{trans,jdbcType=VARCHAR}
+    </select>
+    <!--联合查询，根据油罐号查询在此表在sysManage_CanInfo表不存在的记录-->
+
+    <!--
+      <select id="selectAlarmParameter"  resultMap="userResultMap">
+        SELECT  b.oilcan FROM oss_sysmanage_AlarmParameter b WHERE b.oilcan NOT IN (SELECT a.oilcan FROM oss_sysmanage_CanInfo a)
+      </select>
+    -->
+
+</mapper>

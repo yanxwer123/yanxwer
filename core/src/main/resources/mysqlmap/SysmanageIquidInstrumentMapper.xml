@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.SysManageIquidInstrumentDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.SysManageIquidInstrument" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="Factory" property="factory" jdbcType="VARCHAR" />
+    <result column="MacType" property="mactype" jdbcType="VARCHAR" />
+    <result column="WorkType" property="worktype" jdbcType="VARCHAR" />
+    <result column="CommType" property="commtype" jdbcType="VARCHAR" />
+    <result column="IPAddress" property="ipaddress" jdbcType="VARCHAR" />
+    <result column="IPPort" property="ipport" jdbcType="VARCHAR" />
+    <result column="SerialPort" property="serialport" jdbcType="VARCHAR" />
+    <result column="BaudRate1" property="baudrate1" jdbcType="VARCHAR" />
+    <result column="BaudRate2" property="baudrate2" jdbcType="VARCHAR" />
+    <result column="StopSite" property="stopsite" jdbcType="VARCHAR" />
+    <result column="CheckSite" property="checksite" jdbcType="VARCHAR" />
+    <result column="DataSite" property="datasite" jdbcType="VARCHAR" />
+    <result column="LastAdjustTime" property="lastadjusttime" jdbcType="TIMESTAMP" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, Factory, MacType, WorkType, CommType, IPAddress, IPPort, SerialPort, BaudRate1, 
+    BaudRate2, StopSite, CheckSite, DataSite, LastAdjustTime, TranStatus, CreateTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_iquidInstrument
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from oss_sysmanage_iquidInstrument
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.SysManageIquidInstrument" >
+    insert into oss_sysmanage_iquidInstrument (ID, Factory, MacType, 
+      WorkType, CommType, IPAddress, 
+      IPPort, SerialPort, BaudRate1, 
+      BaudRate2, StopSite, CheckSite, 
+      DataSite, LastAdjustTime, TranStatus, 
+      CreateTime)
+    values (#{id,jdbcType=INTEGER}, #{factory,jdbcType=VARCHAR}, #{mactype,jdbcType=VARCHAR}, 
+      #{worktype,jdbcType=VARCHAR}, #{commtype,jdbcType=VARCHAR}, #{ipaddress,jdbcType=VARCHAR}, 
+      #{ipport,jdbcType=VARCHAR}, #{serialport,jdbcType=VARCHAR}, #{baudrate1,jdbcType=VARCHAR}, 
+      #{baudrate2,jdbcType=VARCHAR}, #{stopsite,jdbcType=VARCHAR}, #{checksite,jdbcType=VARCHAR}, 
+      #{datasite,jdbcType=VARCHAR}, #{lastadjusttime,jdbcType=TIMESTAMP}, #{transtatus,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.SysManageIquidInstrument" >
+    insert into oss_sysmanage_iquidInstrument
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="factory != null" >
+        Factory,
+      </if>
+      <if test="mactype != null" >
+        MacType,
+      </if>
+      <if test="worktype != null" >
+        WorkType,
+      </if>
+      <if test="commtype != null" >
+        CommType,
+      </if>
+      <if test="ipaddress != null" >
+        IPAddress,
+      </if>
+      <if test="ipport != null" >
+        IPPort,
+      </if>
+      <if test="serialport != null" >
+        SerialPort,
+      </if>
+      <if test="baudrate1 != null" >
+        BaudRate1,
+      </if>
+      <if test="baudrate2 != null" >
+        BaudRate2,
+      </if>
+      <if test="stopsite != null" >
+        StopSite,
+      </if>
+      <if test="checksite != null" >
+        CheckSite,
+      </if>
+      <if test="datasite != null" >
+        DataSite,
+      </if>
+      <if test="lastadjusttime != null" >
+        LastAdjustTime,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="factory != null" >
+        #{factory,jdbcType=VARCHAR},
+      </if>
+      <if test="mactype != null" >
+        #{mactype,jdbcType=VARCHAR},
+      </if>
+      <if test="worktype != null" >
+        #{worktype,jdbcType=VARCHAR},
+      </if>
+      <if test="commtype != null" >
+        #{commtype,jdbcType=VARCHAR},
+      </if>
+      <if test="ipaddress != null" >
+        #{ipaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="ipport != null" >
+        #{ipport,jdbcType=VARCHAR},
+      </if>
+      <if test="serialport != null" >
+        #{serialport,jdbcType=VARCHAR},
+      </if>
+      <if test="baudrate1 != null" >
+        #{baudrate1,jdbcType=VARCHAR},
+      </if>
+      <if test="baudrate2 != null" >
+        #{baudrate2,jdbcType=VARCHAR},
+      </if>
+      <if test="stopsite != null" >
+        #{stopsite,jdbcType=VARCHAR},
+      </if>
+      <if test="checksite != null" >
+        #{checksite,jdbcType=VARCHAR},
+      </if>
+      <if test="datasite != null" >
+        #{datasite,jdbcType=VARCHAR},
+      </if>
+      <if test="lastadjusttime != null" >
+        #{lastadjusttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.SysManageIquidInstrument" >
+    update oss_sysmanage_iquidInstrument
+    <set >
+      <if test="factory != null" >
+        Factory = #{factory,jdbcType=VARCHAR},
+      </if>
+      <if test="mactype != null" >
+        MacType = #{mactype,jdbcType=VARCHAR},
+      </if>
+      <if test="worktype != null" >
+        WorkType = #{worktype,jdbcType=VARCHAR},
+      </if>
+      <if test="commtype != null" >
+        CommType = #{commtype,jdbcType=VARCHAR},
+      </if>
+      <if test="ipaddress != null" >
+        IPAddress = #{ipaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="ipport != null" >
+        IPPort = #{ipport,jdbcType=VARCHAR},
+      </if>
+      <if test="serialport != null" >
+        SerialPort = #{serialport,jdbcType=VARCHAR},
+      </if>
+      <if test="baudrate1 != null" >
+        BaudRate1 = #{baudrate1,jdbcType=VARCHAR},
+      </if>
+      <if test="baudrate2 != null" >
+        BaudRate2 = #{baudrate2,jdbcType=VARCHAR},
+      </if>
+      <if test="stopsite != null" >
+        StopSite = #{stopsite,jdbcType=VARCHAR},
+      </if>
+      <if test="checksite != null" >
+        CheckSite = #{checksite,jdbcType=VARCHAR},
+      </if>
+      <if test="datasite != null" >
+        DataSite = #{datasite,jdbcType=VARCHAR},
+      </if>
+      <if test="lastadjusttime != null" >
+        LastAdjustTime = #{lastadjusttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.SysManageIquidInstrument" >
+    update oss_sysmanage_iquidInstrument
+    set Factory = #{factory,jdbcType=VARCHAR},
+      MacType = #{mactype,jdbcType=VARCHAR},
+      WorkType = #{worktype,jdbcType=VARCHAR},
+      CommType = #{commtype,jdbcType=VARCHAR},
+      IPAddress = #{ipaddress,jdbcType=VARCHAR},
+      IPPort = #{ipport,jdbcType=VARCHAR},
+      SerialPort = #{serialport,jdbcType=VARCHAR},
+      BaudRate1 = #{baudrate1,jdbcType=VARCHAR},
+      BaudRate2 = #{baudrate2,jdbcType=VARCHAR},
+      StopSite = #{stopsite,jdbcType=VARCHAR},
+      CheckSite = #{checksite,jdbcType=VARCHAR},
+      DataSite = #{datasite,jdbcType=VARCHAR},
+      LastAdjustTime = #{lastadjusttime,jdbcType=TIMESTAMP},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByTrans" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM  oss_sysmanage_iquidInstrument WHERE TranStatus = #{transtatus,jdbcType=VARCHAR}
+  </select>
+  <select id="selectSBXH"  resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM  oss_sysmanage_iquidInstrument order BY ID DESC limit 1
+  </select>
+  <select id="selectLast"   resultType="com.kld.gsm.ATG.domain.SysManageIquidInstrument">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM  oss_sysmanage_iquidInstrument  where ID = (SELECT max(ID) FROM oss_sysmanage_iquidInstrument);
+  </select>
+</mapper>

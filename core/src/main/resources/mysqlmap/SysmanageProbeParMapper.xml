@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.SysManageProbeParDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.SysManageProbePar" >
+    <id column="ProbeModel" property="probemodel" jdbcType="VARCHAR" />
+    <result column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <result column="OilZero" property="oilzero" jdbcType="DOUBLE" />
+    <result column="WaterZero" property="waterzero" jdbcType="DOUBLE" />
+    <result column="ProbeSkew" property="probeskew" jdbcType="DOUBLE" />
+    <result column="InclineSkew" property="inclineskew" jdbcType="DOUBLE" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="LastAdjustTime" property="lastadjusttime" jdbcType="TIMESTAMP" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="RealTemp1" property="realtemp1" jdbcType="DOUBLE" />
+    <result column="ProRealTemp1" property="prorealtemp1" jdbcType="DOUBLE" />
+    <result column="RealTemp2" property="realtemp2" jdbcType="DOUBLE" />
+    <result column="ProRealTemp2" property="prorealtemp2" jdbcType="DOUBLE" />
+    <result column="RealTemp3" property="realtemp3" jdbcType="DOUBLE" />
+    <result column="ProRealTemp3" property="prorealtemp3" jdbcType="DOUBLE" />
+    <result column="RealTemp4" property="realtemp4" jdbcType="DOUBLE" />
+    <result column="ProRealTemp4" property="prorealtemp4" jdbcType="DOUBLE" />
+    <result column="RealTemp5" property="realtemp5" jdbcType="DOUBLE" />
+    <result column="ProRealTemp5" property="prorealtemp5" jdbcType="DOUBLE" />
+    <result column="InitDesnsity" property="initdesnsity" jdbcType="DOUBLE" />
+    <result column="InitHighDiff" property="inithighdiff" jdbcType="DOUBLE" />
+    <result column="CorrectionFactor" property="correctionfactor" jdbcType="DOUBLE" />
+    <result column="DeviceModel" property="devicemodel" jdbcType="VARCHAR" />
+    <result column="ProbePort" property="probeport" jdbcType="INTEGER" />
+    <result column="OilCan" property="oilcan" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+   ProbeModel, OilNo, OilZero, WaterZero, ProbeSkew, InclineSkew, CreateTime, LastAdjustTime,
+    TranStatus, RealTemp1, ProRealTemp1, RealTemp2, ProRealTemp2, RealTemp3, ProRealTemp3,
+    RealTemp4, ProRealTemp4, RealTemp5, ProRealTemp5, InitDesnsity, InitHighDiff, CorrectionFactor,
+    DeviceModel, ProbePort, OilCan
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_probePar
+    where ProbeModel = #{probemodel,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from oss_sysmanage_probePar
+    where ProbeModel = #{probemodel,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.SysManageProbePar" >
+    insert into oss_sysmanage_probePar (ProbeModel, OilNo, OilZero,
+      WaterZero, ProbeSkew, InclineSkew,
+      CreateTime, LastAdjustTime, TranStatus,
+      RealTemp1, ProRealTemp1, RealTemp2,
+      ProRealTemp2, RealTemp3, ProRealTemp3,
+      RealTemp4, ProRealTemp4, RealTemp5,
+      ProRealTemp5, InitDesnsity, InitHighDiff,
+      CorrectionFactor, DeviceModel, ProbePort,
+      OilCan)
+    values (#{probemodel,jdbcType=VARCHAR}, #{oilno,jdbcType=VARCHAR}, #{oilzero,jdbcType=DOUBLE},
+      #{waterzero,jdbcType=DOUBLE}, #{probeskew,jdbcType=DOUBLE}, #{inclineskew,jdbcType=DOUBLE},
+      #{createtime,jdbcType=TIMESTAMP}, #{lastadjusttime,jdbcType=TIMESTAMP}, #{transtatus,jdbcType=VARCHAR},
+      #{realtemp1,jdbcType=DOUBLE}, #{prorealtemp1,jdbcType=DOUBLE}, #{realtemp2,jdbcType=DOUBLE},
+      #{prorealtemp2,jdbcType=DOUBLE}, #{realtemp3,jdbcType=DOUBLE}, #{prorealtemp3,jdbcType=DOUBLE},
+      #{realtemp4,jdbcType=DOUBLE}, #{prorealtemp4,jdbcType=DOUBLE}, #{realtemp5,jdbcType=DOUBLE},
+      #{prorealtemp5,jdbcType=DOUBLE}, #{initdesnsity,jdbcType=DOUBLE}, #{inithighdiff,jdbcType=DOUBLE},
+      #{correctionfactor,jdbcType=DOUBLE}, #{devicemodel,jdbcType=VARCHAR}, #{probeport,jdbcType=INTEGER},
+      #{oilcan,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.SysManageProbePar" >
+    insert into oss_sysmanage_probePar
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="probemodel != null" >
+        ProbeModel,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="oilzero != null" >
+        OilZero,
+      </if>
+      <if test="waterzero != null" >
+        WaterZero,
+      </if>
+      <if test="probeskew != null" >
+        ProbeSkew,
+      </if>
+      <if test="inclineskew != null" >
+        InclineSkew,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="lastadjusttime != null" >
+        LastAdjustTime,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="realtemp1 != null" >
+        RealTemp1,
+      </if>
+      <if test="prorealtemp1 != null" >
+        ProRealTemp1,
+      </if>
+      <if test="realtemp2 != null" >
+        RealTemp2,
+      </if>
+      <if test="prorealtemp2 != null" >
+        ProRealTemp2,
+      </if>
+      <if test="realtemp3 != null" >
+        RealTemp3,
+      </if>
+      <if test="prorealtemp3 != null" >
+        ProRealTemp3,
+      </if>
+      <if test="realtemp4 != null" >
+        RealTemp4,
+      </if>
+      <if test="prorealtemp4 != null" >
+        ProRealTemp4,
+      </if>
+      <if test="realtemp5 != null" >
+        RealTemp5,
+      </if>
+      <if test="prorealtemp5 != null" >
+        ProRealTemp5,
+      </if>
+      <if test="initdesnsity != null" >
+        InitDesnsity,
+      </if>
+      <if test="inithighdiff != null" >
+        InitHighDiff,
+      </if>
+      <if test="correctionfactor != null" >
+        CorrectionFactor,
+      </if>
+      <if test="devicemodel != null" >
+        DeviceModel,
+      </if>
+      <if test="probeport != null" >
+        ProbePort,
+      </if>
+      <if test="oilcan != null" >
+        OilCan,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="probemodel != null" >
+        #{probemodel,jdbcType=VARCHAR},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilzero != null" >
+        #{oilzero,jdbcType=DOUBLE},
+      </if>
+      <if test="waterzero != null" >
+        #{waterzero,jdbcType=DOUBLE},
+      </if>
+      <if test="probeskew != null" >
+        #{probeskew,jdbcType=DOUBLE},
+      </if>
+      <if test="inclineskew != null" >
+        #{inclineskew,jdbcType=DOUBLE},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastadjusttime != null" >
+        #{lastadjusttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="realtemp1 != null" >
+        #{realtemp1,jdbcType=DOUBLE},
+      </if>
+      <if test="prorealtemp1 != null" >
+        #{prorealtemp1,jdbcType=DOUBLE},
+      </if>
+      <if test="realtemp2 != null" >
+        #{realtemp2,jdbcType=DOUBLE},
+      </if>
+      <if test="prorealtemp2 != null" >
+        #{prorealtemp2,jdbcType=DOUBLE},
+      </if>
+      <if test="realtemp3 != null" >
+        #{realtemp3,jdbcType=DOUBLE},
+      </if>
+      <if test="prorealtemp3 != null" >
+        #{prorealtemp3,jdbcType=DOUBLE},
+      </if>
+      <if test="realtemp4 != null" >
+        #{realtemp4,jdbcType=DOUBLE},
+      </if>
+      <if test="prorealtemp4 != null" >
+        #{prorealtemp4,jdbcType=DOUBLE},
+      </if>
+      <if test="realtemp5 != null" >
+        #{realtemp5,jdbcType=DOUBLE},
+      </if>
+      <if test="prorealtemp5 != null" >
+        #{prorealtemp5,jdbcType=DOUBLE},
+      </if>
+      <if test="initdesnsity != null" >
+        #{initdesnsity,jdbcType=DOUBLE},
+      </if>
+      <if test="inithighdiff != null" >
+        #{inithighdiff,jdbcType=DOUBLE},
+      </if>
+      <if test="correctionfactor != null" >
+        #{correctionfactor,jdbcType=DOUBLE},
+      </if>
+      <if test="devicemodel != null" >
+        #{devicemodel,jdbcType=VARCHAR},
+      </if>
+      <if test="probeport != null" >
+        #{probeport,jdbcType=INTEGER},
+      </if>
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.SysManageProbePar" >
+    update oss_sysmanage_probePar
+    <set >
+      <if test="oilno != null" >
+        OilNo = #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilzero != null" >
+        OilZero = #{oilzero,jdbcType=DOUBLE},
+      </if>
+      <if test="waterzero != null" >
+        WaterZero = #{waterzero,jdbcType=DOUBLE},
+      </if>
+      <if test="probeskew != null" >
+        ProbeSkew = #{probeskew,jdbcType=DOUBLE},
+      </if>
+      <if test="inclineskew != null" >
+        InclineSkew = #{inclineskew,jdbcType=DOUBLE},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastadjusttime != null" >
+        LastAdjustTime = #{lastadjusttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="realtemp1 != null" >
+        RealTemp1 = #{realtemp1,jdbcType=DOUBLE},
+      </if>
+      <if test="prorealtemp1 != null" >
+        ProRealTemp1 = #{prorealtemp1,jdbcType=DOUBLE},
+      </if>
+      <if test="realtemp2 != null" >
+        RealTemp2 = #{realtemp2,jdbcType=DOUBLE},
+      </if>
+      <if test="prorealtemp2 != null" >
+        ProRealTemp2 = #{prorealtemp2,jdbcType=DOUBLE},
+      </if>
+      <if test="realtemp3 != null" >
+        RealTemp3 = #{realtemp3,jdbcType=DOUBLE},
+      </if>
+      <if test="prorealtemp3 != null" >
+        ProRealTemp3 = #{prorealtemp3,jdbcType=DOUBLE},
+      </if>
+      <if test="realtemp4 != null" >
+        RealTemp4 = #{realtemp4,jdbcType=DOUBLE},
+      </if>
+      <if test="prorealtemp4 != null" >
+        ProRealTemp4 = #{prorealtemp4,jdbcType=DOUBLE},
+      </if>
+      <if test="realtemp5 != null" >
+        RealTemp5 = #{realtemp5,jdbcType=DOUBLE},
+      </if>
+      <if test="prorealtemp5 != null" >
+        ProRealTemp5 = #{prorealtemp5,jdbcType=DOUBLE},
+      </if>
+      <if test="initdesnsity != null" >
+        InitDesnsity = #{initdesnsity,jdbcType=DOUBLE},
+      </if>
+      <if test="inithighdiff != null" >
+        InitHighDiff = #{inithighdiff,jdbcType=DOUBLE},
+      </if>
+      <if test="correctionfactor != null" >
+        CorrectionFactor = #{correctionfactor,jdbcType=DOUBLE},
+      </if>
+      <if test="devicemodel != null" >
+        DeviceModel = #{devicemodel,jdbcType=VARCHAR},
+      </if>
+      <if test="probeport != null" >
+        ProbePort = #{probeport,jdbcType=INTEGER},
+      </if>
+      <if test="oilcan != null" >
+        OilCan = #{oilcan,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ProbeModel = #{probemodel,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.SysManageProbePar" >
+    update oss_sysmanage_probePar
+    set OilNo = #{oilno,jdbcType=VARCHAR},
+      OilZero = #{oilzero,jdbcType=DOUBLE},
+      WaterZero = #{waterzero,jdbcType=DOUBLE},
+      ProbeSkew = #{probeskew,jdbcType=DOUBLE},
+      InclineSkew = #{inclineskew,jdbcType=DOUBLE},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      LastAdjustTime = #{lastadjusttime,jdbcType=TIMESTAMP},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      RealTemp1 = #{realtemp1,jdbcType=DOUBLE},
+      ProRealTemp1 = #{prorealtemp1,jdbcType=DOUBLE},
+      RealTemp2 = #{realtemp2,jdbcType=DOUBLE},
+      ProRealTemp2 = #{prorealtemp2,jdbcType=DOUBLE},
+      RealTemp3 = #{realtemp3,jdbcType=DOUBLE},
+      ProRealTemp3 = #{prorealtemp3,jdbcType=DOUBLE},
+      RealTemp4 = #{realtemp4,jdbcType=DOUBLE},
+      ProRealTemp4 = #{prorealtemp4,jdbcType=DOUBLE},
+      RealTemp5 = #{realtemp5,jdbcType=DOUBLE},
+      ProRealTemp5 = #{prorealtemp5,jdbcType=DOUBLE},
+      InitDesnsity = #{initdesnsity,jdbcType=DOUBLE},
+      InitHighDiff = #{inithighdiff,jdbcType=DOUBLE},
+      CorrectionFactor = #{correctionfactor,jdbcType=DOUBLE},
+      DeviceModel = #{devicemodel,jdbcType=VARCHAR},
+      ProbePort = #{probeport,jdbcType=INTEGER},
+      OilCan = #{oilcan,jdbcType=INTEGER}
+    where ProbeModel = #{probemodel,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_probePar
+  </select>
+  <select id="selectByTrans" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_sysmanage_probePar WHERE  TranStatus = #{transtatus,jdbcType=VARCHAR}
+  </select>
+  <select id="ExisOilCan" parameterType="hashmap"  resultType="Integer">
+    SELECT
+    COUNT(*)
+    FROM oss_sysmanage_probePar WHERE OilCan = #{OilCan,jdbcType=INTEGER}
+  </select>
+  <select id="ExisProbePort" parameterType="hashmap"  resultType="Integer">
+    SELECT
+    COUNT(*)
+    FROM oss_sysmanage_probePar WHERE ProbePort = #{ProbePort,jdbcType=INTEGER}
+  </select>
+</mapper>

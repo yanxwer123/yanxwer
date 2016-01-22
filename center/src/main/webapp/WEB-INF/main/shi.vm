@@ -1,0 +1,853 @@
+#set($layout="layout/emptylayout.vm")
+#set($menuTitle="主页")
+<style xmlns="http://www.w3.org/1999/html">
+    *{ margin:0; padding:0;} li{ list-style:none;}
+    .mianbox{ overflow:hidden; background:#fed; min-width:1120px;}.row{ padding:10px 10px 0 10px;  overflow:hidden;}
+    .messagebox01{ display:block; float:left; position:relative; width:458px; border:1px solid #dcdddd; border-radius:2px; background:#fff; margin-right:10px;}
+    .messagebox02{ display:block; float:left; position:relative; width:305px; border:1px solid #dcdddd; border-radius:2px; background:#fff; margin-right:10px;}
+    .messagebox03{ width:100%; margin-left:-787px; float:right; }
+    .messagebox03c{ margin-left:787px; border:1px solid #dcdddd; border-radius:2px; background:#fff;}
+    .messagebox04{ width:100%; }
+    .messagebox04c{ border:1px solid #dcdddd; border-radius:2px; background:#fff;}
+
+    .messagebox01 .messagetitle,.messagebox02 .messagetitle,.messagebox03c .messagetitle,.messagebox04c .messagetitle{ height:36px; line-height:36px; border-bottom:1px solid #dcdddd; font-size:14px; padding:0 10px;}
+    .messagebox01 .messagemian,.messagebox02 .messagemian,.messagebox03c .messagemian,.messagebox04c .messagemian{ overflow:hidden;}
+    .messagemian li{padding:0 11px; float:left;}
+    .no-1-row .messagemian li:not(:first-child){ border-left:1px solid #dcdddd;}
+
+    .timebox{ font-size:12px; color:#898989; line-height:36px; display:block; float:right;}
+    .imita-btn{ width:130px; height:36px; border-radius:2px; display:block; line-height:36px; text-align:center; margin:8px auto; color:#fff; font-size:12px;}
+    .imita-btn01{ width:130px; height:77px; border-radius:2px; display:block; line-height:77px; text-align:center; margin:8px auto; color:#fff; font-size:16px;}
+    .imita-btn02{ width:38px; height:60px; border-radius:2px; display:block; line-height:1.25; text-align:center; margin:6px 6px 6px 7px; color:#fff; font-size:12px; background:#9fa0a0;}
+    .imita-btn02 span{ font-size:28px; font-family:adamina; display:block;}
+    .all-warm{ color:#fff; width:207px; height:130px; border-radius:2px; margin:7px; text-align:center; overflow:hidden; float:left; padding-top:16px; font-size:14px; line-height:2;}
+    .all-warm span{  font-size:34px; font-family:adamina;display:block;}
+    .imita-btn span{ font-size:16px; font-family:adamina;}.imita-p{ width:130px; height:28px; display:block; line-height:28px; font-size:12px; color:#4c4948; text-align:center;}
+    .bgcolororange{ background:#f0831e;}.bgcolorred{ background:#d51a1b;}.bgcolotrblue{ background:#2fa7e5;}.bgcolorgreen{ background:#14c27e;}
+    .selectArea{
+        height: 28px; background-color: #AEAEAE; vertical-align: middle;
+    }
+    .bsred{ background-color: red;height: 16px; width: 36px;}
+    .bsgreen{ background-color:green;height: 16px; width: 36px; }
+</style>
+<div class="selectArea">
+    <label style="color: red; font-size: 16px; margin-left: 12px;">湖南省</label>
+    <label style="color: white; font-size: 16px;"> 实时信息监控</label>
+    #parse("business/realstock.vm")
+    <a id="btnSelect" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchDatabyParams();">查询</a>
+</div>
+<div class="mianbox">
+
+    <ul class="row no-1-row" >
+        <li class="messagebox01" >
+            <p class="messagetitle">库存与销量<span class="timebox" id="qycyxlTime"></span></p>
+            <ul class="messagemian">
+                <li>
+                    <span class="imita-btn bgcolororange">汽油<span id="qyxl"></span>万升</span>
+                    <span class="imita-btn bgcolorred">柴油<span id="cyxl"></span>万升</span>
+                    <span class="imita-p">销量</span>
+                </li>
+                <li>
+                    <span class="imita-btn bgcolororange">汽油<span id="qyck"></span>万升</span>
+                    <span class="imita-btn bgcolorred">柴油<span id="cykc"></span>万升</span>
+                    <span class="imita-p">库存</span>
+                </li>
+                <li>
+                    <span class="imita-btn bgcolororange">汽油<span id="ztqy"></span>万升</span>
+                    <span class="imita-btn bgcolorred">柴油<span id="ztcy"></span>万升</span>
+                    <span class="imita-p">在途</span>
+                </li>
+            </ul>
+        </li>
+        <li class="messagebox02">
+            <p class="messagetitle">进货验收<span class="timebox" id="jhysjzsj"></span></p>
+            <ul class="messagemian">
+                <li>
+                    <span class="imita-btn bgcolororange">汽油<span id="qyjhl"></span>万升</span>
+                    <span class="imita-btn bgcolorred">柴油<span id="cyjhl"></span>万升</span>
+                    <span class="imita-p">进货量</span>
+                </li>
+                <li>
+                    <span class="imita-btn bgcolororange">汽油<span id="yysqy"></span>万升</span>
+                    <span class="imita-btn bgcolorred">柴油<span id="yyscy"></span>万升</span>
+                    <span class="imita-p">已验收</span>
+                </li>
+            </ul>
+        </li>
+        <li class="messagebox03">
+            <div class="messagebox03c">
+                <p class="messagetitle">加油机、液位仪监控<span class="timebox" id="ywyjk"></span></p>
+                <ul class="messagemian">
+                    <li>
+                        <span class="imita-btn01 bgcolotrblue"><span id="tqcs"></span></span>
+                        <span class="imita-p">提枪次数</span>
+                    </li>
+                    <li>
+                        <span class="imita-btn01 bgcolorgreen"><span id="ywyssl"></span></span>
+                        <span class="imita-p">液位仪使用率</span>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+    <ul class="row">
+
+        <li class="messagebox04">
+            <div class="messagebox04c">
+                <p class="messagetitle">报警分布<span class="timebox">截止时间:2015-11-16 24:00</span></p>
+                <table cellspacing="0" cellpadding="0" width="100%" style="font-size: 14px;">
+                    <tr>
+                        <td>
+                            <div id="allmap" style=" width: 1000px; height:392px;"></div>
+                        </td>
+
+                        <td valign="bottom">
+                             <table cellpadding="0" cellspacing="0" style="margin-bottom: 6px;">
+                                 <tr><td height="16px" valign="middle"> 报警状态：&nbsp;</td><td><div class="bsred"></div></td valign="middle"><td>&nbsp;故障油站</td></tr>
+                                 <tr><td height="16px"></td><td><div class="bsgreen"></div> </td><td valign="middle">&nbsp;正常油站</td></tr>
+                             </table>
+                        </td>
+                    </tr>
+                </table>
+
+
+            </div>
+        </li>
+
+    </ul>
+</div>
+<label id="list"></label>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Q0LkoBrq6SnEM8QgoqviG53L"></script>
+
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");
+    map.centerAndZoom(new BMap.Point(116.403765, 39.914850), 5);
+    map.enableScrollWheelZoom();
+
+    function getBoundary(){
+        var bdary = new BMap.Boundary();
+        bdary.get("湖南", function(rs){       //获取行政区域
+            map.clearOverlays();        //清除地图覆盖物
+            var count = rs.boundaries.length; //行政区域的点有多少个
+            if (count === 0) {
+                alert('未能获取当前输入行政区域');
+                return ;
+            }
+            var pointArray = [];
+            for (var i = 0; i < count; i++) {
+                var ply = new BMap.Polygon(rs.boundaries[i], {strokeWeight: 2, strokeColor: "#ff0000"}); //建立多边形覆盖物
+                map.addOverlay(ply);  //添加覆盖物
+                pointArray = pointArray.concat(ply.getPath());
+            }
+            map.setViewport(pointArray);    //调整视野
+        });
+    }
+
+    setTimeout(function(){
+        getBoundary();
+    }, 2000);
+</script>
+<script type="text/javascript">
+    $(function()
+    {
+        loadSaleOutData();
+        loadSYData();
+        LoadAlarmInventory();
+        LoadEq();
+        LoadAlarmSort();
+        LoadJZTime();
+        LoadOilLiter();
+        LoadInventory();
+        LoadTqcs();
+        LoadYwySyl();
+        LoadZTOilL();
+        LoadJHL();
+        LoadYYS();
+    })
+    var allTotal=0;
+    //脱销
+    function loadSaleOutData()
+    {
+        //开始时间
+        var begin = new Date();
+        var start=begin.toLocaleDateString();
+        //结束时间
+        var end = new Date();
+        var date = end.getDate();
+        date = date + 1;
+        end.setDate(date);
+        var over=end.toLocaleDateString();
+        //加油站编号
+        var ss=$('#ss').combobox('getValue');
+        var aa=$('#aa').combobox('getValue');
+        var cc=$('#cc').combobox('getValue');
+        var oucode="";
+        if(cc!="")
+        {
+            oucode=cc;
+        }
+        if(aa!="")
+        {
+            oucode=aa;
+        }
+        if(ss!="")
+        {
+            oucode=ss;
+        }
+        //绑定当天损益预警报警次数
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/selectAlarmSaleOutCount?StartAlarmTime="+start+"&EndAlarmTime="+over+"&oucode="+oucode,//这里的地址是选择select后执行后台的url，然后做处理
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+                $("#txbjCount").html(msg.total);
+                allTotal+=msg.total;
+                $("#allAlarm").html(allTotal);
+            }
+        });
+
+    }
+    //损益报警
+    function loadSYData()
+    {
+
+        //开始时间 日结损益
+        var begin = new Date();
+        var start=begin.toLocaleDateString();
+        //结束时间 日结损益
+        var end = new Date();
+        var date = end.getDate();
+        date = date + 1;
+        end.setDate(date);
+        var over=end.toLocaleDateString();
+        //开始时间 交接班损益
+        var shiftbegin=start.replace('/',"").replace('/',"");
+        var shiftend=start.replace('/',"").replace('/',"");
+        //结束时间 交接班损益
+
+        //加油站编号
+        var ss=$('#ss').combobox('getValue');
+        var aa=$('#aa').combobox('getValue');
+        var cc=$('#cc').combobox('getValue');
+        var oucode="";
+        if(cc!="")
+        {
+            oucode=cc;
+        }
+        if(aa!="")
+        {
+            oucode=aa;
+        }
+        if(ss!="")
+        {
+            oucode=ss;
+        }
+        var total=0;
+        //绑定当天损益预警报警次数
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/selectDailyLostCout?begin="+start+"&end="+over+"&oucode="+oucode,//这里的地址是选择select后执行后台的url，然后做处理
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+                total+=msg.total;
+                $("#syyjCount").html(total);
+                allTotal+=msg.total;
+                $("#allAlarm").html(allTotal);
+            }
+        });
+
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/selectShiftLostCout?start="+shiftbegin+"&end="+shiftend+"&oucode="+oucode,//这里的地址是选择select后执行后台的url，然后做处理
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+                total+=msg.total;
+                $("#syyjCount").html(total);
+                allTotal+=msg.total;
+                $("#allAlarm").html(allTotal);
+            }
+        });
+
+    }
+    //油管报警
+    function LoadAlarmInventory()
+    {
+        //开始时间 日结损益
+        var begin = new Date();
+        var start=begin.toLocaleDateString();
+        //加油站编号
+        var ss=$('#ss').combobox('getValue');
+        var aa=$('#aa').combobox('getValue');
+        var cc=$('#cc').combobox('getValue');
+        var oucode="";
+        if(cc!="")
+        {
+            oucode=cc;
+        }
+        if(aa!="")
+        {
+            oucode=aa;
+        }
+        if(ss!="")
+        {
+            oucode=ss;
+        }
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/selectAalrmInventoryCount?begin="+start+"&end="+start+"&oucode="+oucode,//这里的地址是选择select后执行后台的url，然后做处理
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+                $("#ygbjCount").html(msg.total);
+                allTotal+=msg.total;
+                $("#allAlarm").html(allTotal);
+            }
+        });
+    }
+    //设备报警
+    function LoadEq()
+    {
+        //开始时间
+        var begin = new Date();
+        var start=begin.toLocaleDateString();
+        var shiftbegin=start.replace('/',"").replace('/',"");
+        var shiftend=start.replace('/',"").replace('/',"");
+
+        //加油站编号
+        var ss=$('#ss').combobox('getValue');
+        var aa=$('#aa').combobox('getValue');
+        var cc=$('#cc').combobox('getValue');
+        var oucode="";
+        if(cc!="")
+        {
+            oucode=cc;
+        }
+        if(aa!="")
+        {
+            oucode=aa;
+        }
+        if(ss!="")
+        {
+            oucode=ss;
+        }
+        //绑定设备预警
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/selectEqCout?start="+shiftbegin+"&end="+shiftend+"&oucode="+oucode,//这里的地址是选择select后执行后台的url，然后做处理
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+
+                $("#sbyjCount").html(msg.total);
+                allTotal+=msg.total;
+                $("#allAlarm").html(allTotal);
+            }
+        });
+    }
+    //报警排序
+    function LoadAlarmSort()
+    {
+        //开始时间
+        var begin = new Date();
+        var start=begin.toLocaleDateString();
+        var shift=start.replace('/',"").replace('/',"");
+
+
+        //加油站编号
+        var ss=$('#ss').combobox('getValue');
+        var aa=$('#aa').combobox('getValue');
+        var cc=$('#cc').combobox('getValue');
+        var oucode="";
+        if(cc!="")
+        {
+            oucode=cc;
+        }
+        if(aa!="")
+        {
+            oucode=aa;
+        }
+        if(ss!="")
+        {
+            oucode=ss;
+        }
+        //绑定排名信息
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/selectAlarmCount?start="+shift+"&oucode="+oucode,//这里的地址是选择select后执行后台的url，然后做处理
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+                var content="";
+
+                if(msg.total>0)
+                {
+                    var num=0;
+                    if(msg.total>3)
+                    {
+                        num=3;
+                    }
+                    else
+                    {
+                        num=msg.total;
+                    }
+                    for(var i=0;i<num;i++)
+                    {
+                        content+='<li class="imita-btn02 bgcolorred"><span>'+msg.rows[i].num+'</span>'+msg.rows[i].ShortName+'</li>';
+                    }
+                }
+
+                if(msg.total>2)
+                {
+                    var num=0;
+                    if(msg.total>8)
+                    {
+                        num=8;
+                    }
+                    else
+                    {
+                        num=msg.total;
+                    }
+                    for(var i=3;i<8;i++)
+                    {
+                        content+='<li class="imita-btn02 bgcolororange"><span>'+msg.rows[i].num+'</span>'+msg.rows[i].ShortName+'</li>';
+                    }
+                }
+                if(msg.total>7)
+                {
+                    for(var i=8;i<msg.total;i++)
+                    {
+                        content+='<li class="imita-btn02"><span>'+msg.rows[i].num+'</span>'+msg.rows[i].ShortName+'</li>';
+                    }
+                }
+                $("#AlarmSort").html(content);
+            }
+        });
+    }
+    //截止日期
+    function LoadJZTime()
+    {
+        var today=new Date();
+        var s=today.toLocaleDateString()+" "+today.getHours()+":"+today.getMinutes();
+        $("#ywytjbjTime").html("截止时间:"+s);
+        $("#qycyxlTime").html("截止时间:"+s);
+        $("#ywyjk").html("截止时间:"+s);
+        $("#jhysjzsj").html("截止时间:"+s);
+    }
+    //绑定柴油汽油销量
+    function LoadOilLiter()
+    {
+        //开始时间 日结损益
+        var begin = new Date();
+        var start=begin.toLocaleDateString()+" 08:00:00";
+        //结束时间 日结损益
+        var end = new Date();
+        var date = end.getDate();
+        date = date + 1;
+        end.setDate(date);
+        var over=end.toLocaleDateString();
+        //加油站编号
+        var ss=$('#ss').combobox('getValue');
+        var aa=$('#aa').combobox('getValue');
+        var cc=$('#cc').combobox('getValue');
+        var oucode="";
+        if(cc!="")
+        {
+            oucode=cc;
+        }
+        if(aa!="")
+        {
+            oucode=aa;
+        }
+        if(ss!="")
+        {
+            oucode=ss;
+        }
+        //绑定汽油销量 oiltype=01汽油
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/selectOilLiter?oiltype=01"+"&start="+start+"&end="+over+"&oucode="+oucode,
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+                if(msg.total>0)
+                {
+                    if(msg.rows[0].Liter!='undefined') {
+                        $("#qyxl").html(msg.rows[0].Liter);
+                    }
+                    else
+                    {
+                        $("#qyxl").html(0);
+                    }
+                }
+                else
+                {
+                    $("#qyxl").html(0);
+                }
+            }
+        });
+        //绑定柴油销量 oiltype=03 柴油
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/selectOilLiter?oiltype=03"+"&start="+start+"&end="+over+"&oucode="+oucode,
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+
+                if(msg.total>0)
+                {
+                    if(msg.rows[0].Liter!='undefined')
+                    {
+                        $("#cyxl").html(msg.rows[0].Liter);
+                    }
+                    else
+                    {
+                        $("#cyxl").html(0);
+                    }
+                }
+                else
+                {
+                    $("#cyxl").html(0);
+                }
+            }
+        });
+    }
+    //绑定库存量
+    function LoadInventory()
+    {
+        //加油站编号
+        var ss=$('#ss').combobox('getValue');
+        var aa=$('#aa').combobox('getValue');
+        var cc=$('#cc').combobox('getValue');
+        var oucode="";
+        if(cc!="")
+        {
+            oucode=cc;
+        }
+        if(aa!="")
+        {
+            oucode=aa;
+        }
+        if(ss!="")
+        {
+            oucode=ss;
+        }
+        //绑定汽油销量 oiltype=01汽油
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/selectInventory?oiltype=01"+"&oucode="+oucode,
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+                $("#qyck").html(msg.total);
+            }
+        });
+        //绑定柴油销量 oiltype=03 柴油
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/selectInventory?oiltype=03"+"&oucode="+oucode,
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+                $("#cykc").html(msg.total);
+            }
+        });
+    }
+    //提枪次数
+    function LoadTqcs()
+    {
+        //开始时间 日结损益
+        var begin = new Date();
+        var start=begin.toLocaleDateString()+" 08:00:00";
+        //结束时间 日结损益
+        var end = new Date();
+        var date = end.getDate();
+        date = date + 1;
+        end.setDate(date);
+        var over=end.toLocaleDateString();
+        //加油站编号
+        var ss=$('#ss').combobox('getValue');
+        var aa=$('#aa').combobox('getValue');
+        var cc=$('#cc').combobox('getValue');
+        var oucode="";
+        if(cc!="")
+        {
+            oucode=cc;
+        }
+        if(aa!="")
+        {
+            oucode=aa;
+        }
+        if(ss!="")
+        {
+            oucode=ss;
+        }
+
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/selectTqCount?start="+start+"&end="+over+"&oucode="+oucode,
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+                if(msg.total>0)
+                {
+                    if(msg.rows[0].num!='')
+                    {$("#tqcs").html(msg.rows[0].num);}
+                    else
+                    {
+                        $("#tqcs").html(0);
+                    }
+
+                }
+                else
+                {
+                    $("#tqcs").html(0);
+                }
+            }
+        });
+    }
+    //提枪次数
+    function LoadYwySyl()
+    {
+        var ss=$('#ss').combobox('getValue');
+        var aa=$('#aa').combobox('getValue');
+        var cc=$('#cc').combobox('getValue');
+        var oucode="";
+        if(cc!="")
+        {
+            oucode=cc;
+        }
+        if(aa!="")
+        {
+            oucode=aa;
+        }
+        if(ss!="")
+        {
+            oucode=ss;
+        }
+
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/selectYwySYL?oucode="+oucode,
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+                $("#ywyssl").html(msg.total);
+
+            }
+        });
+    }
+
+    //绑定在途柴油汽油量
+    function LoadZTOilL()
+    {
+        //加油站编号
+        var ss=$('#ss').combobox('getValue');
+        var aa=$('#aa').combobox('getValue');
+        var cc=$('#cc').combobox('getValue');
+        var oucode="";
+        if(cc!="")
+        {
+            oucode=cc;
+        }
+        if(aa!="")
+        {
+            oucode=aa;
+        }
+        if(ss!="")
+        {
+            oucode=ss;
+        }
+        //绑定汽油销量 oiltype=01汽油
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/selectDBill?oiltype=01"+"&oucode="+oucode,
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+                if(msg.total>0)
+                {
+                    if(msg.rows[0].PlanL!='undefined') {
+                        $("#ztqy").html(msg.rows[0].PlanL);
+                    }
+                    else
+                    {
+                        $("#ztqy").html(0);
+                    }
+                }
+                else
+                {
+                    $("#ztqy").html(0);
+                }
+            }
+        });
+        //绑定柴油销量 oiltype=03 柴油
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/selectDBill?oiltype=03"+"&oucode="+oucode,
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+
+                if(msg.total>0)
+                {
+                    if(msg.rows[0].PlanL!='undefined')
+                    {
+                        $("#ztcy").html(msg.rows[0].PlanL);
+                    }
+                    else
+                    {
+                        $("#ztcy").html(0);
+                    }
+                }
+                else
+                {
+                    $("#ztcy").html(0);
+                }
+            }
+        });
+    }
+
+    //绑定柴油汽油销量
+    function LoadJHL()
+    {
+        //开始时间 日结损益
+        var begin = new Date();
+        var start=begin.toLocaleDateString()+" 08:00:00";
+        //结束时间 日结损益
+        var end = new Date();
+        var date = end.getDate();
+        date = date + 1;
+        end.setDate(date);
+        var over=end.toLocaleDateString();
+        //加油站编号
+        var ss=$('#ss').combobox('getValue');
+        var aa=$('#aa').combobox('getValue');
+        var cc=$('#cc').combobox('getValue');
+        var oucode="";
+        if(cc!="")
+        {
+            oucode=cc;
+        }
+        if(aa!="")
+        {
+            oucode=aa;
+        }
+        if(ss!="")
+        {
+            oucode=ss;
+        }
+        //绑定汽油销量 oiltype=01汽油
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/selectJHL?oiltype=01"+"&start="+start+"&end="+over+"&oucode="+oucode,
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+                if(msg.total>0)
+                {
+                    if(msg.rows[0].Liter!='undefined') {
+                        $("#qyjhl").html(msg.rows[0].PlanL);
+                    }
+                    else
+                    {
+                        $("#qyjhl").html(0);
+                    }
+                }
+                else
+                {
+                    $("#qyjhl").html(0);
+                }
+            }
+        });
+        //绑定柴油销量 oiltype=03 柴油
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/selectJHL?oiltype=03"+"&start="+start+"&end="+over+"&oucode="+oucode,
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+
+                if(msg.total>0)
+                {
+                    if(msg.rows[0].Liter!='undefined')
+                    {
+                        $("#cyjhl").html(msg.rows[0].PlanL);
+                    }
+                    else
+                    {
+                        $("#cyjhl").html(0);
+                    }
+                }
+                else
+                {
+                    $("#cyjhl").html(0);
+                }
+            }
+        });
+    }
+
+    //绑定柴油汽油已验收
+    function LoadYYS()
+    {
+        //开始时间 日结损益
+        var begin = new Date();
+        var start=begin.toLocaleDateString()+" 08:00:00";
+        //结束时间 日结损益
+        var end = new Date();
+        var date = end.getDate();
+        date = date + 1;
+        end.setDate(date);
+        var over=end.toLocaleDateString();
+        //加油站编号
+        var ss=$('#ss').combobox('getValue');
+        var aa=$('#aa').combobox('getValue');
+        var cc=$('#cc').combobox('getValue');
+        var oucode="";
+        if(cc!="")
+        {
+            oucode=cc;
+        }
+        if(aa!="")
+        {
+            oucode=aa;
+        }
+        if(ss!="")
+        {
+            oucode=ss;
+        }
+        //绑定汽油销量 oiltype=01汽油
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/selectYYS?oiltype=01"+"&start="+start+"&end="+over+"&oucode="+oucode,
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+                if(msg.total>0)
+                {
+                    if(msg.rows[0].RealGetL!='undefined') {
+                        $("#yysqy").html(msg.rows[0].RealGetL);
+                    }
+                    else
+                    {
+                        $("#yysqy").html(0);
+                    }
+                }
+                else
+                {
+                    $("#yysqy").html(0);
+                }
+            }
+        });
+        //绑定柴油销量 oiltype=03 柴油
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/selectYYS?oiltype=03"+"&start="+start+"&end="+over+"&oucode="+oucode,
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+
+                if(msg.total>0)
+                {
+                    if(msg.rows[0].RealGetL!='undefined')
+                    {
+                        $("#yyscy").html(msg.rows[0].RealGetL);
+                    }
+                    else
+                    {
+                        $("#yyscy").html(0);
+                    }
+                }
+                else
+                {
+                    $("#yyscy").html(0);
+                }
+            }
+        });
+    }
+</script>

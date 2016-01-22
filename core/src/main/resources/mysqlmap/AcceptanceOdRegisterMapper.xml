@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.AcceptanceOdRegisterDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.AcceptanceOdRegister" >
+    <id column="ManualNo" property="manualNo" jdbcType="VARCHAR" />
+    <result column="DeliveryNo" property="deliveryno" jdbcType="VARCHAR" />
+    <result column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <result column="Shift" property="shift" jdbcType="VARCHAR" />
+    <result column="DischargeLoss" property="dischargeloss" jdbcType="DOUBLE" />
+    <result column="DischargeRate" property="dischargerate" jdbcType="DOUBLE" />
+    <result column="PlanL" property="planl" jdbcType="DOUBLE" />
+    <result column="RealReceiveL" property="realreceivel" jdbcType="DOUBLE" />
+    <result column="HeightEmpey" property="heightempey" jdbcType="DOUBLE" />
+    <result column="HeightTotal" property="heighttotal" jdbcType="DOUBLE" />
+    <result column="HeightWater" property="heightwater" jdbcType="DOUBLE" />
+    <result column="CubageTable" property="cubagetable" jdbcType="DOUBLE" />
+    <result column="PlumbunBankOperator" property="plumbunbankoperator" jdbcType="VARCHAR" />
+    <result column="CalculateOperator" property="calculateoperator" jdbcType="VARCHAR" />
+    <result column="BackBankNo" property="backbankno" jdbcType="VARCHAR" />
+    <result column="CanTruckTemp" property="cantrucktemp" jdbcType="DOUBLE" />
+    <result column="IsFullDose" property="isfulldose" jdbcType="INTEGER" />
+    <result column="ServiceLevel" property="servicelevel" jdbcType="INTEGER" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="IsDel" property="isdel" jdbcType="INTEGER" />
+    <result column="RealGetL" property="realgetl" jdbcType="DOUBLE" />
+    <result column="DuringSales" property="duringsales" jdbcType="DOUBLE" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="RealGetLV20" property="realGetLV20" jdbcType="DOUBLE" />
+    <result column="DischargeLossV20" property="dischargeLossV20" jdbcType="DOUBLE" />
+    <result column="DischargeRateV20" property="dischargeRateV20" jdbcType="DOUBLE" />
+    <result column="BeginTime" property="begintime" jdbcType="TIMESTAMP" />
+    <result column="EndTime" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="InStationTime" property="instationtime" jdbcType="TIMESTAMP"/>
+    <result column="IndemnityLoss" property="indemnityloss" jdbcType="DOUBLE"/>
+  </resultMap>
+  <resultMap id="ProResultMap" type="java.util.HashMap">
+    <result column="DeliveryNo" property="DeliveryNo" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result column="DeliveryTime" property="DeliveryTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    <result column="FromDepotName" property="FromDepotName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result column="ToStationName" property="ToStationName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result column="OilName" property="OilName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result column="DeliveryTemp" property="DeliveryTemp" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+    <result column="PlanL" property="PlanL" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+    <result column="PlanTon" property="PlanTon" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+    <result column="ShipmentTime" property="ShipmentTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    <result column="CreateTime" property="CreateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    <result column="CarNo" property="CarNo" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result column="OutSealNo" property="OutSealNo" javaType="java.lang.String" jdbcType="VARCHAR"/>
+  </resultMap>
+
+  <resultMap id="byShift"  type="java.util.HashMap" >
+    <result column="OilNo" property="OilNo" jdbcType="VARCHAR" />
+    <result column="RealGetLV20" property="RealGetLV20" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    DeliveryNo, ManualNo,OilNo, Shift, DischargeLoss, DischargeRate, PlanL, RealReceiveL, HeightEmpey, 
+    HeightTotal, HeightWater, CubageTable, PlumbunBankOperator, CalculateOperator, BackBankNo, 
+    CanTruckTemp, IsFullDose, ServiceLevel, CreateTime, IsDel, RealGetL, DuringSales, 
+    TranStatus,DischargeLossV20,DischargeRateV20,RealGetLV20,BeginTime,EndTime,InStationTime,IndemnityLoss
+  </sql>
+
+
+  <select id="findByShift" parameterType="java.util.Map" resultMap="byShift">
+    <![CDATA[
+         SELECT oilno ,SUM(RealGetLV20) AS RealGetLV20
+        FROM oss_acceptance_odRegister
+        WHERE shift >=#{minshift} AND shift <= #{maxshift}
+        GROUP BY oilno
+        ]]>
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_acceptance_odRegister
+    where ManualNo = #{manualNo,jdbcType=VARCHAR} or DeliveryNo = #{manualNo,jdbcType=VARCHAR}
+  </select>
+<select id="getOdregRate" resultType="Map" parameterType="Map">
+  SELECT
+	sum(DischargeL) AS Dischargel,
+	SUM(DischargeL) AS V20,
+	SUM(DuringSales) AS DuringSales,
+	#{yfss,jdbcType=DOUBLE} - SUM(DischargeL) AS v20loss,
+	(#{yfss,jdbcType=DOUBLE} - SUM(DischargeL)) / #{yfss,jdbcType=DOUBLE} AS V20lossrate,
+	#{yfss,jdbcType=DOUBLE} - (sum(EndOilL)-sum(BeginoilL)+sum(DuringSales))   AS loss,
+	(#{yfss,jdbcType=DOUBLE} - (sum(EndOilL)-sum(BeginoilL)+sum(DuringSales))) / #{yfss,jdbcType=DOUBLE} AS lossreate,
+	#{yfss,jdbcType=DOUBLE}-SUM(Dischargel)-(#{yfss,jdbcType=DOUBLE} * #{syl,jdbcType=DOUBLE}) AS shsp
+
+FROM
+	oss_acceptance_odRegisterInfo
+WHERE
+	ManualNo = #{billno,jdbcType=VARCHAR}
+</select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from oss_acceptance_odRegister
+    where ManualNo = #{manualNo,jdbcType=VARCHAR} or DeliveryNo=#{manualNo,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.AcceptanceOdRegister" >
+    insert into oss_acceptance_odRegister (DeliveryNo, ManualNo,OilNo, Shift, 
+      DischargeLoss, DischargeRate, PlanL, 
+      RealReceiveL, HeightEmpey, HeightTotal, 
+      HeightWater, CubageTable, PlumbunBankOperator, 
+      CalculateOperator, BackBankNo, CanTruckTemp, 
+      IsFullDose, ServiceLevel, CreateTime, 
+      IsDel, RealGetL, DuringSales, DischargeLossV20,DischargeRateV20,RealGetLV20,
+      TranStatus,BeginTime,EndTime,InStationTime,IndemnityLoss)
+    values (#{deliveryno,jdbcType=VARCHAR},#{manualNo,jdbcType=VARCHAR}, #{oilno,jdbcType=VARCHAR}, #{shift,jdbcType=VARCHAR}, 
+      #{dischargeloss,jdbcType=DOUBLE}, #{dischargerate,jdbcType=DOUBLE}, #{planl,jdbcType=DOUBLE}, 
+      #{realreceivel,jdbcType=DOUBLE}, #{heightempey,jdbcType=DOUBLE}, #{heighttotal,jdbcType=DOUBLE}, 
+      #{heightwater,jdbcType=DOUBLE}, #{cubagetable,jdbcType=DOUBLE}, #{plumbunbankoperator,jdbcType=VARCHAR}, 
+      #{calculateoperator,jdbcType=VARCHAR}, #{backbankno,jdbcType=VARCHAR}, #{cantrucktemp,jdbcType=DOUBLE}, 
+      #{isfulldose,jdbcType=INTEGER}, #{servicelevel,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{isdel,jdbcType=INTEGER}, #{realgetl,jdbcType=DOUBLE}, #{duringsales,jdbcType=DOUBLE}, #{realGetLV20,jdbcType=DOUBLE},#{dischargeLossV20,jdbcType=DOUBLE},#{dischargeRateV20,jdbcType=DOUBLE},
+      #{transtatus,jdbcType=VARCHAR},#{begintime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP},#{instationtime,jdbcType=TIMESTAMP},#{indemnityloss,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.AcceptanceOdRegister" >
+    insert into oss_acceptance_odRegister
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="deliveryno != null" >
+        DeliveryNo,
+      </if>
+      <if test="manualNo != null" >
+        ManualNo,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="shift != null" >
+        Shift,
+      </if>
+      <if test="dischargeloss != null" >
+        DischargeLoss,
+      </if>
+      <if test="dischargerate != null" >
+        DischargeRate,
+      </if>
+      <if test="planl != null" >
+        PlanL,
+      </if>
+      <if test="realreceivel != null" >
+        RealReceiveL,
+      </if>
+      <if test="heightempey != null" >
+        HeightEmpey,
+      </if>
+      <if test="heighttotal != null" >
+        HeightTotal,
+      </if>
+      <if test="heightwater != null" >
+        HeightWater,
+      </if>
+      <if test="cubagetable != null" >
+        CubageTable,
+      </if>
+      <if test="plumbunbankoperator != null" >
+        PlumbunBankOperator,
+      </if>
+      <if test="calculateoperator != null" >
+        CalculateOperator,
+      </if>
+      <if test="backbankno != null" >
+        BackBankNo,
+      </if>
+      <if test="cantrucktemp != null" >
+        CanTruckTemp,
+      </if>
+      <if test="isfulldose != null" >
+        IsFullDose,
+      </if>
+      <if test="servicelevel != null" >
+        ServiceLevel,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="isdel != null" >
+        IsDel,
+      </if>
+      <if test="realgetl != null" >
+        RealGetL,
+      </if>
+      <if test="duringsales != null" >
+        DuringSales,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="realGetLV20 != null" >
+        realGetLV20,
+      </if>
+      <if test="dischargeLossV20 != null" >
+        dischargeLossV20,
+      </if>
+      <if test="dischargeRateV20 != null" >
+        dischargeRateV20,
+      </if>
+      <if test="begintime != null" >
+        BeginTime,
+      </if>
+      <if test="endtime != null" >
+        EndTime,
+      </if>
+      <if test="instationtime != null" >
+        InStationTime,
+      </if>
+      <if test="indemnityloss != null" >
+        IndemnityLoss,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="deliveryno != null" >
+        #{deliveryno,jdbcType=VARCHAR},
+      </if>
+      <if test="manualNo != null" >
+        #{manualNo,jdbcType=VARCHAR},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null" >
+        #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="dischargeloss != null" >
+        #{dischargeloss,jdbcType=DOUBLE},
+      </if>
+      <if test="dischargerate != null" >
+        #{dischargerate,jdbcType=DOUBLE},
+      </if>
+      <if test="planl != null" >
+        #{planl,jdbcType=DOUBLE},
+      </if>
+      <if test="realreceivel != null" >
+        #{realreceivel,jdbcType=DOUBLE},
+      </if>
+      <if test="heightempey != null" >
+        #{heightempey,jdbcType=DOUBLE},
+      </if>
+      <if test="heighttotal != null" >
+        #{heighttotal,jdbcType=DOUBLE},
+      </if>
+      <if test="heightwater != null" >
+        #{heightwater,jdbcType=DOUBLE},
+      </if>
+      <if test="cubagetable != null" >
+        #{cubagetable,jdbcType=DOUBLE},
+      </if>
+      <if test="plumbunbankoperator != null" >
+        #{plumbunbankoperator,jdbcType=VARCHAR},
+      </if>
+      <if test="calculateoperator != null" >
+        #{calculateoperator,jdbcType=VARCHAR},
+      </if>
+      <if test="backbankno != null" >
+        #{backbankno,jdbcType=VARCHAR},
+      </if>
+      <if test="cantrucktemp != null" >
+        #{cantrucktemp,jdbcType=DOUBLE},
+      </if>
+      <if test="isfulldose != null" >
+        #{isfulldose,jdbcType=INTEGER},
+      </if>
+      <if test="servicelevel != null" >
+        #{servicelevel,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="realgetl != null" >
+        #{realgetl,jdbcType=DOUBLE},
+      </if>
+      <if test="duringsales != null" >
+        #{duringsales,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="realGetLV20 != null" >
+        #{realGetLV20,jdbcType=DOUBLE},
+      </if>
+      <if test="dischargeLossV20 != null" >
+        #{dischargeLossV20,jdbcType=DOUBLE},
+      </if>
+      <if test="dischargeRateV20 != null" >
+        #{dischargeRateV20,jdbcType=DOUBLE},
+      </if>
+      <if test="begintime != null" >
+        #{begintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="instationtime != null" >
+        #{instationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="indemnityloss != null" >
+        #{indemnityloss,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.AcceptanceOdRegister" >
+    update oss_acceptance_odRegister
+    <set >
+      <if test="dischargeLossV20 != null" >
+      DischargeLossV20 = #{dischargeLossV20,jdbcType=DOUBLE},
+    </if>
+      <if test="dischargeRateV20 != null" >
+        DischargeRateV20 = #{dischargeRateV20,jdbcType=DOUBLE},
+      </if>
+      <if test="duringsales != null" >
+        DuringSales = #{duringsales,jdbcType=DOUBLE},
+      </if>
+
+      <if test="oilno != null" >
+        OilNo = #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null" >
+        Shift = #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="dischargeloss != null" >
+        DischargeLoss = #{dischargeloss,jdbcType=DOUBLE},
+      </if>
+      <if test="dischargerate != null" >
+        DischargeRate = #{dischargerate,jdbcType=DOUBLE},
+      </if>
+      <if test="planl != null" >
+        PlanL = #{planl,jdbcType=DOUBLE},
+      </if>
+      <if test="realreceivel != null" >
+        RealReceiveL = #{realreceivel,jdbcType=DOUBLE},
+      </if>
+      <if test="heightempey != null" >
+        HeightEmpey = #{heightempey,jdbcType=DOUBLE},
+      </if>
+      <if test="heighttotal != null" >
+        HeightTotal = #{heighttotal,jdbcType=DOUBLE},
+      </if>
+      <if test="heightwater != null" >
+        HeightWater = #{heightwater,jdbcType=DOUBLE},
+      </if>
+      <if test="cubagetable != null" >
+        CubageTable = #{cubagetable,jdbcType=DOUBLE},
+      </if>
+      <if test="plumbunbankoperator != null" >
+        PlumbunBankOperator = #{plumbunbankoperator,jdbcType=VARCHAR},
+      </if>
+      <if test="calculateoperator != null" >
+        CalculateOperator = #{calculateoperator,jdbcType=VARCHAR},
+      </if>
+      <if test="backbankno != null" >
+        BackBankNo = #{backbankno,jdbcType=VARCHAR},
+      </if>
+      <if test="cantrucktemp != null" >
+        CanTruckTemp = #{cantrucktemp,jdbcType=DOUBLE},
+      </if>
+      <if test="isfulldose != null" >
+        IsFullDose = #{isfulldose,jdbcType=INTEGER},
+      </if>
+      <if test="servicelevel != null" >
+        ServiceLevel = #{servicelevel,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdel != null" >
+        IsDel = #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="realgetl != null" >
+        RealGetL = #{realgetl,jdbcType=DOUBLE},
+      </if>
+      <if test="duringsales != null" >
+        DuringSales = #{duringsales,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="realGetLV20 != null" >
+        realGetLV20 = #{realGetLV20,jdbcType=DOUBLE},
+      </if>
+      <if test="duringsales != null" >
+        dischargeLossV20 = #{dischargeLossV20,jdbcType=DOUBLE},
+      </if>
+      <if test="dischargeRateV20 != null" >
+        dischargeRateV20 = #{dischargeRateV20,jdbcType=DOUBLE},
+      </if>
+      <if test="begintime != null" >
+        BeginTime = #{begintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        EndTime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliveryno != null" >
+        DeliveryNo = #{deliveryno,jdbcType=VARCHAR},
+      </if>
+      <if test="instationtime != null" >
+        InStationTime = #{instationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="indemnityloss != null" >
+        IndemnityLoss = #{indemnityloss,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where ManualNo = #{manualNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.AcceptanceOdRegister" >
+    update oss_acceptance_odRegister
+    set OilNo = #{oilno,jdbcType=VARCHAR},
+      Shift = #{shift,jdbcType=VARCHAR},
+      DischargeLoss = #{dischargeloss,jdbcType=DOUBLE},
+      DischargeRate = #{dischargerate,jdbcType=DOUBLE},
+      PlanL = #{planl,jdbcType=DOUBLE},
+      RealReceiveL = #{realreceivel,jdbcType=DOUBLE},
+      HeightEmpey = #{heightempey,jdbcType=DOUBLE},
+      HeightTotal = #{heighttotal,jdbcType=DOUBLE},
+      HeightWater = #{heightwater,jdbcType=DOUBLE},
+      CubageTable = #{cubagetable,jdbcType=DOUBLE},
+      PlumbunBankOperator = #{plumbunbankoperator,jdbcType=VARCHAR},
+      CalculateOperator = #{calculateoperator,jdbcType=VARCHAR},
+      BackBankNo = #{backbankno,jdbcType=VARCHAR},
+      CanTruckTemp = #{cantrucktemp,jdbcType=DOUBLE},
+      IsFullDose = #{isfulldose,jdbcType=INTEGER},
+      ServiceLevel = #{servicelevel,jdbcType=INTEGER},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      IsDel = #{isdel,jdbcType=INTEGER},
+      RealGetL = #{realgetl,jdbcType=DOUBLE},
+      DuringSales = #{duringsales,jdbcType=DOUBLE},
+      realGetLV20 = #{realGetLV20,jdbcType=DOUBLE},
+      dischargeLossV20 = #{dischargeLossV20,jdbcType=DOUBLE},
+      dischargeRateV20 = #{dischargeRateV20,jdbcType=DOUBLE},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      BeginTime=#{begintime,jdbcType=TIMESTAMP},
+      EndTime=#{endtime,jdbcType=TIMESTAMP},
+      DeliveryNo=#{deliveryno,jdbcType=VARCHAR},
+      InStationTime = #{instationtime,jdbcType=TIMESTAMP},
+      IndemnityLoss = #{indemnityloss,jdbcType=DOUBLE}
+    where ManualNo = #{manualNo,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByTrans" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_acceptance_odRegister WHERE  TranStatus=#{0,jdbcType=VARCHAR}
+  </select>
+  <select id="selectWHDByoil" parameterType="String" resultMap="BaseResultMap">
+     SELECT
+     <include refid="Base_Column_List"/>
+    FROM oss_acceptance_odRegister
+    WHERE
+    ( DeliveryNo IS NULL OR DeliveryNo = '') AND OilNo =#{0,jdbcType=VARCHAR}
+    and ManualNo IN(SELECT DeliveryNo FROM oss_acceptance_nobills where IsComplete=1 )
+  </select>
+  <select id="selectjhysbynoanddate" resultMap="ProResultMap" parameterType="hashmap">
+    select
+        *
+    from View_GetOdReg where
+    <![CDATA[CreateTime >= #{begin, jdbcType=TIMESTAMP}]]>
+    <![CDATA[and CreateTime <= #{end, jdbcType=TIMESTAMP}]]>
+    <if test="deliveryNo != null and deliveryNo != ''">
+      and DeliveryNo = #{deliveryNo}
+    </if>
+    order by createtime desc
+  </select>
+  <update id="updateByManualNo" parameterType="hashmap">
+      UPDATE oss_acceptance_odRegister
+      <set>
+        SHIFT=#{shift},
+        TranStatus=0
+      </set>
+      <where>
+        ManualNo= #{manualno} or DeliveryNo=#{manualno}
+      </where>
+  </update>
+
+</mapper>

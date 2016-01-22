@@ -1,0 +1,791 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_daily_TradeAccountMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_daily_TradeAccount" >
+    <id column="MacNo" property="macno" jdbcType="INTEGER" />
+    <id column="TTC" property="ttc" jdbcType="INTEGER" />
+    <id column="TakeDate" property="takedate" jdbcType="TIMESTAMP" />
+    <id column="OilGun" property="oilgun" jdbcType="VARCHAR" />
+    <id column="NodeNo" property="nodeno" jdbcType="VARCHAR" />
+    <result column="CardNo" property="cardno" jdbcType="VARCHAR" />
+    <result column="MachineOilNo" property="machineoilno" jdbcType="VARCHAR" />
+    <result column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <result column="CTC" property="ctc" jdbcType="INTEGER" />
+    <result column="OpeNo" property="openo" jdbcType="VARCHAR" />
+    <result column="Liter" property="liter" jdbcType="DOUBLE" />
+    <result column="Price" property="price" jdbcType="DOUBLE" />
+    <result column="Amount" property="amount" jdbcType="DOUBLE" />
+    <result column="Balance" property="balance" jdbcType="DOUBLE" />
+    <result column="PumpNo" property="pumpno" jdbcType="DOUBLE" />
+    <result column="TAC" property="tac" jdbcType="VARCHAR" />
+    <result column="GMAC" property="gmac" jdbcType="VARCHAR" />
+    <result column="PSAM_TAC" property="psamTac" jdbcType="VARCHAR" />
+    <result column="PSAM_ASN" property="psamAsn" jdbcType="VARCHAR" />
+    <result column="TempinalNo" property="tempinalno" jdbcType="VARCHAR" />
+    <result column="PSAM_TTC" property="psamTtc" jdbcType="INTEGER" />
+    <result column="MoneySou" property="moneysou" jdbcType="VARCHAR" />
+    <result column="PayMode" property="paymode" jdbcType="VARCHAR" />
+    <result column="PayUnit" property="payunit" jdbcType="VARCHAR" />
+    <result column="T_MAC" property="tMac" jdbcType="VARCHAR" />
+    <result column="AccountDate" property="accountdate" jdbcType="TIMESTAMP" />
+    <result column="TraCode" property="tracode" jdbcType="VARCHAR" />
+    <result column="GetTime" property="gettime" jdbcType="TIMESTAMP" />
+    <result column="Key_Version" property="keyVersion" jdbcType="INTEGER" />
+    <result column="Key_Index" property="keyIndex" jdbcType="INTEGER" />
+    <result column="CompMatchFlag" property="compmatchflag" jdbcType="VARCHAR" />
+    <result column="CompNo" property="compno" jdbcType="VARCHAR" />
+    <result column="BackMatchFlag" property="backmatchflag" jdbcType="VARCHAR" />
+    <result column="PayTypeFlag" property="paytypeflag" jdbcType="VARCHAR" />
+    <result column="Shift" property="shift" jdbcType="VARCHAR" />
+    <result column="TransFlag" property="transflag" jdbcType="VARCHAR" />
+    <result column="IsRecieved" property="isrecieved" jdbcType="VARCHAR" />
+    <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    MacNo, TTC, TakeDate, OilGun, NodeNo, CardNo, MachineOilNo, OilNo, CTC, OpeNo, Liter, 
+    Price, Amount, Balance, PumpNo, TAC, GMAC, PSAM_TAC, PSAM_ASN, TempinalNo, PSAM_TTC, 
+    MoneySou, PayMode, PayUnit, T_MAC, AccountDate, TraCode, GetTime, Key_Version, Key_Index, 
+    CompMatchFlag, CompNo, BackMatchFlag, PayTypeFlag, Shift, TransFlag, IsRecieved, 
+    OUCode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_daily_TradeAccountKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_daily_TradeAccount
+    where MacNo = #{macno,jdbcType=INTEGER}
+      and TTC = #{ttc,jdbcType=INTEGER}
+      and TakeDate = #{takedate,jdbcType=TIMESTAMP}
+      and OilGun = #{oilgun,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_daily_TradeAccountKey" >
+    delete from oss_daily_TradeAccount
+    where MacNo = #{macno,jdbcType=INTEGER}
+      and TTC = #{ttc,jdbcType=INTEGER}
+      and TakeDate = #{takedate,jdbcType=TIMESTAMP}
+      and OilGun = #{oilgun,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_daily_TradeAccount" >
+    insert into oss_daily_TradeAccount (MacNo, TTC, TakeDate, 
+      OilGun, NodeNo, CardNo, 
+      MachineOilNo, OilNo, CTC, 
+      OpeNo, Liter, Price, 
+      Amount, Balance, PumpNo, 
+      TAC, GMAC, PSAM_TAC, 
+      PSAM_ASN, TempinalNo, PSAM_TTC, 
+      MoneySou, PayMode, PayUnit, 
+      T_MAC, AccountDate, TraCode, 
+      GetTime, Key_Version, Key_Index, 
+      CompMatchFlag, CompNo, BackMatchFlag, 
+      PayTypeFlag, Shift, TransFlag,
+      IsRecieved, OUCode,BackCanFlag)
+    values (#{macno,jdbcType=INTEGER}, #{ttc,jdbcType=INTEGER}, #{takedate,jdbcType=TIMESTAMP}, 
+      #{oilgun,jdbcType=VARCHAR}, #{nodeno,jdbcType=VARCHAR}, #{cardno,jdbcType=VARCHAR}, 
+      #{machineoilno,jdbcType=VARCHAR}, #{oilno,jdbcType=VARCHAR}, #{ctc,jdbcType=INTEGER}, 
+      #{openo,jdbcType=VARCHAR}, #{liter,jdbcType=DOUBLE}, #{price,jdbcType=DOUBLE}, 
+      #{amount,jdbcType=DOUBLE}, #{balance,jdbcType=DOUBLE}, #{pumpno,jdbcType=DOUBLE}, 
+      #{tac,jdbcType=VARCHAR}, #{gmac,jdbcType=VARCHAR}, #{psamTac,jdbcType=VARCHAR}, 
+      #{psamAsn,jdbcType=VARCHAR}, #{tempinalno,jdbcType=VARCHAR}, #{psamTtc,jdbcType=INTEGER}, 
+      #{moneysou,jdbcType=VARCHAR}, #{paymode,jdbcType=VARCHAR}, #{payunit,jdbcType=VARCHAR}, 
+      #{tMac,jdbcType=VARCHAR}, #{accountdate,jdbcType=TIMESTAMP}, #{tracode,jdbcType=VARCHAR}, 
+      #{gettime,jdbcType=TIMESTAMP}, #{keyVersion,jdbcType=INTEGER}, #{keyIndex,jdbcType=INTEGER}, 
+      #{compmatchflag,jdbcType=VARCHAR}, #{compno,jdbcType=VARCHAR}, #{backmatchflag,jdbcType=VARCHAR}, 
+      #{paytypeflag,jdbcType=VARCHAR}, #{shift,jdbcType=VARCHAR}, #{transflag,jdbcType=VARCHAR}, 
+      #{isrecieved,jdbcType=VARCHAR}, #{oucode,jdbcType=VARCHAR},#{backcanflag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="merge" parameterType="com.kld.gsm.center.domain.oss_daily_TradeAccount" >
+    replace into oss_daily_TradeAccount
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="macno != null" >
+        MacNo,
+      </if>
+      <if test="ttc != null" >
+        TTC,
+      </if>
+      <if test="takedate != null" >
+        TakeDate,
+      </if>
+      <if test="oilgun != null" >
+        OilGun,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="cardno != null" >
+        CardNo,
+      </if>
+      <if test="machineoilno != null" >
+        MachineOilNo,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="ctc != null" >
+        CTC,
+      </if>
+      <if test="openo != null" >
+        OpeNo,
+      </if>
+      <if test="liter != null" >
+        Liter,
+      </if>
+      <if test="price != null" >
+        Price,
+      </if>
+      <if test="amount != null" >
+        Amount,
+      </if>
+      <if test="balance != null" >
+        Balance,
+      </if>
+      <if test="pumpno != null" >
+        PumpNo,
+      </if>
+      <if test="tac != null" >
+        TAC,
+      </if>
+      <if test="gmac != null" >
+        GMAC,
+      </if>
+      <if test="psamTac != null" >
+        PSAM_TAC,
+      </if>
+      <if test="psamAsn != null" >
+        PSAM_ASN,
+      </if>
+      <if test="tempinalno != null" >
+        TempinalNo,
+      </if>
+      <if test="psamTtc != null" >
+        PSAM_TTC,
+      </if>
+      <if test="moneysou != null" >
+        MoneySou,
+      </if>
+      <if test="paymode != null" >
+        PayMode,
+      </if>
+      <if test="payunit != null" >
+        PayUnit,
+      </if>
+      <if test="tMac != null" >
+        T_MAC,
+      </if>
+      <if test="accountdate != null" >
+        AccountDate,
+      </if>
+      <if test="tracode != null" >
+        TraCode,
+      </if>
+      <if test="gettime != null" >
+        GetTime,
+      </if>
+      <if test="keyVersion != null" >
+        Key_Version,
+      </if>
+      <if test="keyIndex != null" >
+        Key_Index,
+      </if>
+      <if test="compmatchflag != null" >
+        CompMatchFlag,
+      </if>
+      <if test="compno != null" >
+        CompNo,
+      </if>
+      <if test="backmatchflag != null" >
+        BackMatchFlag,
+      </if>
+      <if test="paytypeflag != null" >
+        PayTypeFlag,
+      </if>
+      <if test="shift != null" >
+        Shift,
+      </if>
+      <if test="transflag != null" >
+        TransFlag,
+      </if>
+      <if test="isrecieved != null" >
+        IsRecieved,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="macno != null" >
+        #{macno,jdbcType=INTEGER},
+      </if>
+      <if test="ttc != null" >
+        #{ttc,jdbcType=INTEGER},
+      </if>
+      <if test="takedate != null" >
+        #{takedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oilgun != null" >
+        #{oilgun,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="cardno != null" >
+        #{cardno,jdbcType=VARCHAR},
+      </if>
+      <if test="machineoilno != null" >
+        #{machineoilno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="ctc != null" >
+        #{ctc,jdbcType=INTEGER},
+      </if>
+      <if test="openo != null" >
+        #{openo,jdbcType=VARCHAR},
+      </if>
+      <if test="liter != null" >
+        #{liter,jdbcType=DOUBLE},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=DOUBLE},
+      </if>
+      <if test="pumpno != null" >
+        #{pumpno,jdbcType=DOUBLE},
+      </if>
+      <if test="tac != null" >
+        #{tac,jdbcType=VARCHAR},
+      </if>
+      <if test="gmac != null" >
+        #{gmac,jdbcType=VARCHAR},
+      </if>
+      <if test="psamTac != null" >
+        #{psamTac,jdbcType=VARCHAR},
+      </if>
+      <if test="psamAsn != null" >
+        #{psamAsn,jdbcType=VARCHAR},
+      </if>
+      <if test="tempinalno != null" >
+        #{tempinalno,jdbcType=VARCHAR},
+      </if>
+      <if test="psamTtc != null" >
+        #{psamTtc,jdbcType=INTEGER},
+      </if>
+      <if test="moneysou != null" >
+        #{moneysou,jdbcType=VARCHAR},
+      </if>
+      <if test="paymode != null" >
+        #{paymode,jdbcType=VARCHAR},
+      </if>
+      <if test="payunit != null" >
+        #{payunit,jdbcType=VARCHAR},
+      </if>
+      <if test="tMac != null" >
+        #{tMac,jdbcType=VARCHAR},
+      </if>
+      <if test="accountdate != null" >
+        #{accountdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tracode != null" >
+        #{tracode,jdbcType=VARCHAR},
+      </if>
+      <if test="gettime != null" >
+        #{gettime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="keyVersion != null" >
+        #{keyVersion,jdbcType=INTEGER},
+      </if>
+      <if test="keyIndex != null" >
+        #{keyIndex,jdbcType=INTEGER},
+      </if>
+      <if test="compmatchflag != null" >
+        #{compmatchflag,jdbcType=VARCHAR},
+      </if>
+      <if test="compno != null" >
+        #{compno,jdbcType=VARCHAR},
+      </if>
+      <if test="backmatchflag != null" >
+        #{backmatchflag,jdbcType=VARCHAR},
+      </if>
+      <if test="paytypeflag != null" >
+        #{paytypeflag,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null" >
+        #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="transflag != null" >
+        #{transflag,jdbcType=VARCHAR},
+      </if>
+      <if test="isrecieved != null" >
+        #{isrecieved,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_daily_TradeAccount" >
+    insert into oss_daily_TradeAccount
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="macno != null" >
+        MacNo,
+      </if>
+      <if test="ttc != null" >
+        TTC,
+      </if>
+      <if test="takedate != null" >
+        TakeDate,
+      </if>
+      <if test="oilgun != null" >
+        OilGun,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="cardno != null" >
+        CardNo,
+      </if>
+      <if test="machineoilno != null" >
+        MachineOilNo,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="ctc != null" >
+        CTC,
+      </if>
+      <if test="openo != null" >
+        OpeNo,
+      </if>
+      <if test="liter != null" >
+        Liter,
+      </if>
+      <if test="price != null" >
+        Price,
+      </if>
+      <if test="amount != null" >
+        Amount,
+      </if>
+      <if test="balance != null" >
+        Balance,
+      </if>
+      <if test="pumpno != null" >
+        PumpNo,
+      </if>
+      <if test="tac != null" >
+        TAC,
+      </if>
+      <if test="gmac != null" >
+        GMAC,
+      </if>
+      <if test="psamTac != null" >
+        PSAM_TAC,
+      </if>
+      <if test="psamAsn != null" >
+        PSAM_ASN,
+      </if>
+      <if test="tempinalno != null" >
+        TempinalNo,
+      </if>
+      <if test="psamTtc != null" >
+        PSAM_TTC,
+      </if>
+      <if test="moneysou != null" >
+        MoneySou,
+      </if>
+      <if test="paymode != null" >
+        PayMode,
+      </if>
+      <if test="payunit != null" >
+        PayUnit,
+      </if>
+      <if test="tMac != null" >
+        T_MAC,
+      </if>
+      <if test="accountdate != null" >
+        AccountDate,
+      </if>
+      <if test="tracode != null" >
+        TraCode,
+      </if>
+      <if test="gettime != null" >
+        GetTime,
+      </if>
+      <if test="keyVersion != null" >
+        Key_Version,
+      </if>
+      <if test="keyIndex != null" >
+        Key_Index,
+      </if>
+      <if test="compmatchflag != null" >
+        CompMatchFlag,
+      </if>
+      <if test="compno != null" >
+        CompNo,
+      </if>
+      <if test="backmatchflag != null" >
+        BackMatchFlag,
+      </if>
+      <if test="paytypeflag != null" >
+        PayTypeFlag,
+      </if>
+      <if test="shift != null" >
+        Shift,
+      </if>
+      <if test="transflag != null" >
+        TransFlag,
+      </if>
+      <if test="isrecieved != null" >
+        IsRecieved,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="macno != null" >
+        #{macno,jdbcType=INTEGER},
+      </if>
+      <if test="ttc != null" >
+        #{ttc,jdbcType=INTEGER},
+      </if>
+      <if test="takedate != null" >
+        #{takedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oilgun != null" >
+        #{oilgun,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="cardno != null" >
+        #{cardno,jdbcType=VARCHAR},
+      </if>
+      <if test="machineoilno != null" >
+        #{machineoilno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="ctc != null" >
+        #{ctc,jdbcType=INTEGER},
+      </if>
+      <if test="openo != null" >
+        #{openo,jdbcType=VARCHAR},
+      </if>
+      <if test="liter != null" >
+        #{liter,jdbcType=DOUBLE},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=DOUBLE},
+      </if>
+      <if test="pumpno != null" >
+        #{pumpno,jdbcType=DOUBLE},
+      </if>
+      <if test="tac != null" >
+        #{tac,jdbcType=VARCHAR},
+      </if>
+      <if test="gmac != null" >
+        #{gmac,jdbcType=VARCHAR},
+      </if>
+      <if test="psamTac != null" >
+        #{psamTac,jdbcType=VARCHAR},
+      </if>
+      <if test="psamAsn != null" >
+        #{psamAsn,jdbcType=VARCHAR},
+      </if>
+      <if test="tempinalno != null" >
+        #{tempinalno,jdbcType=VARCHAR},
+      </if>
+      <if test="psamTtc != null" >
+        #{psamTtc,jdbcType=INTEGER},
+      </if>
+      <if test="moneysou != null" >
+        #{moneysou,jdbcType=VARCHAR},
+      </if>
+      <if test="paymode != null" >
+        #{paymode,jdbcType=VARCHAR},
+      </if>
+      <if test="payunit != null" >
+        #{payunit,jdbcType=VARCHAR},
+      </if>
+      <if test="tMac != null" >
+        #{tMac,jdbcType=VARCHAR},
+      </if>
+      <if test="accountdate != null" >
+        #{accountdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tracode != null" >
+        #{tracode,jdbcType=VARCHAR},
+      </if>
+      <if test="gettime != null" >
+        #{gettime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="keyVersion != null" >
+        #{keyVersion,jdbcType=INTEGER},
+      </if>
+      <if test="keyIndex != null" >
+        #{keyIndex,jdbcType=INTEGER},
+      </if>
+      <if test="compmatchflag != null" >
+        #{compmatchflag,jdbcType=VARCHAR},
+      </if>
+      <if test="compno != null" >
+        #{compno,jdbcType=VARCHAR},
+      </if>
+      <if test="backmatchflag != null" >
+        #{backmatchflag,jdbcType=VARCHAR},
+      </if>
+      <if test="paytypeflag != null" >
+        #{paytypeflag,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null" >
+        #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="transflag != null" >
+        #{transflag,jdbcType=VARCHAR},
+      </if>
+      <if test="isrecieved != null" >
+        #{isrecieved,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_daily_TradeAccount" >
+    update oss_daily_TradeAccount
+    <set >
+      <if test="cardno != null" >
+        CardNo = #{cardno,jdbcType=VARCHAR},
+      </if>
+      <if test="machineoilno != null" >
+        MachineOilNo = #{machineoilno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilno != null" >
+        OilNo = #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="ctc != null" >
+        CTC = #{ctc,jdbcType=INTEGER},
+      </if>
+      <if test="openo != null" >
+        OpeNo = #{openo,jdbcType=VARCHAR},
+      </if>
+      <if test="liter != null" >
+        Liter = #{liter,jdbcType=DOUBLE},
+      </if>
+      <if test="price != null" >
+        Price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="amount != null" >
+        Amount = #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="balance != null" >
+        Balance = #{balance,jdbcType=DOUBLE},
+      </if>
+      <if test="pumpno != null" >
+        PumpNo = #{pumpno,jdbcType=DOUBLE},
+      </if>
+      <if test="tac != null" >
+        TAC = #{tac,jdbcType=VARCHAR},
+      </if>
+      <if test="gmac != null" >
+        GMAC = #{gmac,jdbcType=VARCHAR},
+      </if>
+      <if test="psamTac != null" >
+        PSAM_TAC = #{psamTac,jdbcType=VARCHAR},
+      </if>
+      <if test="psamAsn != null" >
+        PSAM_ASN = #{psamAsn,jdbcType=VARCHAR},
+      </if>
+      <if test="tempinalno != null" >
+        TempinalNo = #{tempinalno,jdbcType=VARCHAR},
+      </if>
+      <if test="psamTtc != null" >
+        PSAM_TTC = #{psamTtc,jdbcType=INTEGER},
+      </if>
+      <if test="moneysou != null" >
+        MoneySou = #{moneysou,jdbcType=VARCHAR},
+      </if>
+      <if test="paymode != null" >
+        PayMode = #{paymode,jdbcType=VARCHAR},
+      </if>
+      <if test="payunit != null" >
+        PayUnit = #{payunit,jdbcType=VARCHAR},
+      </if>
+      <if test="tMac != null" >
+        T_MAC = #{tMac,jdbcType=VARCHAR},
+      </if>
+      <if test="accountdate != null" >
+        AccountDate = #{accountdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tracode != null" >
+        TraCode = #{tracode,jdbcType=VARCHAR},
+      </if>
+      <if test="gettime != null" >
+        GetTime = #{gettime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="keyVersion != null" >
+        Key_Version = #{keyVersion,jdbcType=INTEGER},
+      </if>
+      <if test="keyIndex != null" >
+        Key_Index = #{keyIndex,jdbcType=INTEGER},
+      </if>
+      <if test="compmatchflag != null" >
+        CompMatchFlag = #{compmatchflag,jdbcType=VARCHAR},
+      </if>
+      <if test="compno != null" >
+        CompNo = #{compno,jdbcType=VARCHAR},
+      </if>
+      <if test="backmatchflag != null" >
+        BackMatchFlag = #{backmatchflag,jdbcType=VARCHAR},
+      </if>
+      <if test="paytypeflag != null" >
+        PayTypeFlag = #{paytypeflag,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null" >
+        Shift = #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="transflag != null" >
+        TransFlag = #{transflag,jdbcType=VARCHAR},
+      </if>
+      <if test="isrecieved != null" >
+        IsRecieved = #{isrecieved,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where MacNo = #{macno,jdbcType=INTEGER}
+      and TTC = #{ttc,jdbcType=INTEGER}
+      and TakeDate = #{takedate,jdbcType=TIMESTAMP}
+      and OilGun = #{oilgun,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_daily_TradeAccount" >
+    update oss_daily_TradeAccount
+    set CardNo = #{cardno,jdbcType=VARCHAR},
+      MachineOilNo = #{machineoilno,jdbcType=VARCHAR},
+      OilNo = #{oilno,jdbcType=VARCHAR},
+      CTC = #{ctc,jdbcType=INTEGER},
+      OpeNo = #{openo,jdbcType=VARCHAR},
+      Liter = #{liter,jdbcType=DOUBLE},
+      Price = #{price,jdbcType=DOUBLE},
+      Amount = #{amount,jdbcType=DOUBLE},
+      Balance = #{balance,jdbcType=DOUBLE},
+      PumpNo = #{pumpno,jdbcType=DOUBLE},
+      TAC = #{tac,jdbcType=VARCHAR},
+      GMAC = #{gmac,jdbcType=VARCHAR},
+      PSAM_TAC = #{psamTac,jdbcType=VARCHAR},
+      PSAM_ASN = #{psamAsn,jdbcType=VARCHAR},
+      TempinalNo = #{tempinalno,jdbcType=VARCHAR},
+      PSAM_TTC = #{psamTtc,jdbcType=INTEGER},
+      MoneySou = #{moneysou,jdbcType=VARCHAR},
+      PayMode = #{paymode,jdbcType=VARCHAR},
+      PayUnit = #{payunit,jdbcType=VARCHAR},
+      T_MAC = #{tMac,jdbcType=VARCHAR},
+      AccountDate = #{accountdate,jdbcType=TIMESTAMP},
+      TraCode = #{tracode,jdbcType=VARCHAR},
+      GetTime = #{gettime,jdbcType=TIMESTAMP},
+      Key_Version = #{keyVersion,jdbcType=INTEGER},
+      Key_Index = #{keyIndex,jdbcType=INTEGER},
+      CompMatchFlag = #{compmatchflag,jdbcType=VARCHAR},
+      CompNo = #{compno,jdbcType=VARCHAR},
+      BackMatchFlag = #{backmatchflag,jdbcType=VARCHAR},
+      PayTypeFlag = #{paytypeflag,jdbcType=VARCHAR},
+      Shift = #{shift,jdbcType=VARCHAR},
+      TransFlag = #{transflag,jdbcType=VARCHAR},
+      IsRecieved = #{isrecieved,jdbcType=VARCHAR},
+      OUCode = #{oucode,jdbcType=VARCHAR}
+    where MacNo = #{macno,jdbcType=INTEGER}
+      and TTC = #{ttc,jdbcType=INTEGER}
+      and TakeDate = #{takedate,jdbcType=TIMESTAMP}
+      and OilGun = #{oilgun,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <select id="selectOilLiter" resultType="hashmap" parameterType="hashmap">
+    select SUM(Liter) AS Liter from
+    (
+    select *,(select OilType from oss_sysmanage_oilType where oss_sysmanage_oilType.OilNO=oss_daily_TradeAccount.OilNO) AS OilType from oss_daily_TradeAccount
+    ) a
+    where 1=1
+    <if test="oiltype != null">
+    and OilType=#{oiltype,jdbcType=VARCHAR}
+    </if>
+    <if test="start != null">
+      <![CDATA[and TakeDate>#{start,jdbcType=VARCHAR}]]>
+    </if>
+    <if test="end != null">
+    <![CDATA[and TakeDate<#{end,jdbcType=VARCHAR}]]>
+    </if>
+    <if test="oucode != null and oucode != '' ">
+    and OUCode LIKE #{oucode,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <select id="selectOilLiterByName" resultType="hashmap" parameterType="hashmap">
+    select SUM(Liter) AS Liter FROM
+    (
+    select  *,(select OilName from oss_sysmanage_oilType where oss_sysmanage_oilType.OilNo=oss_daily_TradeAccount.OilNo) as OilName from oss_daily_TradeAccount
+    )  a
+    where 1=1
+    <if test="oilname != null">
+      and OilName LIKE #{oilname,jdbcType=VARCHAR}
+    </if>
+    <if test="start != null">
+      <![CDATA[and TakeDate>#{start,jdbcType=VARCHAR}]]>
+    </if>
+    <if test="end != null">
+      <![CDATA[and TakeDate<#{end,jdbcType=VARCHAR}]]>
+    </if>
+    <if test="oucode != null and oucode != '' ">
+      and OUCode LIKE #{oucode,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <select id="selectTqCount" resultType="hashmap" parameterType="hashmap">
+    select COUNT(*) as num,OilType FROM
+    (
+    select  *,(select OilType from oss_sysmanage_oilType where oss_sysmanage_oilType.OilNo=oss_daily_TradeAccount.OilNo) as OilType from oss_daily_TradeAccount
+    )  a
+    WHERE 1=1
+    <if test="start != null">
+      <![CDATA[and TakeDate>#{start,jdbcType=VARCHAR}]]>
+    </if>
+    <if test="oiltype !=null">
+      <![CDATA[and OilType=#{oiltype,jdbcType=VARCHAR}]]>
+      </if>
+    <if test="end != null">
+      <![CDATA[and TakeDate<#{end,jdbcType=VARCHAR}]]>
+    </if>
+    <if test="oucode != null and oucode != '' ">
+      and OUCode LIKE #{oucode,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <select id="selectNewLiter" resultType="hashmap" parameterType="hashmap">
+    select * FROM (
+    select *,
+    (SELECT OilType from oss_sysmanage_oilType where oss_sysmanage_oilType.OilNo=oss_daily_opotCount.OilNo) AS OilType
+    from oss_daily_opotCount  where LEFT(Shift,8)=(SELECT MAX(LEFT(Shift,8)) from oss_daily_opotCount)
+    ) a
+    where 1=1
+    <if test="oiltype !=null">
+      <![CDATA[and OilType=#{oiltype,jdbcType=VARCHAR}]]>
+    </if>
+    <if test="type != null and type != '' ">
+      <![CDATA[and Type LIKE #{type,jdbcType=VARCHAR}]]>
+    </if>
+    <if test="oucode != null and oucode != '' ">
+      <![CDATA[and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    </if>
+  </select>
+</mapper>

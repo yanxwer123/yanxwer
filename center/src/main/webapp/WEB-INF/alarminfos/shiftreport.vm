@@ -1,0 +1,49 @@
+#set($layout="layout/emptylayout.vm")
+#set($menuTitle="油站班报")
+油站监控  >>  湛江海头加油站
+<div class="row">
+    <div class="col-md-6" id="table">
+        <div class="row">
+            <div class="col-lg-2" align="center" id="td" style="background-color: red">总揽</div>
+            <div class="col-lg-2" align="center" id="td">罐枪实时监控</div>
+            <div class="col-lg-2" align="center" id="td">油站站点库存</div>
+            <div class="col-lg-2" align="center" id="td">油站日平衡</div>
+            <div class="col-lg-2" align="center" id="td">油站班报</div>
+            <div class="col-lg-2" align="center" id="td">报警信息</div>
+        </div>
+    </div>
+    <div class="col-md-6"></div>
+</div>
+<div class="row">
+    <div class="col-md-1">日期：</div>
+    <div class="col-md-2"><input type="text" class="easyui-datebox"/></div>
+    <div class="col-md-2">—<input type="text" class="easyui-datebox"/></div>
+    <div class="col-md-1"><input type="button" value="查询"/></div>
+    <div class="col-md-6"></div>
+</div>
+<table class="easyui-datagrid">
+    <thead>
+    <tr>
+        <th data-options="field:'code'">日期</th>
+        <th data-options="field:'name'">班次</th>
+        <th data-options="field:'name'">接班人</th>
+        <th data-options="field:'JBSJ'">接班时间</th>
+        <th data-options="field:'JBR2'">交班人</th>
+        <th data-options="field:'JBSJ2'">交班时间</th>
+        <th data-options="field:'SYL'">详情</th>
+    </tr>
+
+    </thead>
+    <tbody>
+
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>

@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_sysmanage_AlarmParameterMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_sysmanage_AlarmParameter" >
+    <id column="OilCan" property="oilcan" jdbcType="INTEGER" />
+    <id column="NodeNo" property="nodeno" jdbcType="VARCHAR" />
+    <result column="LowPreAlarm" property="lowprealarm" jdbcType="DOUBLE" />
+    <result column="LowAlarm" property="lowalarm" jdbcType="DOUBLE" />
+    <result column="HighPreAlarm" property="highprealarm" jdbcType="DOUBLE" />
+    <result column="HighAlarm" property="highalarm" jdbcType="DOUBLE" />
+    <result column="WaterAlarm" property="wateralarm" jdbcType="DOUBLE" />
+    <result column="HighTempAlarm" property="hightempalarm" jdbcType="DOUBLE" />
+    <result column="LowTempAlarm" property="lowtempalarm" jdbcType="DOUBLE" />
+    <result column="LastOpTime" property="lastoptime" jdbcType="TIMESTAMP" />
+    <result column="Optime" property="optime" jdbcType="TIMESTAMP" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    OilCan, NodeNo, LowPreAlarm, LowAlarm, HighPreAlarm, HighAlarm, WaterAlarm, HighTempAlarm, 
+    LowTempAlarm, LastOpTime, Optime, TranStatus, OUCode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_sysmanage_AlarmParameterKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_AlarmParameter
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByNodeNo" resultMap="BaseResultMap" parameterType="String">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_sysmanage_AlarmParameter WHERE NodeNo=#{0,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_sysmanage_AlarmParameterKey" >
+    delete from oss_sysmanage_AlarmParameter
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_sysmanage_AlarmParameter" >
+    insert into oss_sysmanage_AlarmParameter (OilCan, NodeNo, LowPreAlarm, 
+      LowAlarm, HighPreAlarm, HighAlarm, 
+      WaterAlarm, HighTempAlarm, LowTempAlarm, 
+      LastOpTime, Optime, TranStatus, 
+      OUCode)
+    values (#{oilcan,jdbcType=INTEGER}, #{nodeno,jdbcType=VARCHAR}, #{lowprealarm,jdbcType=DOUBLE}, 
+      #{lowalarm,jdbcType=DOUBLE}, #{highprealarm,jdbcType=DOUBLE}, #{highalarm,jdbcType=DOUBLE}, 
+      #{wateralarm,jdbcType=DOUBLE}, #{hightempalarm,jdbcType=DOUBLE}, #{lowtempalarm,jdbcType=DOUBLE}, 
+      #{lastoptime,jdbcType=TIMESTAMP}, #{optime,jdbcType=TIMESTAMP}, #{transtatus,jdbcType=VARCHAR}, 
+      #{oucode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_sysmanage_AlarmParameter" >
+    insert into oss_sysmanage_AlarmParameter
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oilcan != null" >
+        OilCan,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="lowprealarm != null" >
+        LowPreAlarm,
+      </if>
+      <if test="lowalarm != null" >
+        LowAlarm,
+      </if>
+      <if test="highprealarm != null" >
+        HighPreAlarm,
+      </if>
+      <if test="highalarm != null" >
+        HighAlarm,
+      </if>
+      <if test="wateralarm != null" >
+        WaterAlarm,
+      </if>
+      <if test="hightempalarm != null" >
+        HighTempAlarm,
+      </if>
+      <if test="lowtempalarm != null" >
+        LowTempAlarm,
+      </if>
+      <if test="lastoptime != null" >
+        LastOpTime,
+      </if>
+      <if test="optime != null" >
+        Optime,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="lowprealarm != null" >
+        #{lowprealarm,jdbcType=DOUBLE},
+      </if>
+      <if test="lowalarm != null" >
+        #{lowalarm,jdbcType=DOUBLE},
+      </if>
+      <if test="highprealarm != null" >
+        #{highprealarm,jdbcType=DOUBLE},
+      </if>
+      <if test="highalarm != null" >
+        #{highalarm,jdbcType=DOUBLE},
+      </if>
+      <if test="wateralarm != null" >
+        #{wateralarm,jdbcType=DOUBLE},
+      </if>
+      <if test="hightempalarm != null" >
+        #{hightempalarm,jdbcType=DOUBLE},
+      </if>
+      <if test="lowtempalarm != null" >
+        #{lowtempalarm,jdbcType=DOUBLE},
+      </if>
+      <if test="lastoptime != null" >
+        #{lastoptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="optime != null" >
+        #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <insert id="merge"  parameterType="com.kld.gsm.center.domain.oss_sysmanage_AlarmParameter">
+    replace into oss_sysmanage_AlarmParameter
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oilcan != null" >
+        OilCan,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="lowprealarm != null" >
+        LowPreAlarm,
+      </if>
+      <if test="lowalarm != null" >
+        LowAlarm,
+      </if>
+      <if test="highprealarm != null" >
+        HighPreAlarm,
+      </if>
+      <if test="highalarm != null" >
+        HighAlarm,
+      </if>
+      <if test="wateralarm != null" >
+        WaterAlarm,
+      </if>
+      <if test="hightempalarm != null" >
+        HighTempAlarm,
+      </if>
+      <if test="lowtempalarm != null" >
+        LowTempAlarm,
+      </if>
+      <if test="lastoptime != null" >
+        LastOpTime,
+      </if>
+      <if test="optime != null" >
+        Optime,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="lowprealarm != null" >
+        #{lowprealarm,jdbcType=DOUBLE},
+      </if>
+      <if test="lowalarm != null" >
+        #{lowalarm,jdbcType=DOUBLE},
+      </if>
+      <if test="highprealarm != null" >
+        #{highprealarm,jdbcType=DOUBLE},
+      </if>
+      <if test="highalarm != null" >
+        #{highalarm,jdbcType=DOUBLE},
+      </if>
+      <if test="wateralarm != null" >
+        #{wateralarm,jdbcType=DOUBLE},
+      </if>
+      <if test="hightempalarm != null" >
+        #{hightempalarm,jdbcType=DOUBLE},
+      </if>
+      <if test="lowtempalarm != null" >
+        #{lowtempalarm,jdbcType=DOUBLE},
+      </if>
+      <if test="lastoptime != null" >
+        #{lastoptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="optime != null" >
+        #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_sysmanage_AlarmParameter" >
+    update oss_sysmanage_AlarmParameter
+    <set >
+      <if test="lowprealarm != null" >
+        LowPreAlarm = #{lowprealarm,jdbcType=DOUBLE},
+      </if>
+      <if test="lowalarm != null" >
+        LowAlarm = #{lowalarm,jdbcType=DOUBLE},
+      </if>
+      <if test="highprealarm != null" >
+        HighPreAlarm = #{highprealarm,jdbcType=DOUBLE},
+      </if>
+      <if test="highalarm != null" >
+        HighAlarm = #{highalarm,jdbcType=DOUBLE},
+      </if>
+      <if test="wateralarm != null" >
+        WaterAlarm = #{wateralarm,jdbcType=DOUBLE},
+      </if>
+      <if test="hightempalarm != null" >
+        HighTempAlarm = #{hightempalarm,jdbcType=DOUBLE},
+      </if>
+      <if test="lowtempalarm != null" >
+        LowTempAlarm = #{lowtempalarm,jdbcType=DOUBLE},
+      </if>
+      <if test="lastoptime != null" >
+        LastOpTime = #{lastoptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="optime != null" >
+        Optime = #{optime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_sysmanage_AlarmParameter" >
+    update oss_sysmanage_AlarmParameter
+    set LowPreAlarm = #{lowprealarm,jdbcType=DOUBLE},
+      LowAlarm = #{lowalarm,jdbcType=DOUBLE},
+      HighPreAlarm = #{highprealarm,jdbcType=DOUBLE},
+      HighAlarm = #{highalarm,jdbcType=DOUBLE},
+      WaterAlarm = #{wateralarm,jdbcType=DOUBLE},
+      HighTempAlarm = #{hightempalarm,jdbcType=DOUBLE},
+      LowTempAlarm = #{lowtempalarm,jdbcType=DOUBLE},
+      LastOpTime = #{lastoptime,jdbcType=TIMESTAMP},
+      Optime = #{optime,jdbcType=TIMESTAMP},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      OUCode = #{oucode,jdbcType=VARCHAR}
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+</mapper>

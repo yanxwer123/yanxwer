@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.DailyOilDayBillDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.DailyOilDayBill" >
+    <id column="AccountDate" property="accountdate" jdbcType="TIMESTAMP" />
+    <id column="OilGun" property="oilgun" jdbcType="INTEGER" />
+    <result column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <result column="OilName" property="oilname" jdbcType="VARCHAR" />
+    <result column="ToPump" property="topump" jdbcType="DOUBLE" />
+    <result column="HoPump" property="hopump" jdbcType="DOUBLE" />
+    <result column="PumpNum" property="pumpnum" jdbcType="DOUBLE" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    AccountDate, OilGun, OilNo, OilName, ToPump, HoPump, PumpNum, TranStatus
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.ATG.domain.DailyOilDayBillKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_daily_oildaybill
+    where AccountDate = #{accountdate,jdbcType=TIMESTAMP}
+      and OilGun = #{oilgun,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.DailyOilDayBillKey" >
+    delete from oss_daily_oildaybill
+    where AccountDate = #{accountdate,jdbcType=TIMESTAMP}
+      and OilGun = #{oilgun,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.DailyOilDayBill" >
+    insert into oss_daily_oildaybill (AccountDate, OilGun, OilNo, 
+      OilName, ToPump, HoPump, 
+      PumpNum, TranStatus)
+    values (#{accountdate,jdbcType=TIMESTAMP}, #{oilgun,jdbcType=INTEGER}, #{oilno,jdbcType=VARCHAR}, 
+      #{oilname,jdbcType=VARCHAR}, #{topump,jdbcType=DOUBLE}, #{hopump,jdbcType=DOUBLE}, 
+      #{pumpnum,jdbcType=DOUBLE}, #{transtatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.DailyOilDayBill" >
+    insert into oss_daily_oildaybill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="accountdate != null" >
+        AccountDate,
+      </if>
+      <if test="oilgun != null" >
+        OilGun,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="oilname != null" >
+        OilName,
+      </if>
+      <if test="topump != null" >
+        ToPump,
+      </if>
+      <if test="hopump != null" >
+        HoPump,
+      </if>
+      <if test="pumpnum != null" >
+        PumpNum,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="accountdate != null" >
+        #{accountdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oilgun != null" >
+        #{oilgun,jdbcType=INTEGER},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilname != null" >
+        #{oilname,jdbcType=VARCHAR},
+      </if>
+      <if test="topump != null" >
+        #{topump,jdbcType=DOUBLE},
+      </if>
+      <if test="hopump != null" >
+        #{hopump,jdbcType=DOUBLE},
+      </if>
+      <if test="pumpnum != null" >
+        #{pumpnum,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.DailyOilDayBill" >
+    update oss_daily_oildaybill
+    <set >
+      <if test="oilno != null" >
+        OilNo = #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilname != null" >
+        OilName = #{oilname,jdbcType=VARCHAR},
+      </if>
+      <if test="topump != null" >
+        ToPump = #{topump,jdbcType=DOUBLE},
+      </if>
+      <if test="hopump != null" >
+        HoPump = #{hopump,jdbcType=DOUBLE},
+      </if>
+      <if test="pumpnum != null" >
+        PumpNum = #{pumpnum,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where AccountDate = #{accountdate,jdbcType=TIMESTAMP}
+      and OilGun = #{oilgun,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.DailyOilDayBill" >
+    update oss_daily_oildaybill
+    set OilNo = #{oilno,jdbcType=VARCHAR},
+      OilName = #{oilname,jdbcType=VARCHAR},
+      ToPump = #{topump,jdbcType=DOUBLE},
+      HoPump = #{hopump,jdbcType=DOUBLE},
+      PumpNum = #{pumpnum,jdbcType=DOUBLE},
+      TranStatus = #{transtatus,jdbcType=VARCHAR}
+    where AccountDate = #{accountdate,jdbcType=TIMESTAMP}
+      and OilGun = #{oilgun,jdbcType=INTEGER}
+  </update>
+  <select id="selectByTrans" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_daily_oildaybill WHERE TranStatus=#{trans,jdbcType=VARCHAR}
+  </select>
+</mapper>

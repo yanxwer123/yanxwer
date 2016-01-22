@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_sysmanage_AlarmPlusMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_sysmanage_AlarmPlus" >
+    <id column="Nodeno" property="nodeno" jdbcType="VARCHAR" />
+    <id column="Oilcanno" property="oilcanno" jdbcType="VARCHAR" />
+    <result column="WaterHightAlarm" property="waterhightalarm" jdbcType="DOUBLE" />
+    <result column="StealOilAlarm" property="stealoilalarm" jdbcType="DOUBLE" />
+    <result column="LeakOilAlarm" property="leakoilalarm" jdbcType="DOUBLE" />
+    <result column="LeakAgeOilAlarm" property="leakageoilalarm" jdbcType="DOUBLE" />
+    <result column="Version" property="version" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Nodeno, Oilcanno, WaterHightAlarm, StealOilAlarm, LeakOilAlarm, LeakAgeOilAlarm, 
+    Version
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_sysmanage_AlarmPlusKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_AlarmPlus
+    where Nodeno = #{nodeno,jdbcType=VARCHAR}
+      and Oilcanno = #{oilcanno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_sysmanage_AlarmPlusKey" >
+    delete from oss_sysmanage_AlarmPlus
+    where Nodeno = #{nodeno,jdbcType=VARCHAR}
+      and Oilcanno = #{oilcanno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_sysmanage_AlarmPlus" >
+    insert into oss_sysmanage_AlarmPlus (Nodeno, Oilcanno, WaterHightAlarm, 
+      StealOilAlarm, LeakOilAlarm, LeakAgeOilAlarm, 
+      Version)
+    values (#{nodeno,jdbcType=VARCHAR}, #{oilcanno,jdbcType=VARCHAR}, #{waterhightalarm,jdbcType=DOUBLE}, 
+      #{stealoilalarm,jdbcType=DOUBLE}, #{leakoilalarm,jdbcType=DOUBLE}, #{leakageoilalarm,jdbcType=DOUBLE}, 
+      #{version,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_sysmanage_AlarmPlus" >
+    insert into oss_sysmanage_AlarmPlus
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="nodeno != null" >
+        Nodeno,
+      </if>
+      <if test="oilcanno != null" >
+        Oilcanno,
+      </if>
+      <if test="waterhightalarm != null" >
+        WaterHightAlarm,
+      </if>
+      <if test="stealoilalarm != null" >
+        StealOilAlarm,
+      </if>
+      <if test="leakoilalarm != null" >
+        LeakOilAlarm,
+      </if>
+      <if test="leakageoilalarm != null" >
+        LeakAgeOilAlarm,
+      </if>
+      <if test="version != null" >
+        Version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilcanno != null" >
+        #{oilcanno,jdbcType=VARCHAR},
+      </if>
+      <if test="waterhightalarm != null" >
+        #{waterhightalarm,jdbcType=DOUBLE},
+      </if>
+      <if test="stealoilalarm != null" >
+        #{stealoilalarm,jdbcType=DOUBLE},
+      </if>
+      <if test="leakoilalarm != null" >
+        #{leakoilalarm,jdbcType=DOUBLE},
+      </if>
+      <if test="leakageoilalarm != null" >
+        #{leakageoilalarm,jdbcType=DOUBLE},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_sysmanage_AlarmPlus" >
+    update oss_sysmanage_AlarmPlus
+    <set >
+      <if test="waterhightalarm != null" >
+        WaterHightAlarm = #{waterhightalarm,jdbcType=DOUBLE},
+      </if>
+      <if test="stealoilalarm != null" >
+        StealOilAlarm = #{stealoilalarm,jdbcType=DOUBLE},
+      </if>
+      <if test="leakoilalarm != null" >
+        LeakOilAlarm = #{leakoilalarm,jdbcType=DOUBLE},
+      </if>
+      <if test="leakageoilalarm != null" >
+        LeakAgeOilAlarm = #{leakageoilalarm,jdbcType=DOUBLE},
+      </if>
+      <if test="version != null" >
+        Version = #{version,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Nodeno = #{nodeno,jdbcType=VARCHAR}
+      and Oilcanno = #{oilcanno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_sysmanage_AlarmPlus" >
+    update oss_sysmanage_AlarmPlus
+    set WaterHightAlarm = #{waterhightalarm,jdbcType=DOUBLE},
+      StealOilAlarm = #{stealoilalarm,jdbcType=DOUBLE},
+      LeakOilAlarm = #{leakoilalarm,jdbcType=DOUBLE},
+      LeakAgeOilAlarm = #{leakageoilalarm,jdbcType=DOUBLE},
+      Version = #{version,jdbcType=VARCHAR}
+    where Nodeno = #{nodeno,jdbcType=VARCHAR}
+      and Oilcanno = #{oilcanno,jdbcType=VARCHAR}
+  </update>
+</mapper>

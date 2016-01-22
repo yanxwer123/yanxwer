@@ -1,0 +1,32 @@
+@charset "utf-8";
+/* CSS Document */
+.modal-body{padding:0px;}
+*{font-family: '微软雅黑'!important;}
+input,select{background: white;}
+/*登录页*/
+.loignbox{ width:760px; height:400px; background:#ffffff url(../img/loign-bg.png) repeat-x; border-radius:8px; box-shadow: 0px 0px 5px 0px rgb( 166, 166, 166 ); position:absolute; top:15%; left:22.5%;}
+/*.loignbox .logobox{ height:80px; padding-left:15px; background:url(../img/login-top-bg1.png) no-repeat center right;}*/
+.loignbox .inputbox{ width:96%; overflow:hidden; margin:0 auto; padding:2.8% 0;}
+.login-copy{ position:absolute; top:92%; left:38%; text-align:center; font-size:12px; color:#eaa256; line-height:2;  }
+
+.inputbox .imgbox{ width:400px; float:left; overflow:hidden;}
+.inputbox .imgbox img{ width:100%;}
+.inputbox .input-box01{ width:40%; display:block; float:right; padding-right:1.5%; padding-top:2%; }
+.input-box01 .input-text{ width:95%; padding-left:2%; background-color:#ffffff; border:1px solid #dcdddd; height:40px; color:#898989; margin-bottom:5%; font-size:14px; display:block; float:left;}
+.input-box01 .input-btn{ width:97%; background-color:#c8161d; border:none; height:40px; color:#fff; margin-bottom:5%; font-size:16px; font-weight:500;}
+.input-box01 .input-check{ width:97%; border:none; color:#4c4948; margin-bottom:5%; font-size:14px; }
+
+.top{top:0; left:0; height:80px; overflow:hidden; width:100%; background-image: url("../img/top-bg.png");border-bottom: 2px solid #c7161e}
+.top .logobox01{ width:45%; height:80px; padding-left: 0px;display:block; float:left; margin:0; }
+.top .user-messages{width:50%;display:block; float:right; font-size:14px; color:#000; padding-top: 20px; padding-right:10px;   }
+.top .user-messages span{ display:block; float:right; padding:0 2%; border-right:1px solid #d05f64;}
+
+.navbox{ position:absolute; top:80px; left:0; width:96%; padding:0 2%; height:40px; background-color:#748f9d; line-height:40px; }
+.navbox a{text-decoration:none; font-size:14px; line-height:40px; color:#ffffff; display:block; float:left; padding:0 1.5%;}
+.navbox a:hover{text-decoration:none;margin-top:1px; background:url(../img/a-hover.png) no-repeat bottom center; font-weight:500; }
+.navbox a.current{ text-decoration:none;background:url(../img/a-hover.png) no-repeat bottom center;}
+
+#ps ul{margin:0px; padding: 0px;}
+#ps ul > li { display: inline-block; margin-left:1%; line-height: 3em;  }
+#ps ul > li .btn-search{ width:60px; height:26px; margin-right:4px;border:none; color:#fff; background-color:#c8161d!important; text-align:center; display:block;}
+li {list-style-type: none; }

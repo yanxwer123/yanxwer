@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_sysmanage_TankInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_sysmanage_TankInfo" >
+    <id column="OilCan" property="oilcan" jdbcType="INTEGER" />
+    <id column="NodeNo" property="nodeno" jdbcType="VARCHAR" />
+    <result column="OilCanType" property="oilcantype" jdbcType="VARCHAR" />
+    <result column="OutFactoryNo" property="outfactoryno" jdbcType="VARCHAR" />
+    <result column="FactoryName" property="factoryname" jdbcType="VARCHAR" />
+    <result column="OutFacoryTime" property="outfacorytime" jdbcType="TIMESTAMP" />
+    <result column="InstallDate" property="installdate" jdbcType="TIMESTAMP" />
+    <result column="UseYears" property="useyears" jdbcType="INTEGER" />
+    <result column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <result column="Cubage" property="cubage" jdbcType="DOUBLE" />
+    <result column="OilCanStatus" property="oilcanstatus" jdbcType="VARCHAR" />
+    <result column="LederL" property="lederl" jdbcType="DOUBLE" />
+    <result column="CanRealL" property="canreall" jdbcType="DOUBLE" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    OilCan, NodeNo, OilCanType, OutFactoryNo, FactoryName, OutFacoryTime, InstallDate, 
+    UseYears, OilNo, Cubage, OilCanStatus, LederL, CanRealL, TranStatus, OUCode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_sysmanage_TankInfoKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_TankInfo
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_sysmanage_TankInfoKey" >
+    delete from oss_sysmanage_TankInfo
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_sysmanage_TankInfo" >
+    insert into oss_sysmanage_TankInfo (OilCan, NodeNo, OilCanType, 
+      OutFactoryNo, FactoryName, OutFacoryTime, 
+      InstallDate, UseYears, OilNo, 
+      Cubage, OilCanStatus, LederL, 
+      CanRealL, TranStatus, OUCode
+      )
+    values (#{oilcan,jdbcType=INTEGER}, #{nodeno,jdbcType=VARCHAR}, #{oilcantype,jdbcType=VARCHAR}, 
+      #{outfactoryno,jdbcType=VARCHAR}, #{factoryname,jdbcType=VARCHAR}, #{outfacorytime,jdbcType=TIMESTAMP}, 
+      #{installdate,jdbcType=TIMESTAMP}, #{useyears,jdbcType=INTEGER}, #{oilno,jdbcType=VARCHAR}, 
+      #{cubage,jdbcType=DOUBLE}, #{oilcanstatus,jdbcType=VARCHAR}, #{lederl,jdbcType=DOUBLE}, 
+      #{canreall,jdbcType=DOUBLE}, #{transtatus,jdbcType=VARCHAR}, #{oucode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_sysmanage_TankInfo" >
+    insert into oss_sysmanage_TankInfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oilcan != null" >
+        OilCan,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="oilcantype != null" >
+        OilCanType,
+      </if>
+      <if test="outfactoryno != null" >
+        OutFactoryNo,
+      </if>
+      <if test="factoryname != null" >
+        FactoryName,
+      </if>
+      <if test="outfacorytime != null" >
+        OutFacoryTime,
+      </if>
+      <if test="installdate != null" >
+        InstallDate,
+      </if>
+      <if test="useyears != null" >
+        UseYears,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="cubage != null" >
+        Cubage,
+      </if>
+      <if test="oilcanstatus != null" >
+        OilCanStatus,
+      </if>
+      <if test="lederl != null" >
+        LederL,
+      </if>
+      <if test="canreall != null" >
+        CanRealL,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilcantype != null" >
+        #{oilcantype,jdbcType=VARCHAR},
+      </if>
+      <if test="outfactoryno != null" >
+        #{outfactoryno,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryname != null" >
+        #{factoryname,jdbcType=VARCHAR},
+      </if>
+      <if test="outfacorytime != null" >
+        #{outfacorytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="installdate != null" >
+        #{installdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="useyears != null" >
+        #{useyears,jdbcType=INTEGER},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="cubage != null" >
+        #{cubage,jdbcType=DOUBLE},
+      </if>
+      <if test="oilcanstatus != null" >
+        #{oilcanstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="lederl != null" >
+        #{lederl,jdbcType=DOUBLE},
+      </if>
+      <if test="canreall != null" >
+        #{canreall,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <insert id="merge" parameterType="com.kld.gsm.center.domain.oss_sysmanage_TankInfo" >
+    replace into oss_sysmanage_TankInfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oilcan != null" >
+        OilCan,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="oilcantype != null" >
+        OilCanType,
+      </if>
+      <if test="outfactoryno != null" >
+        OutFactoryNo,
+      </if>
+      <if test="factoryname != null" >
+        FactoryName,
+      </if>
+      <if test="outfacorytime != null" >
+        OutFacoryTime,
+      </if>
+      <if test="installdate != null" >
+        InstallDate,
+      </if>
+      <if test="useyears != null" >
+        UseYears,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="cubage != null" >
+        Cubage,
+      </if>
+      <if test="oilcanstatus != null" >
+        OilCanStatus,
+      </if>
+      <if test="lederl != null" >
+        LederL,
+      </if>
+      <if test="canreall != null" >
+        CanRealL,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilcantype != null" >
+        #{oilcantype,jdbcType=VARCHAR},
+      </if>
+      <if test="outfactoryno != null" >
+        #{outfactoryno,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryname != null" >
+        #{factoryname,jdbcType=VARCHAR},
+      </if>
+      <if test="outfacorytime != null" >
+        #{outfacorytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="installdate != null" >
+        #{installdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="useyears != null" >
+        #{useyears,jdbcType=INTEGER},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="cubage != null" >
+        #{cubage,jdbcType=DOUBLE},
+      </if>
+      <if test="oilcanstatus != null" >
+        #{oilcanstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="lederl != null" >
+        #{lederl,jdbcType=DOUBLE},
+      </if>
+      <if test="canreall != null" >
+        #{canreall,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_sysmanage_TankInfo" >
+    update oss_sysmanage_TankInfo
+    <set >
+      <if test="oilcantype != null" >
+        OilCanType = #{oilcantype,jdbcType=VARCHAR},
+      </if>
+      <if test="outfactoryno != null" >
+        OutFactoryNo = #{outfactoryno,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryname != null" >
+        FactoryName = #{factoryname,jdbcType=VARCHAR},
+      </if>
+      <if test="outfacorytime != null" >
+        OutFacoryTime = #{outfacorytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="installdate != null" >
+        InstallDate = #{installdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="useyears != null" >
+        UseYears = #{useyears,jdbcType=INTEGER},
+      </if>
+      <if test="oilno != null" >
+        OilNo = #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="cubage != null" >
+        Cubage = #{cubage,jdbcType=DOUBLE},
+      </if>
+      <if test="oilcanstatus != null" >
+        OilCanStatus = #{oilcanstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="lederl != null" >
+        LederL = #{lederl,jdbcType=DOUBLE},
+      </if>
+      <if test="canreall != null" >
+        CanRealL = #{canreall,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_sysmanage_TankInfo" >
+    update oss_sysmanage_TankInfo
+    set OilCanType = #{oilcantype,jdbcType=VARCHAR},
+      OutFactoryNo = #{outfactoryno,jdbcType=VARCHAR},
+      FactoryName = #{factoryname,jdbcType=VARCHAR},
+      OutFacoryTime = #{outfacorytime,jdbcType=TIMESTAMP},
+      InstallDate = #{installdate,jdbcType=TIMESTAMP},
+      UseYears = #{useyears,jdbcType=INTEGER},
+      OilNo = #{oilno,jdbcType=VARCHAR},
+      Cubage = #{cubage,jdbcType=DOUBLE},
+      OilCanStatus = #{oilcanstatus,jdbcType=VARCHAR},
+      LederL = #{lederl,jdbcType=DOUBLE},
+      CanRealL = #{canreall,jdbcType=DOUBLE},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      OUCode = #{oucode,jdbcType=VARCHAR}
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+
+  <select id="findAll"  resultType="com.kld.gsm.center.domain.oss_sysmanage_TankInfo">
+    SELECT * FROM oss_sysmanage_TankInfo
+  </select>
+
+  <select id="findOilName"  parameterType="java.lang.String" resultType="java.lang.String">
+  SELECT OilName FROM oss_sysmanage_oilType WHERE Oilno =(SELECT OilNo FROM oss_sysmanage_TankInfo WHERE OilCan =#{oilcan})
+  </select>
+
+</mapper>

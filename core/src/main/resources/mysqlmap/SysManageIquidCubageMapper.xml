@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.SysManageIquidCubageDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.SysManageIquidCubage" >
+    <id column="Version" property="version" jdbcType="VARCHAR" />
+    <id column="OilCan" property="oilcan" jdbcType="INTEGER" />
+    <result column="UpdateTime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="SetState" property="setstate" jdbcType="INTEGER" />
+    <result column="SetMan" property="setman" jdbcType="VARCHAR" />
+    <result column="SetTime" property="settime" jdbcType="TIMESTAMP" />
+    <result column="InUsed" property="inused" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Version, OilCan, UpdateTime, SetState, SetMan, SetTime, InUsed
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.ATG.domain.SysManageIquidCubageKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_iquidcubage
+    where Version = #{version,jdbcType=VARCHAR}
+      and OilCan = #{oilcan,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.SysManageIquidCubageKey" >
+    delete from oss_sysmanage_iquidcubage
+    where Version = #{version,jdbcType=VARCHAR}
+      and OilCan = #{oilcan,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.SysManageIquidCubage" >
+    insert into oss_sysmanage_iquidcubage (Version, OilCan, UpdateTime, 
+      SetState, SetMan, SetTime, 
+      InUsed)
+    values (#{version,jdbcType=VARCHAR}, #{oilcan,jdbcType=INTEGER}, #{updatetime,jdbcType=TIMESTAMP}, 
+      #{setstate,jdbcType=INTEGER}, #{setman,jdbcType=VARCHAR}, #{settime,jdbcType=TIMESTAMP}, 
+      #{inused,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.SysManageIquidCubage" >
+    insert into oss_sysmanage_iquidcubage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="version != null" >
+        Version,
+      </if>
+      <if test="oilcan != null" >
+        OilCan,
+      </if>
+      <if test="updatetime != null" >
+        UpdateTime,
+      </if>
+      <if test="setstate != null" >
+        SetState,
+      </if>
+      <if test="setman != null" >
+        SetMan,
+      </if>
+      <if test="settime != null" >
+        SetTime,
+      </if>
+      <if test="inused != null" >
+        InUsed,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="setstate != null" >
+        #{setstate,jdbcType=INTEGER},
+      </if>
+      <if test="setman != null" >
+        #{setman,jdbcType=VARCHAR},
+      </if>
+      <if test="settime != null" >
+        #{settime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inused != null" >
+        #{inused,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.SysManageIquidCubage" >
+    update oss_sysmanage_iquidcubage
+    <set >
+      <if test="updatetime != null" >
+        UpdateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="setstate != null" >
+        SetState = #{setstate,jdbcType=INTEGER},
+      </if>
+      <if test="setman != null" >
+        SetMan = #{setman,jdbcType=VARCHAR},
+      </if>
+      <if test="settime != null" >
+        SetTime = #{settime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inused != null" >
+        InUsed = #{inused,jdbcType=INTEGER},
+      </if>
+    </set>
+    where Version = #{version,jdbcType=VARCHAR}
+      and OilCan = #{oilcan,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.SysManageIquidCubage" >
+    update oss_sysmanage_iquidcubage
+    set UpdateTime = #{updatetime,jdbcType=TIMESTAMP},
+      SetState = #{setstate,jdbcType=INTEGER},
+      SetMan = #{setman,jdbcType=VARCHAR},
+      SetTime = #{settime,jdbcType=TIMESTAMP},
+      InUsed = #{inused,jdbcType=INTEGER}
+    where Version = #{version,jdbcType=VARCHAR}
+      and OilCan = #{oilcan,jdbcType=INTEGER}
+  </update>
+</mapper>

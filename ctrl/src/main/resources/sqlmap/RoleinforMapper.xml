@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.kld.gsm.coord.dao.RoleinforDao">
+<!--通过角色名称查所有-->
+    <select id="getByRoleName" parameterType="java.lang.String" resultType="com.kld.gsm.coord.domain.Roleinfor">
+    select * from roleinfor where rolename = #{rolename}
+  </select>
+    <!-- 通过操作员号直接查询菜单名称 -->
+    <select id="getAll"  resultType="java.lang.String" parameterType="java.lang.Integer">
+        select menuname from roleinfor ,oprauthority where roleinfor.rolename=oprauthority.rolename AND oprauthority.oprno=#{oprno}
+    </select>
+</mapper>

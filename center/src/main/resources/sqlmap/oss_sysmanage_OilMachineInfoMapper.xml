@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_sysmanage_OilMachineInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_sysmanage_OilMachineInfo" >
+    <id column="MacNo" property="macno" jdbcType="INTEGER" />
+    <id column="NodeNo" property="nodeno" jdbcType="VARCHAR" />
+    <result column="MacModel" property="macmodel" jdbcType="VARCHAR" />
+    <result column="OutFactoryNo" property="outfactoryno" jdbcType="VARCHAR" />
+    <result column="FactoryName" property="factoryname" jdbcType="VARCHAR" />
+    <result column="OutFactoryTime" property="outfactorytime" jdbcType="TIMESTAMP" />
+    <result column="InstallDate" property="installdate" jdbcType="TIMESTAMP" />
+    <result column="UseYears" property="useyears" jdbcType="INTEGER" />
+    <result column="OilGunNum" property="oilgunnum" jdbcType="INTEGER" />
+    <result column="OilUnitNum" property="oilunitnum" jdbcType="INTEGER" />
+    <result column="OilMachineStatus" property="oilmachinestatus" jdbcType="VARCHAR" />
+    <result column="MacType" property="mactype" jdbcType="VARCHAR" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    MacNo, NodeNo, MacModel, OutFactoryNo, FactoryName, OutFactoryTime, InstallDate, 
+    UseYears, OilGunNum, OilUnitNum, OilMachineStatus, MacType, TranStatus, OUCode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_sysmanage_OilMachineInfoKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_OilMachineInfo
+    where MacNo = #{macno,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_sysmanage_OilMachineInfoKey" >
+    delete from oss_sysmanage_OilMachineInfo
+    where MacNo = #{macno,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_sysmanage_OilMachineInfo" >
+    insert into oss_sysmanage_OilMachineInfo (MacNo, NodeNo, MacModel, 
+      OutFactoryNo, FactoryName, OutFactoryTime, 
+      InstallDate, UseYears, OilGunNum, 
+      OilUnitNum, OilMachineStatus, MacType, 
+      TranStatus, OUCode)
+    values (#{macno,jdbcType=INTEGER}, #{nodeno,jdbcType=VARCHAR}, #{macmodel,jdbcType=VARCHAR}, 
+      #{outfactoryno,jdbcType=VARCHAR}, #{factoryname,jdbcType=VARCHAR}, #{outfactorytime,jdbcType=TIMESTAMP}, 
+      #{installdate,jdbcType=TIMESTAMP}, #{useyears,jdbcType=INTEGER}, #{oilgunnum,jdbcType=INTEGER}, 
+      #{oilunitnum,jdbcType=INTEGER}, #{oilmachinestatus,jdbcType=VARCHAR}, #{mactype,jdbcType=VARCHAR}, 
+      #{transtatus,jdbcType=VARCHAR}, #{oucode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_sysmanage_OilMachineInfo" >
+    insert into oss_sysmanage_OilMachineInfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="macno != null" >
+        MacNo,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="macmodel != null" >
+        MacModel,
+      </if>
+      <if test="outfactoryno != null" >
+        OutFactoryNo,
+      </if>
+      <if test="factoryname != null" >
+        FactoryName,
+      </if>
+      <if test="outfactorytime != null" >
+        OutFactoryTime,
+      </if>
+      <if test="installdate != null" >
+        InstallDate,
+      </if>
+      <if test="useyears != null" >
+        UseYears,
+      </if>
+      <if test="oilgunnum != null" >
+        OilGunNum,
+      </if>
+      <if test="oilunitnum != null" >
+        OilUnitNum,
+      </if>
+      <if test="oilmachinestatus != null" >
+        OilMachineStatus,
+      </if>
+      <if test="mactype != null" >
+        MacType,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="macno != null" >
+        #{macno,jdbcType=INTEGER},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="macmodel != null" >
+        #{macmodel,jdbcType=VARCHAR},
+      </if>
+      <if test="outfactoryno != null" >
+        #{outfactoryno,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryname != null" >
+        #{factoryname,jdbcType=VARCHAR},
+      </if>
+      <if test="outfactorytime != null" >
+        #{outfactorytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="installdate != null" >
+        #{installdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="useyears != null" >
+        #{useyears,jdbcType=INTEGER},
+      </if>
+      <if test="oilgunnum != null" >
+        #{oilgunnum,jdbcType=INTEGER},
+      </if>
+      <if test="oilunitnum != null" >
+        #{oilunitnum,jdbcType=INTEGER},
+      </if>
+      <if test="oilmachinestatus != null" >
+        #{oilmachinestatus,jdbcType=VARCHAR},
+      </if>
+      <if test="mactype != null" >
+        #{mactype,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <insert id="merge" parameterType="com.kld.gsm.center.domain.oss_sysmanage_OilMachineInfo" >
+    replace into oss_sysmanage_OilMachineInfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="macno != null" >
+        MacNo,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="macmodel != null" >
+        MacModel,
+      </if>
+      <if test="outfactoryno != null" >
+        OutFactoryNo,
+      </if>
+      <if test="factoryname != null" >
+        FactoryName,
+      </if>
+      <if test="outfactorytime != null" >
+        OutFactoryTime,
+      </if>
+      <if test="installdate != null" >
+        InstallDate,
+      </if>
+      <if test="useyears != null" >
+        UseYears,
+      </if>
+      <if test="oilgunnum != null" >
+        OilGunNum,
+      </if>
+      <if test="oilunitnum != null" >
+        OilUnitNum,
+      </if>
+      <if test="oilmachinestatus != null" >
+        OilMachineStatus,
+      </if>
+      <if test="mactype != null" >
+        MacType,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="macno != null" >
+        #{macno,jdbcType=INTEGER},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="macmodel != null" >
+        #{macmodel,jdbcType=VARCHAR},
+      </if>
+      <if test="outfactoryno != null" >
+        #{outfactoryno,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryname != null" >
+        #{factoryname,jdbcType=VARCHAR},
+      </if>
+      <if test="outfactorytime != null" >
+        #{outfactorytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="installdate != null" >
+        #{installdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="useyears != null" >
+        #{useyears,jdbcType=INTEGER},
+      </if>
+      <if test="oilgunnum != null" >
+        #{oilgunnum,jdbcType=INTEGER},
+      </if>
+      <if test="oilunitnum != null" >
+        #{oilunitnum,jdbcType=INTEGER},
+      </if>
+      <if test="oilmachinestatus != null" >
+        #{oilmachinestatus,jdbcType=VARCHAR},
+      </if>
+      <if test="mactype != null" >
+        #{mactype,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_sysmanage_OilMachineInfo" >
+    update oss_sysmanage_OilMachineInfo
+    <set >
+      <if test="macmodel != null" >
+        MacModel = #{macmodel,jdbcType=VARCHAR},
+      </if>
+      <if test="outfactoryno != null" >
+        OutFactoryNo = #{outfactoryno,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryname != null" >
+        FactoryName = #{factoryname,jdbcType=VARCHAR},
+      </if>
+      <if test="outfactorytime != null" >
+        OutFactoryTime = #{outfactorytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="installdate != null" >
+        InstallDate = #{installdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="useyears != null" >
+        UseYears = #{useyears,jdbcType=INTEGER},
+      </if>
+      <if test="oilgunnum != null" >
+        OilGunNum = #{oilgunnum,jdbcType=INTEGER},
+      </if>
+      <if test="oilunitnum != null" >
+        OilUnitNum = #{oilunitnum,jdbcType=INTEGER},
+      </if>
+      <if test="oilmachinestatus != null" >
+        OilMachineStatus = #{oilmachinestatus,jdbcType=VARCHAR},
+      </if>
+      <if test="mactype != null" >
+        MacType = #{mactype,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where MacNo = #{macno,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_sysmanage_OilMachineInfo" >
+    update oss_sysmanage_OilMachineInfo
+    set MacModel = #{macmodel,jdbcType=VARCHAR},
+      OutFactoryNo = #{outfactoryno,jdbcType=VARCHAR},
+      FactoryName = #{factoryname,jdbcType=VARCHAR},
+      OutFactoryTime = #{outfactorytime,jdbcType=TIMESTAMP},
+      InstallDate = #{installdate,jdbcType=TIMESTAMP},
+      UseYears = #{useyears,jdbcType=INTEGER},
+      OilGunNum = #{oilgunnum,jdbcType=INTEGER},
+      OilUnitNum = #{oilunitnum,jdbcType=INTEGER},
+      OilMachineStatus = #{oilmachinestatus,jdbcType=VARCHAR},
+      MacType = #{mactype,jdbcType=VARCHAR},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      OUCode = #{oucode,jdbcType=VARCHAR}
+    where MacNo = #{macno,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+</mapper>

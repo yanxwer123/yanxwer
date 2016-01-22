@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task.xsd
+        http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-2.5.xsd
+     http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <context:annotation-config/>
+    <context:component-scan base-package="com.kld.gsm"/>
+    <task:annotation-driven/>
+
+     <bean id="sybaseSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource-sybase"/>
+        <property name="typeAliasesPackage" value="com.kld.gsm.coord.domain"/>
+        <property name="mapperLocations" value="classpath:sqlmap/*.xml"/>
+    </bean>
+
+    <bean id="mysqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource-mysql"/>
+        <property name="typeAliasesPackage" value="com.kld.gsm.ATG.domain"/>
+        <property name="mapperLocations" value="classpath*:mysqlmap/*.xml"/>
+    </bean>
+
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.kld.gsm.coord.dao"/>
+        <property name="annotationClass" value="com.kld.gsm.coord.mybatis.SybaseRepository"/>
+        <property name="sqlSessionFactoryBeanName" value="sybaseSessionFactory"/>
+    </bean>
+
+    <bean id="dataSource-sybase" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          destroy-method="close">
+        <property name="driverClass" value="com.sybase.jdbc3.jdbc.SybDriver"/>
+        <!--测试地址-->
+        <property name="jdbcUrl" value="jdbc:sybase:Tds:127.0.0.1:2638/gkdb"/>
+
+        <!--<property name="jdbcUrl" value="jdbc:sybase:Tds:123.57.58.241:2638/gkdb?useUnicode=true"/>-->
+
+        <property name="user" value="dba"/>
+        <property name="password" value="sql"/>
+        <property name="idleConnectionTestPeriod" value="60"/>
+        <property name="testConnectionOnCheckin" value="true"/>
+        <property name="minPoolSize" value="1"/>
+        <property name="maxPoolSize" value="10"/>
+    </bean>
+
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.kld.gsm.ATG.dao"/>
+        <property name="annotationClass" value="com.kld.gsm.ATG.common.Repository.MySqlRepository"/>
+        <property name="sqlSessionFactoryBeanName" value="mysqlSessionFactory"/>
+    </bean>
+
+    <context:annotation-config/>
+    <context:component-scan base-package="com.kld.gsm"/>
+    <!-- Mysql声明事务管理组件 -->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource-mysql"/>
+    </bean>
+    <!-- Sybase声明事务管理组件 -->
+    <bean id="txManager-Sybase" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource-sybase"/>
+    </bean>
+    <!--Sybase开启事务注解扫描  -->
+    <tx:annotation-driven transaction-manager="txManager-Sybase" proxy-target-class="true"/>
+    <tx:advice id="syTxAdvice" transaction-manager="txManager-Sybase">
+        <tx:attributes>
+            <tx:method name="update*" propagation="REQUIRED" read-only="false"
+                       rollback-for="java.lang.Exception" no-rollback-for="java.lang.RuntimeException"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!--Mysql开启事务注解扫描  -->
+    <tx:annotation-driven transaction-manager="txManager" proxy-target-class="true"/>
+    <tx:advice id="userTxAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="update*" propagation="REQUIRED" read-only="false"
+                       rollback-for="java.lang.Exception" no-rollback-for="java.lang.RuntimeException"/>
+        </tx:attributes>
+    </tx:advice>
+    <!--init-method="getPoolManager"-->
+    <bean id="dataSource-mysql" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          destroy-method="close">
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <!--测试地址-->
+        <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:8999/gsmapp?useUnicode=true&amp;characterEncoding=UTF-8"/>
+        <!--<property name="jdbcUrl" value="jdbc:mysql://192.168.0.23:8999/gsmapp?useUnicode=true&amp;characterEncoding=UTF-8"/>-->
+        <!--<property name="jdbcUrl" value="jdbc:mysql://182.92.165.239:3306/gsmapp?useUnicode=true"/>-->
+        <property name="user" value="root"/>
+        <property name="password" value="gsmdb112"/>
+
+        <property name="maxPoolSize" value="30"/>
+        <property name="minPoolSize" value="2"/>
+        <property name="initialPoolSize" value="1"/>
+        <property name="acquireIncrement" value="1"/>
+        <property name="maxIdleTime" value="20"/>
+        <property name="autoCommitOnClose" value="true"/>
+        <property name="idleConnectionTestPeriod" value="9"/>
+
+    </bean>
+
+    <!-- 被执行类 -->
+    <!--交易流水-->
+    <!--<bean id="DailyTradeAccountPolling" class="com.kld.gsm.coord.timertask.DailyTradeAccountPolling">
+        <property name="scheduler" ref="schedulerFactory" />
+    </bean>-->
+    <!-- 将DailyTradeAccountPolling注入到job中 -->
+    <!--<bean id="QuartzJobDailyTradeAccountPolling" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="DailyTradeAccountPolling" />
+        <property name="targetMethod" value="say" />
+        <property name="concurrent" value="false" />
+    </bean>-->
+    <!-- 将job注入到定时触发器 -->
+    <!--<bean id="TriggerDailyTradeAccountPolling" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="QuartzJobDailyTradeAccountPolling" />
+        <property name="cronExpression"><value>10/1 * * * * *</value></property>
+    </bean>-->
+    <!--设备基础信息保存-->
+    <!--<bean id="DeviceInfoPolling" class="com.kld.gsm.coord.timertask.DeviceInfoPolling">
+        <property name="scheduler" ref="schedulerFactory" />
+    </bean>-->
+    <!-- 将DeviceInfoPolling注入到job中 -->
+    <!--<bean id="QuartzJobDeviceInfoPolling" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="DeviceInfoPolling" />
+        <property name="targetMethod" value="say" />
+        <property name="concurrent" value="false" />
+    </bean>-->
+    <!-- 将job注入到定时触发器 -->
+    <!--<bean id="TriggerDeviceInfoPolling" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="QuartzJobDeviceInfoPolling" />
+        <property name="cronExpression"><value>10/1 * * * * *</value></property>
+    </bean>-->
+    <!-- 将触发器注入任务工程 -->
+    <!--<bean id="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="TriggerDailyTradeAccountPolling" />
+            </list>
+        </property>
+    </bean>-->
+</beans>

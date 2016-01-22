@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.SysManagePowerRecordDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.SysManagePowerRecord" >
+    <id column="Date" property="date" jdbcType="VARCHAR" />
+    <id column="Time" property="time" jdbcType="VARCHAR" />
+    <result column="OperateType" property="operatetype" jdbcType="INTEGER" />
+    <result column="OilCanNo" property="oilcanno" jdbcType="INTEGER" />
+    <result column="TotalHeight" property="totalheight" jdbcType="DOUBLE" />
+    <result column="WaterHeight" property="waterheight" jdbcType="DOUBLE" />
+    <result column="OilTemp" property="oiltemp" jdbcType="DOUBLE" />
+    <result column="OilTemp1" property="oiltemp1" jdbcType="DOUBLE" />
+    <result column="OilTemp2" property="oiltemp2" jdbcType="DOUBLE" />
+    <result column="OilTemp3" property="oiltemp3" jdbcType="DOUBLE" />
+    <result column="OilTemp4" property="oiltemp4" jdbcType="DOUBLE" />
+    <result column="OilTemp5" property="oiltemp5" jdbcType="DOUBLE" />
+    <result column="OilCubage" property="oilcubage" jdbcType="DOUBLE" />
+    <result column="OilStandCubage" property="oilstandcubage" jdbcType="DOUBLE" />
+    <result column="EmptyCubage" property="emptycubage" jdbcType="DOUBLE" />
+    <result column="WaterBulk" property="waterbulk" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Date, Time, OperateType, OilCanNo, TotalHeight, WaterHeight, OilTemp, OilTemp1, OilTemp2, 
+    OilTemp3, OilTemp4, OilTemp5, OilCubage, OilStandCubage, EmptyCubage, WaterBulk
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.ATG.domain.SysManagePowerRecordKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_powerRecord
+    where Date = #{date,jdbcType=VARCHAR}
+      and Time = #{time,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.SysManagePowerRecordKey" >
+    delete from oss_sysmanage_powerRecord
+    where Date = #{date,jdbcType=VARCHAR}
+      and Time = #{time,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.SysManagePowerRecord" >
+    insert into oss_sysmanage_powerRecord (Date, Time, OperateType, 
+      OilCanNo, TotalHeight, WaterHeight, 
+      OilTemp, OilTemp1, OilTemp2, 
+      OilTemp3, OilTemp4, OilTemp5, 
+      OilCubage, OilStandCubage, EmptyCubage, 
+      WaterBulk)
+    values (#{date,jdbcType=VARCHAR}, #{time,jdbcType=VARCHAR}, #{operatetype,jdbcType=INTEGER}, 
+      #{oilcanno,jdbcType=INTEGER}, #{totalheight,jdbcType=DOUBLE}, #{waterheight,jdbcType=DOUBLE}, 
+      #{oiltemp,jdbcType=DOUBLE}, #{oiltemp1,jdbcType=DOUBLE}, #{oiltemp2,jdbcType=DOUBLE}, 
+      #{oiltemp3,jdbcType=DOUBLE}, #{oiltemp4,jdbcType=DOUBLE}, #{oiltemp5,jdbcType=DOUBLE}, 
+      #{oilcubage,jdbcType=DOUBLE}, #{oilstandcubage,jdbcType=DOUBLE}, #{emptycubage,jdbcType=DOUBLE}, 
+      #{waterbulk,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.SysManagePowerRecord" >
+    insert into oss_sysmanage_powerRecord
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="date != null" >
+        Date,
+      </if>
+      <if test="time != null" >
+        Time,
+      </if>
+      <if test="operatetype != null" >
+        OperateType,
+      </if>
+      <if test="oilcanno != null" >
+        OilCanNo,
+      </if>
+      <if test="totalheight != null" >
+        TotalHeight,
+      </if>
+      <if test="waterheight != null" >
+        WaterHeight,
+      </if>
+      <if test="oiltemp != null" >
+        OilTemp,
+      </if>
+      <if test="oiltemp1 != null" >
+        OilTemp1,
+      </if>
+      <if test="oiltemp2 != null" >
+        OilTemp2,
+      </if>
+      <if test="oiltemp3 != null" >
+        OilTemp3,
+      </if>
+      <if test="oiltemp4 != null" >
+        OilTemp4,
+      </if>
+      <if test="oiltemp5 != null" >
+        OilTemp5,
+      </if>
+      <if test="oilcubage != null" >
+        OilCubage,
+      </if>
+      <if test="oilstandcubage != null" >
+        OilStandCubage,
+      </if>
+      <if test="emptycubage != null" >
+        EmptyCubage,
+      </if>
+      <if test="waterbulk != null" >
+        WaterBulk,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="date != null" >
+        #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="operatetype != null" >
+        #{operatetype,jdbcType=INTEGER},
+      </if>
+      <if test="oilcanno != null" >
+        #{oilcanno,jdbcType=INTEGER},
+      </if>
+      <if test="totalheight != null" >
+        #{totalheight,jdbcType=DOUBLE},
+      </if>
+      <if test="waterheight != null" >
+        #{waterheight,jdbcType=DOUBLE},
+      </if>
+      <if test="oiltemp != null" >
+        #{oiltemp,jdbcType=DOUBLE},
+      </if>
+      <if test="oiltemp1 != null" >
+        #{oiltemp1,jdbcType=DOUBLE},
+      </if>
+      <if test="oiltemp2 != null" >
+        #{oiltemp2,jdbcType=DOUBLE},
+      </if>
+      <if test="oiltemp3 != null" >
+        #{oiltemp3,jdbcType=DOUBLE},
+      </if>
+      <if test="oiltemp4 != null" >
+        #{oiltemp4,jdbcType=DOUBLE},
+      </if>
+      <if test="oiltemp5 != null" >
+        #{oiltemp5,jdbcType=DOUBLE},
+      </if>
+      <if test="oilcubage != null" >
+        #{oilcubage,jdbcType=DOUBLE},
+      </if>
+      <if test="oilstandcubage != null" >
+        #{oilstandcubage,jdbcType=DOUBLE},
+      </if>
+      <if test="emptycubage != null" >
+        #{emptycubage,jdbcType=DOUBLE},
+      </if>
+      <if test="waterbulk != null" >
+        #{waterbulk,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.SysManagePowerRecord" >
+    update oss_sysmanage_powerRecord
+    <set >
+      <if test="operatetype != null" >
+        OperateType = #{operatetype,jdbcType=INTEGER},
+      </if>
+      <if test="oilcanno != null" >
+        OilCanNo = #{oilcanno,jdbcType=INTEGER},
+      </if>
+      <if test="totalheight != null" >
+        TotalHeight = #{totalheight,jdbcType=DOUBLE},
+      </if>
+      <if test="waterheight != null" >
+        WaterHeight = #{waterheight,jdbcType=DOUBLE},
+      </if>
+      <if test="oiltemp != null" >
+        OilTemp = #{oiltemp,jdbcType=DOUBLE},
+      </if>
+      <if test="oiltemp1 != null" >
+        OilTemp1 = #{oiltemp1,jdbcType=DOUBLE},
+      </if>
+      <if test="oiltemp2 != null" >
+        OilTemp2 = #{oiltemp2,jdbcType=DOUBLE},
+      </if>
+      <if test="oiltemp3 != null" >
+        OilTemp3 = #{oiltemp3,jdbcType=DOUBLE},
+      </if>
+      <if test="oiltemp4 != null" >
+        OilTemp4 = #{oiltemp4,jdbcType=DOUBLE},
+      </if>
+      <if test="oiltemp5 != null" >
+        OilTemp5 = #{oiltemp5,jdbcType=DOUBLE},
+      </if>
+      <if test="oilcubage != null" >
+        OilCubage = #{oilcubage,jdbcType=DOUBLE},
+      </if>
+      <if test="oilstandcubage != null" >
+        OilStandCubage = #{oilstandcubage,jdbcType=DOUBLE},
+      </if>
+      <if test="emptycubage != null" >
+        EmptyCubage = #{emptycubage,jdbcType=DOUBLE},
+      </if>
+      <if test="waterbulk != null" >
+        WaterBulk = #{waterbulk,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where Date = #{date,jdbcType=VARCHAR}
+      and Time = #{time,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.SysManagePowerRecord" >
+    update oss_sysmanage_powerRecord
+    set OperateType = #{operatetype,jdbcType=INTEGER},
+      OilCanNo = #{oilcanno,jdbcType=INTEGER},
+      TotalHeight = #{totalheight,jdbcType=DOUBLE},
+      WaterHeight = #{waterheight,jdbcType=DOUBLE},
+      OilTemp = #{oiltemp,jdbcType=DOUBLE},
+      OilTemp1 = #{oiltemp1,jdbcType=DOUBLE},
+      OilTemp2 = #{oiltemp2,jdbcType=DOUBLE},
+      OilTemp3 = #{oiltemp3,jdbcType=DOUBLE},
+      OilTemp4 = #{oiltemp4,jdbcType=DOUBLE},
+      OilTemp5 = #{oiltemp5,jdbcType=DOUBLE},
+      OilCubage = #{oilcubage,jdbcType=DOUBLE},
+      OilStandCubage = #{oilstandcubage,jdbcType=DOUBLE},
+      EmptyCubage = #{emptycubage,jdbcType=DOUBLE},
+      WaterBulk = #{waterbulk,jdbcType=DOUBLE}
+    where Date = #{date,jdbcType=VARCHAR}
+      and Time = #{time,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_daily_OilDailyRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_daily_OilDailyRecord" >
+    <id column="AccountDate" property="accountdate" jdbcType="TIMESTAMP" />
+    <id column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <id column="NodeNo" property="nodeno" jdbcType="VARCHAR" />
+    <result column="OilName" property="oilname" jdbcType="VARCHAR" />
+    <result column="Price" property="price" jdbcType="DOUBLE" />
+    <result column="DayStartL" property="daystartl" jdbcType="DOUBLE" />
+    <result column="DayEndL" property="dayendl" jdbcType="DOUBLE" />
+    <result column="GetBillNo" property="getbillno" jdbcType="VARCHAR" />
+    <result column="DayInOilL" property="dayinoill" jdbcType="DOUBLE" />
+    <result column="DayInCount" property="dayincount" jdbcType="DOUBLE" />
+    <result column="DaySaleL" property="daysalel" jdbcType="DOUBLE" />
+    <result column="DaySaleLSum" property="daysalelsum" jdbcType="DOUBLE" />
+    <result column="DaySaleCountSum" property="daysalecountsum" jdbcType="DOUBLE" />
+    <result column="DayIndeL" property="dayindel" jdbcType="DOUBLE" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    AccountDate, OilNo, NodeNo, OilName, Price, DayStartL, DayEndL, GetBillNo, DayInOilL, 
+    DayInCount, DaySaleL, DaySaleLSum, DaySaleCountSum, DayIndeL, TranStatus, OUCode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_daily_OilDailyRecordKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_daily_OilDailyRecord
+    where AccountDate = #{accountdate,jdbcType=TIMESTAMP}
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_daily_OilDailyRecordKey" >
+    delete from oss_daily_OilDailyRecord
+    where AccountDate = #{accountdate,jdbcType=TIMESTAMP}
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_daily_OilDailyRecord" >
+    insert into oss_daily_OilDailyRecord (AccountDate, OilNo, NodeNo, 
+      OilName, Price, DayStartL, 
+      DayEndL, GetBillNo, DayInOilL, 
+      DayInCount, DaySaleL, DaySaleLSum, 
+      DaySaleCountSum, DayIndeL, TranStatus, 
+      OUCode)
+    values (#{accountdate,jdbcType=TIMESTAMP}, #{oilno,jdbcType=VARCHAR}, #{nodeno,jdbcType=VARCHAR}, 
+      #{oilname,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, #{daystartl,jdbcType=DOUBLE}, 
+      #{dayendl,jdbcType=DOUBLE}, #{getbillno,jdbcType=VARCHAR}, #{dayinoill,jdbcType=DOUBLE}, 
+      #{dayincount,jdbcType=DOUBLE}, #{daysalel,jdbcType=DOUBLE}, #{daysalelsum,jdbcType=DOUBLE}, 
+      #{daysalecountsum,jdbcType=DOUBLE}, #{dayindel,jdbcType=DOUBLE}, #{transtatus,jdbcType=VARCHAR}, 
+      #{oucode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_daily_OilDailyRecord" >
+    insert into oss_daily_OilDailyRecord
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="accountdate != null" >
+        AccountDate,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="oilname != null" >
+        OilName,
+      </if>
+      <if test="price != null" >
+        Price,
+      </if>
+      <if test="daystartl != null" >
+        DayStartL,
+      </if>
+      <if test="dayendl != null" >
+        DayEndL,
+      </if>
+      <if test="getbillno != null" >
+        GetBillNo,
+      </if>
+      <if test="dayinoill != null" >
+        DayInOilL,
+      </if>
+      <if test="dayincount != null" >
+        DayInCount,
+      </if>
+      <if test="daysalel != null" >
+        DaySaleL,
+      </if>
+      <if test="daysalelsum != null" >
+        DaySaleLSum,
+      </if>
+      <if test="daysalecountsum != null" >
+        DaySaleCountSum,
+      </if>
+      <if test="dayindel != null" >
+        DayIndeL,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="accountdate != null" >
+        #{accountdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilname != null" >
+        #{oilname,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="daystartl != null" >
+        #{daystartl,jdbcType=DOUBLE},
+      </if>
+      <if test="dayendl != null" >
+        #{dayendl,jdbcType=DOUBLE},
+      </if>
+      <if test="getbillno != null" >
+        #{getbillno,jdbcType=VARCHAR},
+      </if>
+      <if test="dayinoill != null" >
+        #{dayinoill,jdbcType=DOUBLE},
+      </if>
+      <if test="dayincount != null" >
+        #{dayincount,jdbcType=DOUBLE},
+      </if>
+      <if test="daysalel != null" >
+        #{daysalel,jdbcType=DOUBLE},
+      </if>
+      <if test="daysalelsum != null" >
+        #{daysalelsum,jdbcType=DOUBLE},
+      </if>
+      <if test="daysalecountsum != null" >
+        #{daysalecountsum,jdbcType=DOUBLE},
+      </if>
+      <if test="dayindel != null" >
+        #{dayindel,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_daily_OilDailyRecord" >
+    update oss_daily_OilDailyRecord
+    <set >
+      <if test="oilname != null" >
+        OilName = #{oilname,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        Price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="daystartl != null" >
+        DayStartL = #{daystartl,jdbcType=DOUBLE},
+      </if>
+      <if test="dayendl != null" >
+        DayEndL = #{dayendl,jdbcType=DOUBLE},
+      </if>
+      <if test="getbillno != null" >
+        GetBillNo = #{getbillno,jdbcType=VARCHAR},
+      </if>
+      <if test="dayinoill != null" >
+        DayInOilL = #{dayinoill,jdbcType=DOUBLE},
+      </if>
+      <if test="dayincount != null" >
+        DayInCount = #{dayincount,jdbcType=DOUBLE},
+      </if>
+      <if test="daysalel != null" >
+        DaySaleL = #{daysalel,jdbcType=DOUBLE},
+      </if>
+      <if test="daysalelsum != null" >
+        DaySaleLSum = #{daysalelsum,jdbcType=DOUBLE},
+      </if>
+      <if test="daysalecountsum != null" >
+        DaySaleCountSum = #{daysalecountsum,jdbcType=DOUBLE},
+      </if>
+      <if test="dayindel != null" >
+        DayIndeL = #{dayindel,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where AccountDate = #{accountdate,jdbcType=TIMESTAMP}
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_daily_OilDailyRecord" >
+    update oss_daily_OilDailyRecord
+    set OilName = #{oilname,jdbcType=VARCHAR},
+      Price = #{price,jdbcType=DOUBLE},
+      DayStartL = #{daystartl,jdbcType=DOUBLE},
+      DayEndL = #{dayendl,jdbcType=DOUBLE},
+      GetBillNo = #{getbillno,jdbcType=VARCHAR},
+      DayInOilL = #{dayinoill,jdbcType=DOUBLE},
+      DayInCount = #{dayincount,jdbcType=DOUBLE},
+      DaySaleL = #{daysalel,jdbcType=DOUBLE},
+      DaySaleLSum = #{daysalelsum,jdbcType=DOUBLE},
+      DaySaleCountSum = #{daysalecountsum,jdbcType=DOUBLE},
+      DayIndeL = #{dayindel,jdbcType=DOUBLE},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      OUCode = #{oucode,jdbcType=VARCHAR}
+    where AccountDate = #{accountdate,jdbcType=TIMESTAMP}
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+</mapper>

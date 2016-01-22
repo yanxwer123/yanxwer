@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_sysmanage_cubageInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_sysmanage_cubageInfo" >
+    <id column="Version" property="version" jdbcType="VARCHAR" />
+    <id column="OilCan" property="oilcan" jdbcType="VARCHAR" />
+    <id column="NodeNo" property="nodeno" jdbcType="VARCHAR" />
+    <id column="Height" property="height" jdbcType="DOUBLE" />
+    <result column="Liter" property="liter" jdbcType="DOUBLE" />
+    <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="Status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Version, OilCan, NodeNo, Height, Liter, OUCode,TranStatus,Status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_sysmanage_cubageInfoKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_cubageInfo
+    where Version = #{version,jdbcType=VARCHAR}
+      and OilCan = #{oilcan,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+      and Height=#{height,jdbcType=DOUBLE}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_sysmanage_cubageInfoKey" >
+    delete from oss_sysmanage_cubageInfo
+    where Version = #{version,jdbcType=VARCHAR}
+      and OilCan = #{oilcan,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+      and Height=#{height,jdbcType=DOUBLE}
+  </delete>
+  <select id="selectByNodenoAndVersion" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_sysmanage_cubageInfo WHERE  NodeNo=#{0,jdbcType=VARCHAR} and Version=#{1,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByNodenoAndVersionandcanno" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_sysmanage_cubageInfo WHERE  NodeNo=#{0,jdbcType=VARCHAR} and Version=#{1,jdbcType=VARCHAR} and OilCan=#{2,jdbcType=VARCHAR}
+  </select>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_sysmanage_cubageInfo" >
+    insert into oss_sysmanage_cubageInfo (Version, OilCan, NodeNo, 
+      Height, Liter, OUCode,TranStatus,Status
+      )
+    values (#{version,jdbcType=VARCHAR}, #{oilcan,jdbcType=VARCHAR}, #{nodeno,jdbcType=VARCHAR},
+      #{height,jdbcType=DOUBLE}, #{liter,jdbcType=DOUBLE}, #{oucode,jdbcType=VARCHAR},#{transtatus,jdbcType=VARCHAR},#{status,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_sysmanage_cubageInfo" >
+    insert into oss_sysmanage_cubageInfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="version != null" >
+        Version,
+      </if>
+      <if test="oilcan != null" >
+        OilCan,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="height != null" >
+        Height,
+      </if>
+      <if test="liter != null" >
+        Liter,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="status != null" >
+        Status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null" >
+        #{height,jdbcType=DOUBLE},
+      </if>
+      <if test="liter != null" >
+        #{liter,jdbcType=DOUBLE},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_sysmanage_cubageInfo" >
+    update oss_sysmanage_cubageInfo
+    <set >
+
+      <if test="liter != null" >
+        Liter = #{liter,jdbcType=DOUBLE},
+      </if>
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        Status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where Version = #{version,jdbcType=VARCHAR}
+      and OilCan = #{oilcan,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+      and Height=#{height,jdbcType=DOUBLE}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_sysmanage_cubageInfo" >
+    update oss_sysmanage_cubageInfo
+    set Height = #{height,jdbcType=DOUBLE},
+      Liter = #{liter,jdbcType=DOUBLE},
+      OUCode = #{oucode,jdbcType=VARCHAR}
+    where Version = #{version,jdbcType=VARCHAR}
+      and OilCan = #{oilcan,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+      and Height=#{height,jdbcType=DOUBLE}
+  </update>
+</mapper>

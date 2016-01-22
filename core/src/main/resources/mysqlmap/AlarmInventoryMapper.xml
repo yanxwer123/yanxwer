@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.AlarmInventoryDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.AlarmInventory" >
+    <id column="OilCan" property="oilcan" jdbcType="INTEGER" />
+    <id column="AlarmType" property="alarmtype" jdbcType="INTEGER" />
+    <id column="StartTime" property="starttime" jdbcType="TIMESTAMP" />
+    <result column="EndTIme" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="AlarmDesc" property="alarmdesc" jdbcType="VARCHAR" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="Shift" property="shift" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="BaseResultMap2" type="Map">
+    <result column="OilCan" jdbcType="INTEGER" />
+    <result column="AlarmType"  jdbcType="INTEGER" />
+    <result column="Name"  jdbcType="VARCHAR" />
+    <result column="StartTime"  jdbcType="TIMESTAMP" />
+    <result column="EndTIme"  jdbcType="TIMESTAMP" />
+    <result column="AlarmDesc" jdbcType="VARCHAR" />
+    <result column="TranStatus"  jdbcType="VARCHAR" />
+    <result column="Shift"  jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    OilCan, AlarmType, StartTime, EndTIme, AlarmDesc, TranStatus, Shift
+  </sql>
+  <sql id="Base_Column_List2" >
+    OilCan, AlarmType, StartTime, EndTIme, AlarmDesc, TranStatus, Shift,Name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.ATG.domain.AlarmInventoryKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_alarm_Inventory
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and AlarmType = #{alarmtype,jdbcType=INTEGER}
+      and StartTime = #{starttime,jdbcType=TIMESTAMP}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.AlarmInventoryKey" >
+    delete from oss_alarm_Inventory
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and AlarmType = #{alarmtype,jdbcType=INTEGER}
+      and StartTime = #{starttime,jdbcType=TIMESTAMP}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.AlarmInventory" >
+    insert into oss_alarm_Inventory (OilCan, AlarmType, StartTime, 
+      EndTIme, AlarmDesc, TranStatus, 
+      Shift)
+    values (#{oilcan,jdbcType=INTEGER}, #{alarmtype,jdbcType=INTEGER}, #{starttime,jdbcType=TIMESTAMP}, 
+      #{endtime,jdbcType=TIMESTAMP}, #{alarmdesc,jdbcType=VARCHAR}, #{transtatus,jdbcType=VARCHAR}, 
+      #{shift,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.AlarmInventory" >
+    insert into oss_alarm_Inventory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oilcan != null" >
+        OilCan,
+      </if>
+      <if test="alarmtype != null" >
+        AlarmType,
+      </if>
+      <if test="starttime != null" >
+        StartTime,
+      </if>
+      <if test="endtime != null" >
+        EndTIme,
+      </if>
+      <if test="alarmdesc != null" >
+        AlarmDesc,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="shift != null" >
+        Shift,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="alarmtype != null" >
+        #{alarmtype,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="alarmdesc != null" >
+        #{alarmdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null" >
+        #{shift,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.AlarmInventory" >
+    update oss_alarm_Inventory
+    <set >
+      <if test="endtime != null" >
+        EndTIme = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="alarmdesc != null" >
+        AlarmDesc = #{alarmdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null" >
+        Shift = #{shift,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and AlarmType = #{alarmtype,jdbcType=INTEGER}
+      and StartTime = #{starttime,jdbcType=TIMESTAMP}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.AlarmInventory" >
+    update oss_alarm_Inventory
+    set EndTIme = #{endtime,jdbcType=TIMESTAMP},
+      AlarmDesc = #{alarmdesc,jdbcType=VARCHAR},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      Shift = #{shift,jdbcType=VARCHAR}
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and AlarmType = #{alarmtype,jdbcType=INTEGER}
+      and StartTime = #{starttime,jdbcType=TIMESTAMP}
+  </update>
+  <update id="updateByEntime" parameterType="com.kld.gsm.ATG.domain.AlarmInventory">
+    update oss_alarm_Inventory set EndTIme = #{endtime,jdbcType=TIMESTAMP} where
+    AlarmType = #{alarmtype,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectByDate"  resultType="hashmap" parameterType="hashmap">
+    SELECT
+    <include refid="Base_Column_List2" />
+     FROM oss_alarm_Inventory ala left join oss_sysmanage_Dict dic on ala.AlarmType=dic.Value WHERE  1=1
+    <if test="begin != null and begin != ''">
+    and   ala.StartTime &gt; #{begin,jdbcType=TIMESTAMP}
+    </if>
+    <if test="end != null and end != ''">
+    and ala.StartTime &lt; #{end,jdbcType=TIMESTAMP}
+    </if>
+    <if test="alarmtype != null and alarmtype != ''">
+    and ala.AlarmType = #{alarmtype,jdbcType=INTEGER}
+    </if>
+    ORDER BY  ala.StartTime DESC
+  </select>
+  <select id="selectByDateLastMouth"  resultType="hashmap">
+    SELECT
+    <include refid="Base_Column_List2" />
+    FROM oss_alarm_Inventory ala left join oss_sysmanage_Dict dic on ala.AlarmType=dic.Value
+    where date_format(ala.StartTime,'%Y-%m-%d') &gt; date_sub(curdate(),interval 30 day)
+    order by ala.StartTime  desc
+  </select>
+  <select id="selectByTrans" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_alarm_Inventory WHERE TranStatus=#{trans,jdbcType=VARCHAR}
+  </select>
+  <select id="getByNo" parameterType="com.kld.gsm.ATG.domain.AlarmInventory">
+    SELECT  *from oss_alarm_Inventory WHERE OilCan = #{oilcan,jdbcType=INTEGER}</select>
+  <update id="setByKey" parameterType="com.kld.gsm.ATG.domain.AlarmInventory">
+    update oss_alarm_Inventory set EndTIme = #{endtime,jdbcType=TIMESTAMP} where
+    AlarmType = #{alarmtype,jdbcType=INTEGER}AND
+  </update>
+
+  <update id="updateEndTime" parameterType="com.kld.gsm.ATG.domain.AlarmInventory">
+    update oss_alarm_Inventory set EndTIme = #{endtime,jdbcType=TIMESTAMP} where
+    AlarmType = #{alarmtype,jdbcType=INTEGER} AND OilCan=#{oilcan,jdbcType=INTEGER}
+    AND EndTIme IS NULL
+  </update>
+
+
+
+  <select id="findBeginAlarm" resultType="com.kld.gsm.ATG.domain.AlarmInventory"   >
+    SELECT * FROM oss_alarm_Inventory WHERE EndTIme is null AND StartTime is not null
+  </select>
+</mapper>

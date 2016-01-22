@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_acceptance_nobillsMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_acceptance_nobills" >
+    <id column="DeliveryNo" property="deliveryno" jdbcType="VARCHAR" />
+    <result column="ConfirmNo" property="confirmno" jdbcType="VARCHAR" />
+    <result column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <result column="OilName" property="oilname" jdbcType="VARCHAR" />
+    <result column="PlanL" property="planl" jdbcType="DOUBLE" />
+    <result column="CardNo" property="cardno" jdbcType="VARCHAR" />
+    <result column="ArriveTime" property="arrivetime" jdbcType="TIMESTAMP" />
+    <result column="FromOilDepot" property="fromoildepot" jdbcType="VARCHAR" />
+    <result column="ToNodeNo" property="tonodeno" jdbcType="VARCHAR" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DeliveryNo, ConfirmNo, OilNo, OilName, PlanL, CardNo, ArriveTime, FromOilDepot, ToNodeNo, 
+    CreateTime, TranStatus
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_acceptance_nobills
+    where DeliveryNo = #{deliveryno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from oss_acceptance_nobills
+    where DeliveryNo = #{deliveryno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_acceptance_nobills" >
+    insert into oss_acceptance_nobills (DeliveryNo, ConfirmNo, OilNo, 
+      OilName, PlanL, CardNo, 
+      ArriveTime, FromOilDepot, ToNodeNo, 
+      CreateTime, TranStatus)
+    values (#{deliveryno,jdbcType=VARCHAR}, #{confirmno,jdbcType=VARCHAR}, #{oilno,jdbcType=VARCHAR}, 
+      #{oilname,jdbcType=VARCHAR}, #{planl,jdbcType=DOUBLE}, #{cardno,jdbcType=VARCHAR}, 
+      #{arrivetime,jdbcType=TIMESTAMP}, #{fromoildepot,jdbcType=VARCHAR}, #{tonodeno,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{transtatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="merge" parameterType="com.kld.gsm.center.domain.oss_acceptance_nobills" >
+    replace into oss_acceptance_nobills
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="deliveryno != null" >
+        DeliveryNo,
+      </if>
+      <if test="confirmno != null" >
+        ConfirmNo,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="oilname != null" >
+        OilName,
+      </if>
+      <if test="planl != null" >
+        PlanL,
+      </if>
+      <if test="cardno != null" >
+        CardNo,
+      </if>
+      <if test="arrivetime != null" >
+        ArriveTime,
+      </if>
+      <if test="fromoildepot != null" >
+        FromOilDepot,
+      </if>
+      <if test="tonodeno != null" >
+        ToNodeNo,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="deliveryno != null" >
+        #{deliveryno,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmno != null" >
+        #{confirmno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilname != null" >
+        #{oilname,jdbcType=VARCHAR},
+      </if>
+      <if test="planl != null" >
+        #{planl,jdbcType=DOUBLE},
+      </if>
+      <if test="cardno != null" >
+        #{cardno,jdbcType=VARCHAR},
+      </if>
+      <if test="arrivetime != null" >
+        #{arrivetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fromoildepot != null" >
+        #{fromoildepot,jdbcType=VARCHAR},
+      </if>
+      <if test="tonodeno != null" >
+        #{tonodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_acceptance_nobills" >
+    insert into oss_acceptance_nobills
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="deliveryno != null" >
+        DeliveryNo,
+      </if>
+      <if test="confirmno != null" >
+        ConfirmNo,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="oilname != null" >
+        OilName,
+      </if>
+      <if test="planl != null" >
+        PlanL,
+      </if>
+      <if test="cardno != null" >
+        CardNo,
+      </if>
+      <if test="arrivetime != null" >
+        ArriveTime,
+      </if>
+      <if test="fromoildepot != null" >
+        FromOilDepot,
+      </if>
+      <if test="tonodeno != null" >
+        ToNodeNo,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="deliveryno != null" >
+        #{deliveryno,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmno != null" >
+        #{confirmno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilname != null" >
+        #{oilname,jdbcType=VARCHAR},
+      </if>
+      <if test="planl != null" >
+        #{planl,jdbcType=DOUBLE},
+      </if>
+      <if test="cardno != null" >
+        #{cardno,jdbcType=VARCHAR},
+      </if>
+      <if test="arrivetime != null" >
+        #{arrivetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fromoildepot != null" >
+        #{fromoildepot,jdbcType=VARCHAR},
+      </if>
+      <if test="tonodeno != null" >
+        #{tonodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_acceptance_nobills" >
+    update oss_acceptance_nobills
+    <set >
+      <if test="confirmno != null" >
+        ConfirmNo = #{confirmno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilno != null" >
+        OilNo = #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilname != null" >
+        OilName = #{oilname,jdbcType=VARCHAR},
+      </if>
+      <if test="planl != null" >
+        PlanL = #{planl,jdbcType=DOUBLE},
+      </if>
+      <if test="cardno != null" >
+        CardNo = #{cardno,jdbcType=VARCHAR},
+      </if>
+      <if test="arrivetime != null" >
+        ArriveTime = #{arrivetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fromoildepot != null" >
+        FromOilDepot = #{fromoildepot,jdbcType=VARCHAR},
+      </if>
+      <if test="tonodeno != null" >
+        ToNodeNo = #{tonodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DeliveryNo = #{deliveryno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_acceptance_nobills" >
+    update oss_acceptance_nobills
+    set ConfirmNo = #{confirmno,jdbcType=VARCHAR},
+      OilNo = #{oilno,jdbcType=VARCHAR},
+      OilName = #{oilname,jdbcType=VARCHAR},
+      PlanL = #{planl,jdbcType=DOUBLE},
+      CardNo = #{cardno,jdbcType=VARCHAR},
+      ArriveTime = #{arrivetime,jdbcType=TIMESTAMP},
+      FromOilDepot = #{fromoildepot,jdbcType=VARCHAR},
+      ToNodeNo = #{tonodeno,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      TranStatus = #{transtatus,jdbcType=VARCHAR}
+    where DeliveryNo = #{deliveryno,jdbcType=VARCHAR}
+  </update>
+</mapper>

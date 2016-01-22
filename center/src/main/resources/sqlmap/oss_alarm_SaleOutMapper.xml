@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_alarm_SaleOutMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_alarm_SaleOut" >
+    <id column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <id column="MesasureTime" property="mesasuretime" jdbcType="TIMESTAMP" />
+    <id column="NodeNo" property="nodeno" jdbcType="VARCHAR" />
+    <result column="NowVolume" property="nowvolume" jdbcType="DOUBLE" />
+    <result column="CanSaleVolume" property="cansalevolume" jdbcType="DOUBLE" />
+    <result column="DayAverageSales" property="dayaveragesales" jdbcType="DOUBLE" />
+    <result column="HourAverageSales" property="houraveragesales" jdbcType="DOUBLE" />
+    <result column="PredictSales" property="predictsales" jdbcType="DOUBLE" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="StartAlarmTime" property="startalarmtime" jdbcType="TIMESTAMP" />
+    <result column="EndAlarmTime" property="endalarmtime" jdbcType="TIMESTAMP" />
+    <result column="Shift" property="shift" jdbcType="VARCHAR" />
+    <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
+    <result column="PredictHours" property="predicthours" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    OilNo, MesasureTime, NodeNo, NowVolume, CanSaleVolume, DayAverageSales, HourAverageSales, 
+    PredictSales, TranStatus, StartAlarmTime, EndAlarmTime, Shift, OUCode,PredictHours
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_alarm_SaleOutKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_alarm_SaleOut
+    where OilNo = #{oilno,jdbcType=VARCHAR}
+      and MesasureTime = #{mesasuretime,jdbcType=TIMESTAMP}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_alarm_SaleOutKey" >
+    delete from oss_alarm_SaleOut
+    where OilNo = #{oilno,jdbcType=VARCHAR}
+      and MesasureTime = #{mesasuretime,jdbcType=TIMESTAMP}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_alarm_SaleOut" >
+    insert into oss_alarm_SaleOut (OilNo, MesasureTime, NodeNo, 
+      NowVolume, CanSaleVolume, DayAverageSales, 
+      HourAverageSales, PredictSales, TranStatus, 
+      StartAlarmTime, EndAlarmTime, Shift, 
+      OUCode,PredictHours)
+    values (#{oilno,jdbcType=VARCHAR}, #{mesasuretime,jdbcType=TIMESTAMP}, #{nodeno,jdbcType=VARCHAR}, 
+      #{nowvolume,jdbcType=DOUBLE}, #{cansalevolume,jdbcType=DOUBLE}, #{dayaveragesales,jdbcType=DOUBLE}, 
+      #{houraveragesales,jdbcType=DOUBLE}, #{predictsales,jdbcType=DOUBLE}, #{transtatus,jdbcType=VARCHAR}, 
+      #{startalarmtime,jdbcType=TIMESTAMP}, #{endalarmtime,jdbcType=TIMESTAMP}, #{shift,jdbcType=VARCHAR}, 
+      #{oucode,jdbcType=VARCHAR},  #{predicthours,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_alarm_SaleOut" >
+    insert into oss_alarm_SaleOut
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="mesasuretime != null" >
+        MesasureTime,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="nowvolume != null" >
+        NowVolume,
+      </if>
+      <if test="cansalevolume != null" >
+        CanSaleVolume,
+      </if>
+      <if test="dayaveragesales != null" >
+        DayAverageSales,
+      </if>
+      <if test="houraveragesales != null" >
+        HourAverageSales,
+      </if>
+      <if test="predictsales != null" >
+        PredictSales,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="startalarmtime != null" >
+        StartAlarmTime,
+      </if>
+      <if test="endalarmtime != null" >
+        EndAlarmTime,
+      </if>
+      <if test="shift != null" >
+        Shift,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+      <if test="predicthours != null" >
+        PredictHours,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="mesasuretime != null" >
+        #{mesasuretime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="nowvolume != null" >
+        #{nowvolume,jdbcType=DOUBLE},
+      </if>
+      <if test="cansalevolume != null" >
+        #{cansalevolume,jdbcType=DOUBLE},
+      </if>
+      <if test="dayaveragesales != null" >
+        #{dayaveragesales,jdbcType=DOUBLE},
+      </if>
+      <if test="houraveragesales != null" >
+        #{houraveragesales,jdbcType=DOUBLE},
+      </if>
+      <if test="predictsales != null" >
+        #{predictsales,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="startalarmtime != null" >
+        #{startalarmtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endalarmtime != null" >
+        #{endalarmtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shift != null" >
+        #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="predicthours != null" >
+        #{predicthours,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_alarm_SaleOut" >
+    update oss_alarm_SaleOut
+    <set >
+      <if test="nowvolume != null" >
+        NowVolume = #{nowvolume,jdbcType=DOUBLE},
+      </if>
+      <if test="cansalevolume != null" >
+        CanSaleVolume = #{cansalevolume,jdbcType=DOUBLE},
+      </if>
+      <if test="dayaveragesales != null" >
+        DayAverageSales = #{dayaveragesales,jdbcType=DOUBLE},
+      </if>
+      <if test="houraveragesales != null" >
+        HourAverageSales = #{houraveragesales,jdbcType=DOUBLE},
+      </if>
+      <if test="predictsales != null" >
+        PredictSales = #{predictsales,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="startalarmtime != null" >
+        StartAlarmTime = #{startalarmtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endalarmtime != null" >
+        EndAlarmTime = #{endalarmtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shift != null" >
+        Shift = #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="predicthours != null" >
+        PredictHours = #{predicthours,jdbcType=INTEGER},
+      </if>
+    </set>
+    where OilNo = #{oilno,jdbcType=VARCHAR}
+      and MesasureTime = #{mesasuretime,jdbcType=TIMESTAMP}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_alarm_SaleOut" >
+    update oss_alarm_SaleOut
+    set NowVolume = #{nowvolume,jdbcType=DOUBLE},
+      CanSaleVolume = #{cansalevolume,jdbcType=DOUBLE},
+      DayAverageSales = #{dayaveragesales,jdbcType=DOUBLE},
+      HourAverageSales = #{houraveragesales,jdbcType=DOUBLE},
+      PredictSales = #{predictsales,jdbcType=DOUBLE},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      StartAlarmTime = #{startalarmtime,jdbcType=TIMESTAMP},
+      EndAlarmTime = #{endalarmtime,jdbcType=TIMESTAMP},
+      Shift = #{shift,jdbcType=VARCHAR},
+      OUCode = #{oucode,jdbcType=VARCHAR},
+      PredictHours = #{predicthours,jdbcType=INTEGER}
+    where OilNo = #{oilno,jdbcType=VARCHAR}
+      and MesasureTime = #{mesasuretime,jdbcType=TIMESTAMP}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <select id="selectSaleOut" resultType="hashmap" parameterType="hashmap">
+    SELECT stn.STATION_NAME,otp.OilName,sot.MesasureTime,sot.NowVolume,sot.CanSaleVolume,sot.DayAverageSales,
+    sot.HourAverageSales,sot.PredictHours,floor((sot.CanSaleVolume/sot.DayAverageSales)) YJSSTS from oss_alarm_SaleOut sot
+    inner join oss_sysmanage_Station stn on sot.OUCode=stn.STATION_CODE
+    inner JOIN oss_sysmanage_oilType otp on  sot.OilNo=otp.OilNo
+    where 1=1
+    <if test="start != null and start!='' " >
+      and  sot.StartAlarmTime  &gt; #{start,jdbcType=TIMESTAMP}
+    </if>
+    <if test="end !=null and end!='' " >
+      and sot.EndAlarmTime &lt; #{end,jdbcType=TIMESTAMP}
+    </if>
+    <if test="oilno != null and oilno!='' " >
+      and sot.OilNo = #{oilno,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <select id="queryPrepayPageList" resultType="hashmap" parameterType="hashmap">
+    SELECT sot.*,stn.STATION_NAME,floor((sot.CanSaleVolume/sot.DayAverageSales)) YJSSTS, otp.OilName from oss_alarm_SaleOut sot
+    inner join oss_sysmanage_Station stn on sot.OUCode=stn.STATION_CODE
+    inner JOIN oss_sysmanage_oilType otp on  sot.OilNo=otp.OilNo
+    where 1=1
+    <if test="start != null" >
+      and  sot.StartAlarmTime  &gt; #{start,jdbcType=TIMESTAMP}
+    </if>
+    <if test="end !=null" >
+      and sot.EndAlarmTime &lt; #{end,jdbcType=TIMESTAMP}
+    </if>
+    <if test="oilno != null" >
+    and sot.OilNo = #{oilno,jdbcType=VARCHAR}
+     </if>
+    <if test="psjy != null and psjy==2" >
+      and sot.PredictHours  &gt;  #{psjyfz,jdbcType=INTEGER}
+    </if>
+    <if test="psjy != null and psjy==1" >
+      and sot.PredictHours &lt; #{psjyfz,jdbcType=INTEGER}
+    </if>
+    ORDER BY Shift DESC
+    <if test="firstRow != null and  pageSize!= null">
+      <![CDATA[ limit  #{firstRow},#{pageSize} ]]>
+    </if>
+  </select>
+
+  <select id="queryJYPrepayPageList" resultType="hashmap" parameterType="hashmap">
+    SELECT *,(select OUName from oss_sys_OrgUnit WHERE oss_alarm_SaleOut.OUCode=oss_sys_OrgUnit.OUCode) AS STATION_NAME
+    ,floor((oss_alarm_SaleOut.CanSaleVolume/oss_alarm_SaleOut.DayAverageSales)) AS YJSSTS,
+    (select OilName from oss_sysmanage_oilType WHERE oss_sysmanage_oilType.OilNo=oss_alarm_SaleOut.OilNo) AS OilName
+    from oss_alarm_SaleOut
+    where 1=1
+    <if test="start != null" >
+      and  MesasureTime  &gt; #{start,jdbcType=TIMESTAMP}
+    </if>
+    <if test="end !=null" >
+      and MesasureTime &lt; #{end,jdbcType=TIMESTAMP}
+    </if>
+    <if test="oilno != null" >
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+    </if>
+    <if test="psjy != null and psjy==2" >
+      and PredictHours  &gt;  #{psjyfz,jdbcType=INTEGER}
+    </if>
+    <if test="psjy != null and psjy==1" >
+      and PredictHours &lt; #{psjyfz,jdbcType=INTEGER}
+    </if>
+    <if test="oucode != null and oucode !=''">
+      <![CDATA[ and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    </if>
+    ORDER BY Shift DESC
+    <if test="firstRow != null and  pageSize!= null">
+      <![CDATA[ limit  #{firstRow},#{pageSize} ]]>
+    </if>
+
+  </select>
+  <select id="queryJYCountPrepayPageList" resultType="hashmap" parameterType="hashmap">
+    SELECT *,(select OUName from oss_sys_OrgUnit WHERE oss_alarm_SaleOut.OUCode=oss_sys_OrgUnit.OUCode) AS STATION_NAME
+    ,floor((oss_alarm_SaleOut.CanSaleVolume/oss_alarm_SaleOut.DayAverageSales)) AS YJSSTS,
+    (select OilName from oss_sysmanage_oilType WHERE oss_sysmanage_oilType.OilNo=oss_alarm_SaleOut.OilNo) AS OilName
+    from oss_alarm_SaleOut
+    where 1=1
+    <if test="start != null" >
+      and  MesasureTime  &gt; #{start,jdbcType=TIMESTAMP}
+    </if>
+    <if test="end !=null" >
+      and MesasureTime &lt; #{end,jdbcType=TIMESTAMP}
+    </if>
+    <if test="oilno != null" >
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+    </if>
+    <if test="psjy != null and psjy==2" >
+      and PredictHours  &gt;  #{psjyfz,jdbcType=INTEGER}
+    </if>
+    <if test="psjy != null and psjy==1" >
+      and PredictHours &lt; #{psjyfz,jdbcType=INTEGER}
+    </if>
+    <if test="oucode != null ">
+      <![CDATA[  and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    </if>
+  </select>
+
+
+
+  <select id="queryPrepayCount"  resultType="Integer"  parameterType="hashmap">
+    SELECT COUNT(*) from oss_alarm_SaleOut sot
+    inner join oss_sysmanage_Station stn on sot.OUCode=stn.STATION_CODE
+    inner JOIN oss_sysmanage_oilType otp on  sot.OilNo=otp.OilNo
+    where 1=1
+    <if test="start != null" >
+      and  sot.StartAlarmTime  &gt; #{start,jdbcType=TIMESTAMP}
+    </if>
+    <if test="end !=null" >
+      and sot.EndAlarmTime &lt; #{end,jdbcType=TIMESTAMP}
+    </if>
+    <if test="oilno != null" >
+      and sot.OilNo = #{oilno,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>

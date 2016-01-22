@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.DailyDeviceInfoDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.DailyDeviceInfo" >
+    <id column="OilCanNo" property="oilcanno" jdbcType="INTEGER" />
+    <result column="DeviceModel" property="devicemodel" jdbcType="VARCHAR" />
+    <result column="EquipCode" property="equipcode" jdbcType="VARCHAR" />
+    <result column="Version" property="version" jdbcType="VARCHAR" />
+    <result column="MakeDate" property="makedate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    OilCanNo, DeviceModel, EquipCode, Version, MakeDate
+  </sql>
+  <select id="selectByPrimaryKey" resultType="com.kld.gsm.ATG.domain.DailyDeviceInfo" parameterType="java.lang.Integer" >
+    select *
+    from oss_daily_DeviceInfo
+    where OilCanNo = #{oilcanno}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from oss_daily_DeviceInfo
+    where OilCanNo = #{oilcanno,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.DailyDeviceInfo" >
+    insert into oss_daily_DeviceInfo (OilCanNo, DeviceModel, EquipCode, 
+      Version, MakeDate)
+    values (#{oilcanno,jdbcType=INTEGER}, #{devicemodel,jdbcType=VARCHAR}, #{equipcode,jdbcType=VARCHAR}, 
+      #{version,jdbcType=VARCHAR}, #{makedate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.DailyDeviceInfo" >
+    insert into oss_daily_DeviceInfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oilcanno != null" >
+        OilCanNo,
+      </if>
+      <if test="devicemodel != null" >
+        DeviceModel,
+      </if>
+      <if test="equipcode != null" >
+        EquipCode,
+      </if>
+      <if test="version != null" >
+        Version,
+      </if>
+      <if test="makedate != null" >
+        MakeDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oilcanno != null" >
+        #{oilcanno,jdbcType=INTEGER},
+      </if>
+      <if test="devicemodel != null" >
+        #{devicemodel,jdbcType=VARCHAR},
+      </if>
+      <if test="equipcode != null" >
+        #{equipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="makedate != null" >
+        #{makedate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.DailyDeviceInfo" >
+    update oss_daily_DeviceInfo
+    <set >
+      <if test="devicemodel != null" >
+        DeviceModel = #{devicemodel,jdbcType=VARCHAR},
+      </if>
+      <if test="equipcode != null" >
+        EquipCode = #{equipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        Version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="makedate != null" >
+        MakeDate = #{makedate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where OilCanNo = #{oilcanno,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.DailyDeviceInfo" >
+    update oss_daily_DeviceInfo
+    set DeviceModel = #{devicemodel,jdbcType=VARCHAR},
+      EquipCode = #{equipcode,jdbcType=VARCHAR},
+      Version = #{version,jdbcType=VARCHAR},
+      MakeDate = #{makedate,jdbcType=TIMESTAMP}
+    where OilCanNo = #{oilcanno,jdbcType=INTEGER}
+  </update>
+</mapper>

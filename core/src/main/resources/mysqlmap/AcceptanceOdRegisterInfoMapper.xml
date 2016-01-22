@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.AcceptanceOdRegisterInfoDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.AcceptanceOdRegisterInfo" >
+    <id column="ManualNo" property="manualNo" jdbcType="VARCHAR" />
+    <id column="OilCan" property="oilcan" jdbcType="INTEGER" />
+    <result column="DeliveryNo" property="deliveryno" jdbcType="VARCHAR" />
+    <result column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <result column="Shift" property="shift" jdbcType="VARCHAR" />
+    <result column="BeginTime" property="begintime" jdbcType="TIMESTAMP" />
+    <result column="EndTime" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="DischargeL" property="dischargel" jdbcType="DOUBLE" />
+    <result column="BeginOilHeight" property="beginoilheight" jdbcType="DOUBLE" />
+    <result column="BeginOilL" property="beginoill" jdbcType="DOUBLE" />
+    <result column="BeginV20L" property="beginv20l" jdbcType="DOUBLE" />
+    <result column="BeginTemperature" property="begintemperature" jdbcType="DOUBLE" />
+    <result column="EndOilHeight" property="endoilheight" jdbcType="DOUBLE" />
+    <result column="EndOilL" property="endoill" jdbcType="DOUBLE" />
+    <result column="EndV20L" property="endv20l" jdbcType="DOUBLE" />
+    <result column="EndTemperature" property="endtemperature" jdbcType="DOUBLE" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="IsDel" property="isdel" jdbcType="INTEGER" />
+    <result column="EnterType" property="entertype" jdbcType="INTEGER" />
+    <result column="DuringSales" property="duringsales" jdbcType="DOUBLE" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="StableBeginTime" property="stablebegintime" jdbcType="TIMESTAMP" />
+    <result column="StableEndTime" property="stableendtime" jdbcType="TIMESTAMP" />
+    <result column="ForceCancelStable" property="forcecancelstable" jdbcType="INTEGER" />
+    <result column="IsBeforeStable" property="isbeforestable" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DeliveryNo,ManualNo, OilCan, OilNo, Shift, BeginTime, EndTime, DischargeL, BeginOilHeight, 
+    BeginOilL, BeginV20L, BeginTemperature, EndOilHeight, EndOilL, EndV20L, EndTemperature, 
+    CreateTime, IsDel, EnterType, DuringSales, TranStatus,StableBeginTime,StableEndTime,ForceCancelStable,IsBeforeStable
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.ATG.domain.AcceptanceOdRegisterInfoKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_acceptance_odRegisterInfo
+    where ManualNo = #{manualNo,jdbcType=VARCHAR}
+      and OilCan = #{oilcan,jdbcType=INTEGER}
+  </select>
+  <select id="selectByDeliveryNoDate" resultMap="BaseResultMap" parameterType="hashmap">
+  	select 
+    <include refid="Base_Column_List" />
+    from oss_acceptance_odRegisterInfo where 1=1
+    <if test="manualNo != null and manualNo != ''">
+    	and (ManualNo = #{manualNo} or DeliveryNo=#{manualNo})
+    </if>
+    <if test="begin != null">
+    	<![CDATA[and CreateTime >= #{begin, jdbcType=TIMESTAMP}]]>
+    </if>
+    <if test="end != null">
+    	<![CDATA[and CreateTime <= #{end, jdbcType=TIMESTAMP}]]>
+    </if>
+    order by createtime desc
+  </select>
+  <select id="selectById"  resultMap="BaseResultMap"  parameterType="com.kld.gsm.ATG.domain.AcceptanceDeliveryBills">
+    SELECT 'ture' as QUERYID,
+    <include refid="Base_Column_List" />
+    FROM  oss_acceptance_odRegisterInfo
+    WHERE (ManualNo =#{manualNo,jdbcType=VARCHAR} OR DeliveryNo =#{manualNo,jdbcType=VARCHAR})
+  </select>
+  <delete id="deleteByDeliveryNo" parameterType="java.lang.String">
+    DELETE from oss_acceptance_odRegisterInfo WHERE ManualNo = #{manualNo,jdbcType=VARCHAR} or DeliveryNo= #{manualNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.AcceptanceOdRegisterInfoKey" >
+    delete from oss_acceptance_odRegisterInfo
+    where ManualNo = #{manualNo,jdbcType=VARCHAR}
+      and OilCan = #{oilcan,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.AcceptanceOdRegisterInfo" >
+    insert into oss_acceptance_odRegisterInfo (DeliveryNo,ManualNo, OilCan, OilNo, 
+      Shift, BeginTime, EndTime, 
+      DischargeL, BeginOilHeight, BeginOilL, 
+      BeginV20L, BeginTemperature, EndOilHeight, 
+      EndOilL, EndV20L, EndTemperature, 
+      CreateTime, IsDel, EnterType, 
+      DuringSales, TranStatus,StableBeginTime,StableEndTime,ForceCancelStable,IsBeforeStable)
+    values (#{deliveryno,jdbcType=VARCHAR},#{manualNo, jdbcType=VARCHAR}, #{oilcan,jdbcType=INTEGER}, #{oilno,jdbcType=VARCHAR}, 
+      #{shift,jdbcType=VARCHAR}, #{begintime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, 
+      #{dischargel,jdbcType=DOUBLE}, #{beginoilheight,jdbcType=DOUBLE}, #{beginoill,jdbcType=DOUBLE}, 
+      #{beginv20l,jdbcType=DOUBLE}, #{begintemperature,jdbcType=DOUBLE}, #{endoilheight,jdbcType=DOUBLE}, 
+      #{endoill,jdbcType=DOUBLE}, #{endv20l,jdbcType=DOUBLE}, #{endtemperature,jdbcType=DOUBLE}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{isdel,jdbcType=INTEGER}, #{entertype,jdbcType=INTEGER}, 
+      #{duringsales,jdbcType=DOUBLE}, #{transtatus,jdbcType=VARCHAR},#{stablebegintime,jdbcType=TIMESTAMP},#{stableendtime,jdbcType=TIMESTAMP},
+     #{forcecancelstable,jdbcType=INTEGER},#{isbeforestable,jdbcType=INTEGER} )
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.AcceptanceOdRegisterInfo" >
+    insert into oss_acceptance_odRegisterInfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="deliveryno != null" >
+        DeliveryNo,
+      </if>
+      <if test="oilcan != null" >
+        OilCan,
+      </if>
+      <if test="manualNo != null" >
+        ManualNo,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="shift != null" >
+        Shift,
+      </if>
+      <if test="begintime != null" >
+        BeginTime,
+      </if>
+      <if test="endtime != null" >
+        EndTime,
+      </if>
+      <if test="dischargel != null" >
+        DischargeL,
+      </if>
+      <if test="beginoilheight != null" >
+        BeginOilHeight,
+      </if>
+      <if test="beginoill != null" >
+        BeginOilL,
+      </if>
+      <if test="beginv20l != null" >
+        BeginV20L,
+      </if>
+      <if test="begintemperature != null" >
+        BeginTemperature,
+      </if>
+      <if test="endoilheight != null" >
+        EndOilHeight,
+      </if>
+      <if test="endoill != null" >
+        EndOilL,
+      </if>
+      <if test="endv20l != null" >
+        EndV20L,
+      </if>
+      <if test="endtemperature != null" >
+        EndTemperature,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="isdel != null" >
+        IsDel,
+      </if>
+      <if test="entertype != null" >
+        EnterType,
+      </if>
+      <if test="duringsales != null" >
+        DuringSales,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="stablebegintime != null" >
+        StableBeginTime,
+      </if>
+      <if test="stableendtime != null" >
+        StableEndTime,
+      </if>
+      <if test="forcecancelstable != null" >
+        ForceCancelStable,
+      </if>
+      <if test="isbeforestable != null" >
+        IsBeforeStable,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="deliveryno != null" >
+        #{deliveryno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="manualNo != null" >
+        #{manualNo,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null" >
+        #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="begintime != null" >
+        #{begintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dischargel != null" >
+        #{dischargel,jdbcType=DOUBLE},
+      </if>
+      <if test="beginoilheight != null" >
+        #{beginoilheight,jdbcType=DOUBLE},
+      </if>
+      <if test="beginoill != null" >
+        #{beginoill,jdbcType=DOUBLE},
+      </if>
+      <if test="beginv20l != null" >
+        #{beginv20l,jdbcType=DOUBLE},
+      </if>
+      <if test="begintemperature != null" >
+        #{begintemperature,jdbcType=DOUBLE},
+      </if>
+      <if test="endoilheight != null" >
+        #{endoilheight,jdbcType=DOUBLE},
+      </if>
+      <if test="endoill != null" >
+        #{endoill,jdbcType=DOUBLE},
+      </if>
+      <if test="endv20l != null" >
+        #{endv20l,jdbcType=DOUBLE},
+      </if>
+      <if test="endtemperature != null" >
+        #{endtemperature,jdbcType=DOUBLE},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="entertype != null" >
+        #{entertype,jdbcType=INTEGER},
+      </if>
+      <if test="duringsales != null" >
+        #{duringsales,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="stablebegintime != null" >
+        #{stablebegintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stableendtime != null" >
+        #{stableendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="forcecancelstable != null" >
+        #{forcecancelstable,jdbcType=INTEGER},
+      </if>
+      <if test="isbeforestable != null" >
+        #{isbeforestable,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <insert id="merge" parameterType="com.kld.gsm.ATG.domain.AcceptanceOdRegisterInfo" >
+    replace into oss_acceptance_odRegisterInfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="deliveryno != null" >
+        DeliveryNo,
+      </if>
+      <if test="oilcan != null" >
+        OilCan,
+      </if>
+      <if test="manualNo != null" >
+        ManualNo,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="shift != null" >
+        Shift,
+      </if>
+      <if test="begintime != null" >
+        BeginTime,
+      </if>
+      <if test="endtime != null" >
+        EndTime,
+      </if>
+      <if test="dischargel != null" >
+        DischargeL,
+      </if>
+      <if test="beginoilheight != null" >
+        BeginOilHeight,
+      </if>
+      <if test="beginoill != null" >
+        BeginOilL,
+      </if>
+      <if test="beginv20l != null" >
+        BeginV20L,
+      </if>
+      <if test="begintemperature != null" >
+        BeginTemperature,
+      </if>
+      <if test="endoilheight != null" >
+        EndOilHeight,
+      </if>
+      <if test="endoill != null" >
+        EndOilL,
+      </if>
+      <if test="endv20l != null" >
+        EndV20L,
+      </if>
+      <if test="endtemperature != null" >
+        EndTemperature,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="isdel != null" >
+        IsDel,
+      </if>
+      <if test="entertype != null" >
+        EnterType,
+      </if>
+      <if test="duringsales != null" >
+        DuringSales,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="stablebegintime != null" >
+        StableBeginTime,
+      </if>
+      <if test="stableendtime != null" >
+        StableEndTime,
+      </if>
+      <if test="forcecancelstable != null" >
+        ForceCancelStable,
+      </if>
+      <if test="isbeforestable != null" >
+        IsBeforeStable,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="deliveryno != null" >
+        #{deliveryno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="manualNo != null" >
+        #{manualNo,jdbcType=VARCHAR},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null" >
+        #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="begintime != null" >
+        #{begintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dischargel != null" >
+        #{dischargel,jdbcType=DOUBLE},
+      </if>
+      <if test="beginoilheight != null" >
+        #{beginoilheight,jdbcType=DOUBLE},
+      </if>
+      <if test="beginoill != null" >
+        #{beginoill,jdbcType=DOUBLE},
+      </if>
+      <if test="beginv20l != null" >
+        #{beginv20l,jdbcType=DOUBLE},
+      </if>
+      <if test="begintemperature != null" >
+        #{begintemperature,jdbcType=DOUBLE},
+      </if>
+      <if test="endoilheight != null" >
+        #{endoilheight,jdbcType=DOUBLE},
+      </if>
+      <if test="endoill != null" >
+        #{endoill,jdbcType=DOUBLE},
+      </if>
+      <if test="endv20l != null" >
+        #{endv20l,jdbcType=DOUBLE},
+      </if>
+      <if test="endtemperature != null" >
+        #{endtemperature,jdbcType=DOUBLE},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="entertype != null" >
+        #{entertype,jdbcType=INTEGER},
+      </if>
+      <if test="duringsales != null" >
+        #{duringsales,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="stablebegintime != null" >
+        #{stablebegintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stableendtime != null" >
+        #{stableendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="forcecancelstable != null" >
+        #{forcecancelstable,jdbcType=INTEGER},
+      </if>
+      <if test="isbeforestable != null" >
+        #{isbeforestable,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.AcceptanceOdRegisterInfo" >
+    update oss_acceptance_odRegisterInfo
+    <set >
+      <if test="deliveryno != null" >
+        DeliveryNo = #{deliveryno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilno != null" >
+        OilNo = #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null" >
+        Shift = #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="begintime != null" >
+        BeginTime = #{begintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        EndTime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dischargel != null" >
+        DischargeL = #{dischargel,jdbcType=DOUBLE},
+      </if>
+      <if test="beginoilheight != null" >
+        BeginOilHeight = #{beginoilheight,jdbcType=DOUBLE},
+      </if>
+      <if test="beginoill != null" >
+        BeginOilL = #{beginoill,jdbcType=DOUBLE},
+      </if>
+      <if test="beginv20l != null" >
+        BeginV20L = #{beginv20l,jdbcType=DOUBLE},
+      </if>
+      <if test="begintemperature != null" >
+        BeginTemperature = #{begintemperature,jdbcType=DOUBLE},
+      </if>
+      <if test="endoilheight != null" >
+        EndOilHeight = #{endoilheight,jdbcType=DOUBLE},
+      </if>
+      <if test="endoill != null" >
+        EndOilL = #{endoill,jdbcType=DOUBLE},
+      </if>
+      <if test="endv20l != null" >
+        EndV20L = #{endv20l,jdbcType=DOUBLE},
+      </if>
+      <if test="endtemperature != null" >
+        EndTemperature = #{endtemperature,jdbcType=DOUBLE},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdel != null" >
+        IsDel = #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="entertype != null" >
+        EnterType = #{entertype,jdbcType=INTEGER},
+      </if>
+      <if test="duringsales != null" >
+        DuringSales = #{duringsales,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="stablebegintime != null" >
+        StableBeginTime = #{stablebegintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stableendtime != null" >
+        StableEndTime = #{stableendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="forcecancelstable != null" >
+        ForceCancelStable = #{forcecancelstable,jdbcType=INTEGER},
+      </if>
+      <if test="isbeforestable != null" >
+        IsBeforeStable = #{isbeforestable,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ManualNo = #{manualNo,jdbcType=VARCHAR}
+      and OilCan = #{oilcan,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.AcceptanceOdRegisterInfo" >
+    update oss_acceptance_odRegisterInfo
+    set OilNo = #{oilno,jdbcType=VARCHAR},
+      DeliveryNo = #{deliveryno,jdbcType=VARCHAR},
+      Shift = #{shift,jdbcType=VARCHAR},
+      BeginTime = #{begintime,jdbcType=TIMESTAMP},
+      EndTime = #{endtime,jdbcType=TIMESTAMP},
+      DischargeL = #{dischargel,jdbcType=DOUBLE},
+      BeginOilHeight = #{beginoilheight,jdbcType=DOUBLE},
+      BeginOilL = #{beginoill,jdbcType=DOUBLE},
+      BeginV20L = #{beginv20l,jdbcType=DOUBLE},
+      BeginTemperature = #{begintemperature,jdbcType=DOUBLE},
+      EndOilHeight = #{endoilheight,jdbcType=DOUBLE},
+      EndOilL = #{endoill,jdbcType=DOUBLE},
+      EndV20L = #{endv20l,jdbcType=DOUBLE},
+      EndTemperature = #{endtemperature,jdbcType=DOUBLE},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      IsDel = #{isdel,jdbcType=INTEGER},
+      EnterType = #{entertype,jdbcType=INTEGER},
+      DuringSales = #{duringsales,jdbcType=DOUBLE},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      StableBeginTime = #{stablebegintime,jdbcType=TIMESTAMP},
+      StableEndTime = #{stableendtime,jdbcType=TIMESTAMP}
+    where ManualNo = #{manualNo,jdbcType=VARCHAR}
+      and OilCan = #{oilcan,jdbcType=INTEGER}
+  </update>
+  <select id="selectBydeliveryno" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM oss_acceptance_odRegisterInfo where ManualNo=#{0,jdbcType=VARCHAR}
+  </select>
+  <update id="updateByManualNo" parameterType="hashmap">
+    UPDATE oss_acceptance_odRegisterInfo
+    <set>
+      SHIFT=#{shift},
+      TranStatus=0
+    </set>
+    <where>
+      ManualNo= #{manualno} or DeliveryNo=#{manualno}
+    </where>
+  </update>
+  <select id="selectBegin" parameterType="String" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM  oss_acceptance_odRegisterInfo where  ManualNo= #{manualno}  ORDER BY BeginTime asc LIMIT 1
+  </select>
+  <select id="selectEnd" parameterType="String" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM  oss_acceptance_odRegisterInfo where  ManualNo= #{manualno}  ORDER BY EndTime DESC LIMIT 1
+  </select>
+
+   <select id="findDischargeL" parameterType="String" resultType="java.util.HashMap">
+    SELECT OilNo as oilno,SUM(DischargeL) as dischargel FROM oss_acceptance_odRegisterInfo
+    WHERE  (Shift IS NULL OR Shift='' OR Shift &gt;#{shift,jdbcType=VARCHAR}) AND DischargeL IS NOT NULL
+    GROUP BY OilNo
+  </select>
+
+
+  <select id="selectbycanno" parameterType="hashmap" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM  oss_acceptance_odRegisterInfo where  OilCan=#{canno,jdbcType=INTEGER} AND BeginTime >=#{sttime,jdbcType=TIMESTAMP}AND EndTime>=#{ettime,jdbcType=TIMESTAMP}
+  </select>
+ </mapper>

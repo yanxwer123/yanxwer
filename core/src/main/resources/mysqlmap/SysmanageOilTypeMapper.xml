@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.SysManageOilTypeDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.SysManageOilType" >
+    <result column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <result column="OilName" property="oilname" jdbcType="VARCHAR" />
+    <result column="MacOilNo" property="macoilno" jdbcType="VARCHAR" />
+    <result column="OilType" property="oiltype" jdbcType="VARCHAR" />
+    <result column="Control" property="control" jdbcType="VARCHAR" />
+    <result column="ValidFlag" property="validflag" jdbcType="VARCHAR" />
+    <result column="ValidTime" property="validtime" jdbcType="TIMESTAMP" />
+    <result column="ModifyTime" property="modifytime" jdbcType="TIMESTAMP" />
+    <result column="ModifyNodeNo" property="modifynodeno" jdbcType="VARCHAR" />
+    <result column="ModifyOpe" property="modifyope" jdbcType="INTEGER" />
+    <result column="LevelCode" property="levelcode" jdbcType="VARCHAR" />
+    <result column="LastOilFlag" property="lastoilflag" jdbcType="VARCHAR" />
+    <result column="OilLevel" property="oillevel" jdbcType="INTEGER" />
+    <result column="InUseFlag" property="inuseflag" jdbcType="VARCHAR" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    OilNo,OilName,MacOilNo,OilType,Control,ValidFlag,ValidTime,ModifyTime,ModifyNodeNo,ModifyOpe,LevelCode,LastOilFlag,OilLevel,InUseFlag,TranStatus
+  </sql>
+  <insert id="insertList" parameterType="java.util.List">
+
+    insert into oss_sysmanage_oilType (OilNo, OilName, MacOilNo,
+    OilType, Control, ValidFlag,
+    ValidTime, ModifyTime, ModifyNodeNo,
+    ModifyOpe, LevelCode, LastOilFlag,
+    OilLevel, InUseFlag, TranStatus)
+    values
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{item.oilno}, #{item.oilname}, #{item.macoilno},
+      #{item.oiltype}, #{item.control}, #{item.validflag},
+      #{item.validtime}, #{item.modifytime}, #{item.modifynodeno},
+      #{item.modifyope}, #{item.levelcode}, #{item.lastoilflag},
+      #{item.oillevel}, #{item.inuseflag}, #{item.transtatus})
+    </foreach>
+  </insert>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select * from oss_sysmanage_oilType
+             where oilno = #{oilno,jdbcType=VARCHAR}
+  </select>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.SysManageOilType" >
+    update oss_sysmanage_oilType
+    set oilname = #{oilname,jdbcType=VARCHAR},
+    MacOilNo = #{macoilno,jdbcType=VARCHAR},
+    OilType = #{oiltype,jdbcType=VARCHAR},
+    Control = #{control,jdbcType=VARCHAR},
+    ValidFlag = #{validflag,jdbcType=VARCHAR},
+    ValidTime = #{validtime,jdbcType=TIMESTAMP},
+    ModifyTime= #{modifytime,jdbcType=TIMESTAMP},
+    ModifyNodeNo= #{modifynodeno,jdbcType=VARCHAR},
+    ModifyOpe = #{modifyope,jdbcType=INTEGER},
+    LevelCode = #{levelcode,jdbcType=VARCHAR},
+    LastOilFlag = #{lastoilflag,jdbcType=VARCHAR},
+    OilLevel = #{oillevel,jdbcType=INTEGER},
+    InUseFlag = #{inuseflag,jdbcType=VARCHAR},
+    TranStatus = #{transtatus,jdbcType=VARCHAR}
+    where OilNo = #{oilno,jdbcType=VARCHAR}
+  </update>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.SysManageOilType" >
+    insert into oss_sysmanage_oilType (OilNo, OilName, MacOilNo, 
+      OilType, Control, ValidFlag, 
+      ValidTime, ModifyTime, ModifyNodeNo, 
+      ModifyOpe, LevelCode, LastOilFlag, 
+      OilLevel, InUseFlag, TranStatus
+      )
+    values (#{oilno}, #{oilname}, #{macoilno},
+      #{oiltype}, #{control}, #{validflag},
+      #{validtime}, #{modifytime}, #{modifynodeno},
+      #{modifyope}, #{levelcode}, #{lastoilflag},
+      #{oillevel}, #{inuseflag}, #{transtatus}
+      )
+  </insert>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from oss_sysmanage_oilType
+    where oilno = #{oilno}
+  </delete>
+  <delete id="deleteAll">
+    delete from oss_sysmanage_oilType</delete>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.SysManageOilType" >
+    insert into oss_sysmanage_oilType
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="oilname != null" >
+        OilName,
+      </if>
+      <if test="macoilno != null" >
+        MacOilNo,
+      </if>
+      <if test="oiltype != null" >
+        OilType,
+      </if>
+      <if test="control != null" >
+        Control,
+      </if>
+      <if test="validflag != null" >
+        ValidFlag,
+      </if>
+      <if test="validtime != null" >
+        ValidTime,
+      </if>
+      <if test="modifytime != null" >
+        ModifyTime,
+      </if>
+      <if test="modifynodeno != null" >
+        ModifyNodeNo,
+      </if>
+      <if test="modifyope != null" >
+        ModifyOpe,
+      </if>
+      <if test="levelcode != null" >
+        LevelCode,
+      </if>
+      <if test="lastoilflag != null" >
+        LastOilFlag,
+      </if>
+      <if test="oillevel != null" >
+        OilLevel,
+      </if>
+      <if test="inuseflag != null" >
+        InUseFlag,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilname != null" >
+        #{oilname,jdbcType=VARCHAR},
+      </if>
+      <if test="macoilno != null" >
+        #{macoilno,jdbcType=VARCHAR},
+      </if>
+      <if test="oiltype != null" >
+        #{oiltype,jdbcType=VARCHAR},
+      </if>
+      <if test="control != null" >
+        #{control,jdbcType=VARCHAR},
+      </if>
+      <if test="validflag != null" >
+        #{validflag,jdbcType=VARCHAR},
+      </if>
+      <if test="validtime != null" >
+        #{validtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null" >
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifynodeno != null" >
+        #{modifynodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyope != null" >
+        #{modifyope,jdbcType=INTEGER},
+      </if>
+      <if test="levelcode != null" >
+        #{levelcode,jdbcType=VARCHAR},
+      </if>
+      <if test="lastoilflag != null" >
+        #{lastoilflag,jdbcType=VARCHAR},
+      </if>
+      <if test="oillevel != null" >
+        #{oillevel,jdbcType=INTEGER},
+      </if>
+      <if test="inuseflag != null" >
+        #{inuseflag,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectByTrans" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_sysmanage_oilType WHERE TranStatus = #{transtatus,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByInUse" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_sysmanage_oilType WHERE InUseFlag =1
+  </select>
+  <select id="selectOilNo" parameterType="String" resultType="String">
+    SELECT
+    OilName
+    FROM oss_sysmanage_oilType WHERE OilNo = #{OilNo,jdbcType=VARCHAR}
+  </select>
+  <select id="selectUse" resultMap="BaseResultMap">
+   SELECT
+	<include refid="Base_Column_List" />
+FROM
+	oss_sysmanage_oilType
+WHERE
+	OilNo IN (
+		SELECT
+			a.OilNo
+		FROM
+			oss_sysmanage_CanInfo a
+	)
+  </select>
+</mapper>

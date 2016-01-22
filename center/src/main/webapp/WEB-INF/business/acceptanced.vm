@@ -1,0 +1,147 @@
+#set($layout="layout/emptylayout.vm")
+#set($menuTitle="进货验收")
+
+<div id="queryResult"  class="easyui-panel" collapsible="true" style=" height: 600px; border-top-color: #761c19;">
+
+    <style>
+        fieldset{border: 3px solid #68AACA;padding: 10px;margin: 20px;}
+        table{border: 1px solid #A0A0A0;margin-bottom:20px}
+        td{border: 1px solid #A0A0A0;;height:25px;width: 200px}
+        td.t-title{background: #F2F2F2;text-align: left;width: 130px}
+        table{width: 100%;}
+    </style>
+    <fieldset>
+        <legend>计量发货信息(出库单信息)</legend>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="t-title"">出库单号</td>
+                <td>"+DeliveryNo+"</td>
+                <td class="t-title">出库时间</td>
+                <td>"+DeliveryTime+"</td>
+            </tr>
+            <tr>
+                <td class="t-title">发油油库</td>
+                <td>"+FromDepotName+"</td>
+                <td class="t-title">目的油站</td>
+                <td>"+ToStationName+"</td>
+            </tr>
+            <tr>
+                <td class="t-title"">油品</td>
+                <td>"+OilNo+"</td>
+                <td class="t-title">交运时间</td>
+                <td>"+ShipmentTime+"</td>
+            </tr>
+            <tr>
+                <td class="t-title">原发升数(L)</td>
+                <td>"+PlanL+"</td>
+                <td class="t-title">原发密度()</td>
+                <td>"+Density+"</td>
+            </tr>
+            <tr>
+                <td class="t-title"">原发数量()</td>
+                <td>"+PlanTon+"</td>
+                <td class="t-title">原发温度()</td>
+                <td>"+DeliveryTemp+"</td>
+            </tr>
+            <tr>
+                <td class="t-title">出库铅封号</td>
+                <td>"+OutSealNo+"</td>
+                <td class="t-title">车牌号码</td>
+                <td>"+CarNo+"</td>
+            </tr>
+        </table>
+    </fieldset>
+    <fieldset>
+        <legend>油站进货验收信息</legend>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="t-title">出库单</td>
+                <td>"+ManualNo+"</td>
+                <td class="t-title">油站</td>
+                <td>"++"</td>
+            </tr>
+            <tr>
+                <td class="t-title">班 次</td>
+                <td>"+Shift+"</td>
+                <td class="t-title">验收日期</td>
+                <td>"+BeginTime+"</td>
+            </tr>
+            <tr>
+                <td class="t-title">开始时间</td>
+                <td>"+BeginTime+"</td>
+                <td class="t-title">结束时间</td>
+                <td>"+EndTime+"</td>
+            </tr>
+            <tr>
+                <td class="t-title">油罐实收升数(L)</td>
+                <td>"+RealGetLV20+"</td>
+                <td class="t-title">罐车验收空高()</td>
+                <td>"+HeightEmpey+"</td>
+            </tr>
+            <tr>
+                <td class="t-title">罐车实收升数</td>
+                <td>"+RealReceiveL+"</td>
+                <td class="t-title">罐车验收水高()</td>
+                <td>"+HeightWater+"</td>
+            </tr>
+            <tr>
+                <td class="t-title">罐车验收油水总高()</td>
+                <td>"+HeightTotal+"</td>
+                <td class="t-title">罐车到站时间</td>
+                <td>"+InStationTime+"td>
+            </tr>
+            <tr>
+                <td class="t-title">罐车验收计量温度()</td>
+                <td>"+CanTruckTemp+"</td>
+                <td class="t-title">油站计量员</td>
+                <td>"+CalculateOperator+"</td>
+            </tr>
+            <tr>
+                <td class="t-title">罐车实收使用容积表</td>
+                <td>"+CubageTable+"</td>
+                <td class="t-title">油站铅封员</td>
+                <td>"+PlumbunBankOperator+"</td>
+            </tr>
+        </table>
+    </fieldset>
+    <div id="result">
+        <table class="easyui-datagrid" id="tt">
+        </table>
+<script>
+    var cols=[[
+        {field:'ouname',title:'罐号',width:50,align:'center'
+        },
+        {field:'oilname',title:'计量前体积',width:100,align:'center'
+        },
+        {field:'oilname',title:'计量后体积',width:100,align:'center'
+        },
+        {field:'oilname',title:'计量前温度',width:100,align:'center'
+        },
+        {field:'oilname',title:'计量后温度',width:100,align:'center'
+        },
+        {field:'oilname',title:'实收升数',width:100,align:'center'
+        }
+    ]];
+    $(function(){
+        initData();
+    });
+    function inittext(){
+        var ManualNo="";
+    }
+    function initData() {
+        inittext();
+        BindDataGridAjax('tt','卸油登记明细 ','/web/alarm/getDailyLostList',cols,ManualNo,'true',10,[10,20,30]);
+    }
+
+
+</script>
+
+
+
+
+
+    </div>
+    <div  class="easyui-panel" collapsible="true" style=" height: 30px;">
+    </div>
+
+</div>

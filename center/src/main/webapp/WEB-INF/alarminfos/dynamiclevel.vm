@@ -1,0 +1,167 @@
+#set($layout="layout/emptylayout.vm")
+#set($menuTitle="动态液位异常")
+
+<div id="query" title="查询条件" collapsible="true" class="easyui-panel" icon="icon-search">
+    <table width="550px">
+        <tr>
+            <th width="100px">
+                选择油站：
+            </th>
+            <th width="150px">
+                <input id="cc" name="cc"  class="easyui-combobox textbox" type="text"  style="width:150px" data-options="prompt:'--请选择--'"></input>
+            </th>
+            <th width="150px">
+                <input id="aa" name="aa"  class="easyui-combobox textbox" type="text" style="width:150px" data-options="prompt:'--请选择--'"></input>
+            </th>
+            <th width="150px">
+                <input id="ss" name="ss"  class="easyui-combobox textbox" type="text" style="width:150px" data-options="prompt:'--请选择--'"></input>
+            </th>
+
+        </tr>
+        <tr>
+            <th width="100px">
+                起止日期：
+            </th>
+            <th width="450px" colspan="3">
+                <input id="dateStartinput" type="text" class="easyui-datebox" required="required"/>
+                <input id="dateEndinput" type="text"  class="easyui-datebox" required="required"/>
+                状态：
+                <select  class="easyui-combobox" id="cboType">
+                    <option selected value="0">-请选择-</option>
+                    <option value="1">正常</option>
+                    <option value="2">异常</option>
+                </select>
+            </th>
+
+
+
+            </th>
+        </tr>
+
+        <tr>
+            <th></th>
+            <th>
+                <a id="btnSelect" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="initData()">查询</a>
+                <a id="btnExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="ExportExl()">导出</a>
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </table>
+
+</div>
+
+<div id="result">
+    <table class="easyui-datagrid" id="tt">
+
+    </table>
+</div>
+
+<script type="text/javascript">
+
+    function formatDatebox(value) {
+        if (value == null || value == '') {
+            return '';
+        }
+        var dt;
+        if (value instanceof Date) {
+            dt = value;
+        } else {
+            dt = new Date(value);
+        }
+
+        return dt.format("yyyy-MM-dd hh:mm"); //扩展的Date的format方法(上述插件实现)
+    }
+    var cols=[[
+        {field:'ouname',title:'油站名称',width:100,align:'center'},
+        {field:'OilCan',title:'油罐编号',width:100,align:'center'},
+        {field:'FristMeasureTime',title:'第一次检测时间',width:110,formatter: formatDatebox,align:'center'},
+        {field:'FristMeasureStore',title:'第一次检测库存(L)',width:100,align:'center'},
+        {field:'SecodeMeasureTime',title:'第二次检测时间',width:110,formatter: formatDatebox,align:'center'},
+        {field:'SecodeMeasureStore',title:'第二次检测库存(L)',width:100,align:'center'},
+        {field:'IntervalSales',title:'两次检测时间内销售量(L)',width:120,align:'center'},
+        {field:'IntervalTime',title:'间隔时间（分:秒）',width:100,align:'center'},
+        {field:'Difference',title:'差异(L)',width:100,align:'center'}
+       /* {field:'result',title:'状态',width:100}*/
+    ]];
+    var  current;//油品编号
+    var pagesize; //配送建议
+    var begin;
+    var end;
+    var oucode;
+    var result;
+    $(function(){
+        Loadcas("cc","aa","ss");
+        var myDate = new Date();
+        var MyTime=new Date();
+        var heigth=$(window).height()-160;
+        $("#result").height(heigth);
+        //var time=MyTime.getFullYear() + "-" + (MyTime.getMonth()) + "-" + MyTime.getDate();
+        $("#dateStartinput").datebox('setValue','<%=myDate.toLocaleDateString()%>');
+        $("#dateEndinput").datebox('setValue','<%=myDate.toLocaleDateString()%>');
+        initData();
+    });
+
+
+    var paras;
+    function inittext(){
+        var startTime=$("#dateStartinput").datebox("getValue").replace(/-/g,"");
+
+        var endTime=$("#dateEndinput").datebox("getValue").replace(/-/g,"");
+
+        page=null;rows=null; begin=startTime;end=endTime;
+        var ss=$('#ss').combobox('getValue');
+        var aa=$('#aa').combobox('getValue');
+        var cc=$('#cc').combobox('getValue');
+        oucode="";
+        if(cc!="")
+        {
+            oucode=cc;
+        }
+        if(aa!="")
+        {
+            oucode=aa;
+        }
+        if(ss!="")
+        {
+            oucode=ss;
+        }
+
+        result=$('#cboType').combobox('getValue');
+
+        paras={ "begin": startTime,"end": endTime,"oucode": oucode,"result": result};
+    }
+
+    function initData() {
+        inittext();
+
+        BindDataGridAjax('tt','动态液位异常','/web/alarm/getGatInfo',cols,paras,'true',10,[10,20,30]);
+
+    }
+    function ExportExl() {
+        inittext();
+        var startTime=$("#dateStartinput").datebox("getValue").replace(/-/g,"");
+
+        var endTime=$("#dateEndinput").datebox("getValue").replace(/-/g,"");
+        var filename=encodeURI(encodeURI("动态液位异常"));
+        window.open("/web/alarm/excelGaTContrast?start="+startTime+"&end="+endTime+"&oucode="+oucode+"&result="+result+"&FileName="+filename);
+    }
+
+    function formatDatebox(value) {
+        if (value == null || value == '') {
+            return '';
+        }
+        var dt;
+        if (value instanceof Date) {
+            dt = value;
+        } else {
+            dt = new Date(value);
+        }
+
+        return dt.format("yyyy-MM-dd hh:mm:ss"); //扩展的Date的format方法(上述插件实现)
+    }
+
+
+
+
+</script>

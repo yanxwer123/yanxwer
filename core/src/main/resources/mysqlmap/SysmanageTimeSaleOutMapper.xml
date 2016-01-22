@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.SysManageTimeSaleOutDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.SysManageTimeSaleOut" >
+    <id column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <id column="SaleTime" property="saletime" jdbcType="INTEGER" />
+    <result column="Sales" property="sales" jdbcType="DOUBLE" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    OilNo, SaleTime, Sales, CreateTime,TranStatus
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.ATG.domain.SysManageTimeSaleOutKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_timeSaleOut
+    where OilNo = #{oilno,jdbcType=VARCHAR}
+      and SaleTime = #{saletime,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.SysManageTimeSaleOutKey" >
+    delete from oss_sysmanage_timeSaleOut
+    where OilNo = #{oilno,jdbcType=VARCHAR}
+      and SaleTime = #{saletime,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.SysManageTimeSaleOut" >
+    insert into oss_sysmanage_timeSaleOut (OilNo, SaleTime, Sales,
+      CreateTime,TranStatus)
+    values (#{oilno,jdbcType=VARCHAR}, #{saletime,jdbcType=INTEGER}, #{sales,jdbcType=DOUBLE},
+      #{createtime,jdbcType=TIMESTAMP},#{transtatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.SysManageTimeSaleOut" >
+    insert into oss_sysmanage_timeSaleOut
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="saletime != null" >
+        SaleTime,
+      </if>
+      <if test="sales != null" >
+        Sales,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="saletime != null" >
+        #{saletime,jdbcType=INTEGER},
+      </if>
+      <if test="sales != null" >
+        #{sales,jdbcType=DOUBLE},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.SysManageTimeSaleOut" >
+    update oss_sysmanage_timeSaleOut
+    <set >
+      <if test="sales != null" >
+        Sales = #{sales,jdbcType=DOUBLE},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OilNo = #{oilno,jdbcType=VARCHAR}
+      and SaleTime = #{saletime,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.SysManageTimeSaleOut" >
+    update oss_sysmanage_timeSaleOut
+    set Sales = #{sales,jdbcType=DOUBLE},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      TranStatus=#{transtatus,jdbcType=VARCHAR}
+    where OilNo = #{oilno,jdbcType=VARCHAR}
+      and SaleTime = #{saletime,jdbcType=INTEGER}
+  </update>
+  <select id="selectByTrans" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_sysmanage_timeSaleOut
+  </select>
+  <select id="selectByOilNo" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_timeSaleOut
+    where OilNo = #{_parameter}
+  </select>
+  
+  <select id="getOilSaleSum" resultMap="BaseResultMap" parameterType="hashmap">
+
+    SELECT OilNo,sum(sales) as Sales FROM gsmapp.oss_sysmanage_timeSaleOut where    SaleTime  &lt;  #{toh}   and SaleTime &gt;= #{fromh}
+    group by oilno
+
+
+  </select>
+  
+  <delete id="deleteAll">
+    DELETE FROM oss_sysmanage_timeSaleOut
+  </delete>
+  <insert id="insertAll">
+    INSERT INTO oss_sysmanage_timeSaleOut
+    SELECT OilNo,SUBSTRING(TakeDate,12,2) SaleTime,SUM(Liter)/30 Sales,'0' TranStatus,NOW() CreateTime
+    FROM oss_daily_TradeAccount tradeaccount
+    WHERE (TakeDate &gt; date_sub(Now(), interval '30 0:0:0' day_second) and TakeDate &lt; NOW())
+    GROUP BY OilNo,SUBSTRING(TakeDate,12,2)
+  </insert>
+</mapper>

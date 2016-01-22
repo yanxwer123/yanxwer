@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kld.gsm.center.dao.oss_alarm_GaTContrastMapper">
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_alarm_GaTContrast">
+    <id column="OilCan" jdbcType="INTEGER" property="oilcan" />
+    <id column="FristMeasureTime" jdbcType="TIMESTAMP" property="fristmeasuretime" />
+    <id column="NodeNo" jdbcType="VARCHAR" property="nodeno" />
+    <result column="FristMeasureStore" jdbcType="DOUBLE" property="fristmeasurestore" />
+    <result column="SecodeMeasureTime" jdbcType="TIMESTAMP" property="secodemeasuretime" />
+    <result column="SecodeMeasureStore" jdbcType="DOUBLE" property="secodemeasurestore" />
+    <result column="IntervalSales" jdbcType="DOUBLE" property="intervalsales" />
+    <result column="IntervalTime" jdbcType="VARCHAR" property="intervaltime" />
+    <result column="Difference" jdbcType="DOUBLE" property="difference" />
+    <result column="TranStatus" jdbcType="VARCHAR" property="transtatus" />
+    <result column="Shift" jdbcType="VARCHAR" property="shift" />
+    <result column="OUCode" jdbcType="VARCHAR" property="oucode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    OilCan, FristMeasureTime, NodeNo, FristMeasureStore, SecodeMeasureTime, SecodeMeasureStore, 
+    IntervalSales, IntervalTime, Difference, TranStatus, Shift, OUCode
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_alarm_GaTContrastKey" resultMap="BaseResultMap">
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_alarm_GaTContrast
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and FristMeasureTime = #{fristmeasuretime,jdbcType=TIMESTAMP}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_alarm_GaTContrastKey">
+    delete from oss_alarm_GaTContrast
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and FristMeasureTime = #{fristmeasuretime,jdbcType=TIMESTAMP}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_alarm_GaTContrast">
+    insert into oss_alarm_GaTContrast (OilCan, FristMeasureTime, NodeNo, 
+      FristMeasureStore, SecodeMeasureTime, 
+      SecodeMeasureStore, IntervalSales, IntervalTime, 
+      Difference, TranStatus, Shift, 
+      OUCode)
+    values (#{oilcan,jdbcType=INTEGER}, #{fristmeasuretime,jdbcType=TIMESTAMP}, #{nodeno,jdbcType=VARCHAR}, 
+      #{fristmeasurestore,jdbcType=DOUBLE}, #{secodemeasuretime,jdbcType=TIMESTAMP}, 
+      #{secodemeasurestore,jdbcType=DOUBLE}, #{intervalsales,jdbcType=DOUBLE}, #{intervaltime,jdbcType=VARCHAR}, 
+      #{difference,jdbcType=DOUBLE}, #{transtatus,jdbcType=VARCHAR}, #{shift,jdbcType=VARCHAR}, 
+      #{oucode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_alarm_GaTContrast">
+    insert into oss_alarm_GaTContrast
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oilcan != null">
+        OilCan,
+      </if>
+      <if test="fristmeasuretime != null">
+        FristMeasureTime,
+      </if>
+      <if test="nodeno != null">
+        NodeNo,
+      </if>
+      <if test="fristmeasurestore != null">
+        FristMeasureStore,
+      </if>
+      <if test="secodemeasuretime != null">
+        SecodeMeasureTime,
+      </if>
+      <if test="secodemeasurestore != null">
+        SecodeMeasureStore,
+      </if>
+      <if test="intervalsales != null">
+        IntervalSales,
+      </if>
+      <if test="intervaltime != null">
+        IntervalTime,
+      </if>
+      <if test="difference != null">
+        Difference,
+      </if>
+      <if test="transtatus != null">
+        TranStatus,
+      </if>
+      <if test="shift != null">
+        Shift,
+      </if>
+      <if test="oucode != null">
+        OUCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oilcan != null">
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="fristmeasuretime != null">
+        #{fristmeasuretime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nodeno != null">
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="fristmeasurestore != null">
+        #{fristmeasurestore,jdbcType=DOUBLE},
+      </if>
+      <if test="secodemeasuretime != null">
+        #{secodemeasuretime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="secodemeasurestore != null">
+        #{secodemeasurestore,jdbcType=DOUBLE},
+      </if>
+      <if test="intervalsales != null">
+        #{intervalsales,jdbcType=DOUBLE},
+      </if>
+      <if test="intervaltime != null">
+        #{intervaltime,jdbcType=VARCHAR},
+      </if>
+      <if test="difference != null">
+        #{difference,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null">
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null">
+        #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null">
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_alarm_GaTContrast">
+    update oss_alarm_GaTContrast
+    <set>
+      <if test="fristmeasurestore != null">
+        FristMeasureStore = #{fristmeasurestore,jdbcType=DOUBLE},
+      </if>
+      <if test="secodemeasuretime != null">
+        SecodeMeasureTime = #{secodemeasuretime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="secodemeasurestore != null">
+        SecodeMeasureStore = #{secodemeasurestore,jdbcType=DOUBLE},
+      </if>
+      <if test="intervalsales != null">
+        IntervalSales = #{intervalsales,jdbcType=DOUBLE},
+      </if>
+      <if test="intervaltime != null">
+        IntervalTime = #{intervaltime,jdbcType=VARCHAR},
+      </if>
+      <if test="difference != null">
+        Difference = #{difference,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null">
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null">
+        Shift = #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null">
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and FristMeasureTime = #{fristmeasuretime,jdbcType=TIMESTAMP}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_alarm_GaTContrast">
+    update oss_alarm_GaTContrast
+    set FristMeasureStore = #{fristmeasurestore,jdbcType=DOUBLE},
+      SecodeMeasureTime = #{secodemeasuretime,jdbcType=TIMESTAMP},
+      SecodeMeasureStore = #{secodemeasurestore,jdbcType=DOUBLE},
+      IntervalSales = #{intervalsales,jdbcType=DOUBLE},
+      IntervalTime = #{intervaltime,jdbcType=VARCHAR},
+      Difference = #{difference,jdbcType=DOUBLE},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      Shift = #{shift,jdbcType=VARCHAR},
+      OUCode = #{oucode,jdbcType=VARCHAR}
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and FristMeasureTime = #{fristmeasuretime,jdbcType=TIMESTAMP}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <select id="selectGatInfo" resultType="hashmap" parameterType="hashmap">
+    <![CDATA[
+SELECT * from oss_alarm_GaTContrast where LEFT(Shift,8)>=#{begin,jdbcType=VARCHAR} and LEFT(Shift,8)<=#{end,jdbcType=VARCHAR}
+    ]]>
+    <if test="oucode != null and  oucode!= ''">
+      <![CDATA[ and OUCode LIKE #{oucode,jdbcType=VARCHAR} ]]>
+    </if>
+    ORDER BY Shift DESC
+    <if test="firstRow != null and  pageSize!= null">
+      <![CDATA[ LIMIT #{firstRow},#{pageSize}]]>
+    </if>
+  </select>
+  <select id="selectGatAllInfo" resultType="hashmap" parameterType="hashmap">
+    <![CDATA[
+SELECT * from oss_alarm_GaTContrast where LEFT(Shift,8)>=#{begin,jdbcType=VARCHAR} and LEFT(Shift,8)<=#{end,jdbcType=VARCHAR}
+    ]]>
+    <if test="oucode != null and  oucode!= ''">
+      <![CDATA[ and OUCode LIKE #{oucode,jdbcType=VARCHAR} ]]>
+    </if>
+    ORDER BY Shift DESC
+  </select>
+</mapper>

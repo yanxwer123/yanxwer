@@ -1,0 +1,29 @@
+<body style="padding:0px;margin:0px;background-color:#006ead;text-align:center;">
+	<div id="bd">
+		<h3 class="error">错误信息：
+			#if($exception)
+				#if($!exception.class.simpleName=="NoSuchMethodException")
+                    $!response.setStatus(404)
+                    404! 您请求的内容不存在
+                #else
+					$exception.message
+				#end
+			#elseif($result)
+				#if($result.resultCode)
+					#showSimpleError()    
+				#else
+					系统错误
+				#end
+			#end
+		</h3>
+		<a href="javascript:void(0)" class="btnback" onclick="window.history.back()" ></a>
+	</div>
+	
+<!--[if IE 6]>
+<script type="text/javascript" src="resources/js/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>
+  DD_belatedPNG.fix('.pngfix');
+</script>
+<![endif]-->
+</body>
+

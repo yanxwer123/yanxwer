@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.AlarmEquipmentDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.AlarmEquipment" >
+    <id column="OilCan" property="oilcan" jdbcType="INTEGER" />
+    <id column="StartAlarmTime" property="startalarmtime" jdbcType="TIMESTAMP" />
+    <result column="EndAlarmTime" property="endalarmtime" jdbcType="TIMESTAMP" />
+    <result column="FailureType" property="failuretype" jdbcType="VARCHAR" />
+    <result column="EquipCode" property="equipcode" jdbcType="VARCHAR" />
+    <result column="MalfunctionCode" property="malfunctioncode" jdbcType="VARCHAR" />
+    <result column="EquipBrand" property="equipbrand" jdbcType="VARCHAR" />
+    <result column="ProbeModel" property="probemodel" jdbcType="VARCHAR" />
+    <result column="Remark" property="remark" jdbcType="VARCHAR" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="Shift" property="shift" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    OilCan, StartAlarmTime, EndAlarmTime, FailureType, EquipCode, MalfunctionCode, EquipBrand, 
+    ProbeModel, Remark, TranStatus, Shift
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.ATG.domain.AlarmEquipmentKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_alarm_Equipment
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and StartAlarmTime = #{startalarmtime,jdbcType=TIMESTAMP}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.AlarmEquipmentKey" >
+    delete from oss_alarm_Equipment
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and StartAlarmTime = #{startalarmtime,jdbcType=TIMESTAMP}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.AlarmEquipment" >
+    insert into oss_alarm_Equipment (OilCan, StartAlarmTime, EndAlarmTime, 
+      FailureType, EquipCode, MalfunctionCode, 
+      EquipBrand, ProbeModel, Remark, 
+      TranStatus, Shift)
+    values (#{oilcan,jdbcType=INTEGER}, #{startalarmtime,jdbcType=TIMESTAMP}, #{endalarmtime,jdbcType=TIMESTAMP}, 
+      #{failuretype,jdbcType=VARCHAR}, #{equipcode,jdbcType=VARCHAR}, #{malfunctioncode,jdbcType=VARCHAR}, 
+      #{equipbrand,jdbcType=VARCHAR}, #{probemodel,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{transtatus,jdbcType=VARCHAR}, #{shift,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.AlarmEquipment" >
+    insert into oss_alarm_Equipment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oilcan != null" >
+        OilCan,
+      </if>
+      <if test="startalarmtime != null" >
+        StartAlarmTime,
+      </if>
+      <if test="endalarmtime != null" >
+        EndAlarmTime,
+      </if>
+      <if test="failuretype != null" >
+        FailureType,
+      </if>
+      <if test="equipcode != null" >
+        EquipCode,
+      </if>
+      <if test="malfunctioncode != null" >
+        MalfunctionCode,
+      </if>
+      <if test="equipbrand != null" >
+        EquipBrand,
+      </if>
+      <if test="probemodel != null" >
+        ProbeModel,
+      </if>
+      <if test="remark != null" >
+        Remark,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="shift != null" >
+        Shift,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="startalarmtime != null" >
+        #{startalarmtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endalarmtime != null" >
+        #{endalarmtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="failuretype != null" >
+        #{failuretype,jdbcType=VARCHAR},
+      </if>
+      <if test="equipcode != null" >
+        #{equipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="malfunctioncode != null" >
+        #{malfunctioncode,jdbcType=VARCHAR},
+      </if>
+      <if test="equipbrand != null" >
+        #{equipbrand,jdbcType=VARCHAR},
+      </if>
+      <if test="probemodel != null" >
+        #{probemodel,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null" >
+        #{shift,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.AlarmEquipment" >
+    update oss_alarm_Equipment
+    <set >
+      <if test="endalarmtime != null" >
+        EndAlarmTime = #{endalarmtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="failuretype != null" >
+        FailureType = #{failuretype,jdbcType=VARCHAR},
+      </if>
+      <if test="equipcode != null" >
+        EquipCode = #{equipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="malfunctioncode != null" >
+        MalfunctionCode = #{malfunctioncode,jdbcType=VARCHAR},
+      </if>
+      <if test="equipbrand != null" >
+        EquipBrand = #{equipbrand,jdbcType=VARCHAR},
+      </if>
+      <if test="probemodel != null" >
+        ProbeModel = #{probemodel,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        Remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null" >
+        Shift = #{shift,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and StartAlarmTime = #{startalarmtime,jdbcType=TIMESTAMP}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.AlarmEquipment" >
+    update oss_alarm_Equipment
+    set EndAlarmTime = #{endalarmtime,jdbcType=TIMESTAMP},
+      FailureType = #{failuretype,jdbcType=VARCHAR},
+      EquipCode = #{equipcode,jdbcType=VARCHAR},
+      MalfunctionCode = #{malfunctioncode,jdbcType=VARCHAR},
+      EquipBrand = #{equipbrand,jdbcType=VARCHAR},
+      ProbeModel = #{probemodel,jdbcType=VARCHAR},
+      Remark = #{remark,jdbcType=VARCHAR},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      Shift = #{shift,jdbcType=VARCHAR}
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and StartAlarmTime = #{startalarmtime,jdbcType=TIMESTAMP}
+  </update>
+  
+   <select id="selectByDate" resultType="com.kld.gsm.ATG.domain.AlarmEquipment" parameterType="hashmap">
+    SELECT <include refid="Base_Column_List" />
+    FROM oss_alarm_Equipment WHERE 1=1
+    <if test="begin != null" >
+      AND StartAlarmTime >= #{begin,jdbcType=TIMESTAMP}
+    </if>
+     <if test="end != null" >
+       and StartAlarmTime &lt;= #{end,jdbcType=TIMESTAMP}
+     </if>
+     <if test="failureType != null " >
+       and FailureType = #{failureType,jdbcType=VARCHAR}
+     </if>
+     ORDER BY StartAlarmTime DESC
+  </select>
+  <select id="selectByTrans" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_alarm_Equipment WHERE TranStatus=#{trans,jdbcType=VARCHAR}
+  </select>
+  <select id="selectEndTime" parameterType="Integer" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_alarm_Equipment WHERE oilcan=#{_parameter} AND EndAlarmTime IS NULL
+  </select>
+  <update id="updateEndTime" parameterType="com.kld.gsm.ATG.domain.AlarmEquipment" >
+  update oss_alarm_Equipment set EndAlarmTime=#{endalarmtime,jdbcType=TIMESTAMP}
+  WHERE oilcan=#{oilcan,jdbcType=INTEGER} AND FailureType=#{failuretype,jdbcType=VARCHAR} AND EndAlarmTime IS NULL
+  AND #{endalarmtime,jdbcType=TIMESTAMP}>IFNULL(StartAlarmTime,0)
+  </update>
+  <select id="selectMaxTime" parameterType="Integer" resultType="String">
+    SELECT
+    MAX(StartAlarmTime) StartAlarmTime
+    FROM oss_alarm_Equipment WHERE oilcan=#{0,jdbcType=INTEGER} and StartAlarmTime &lt; now()
+  </select>
+  <select id="isExisit" parameterType="com.kld.gsm.ATG.domain.AlarmEquipment" resultType="String">
+    SELECT FailureType
+    FROM oss_alarm_Equipment
+    WHERE oilcan=#{oilcan,jdbcType=INTEGER}
+    AND FailureType=#{failuretype,jdbcType=VARCHAR}
+    AND StartAlarmTime=#{startalarmtime,jdbcType=TIMESTAMP}
+  </select>
+</mapper>

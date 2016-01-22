@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.SysManageIquidCubageInfoDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.SysManageIquidCubageInfo" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <id column="Version" property="version" jdbcType="VARCHAR" />
+    <id column="OilCan" property="oilcan" jdbcType="INTEGER" />
+    <result column="Height" property="height" jdbcType="DOUBLE" />
+    <result column="Liter" property="liter" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, Version, OilCan, Height, Liter
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.ATG.domain.SysManageIquidCubageInfoKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_iquidCubageInfo
+    where ID = #{id,jdbcType=INTEGER}
+      and Version = #{version,jdbcType=VARCHAR}
+      and OilCan = #{oilcan,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.SysManageIquidCubageInfoKey" >
+    delete from oss_sysmanage_iquidCubageInfo
+    where ID = #{id,jdbcType=INTEGER}
+      and Version = #{version,jdbcType=VARCHAR}
+      and OilCan = #{oilcan,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.SysManageIquidCubageInfo" >
+    insert into oss_sysmanage_iquidCubageInfo (ID, Version, OilCan, 
+      Height, Liter)
+    values (#{id,jdbcType=INTEGER}, #{version,jdbcType=VARCHAR}, #{oilcan,jdbcType=INTEGER}, 
+      #{height,jdbcType=DOUBLE}, #{liter,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.SysManageIquidCubageInfo" >
+    insert into oss_sysmanage_iquidCubageInfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="version != null" >
+        Version,
+      </if>
+      <if test="oilcan != null" >
+        OilCan,
+      </if>
+      <if test="height != null" >
+        Height,
+      </if>
+      <if test="liter != null" >
+        Liter,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="height != null" >
+        #{height,jdbcType=DOUBLE},
+      </if>
+      <if test="liter != null" >
+        #{liter,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.SysManageIquidCubageInfo" >
+    update oss_sysmanage_iquidCubageInfo
+    <set >
+      <if test="height != null" >
+        Height = #{height,jdbcType=DOUBLE},
+      </if>
+      <if test="liter != null" >
+        Liter = #{liter,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+      and Version = #{version,jdbcType=VARCHAR}
+      and OilCan = #{oilcan,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.SysManageIquidCubageInfo" >
+    update oss_sysmanage_iquidCubageInfo
+    set Height = #{height,jdbcType=DOUBLE},
+      Liter = #{liter,jdbcType=DOUBLE}
+    where ID = #{id,jdbcType=INTEGER}
+      and Version = #{version,jdbcType=VARCHAR}
+      and OilCan = #{oilcan,jdbcType=INTEGER}
+  </update>
+</mapper>

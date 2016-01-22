@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.HNRemoteToHnMapper" >
+    <resultMap type="java.util.HashMap" id="resultMap">
+
+        <result column="nodeno" property="nodeno"   jdbcType="VARCHAR"  />
+
+
+        <result column="oilcan" property="oilcan"  jdbcType="INTEGER"/>
+
+
+        <result column="startTime" property="startTime"   jdbcType="TIMESTAMP"/>
+
+
+        <result column="endTime"  property="endTime"   jdbcType="TIMESTAMP"/>
+
+
+        <result column="unloadQty" property="unloadQty"  jdbcType="DOUBLE"/>
+
+
+        <result column="backTankQty" property="backTankQty"  jdbcType="DOUBLE"/>
+
+
+        <result column="saleQty" property="saleQty"  jdbcType="DOUBLE"/>
+
+
+        <result column="startStock" property="startStock"   jdbcType="DOUBLE"/>
+
+
+        <result column="endStock" property="endStock"  jdbcType="DOUBLE"/>
+
+
+        <result column="lossQty" property="lossQty"   jdbcType="DOUBLE"/>
+
+
+        <result column="lossRate" property="lossRate" jdbcType="DOUBLE"/>
+
+    </resultMap>
+    <!--<select id="getinfo" statementType="CALLABLE" parameterType="java.util.Map"  resultMap="resultMap" >
+        <![CDATA[ {call getguninfo(#{nodeno,jdbcType=VARCHAR,mode=IN} ) }]]>
+    </select>
+    --><select id="getremotetohninfo" statementType="CALLABLE" parameterType="java.util.Map"  resultType="com.kld.gsm.center.domain.hn.HNGunInfo" >
+        <![CDATA[ {call getremotetohninfo(#{nodeno,jdbcType=VARCHAR,mode=IN} ) }]]>
+    </select>
+</mapper>
+

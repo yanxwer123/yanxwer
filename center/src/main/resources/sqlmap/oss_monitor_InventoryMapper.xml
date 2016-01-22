@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_monitor_InventoryMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_monitor_Inventory" >
+    <id column="OilCanNo" property="oilcanno" jdbcType="INTEGER" />
+    <id column="Date" property="date" jdbcType="VARCHAR" />
+    <id column="Time" property="time" jdbcType="VARCHAR" />
+    <id column="NodeNo" property="nodeno" jdbcType="VARCHAR" />
+    <result column="OilCubage" property="oilcubage" jdbcType="DOUBLE" />
+    <result column="StandCubage" property="standcubage" jdbcType="DOUBLE" />
+    <result column="EmptyCubage" property="emptycubage" jdbcType="DOUBLE" />
+    <result column="TotalHeight" property="totalheight" jdbcType="DOUBLE" />
+    <result column="WaterHeight" property="waterheight" jdbcType="DOUBLE" />
+    <result column="Temp" property="temp" jdbcType="DOUBLE" />
+    <result column="Temp1" property="temp1" jdbcType="DOUBLE" />
+    <result column="Temp2" property="temp2" jdbcType="DOUBLE" />
+    <result column="Temp3" property="temp3" jdbcType="DOUBLE" />
+    <result column="Temp4" property="temp4" jdbcType="DOUBLE" />
+    <result column="Temp5" property="temp5" jdbcType="DOUBLE" />
+    <result column="WaterBulk" property="waterbulk" jdbcType="DOUBLE" />
+    <result column="ApparentDensity" property="apparentdensity" jdbcType="DOUBLE" />
+    <result column="StandDensity" property="standdensity" jdbcType="DOUBLE" />
+    <result column="Version" property="version" jdbcType="VARCHAR" />
+    <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
+    <result column="Transtatus" property="transtatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    OilCanNo, Date, Time, NodeNo, OilCubage, StandCubage, EmptyCubage, TotalHeight, WaterHeight,
+    Temp, Temp1, Temp2, Temp3, Temp4, Temp5, WaterBulk, ApparentDensity, StandDensity, 
+    Version, OUCode,Transtatus
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_monitor_InventoryKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_monitor_Inventory
+    where OilCanNo = #{oilcanno,jdbcType=INTEGER}
+      and Date = #{date,jdbcType=VARCHAR}
+      and Time = #{time,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_monitor_InventoryKey" >
+    delete from oss_monitor_Inventory
+    where OilCanNo = #{oilcanno,jdbcType=INTEGER}
+      and Date = #{date,jdbcType=VARCHAR}
+      and Time = #{time,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_monitor_Inventory" >
+    insert into oss_monitor_Inventory (OilCanNo, Date, Time, 
+      NodeNo, OilCubage, StandCubage, 
+      EmptyCubage, TotalHeight, WaterHeight, 
+      Temp, Temp1, Temp2, Temp3, 
+      Temp4, Temp5, WaterBulk, 
+      ApparentDensity, StandDensity, Version, 
+      OUCode,Transtatus)
+    values (#{oilcanno,jdbcType=INTEGER}, #{date,jdbcType=VARCHAR}, #{time,jdbcType=VARCHAR}, 
+      #{nodeno,jdbcType=VARCHAR}, #{oilcubage,jdbcType=DOUBLE}, #{standcubage,jdbcType=DOUBLE}, 
+      #{emptycubage,jdbcType=DOUBLE}, #{totalheight,jdbcType=DOUBLE}, #{waterheight,jdbcType=DOUBLE}, 
+      #{temp,jdbcType=DOUBLE}, #{temp1,jdbcType=DOUBLE}, #{temp2,jdbcType=DOUBLE}, #{temp3,jdbcType=DOUBLE}, 
+      #{temp4,jdbcType=DOUBLE}, #{temp5,jdbcType=DOUBLE}, #{waterbulk,jdbcType=DOUBLE}, 
+      #{apparentdensity,jdbcType=DOUBLE}, #{standdensity,jdbcType=DOUBLE}, #{version,jdbcType=VARCHAR}, 
+      #{oucode,jdbcType=VARCHAR},#{transtatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_monitor_Inventory" >
+    insert into oss_monitor_Inventory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oilcanno != null" >
+        OilCanNo,
+      </if>
+      <if test="date != null" >
+        Date,
+      </if>
+      <if test="time != null" >
+        Time,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="oilcubage != null" >
+        OilCubage,
+      </if>
+      <if test="standcubage != null" >
+        StandCubage,
+      </if>
+      <if test="emptycubage != null" >
+        EmptyCubage,
+      </if>
+      <if test="totalheight != null" >
+        TotalHeight,
+      </if>
+      <if test="waterheight != null" >
+        WaterHeight,
+      </if>
+      <if test="temp != null" >
+        Temp,
+      </if>
+      <if test="temp1 != null" >
+        Temp1,
+      </if>
+      <if test="temp2 != null" >
+        Temp2,
+      </if>
+      <if test="temp3 != null" >
+        Temp3,
+      </if>
+      <if test="temp4 != null" >
+        Temp4,
+      </if>
+      <if test="temp5 != null" >
+        Temp5,
+      </if>
+      <if test="waterbulk != null" >
+        WaterBulk,
+      </if>
+      <if test="apparentdensity != null" >
+        ApparentDensity,
+      </if>
+      <if test="standdensity != null" >
+        StandDensity,
+      </if>
+      <if test="version != null" >
+        Version,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+      <if test="transtatus != null" >
+        Transtatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oilcanno != null" >
+        #{oilcanno,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilcubage != null" >
+        #{oilcubage,jdbcType=DOUBLE},
+      </if>
+      <if test="standcubage != null" >
+        #{standcubage,jdbcType=DOUBLE},
+      </if>
+      <if test="emptycubage != null" >
+        #{emptycubage,jdbcType=DOUBLE},
+      </if>
+      <if test="totalheight != null" >
+        #{totalheight,jdbcType=DOUBLE},
+      </if>
+      <if test="waterheight != null" >
+        #{waterheight,jdbcType=DOUBLE},
+      </if>
+      <if test="temp != null" >
+        #{temp,jdbcType=DOUBLE},
+      </if>
+      <if test="temp1 != null" >
+        #{temp1,jdbcType=DOUBLE},
+      </if>
+      <if test="temp2 != null" >
+        #{temp2,jdbcType=DOUBLE},
+      </if>
+      <if test="temp3 != null" >
+        #{temp3,jdbcType=DOUBLE},
+      </if>
+      <if test="temp4 != null" >
+        #{temp4,jdbcType=DOUBLE},
+      </if>
+      <if test="temp5 != null" >
+        #{temp5,jdbcType=DOUBLE},
+      </if>
+      <if test="waterbulk != null" >
+        #{waterbulk,jdbcType=DOUBLE},
+      </if>
+      <if test="apparentdensity != null" >
+        #{apparentdensity,jdbcType=DOUBLE},
+      </if>
+      <if test="standdensity != null" >
+        #{standdensity,jdbcType=DOUBLE},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_monitor_Inventory" >
+    update oss_monitor_Inventory
+    <set >
+      <if test="oilcubage != null" >
+        OilCubage = #{oilcubage,jdbcType=DOUBLE},
+      </if>
+      <if test="standcubage != null" >
+        StandCubage = #{standcubage,jdbcType=DOUBLE},
+      </if>
+      <if test="emptycubage != null" >
+        EmptyCubage = #{emptycubage,jdbcType=DOUBLE},
+      </if>
+      <if test="totalheight != null" >
+        TotalHeight = #{totalheight,jdbcType=DOUBLE},
+      </if>
+      <if test="waterheight != null" >
+        WaterHeight = #{waterheight,jdbcType=DOUBLE},
+      </if>
+      <if test="temp != null" >
+        Temp = #{temp,jdbcType=DOUBLE},
+      </if>
+      <if test="temp1 != null" >
+        Temp1 = #{temp1,jdbcType=DOUBLE},
+      </if>
+      <if test="temp2 != null" >
+        Temp2 = #{temp2,jdbcType=DOUBLE},
+      </if>
+      <if test="temp3 != null" >
+        Temp3 = #{temp3,jdbcType=DOUBLE},
+      </if>
+      <if test="temp4 != null" >
+        Temp4 = #{temp4,jdbcType=DOUBLE},
+      </if>
+      <if test="temp5 != null" >
+        Temp5 = #{temp5,jdbcType=DOUBLE},
+      </if>
+      <if test="waterbulk != null" >
+        WaterBulk = #{waterbulk,jdbcType=DOUBLE},
+      </if>
+      <if test="apparentdensity != null" >
+        ApparentDensity = #{apparentdensity,jdbcType=DOUBLE},
+      </if>
+      <if test="standdensity != null" >
+        StandDensity = #{standdensity,jdbcType=DOUBLE},
+      </if>
+      <if test="version != null" >
+        Version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null" >
+        Transtatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OilCanNo = #{oilcanno,jdbcType=INTEGER}
+      and Date = #{date,jdbcType=VARCHAR}
+      and Time = #{time,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_monitor_Inventory" >
+    update oss_monitor_Inventory
+    set OilCubage = #{oilcubage,jdbcType=DOUBLE},
+      StandCubage = #{standcubage,jdbcType=DOUBLE},
+      EmptyCubage = #{emptycubage,jdbcType=DOUBLE},
+      TotalHeight = #{totalheight,jdbcType=DOUBLE},
+      WaterHeight = #{waterheight,jdbcType=DOUBLE},
+      Temp = #{temp,jdbcType=DOUBLE},
+      Temp1 = #{temp1,jdbcType=DOUBLE},
+      Temp2 = #{temp2,jdbcType=DOUBLE},
+      Temp3 = #{temp3,jdbcType=DOUBLE},
+      Temp4 = #{temp4,jdbcType=DOUBLE},
+      Temp5 = #{temp5,jdbcType=DOUBLE},
+      WaterBulk = #{waterbulk,jdbcType=DOUBLE},
+      ApparentDensity = #{apparentdensity,jdbcType=DOUBLE},
+      StandDensity = #{standdensity,jdbcType=DOUBLE},
+      Version = #{version,jdbcType=VARCHAR},
+      OUCode = #{oucode,jdbcType=VARCHAR},
+      Transtatus = #{transtatus,jdbcType=VARCHAR}
+    where OilCanNo = #{oilcanno,jdbcType=INTEGER}
+      and Date = #{date,jdbcType=VARCHAR}
+      and Time = #{time,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+</mapper>

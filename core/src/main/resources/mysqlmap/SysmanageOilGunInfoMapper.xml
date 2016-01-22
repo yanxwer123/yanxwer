@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.SysManageOilGunInfoDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.SysManageOilGunInfo" >
+    <id column="OilGun" property="oilgun" jdbcType="VARCHAR" />
+    <result column="MacNo" property="macno" jdbcType="INTEGER" />
+    <result column="OilCan" property="oilcan" jdbcType="INTEGER" />
+    <result column="OilGunName" property="oilgunname" jdbcType="VARCHAR" />
+    <result column="CtrlUnitNum" property="ctrlunitnum" jdbcType="INTEGER" />
+    <result column="LinkAdr" property="linkadr" jdbcType="INTEGER" />
+    <result column="GunStatus" property="gunstatus" jdbcType="VARCHAR" />
+    <result column="InitPump" property="initpump" jdbcType="DOUBLE" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    OilGun, MacNo, OilCan, OilGunName, CtrlUnitNum, LinkAdr, GunStatus, InitPump, TranStatus
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_OilGunInfo
+    where OilGun = #{oilgun}
+  </select>
+  <delete id="deleteAll" >
+    delete from oss_sysmanage_OilGunInfo
+  </delete>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from oss_sysmanage_OilGunInfo
+    where OilGun = #{oilgun}
+  </delete>
+
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.SysManageOilGunInfo" >
+    insert into oss_sysmanage_OilGunInfo (OilGun, MacNo, OilCan, 
+      OilGunName, CtrlUnitNum, LinkAdr, 
+      GunStatus, InitPump, TranStatus
+      )
+    values (#{oilgun}, #{macno}, #{oilcan},
+      #{oilgunname}, #{ctrlunitnum}, #{linkadr},
+      #{gunstatus}, #{initpump}, #{transtatus}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.SysManageOilGunInfo" >
+    insert into oss_sysmanage_OilGunInfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oilgun != null" >
+        OilGun,
+      </if>
+      <if test="macno != null" >
+        MacNo,
+      </if>
+      <if test="oilcan != null" >
+        OilCan,
+      </if>
+      <if test="oilgunname != null" >
+        OilGunName,
+      </if>
+      <if test="ctrlunitnum != null" >
+        CtrlUnitNum,
+      </if>
+      <if test="linkadr != null" >
+        LinkAdr,
+      </if>
+      <if test="gunstatus != null" >
+        GunStatus,
+      </if>
+      <if test="initpump != null" >
+        InitPump,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oilgun != null" >
+        #{oilgun,jdbcType=INTEGER},
+      </if>
+      <if test="macno != null" >
+        #{macno,jdbcType=INTEGER},
+      </if>
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="oilgunname != null" >
+        #{oilgunname,jdbcType=VARCHAR},
+      </if>
+      <if test="ctrlunitnum != null" >
+        #{ctrlunitnum,jdbcType=INTEGER},
+      </if>
+      <if test="linkadr != null" >
+        #{linkadr,jdbcType=INTEGER},
+      </if>
+      <if test="gunstatus != null" >
+        #{gunstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="initpump != null" >
+        #{initpump,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.SysManageOilGunInfo" >
+    update oss_sysmanage_OilGunInfo
+    <set >
+      <if test="macno != null" >
+        MacNo = #{macno,jdbcType=INTEGER},
+      </if>
+      <if test="oilcan != null" >
+        OilCan = #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="oilgunname != null" >
+        OilGunName = #{oilgunname,jdbcType=VARCHAR},
+      </if>
+      <if test="ctrlunitnum != null" >
+        CtrlUnitNum = #{ctrlunitnum,jdbcType=INTEGER},
+      </if>
+      <if test="linkadr != null" >
+        LinkAdr = #{linkadr,jdbcType=INTEGER},
+      </if>
+      <if test="gunstatus != null" >
+        GunStatus = #{gunstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="initpump != null" >
+        InitPump = #{initpump,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OilGun = #{oilgun,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.SysManageOilGunInfo" >
+    update oss_sysmanage_OilGunInfo
+    set MacNo = #{macno,jdbcType=INTEGER},
+      OilCan = #{oilcan,jdbcType=INTEGER},
+      OilGunName = #{oilgunname,jdbcType=VARCHAR},
+      CtrlUnitNum = #{ctrlunitnum,jdbcType=INTEGER},
+      LinkAdr = #{linkadr,jdbcType=INTEGER},
+      GunStatus = #{gunstatus,jdbcType=VARCHAR},
+      InitPump = #{initpump,jdbcType=DOUBLE},
+      TranStatus = #{transtatus,jdbcType=VARCHAR}
+    where OilGun = #{oilgun,jdbcType=INTEGER}
+  </update>
+  <select id="selectAllOilGun" resultMap="BaseResultMap" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_OilGunInfo
+  </select>
+    <select id="selectByTrans" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_sysmanage_OilGunInfo WHERE TranStatus = #{transtatus,jdbcType=VARCHAR}
+  </select>
+  <select id="selectOilGunByOilCanNo" parameterType="Integer" resultType="Integer">
+    SELECT OilGun
+    FROM oss_sysmanage_OilGunInfo WHERE OilCan=#{_parameter}
+  </select>
+  <select id="selectOilInfoByOilCanNo" parameterType="Integer" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_sysmanage_OilGunInfo WHERE OilCan=#{_parameter}
+  </select>
+  <select id="selectOilCanByOilGun" parameterType="Integer" resultType="Integer">
+    SELECT
+    OilCan
+    FROM oss_sysmanage_OilGunInfo WHERE OilGun=#{_parameter}
+  </select>
+
+  <select id="findByOilCanNo" parameterType="java.lang.String" resultType="com.kld.gsm.ATG.domain.SysManageOilGunInfo">
+       SELECT * FROM oss_sysmanage_OilGunInfo WHERE OilCan =#{canno}
+  </select>
+
+</mapper>

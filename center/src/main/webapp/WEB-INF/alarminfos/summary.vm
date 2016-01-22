@@ -1,0 +1,99 @@
+#set($layout="layout/emptylayout.vm")
+#set($menuTitle="报警信息总览")
+
+<style type="text/css">
+    #table{border:solid #999999; border-width:1px 0px 0px 1px;}
+    #td{border:solid #999999; border-width:0px 1px 1px 0px; padding:10px 0px;}
+     .qh{ width:100px;  text-align:center;}
+    .top{ width: 100%; height: auto;}
+    .topleft{  width: 620px;}
+
+
+</style>
+
+<script type="text/javascript">
+    $(function(){
+        $(".col-lg-2").click(function(){
+            $('.col-lg-2').css('background','none');
+            $(this).css('background','red')
+        });
+    })
+    </script>
+油站监控  >>  湛江海头加油站
+<div class="row">
+    <div class="col-md-6" id="table">
+        <div class="row">
+            <div class="col-lg-2" align="center" id="td" style="background-color: red">总揽</div>
+            <div class="col-lg-2" align="center" id="td">罐枪实时监控</div>
+            <div class="col-lg-2" align="center" id="td">油站站点库存</div>
+            <div class="col-lg-2" align="center" id="td">油站日平衡</div>
+            <div class="col-lg-2" align="center" id="td">油站班报</div>
+            <div class="col-lg-2" align="center" id="td">报警信息</div>
+        </div>
+    </div>
+    <div class="col-md-6"></div>
+
+</div>
+<div class="row">
+    <div class="col-md-12">日期：<input type="text" class="easyui-datebox"/> —<input type="text" class="easyui-datebox"/> <input type="button" value="查询"></div>
+    <div class="col-md-12">从2015年11月10日至2015年11月18日，累计报警次数：10次，已处理：6次；待处理：4次</div>
+</div>
+ <div class="row">
+     <div class="col-md-6">
+         <div class="row">
+             <div class="col-md-6">销量</div><div class="col-md-6">开始日期：2015年11月16日 24:00</div>
+             <div class="clo-md-12"><hr/></div>
+             <div class="col-md-6">93#汽油：10000L</div> <div class="col-md-6">柴油：0L</div>
+             <div class="col-md-6">97#汽油：3512L</div> <div class="col-md-6">柴油：3512L</div>
+             <div class="col-md-6">卡销笔</div>  <div class="col-md-6">提枪次数</div>
+             <div class="col-md-6">80%</div>  <div class="col-md-6">12731次</div>
+             <div class="col-md-6">汽油：79% 柴油:81%</div>  <div class="col-md-6">汽油:12731次 柴油：2731次</div>
+         </div>
+     </div>
+     <div class="col-md-6">
+             <div class="row">
+                 <div class="col-md-12">油站报警信息</div>
+                 <div class="col-md-4">1</div><div class="col-md-4">2</div><div class="col-md-2">4</div>
+             </div>
+     </div>
+ </div>
+<div class="row">
+    <div class="col-md-12">实时罐存</div>
+    <div class="col-md-12">放置实时罐存内容</div>
+</div>
+<div class="row">
+    <div class="col-lg-12">进货验收</div>
+    <div class="col-lg-12">2015年11月11日，预留订单：1笔、发货订单：1笔、已收货：1笔。</div>
+</div>
+<table class="easyui-datagrid">
+    <thead>
+    <tr>
+<th  data-options="field:'code'">出库单号</th>
+        <th  data-options="field:'code'">预留单号</th>
+    <th  data-options="field:'code'">配送单号</th>
+    <th  data-options="field:'code'">油站</th>
+    <th  data-options="field:'code'">油品名称</th>
+    <th  data-options="field:'code'">原发数量（kg/L）</th>
+    <th  data-options="field:'code'">出库时间</th>
+    <th  data-options="field:'code'">出库油库</th>
+    <th  data-options="field:'code'">发货状态</th>
+    <th  data-options="field:'code'">验收日期</th>
+    <th  data-options="field:'code'">验收状态</th>
+    <th  data-options="field:'code'">实收升数（L）</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr><td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    </tbody>

@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kld.gsm.center.dao.oss_alarm_InventoryMapper">
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_alarm_Inventory">
+    <id column="OilCan" jdbcType="INTEGER" property="oilcan" />
+    <id column="AlarmType" jdbcType="INTEGER" property="alarmtype" />
+    <id column="StartTime" jdbcType="TIMESTAMP" property="starttime" />
+    <id column="NodeNo" jdbcType="VARCHAR" property="nodeno" />
+    <result column="EndTIme" jdbcType="TIMESTAMP" property="endtime" />
+    <result column="AlarmDesc" jdbcType="VARCHAR" property="alarmdesc" />
+    <result column="TranStatus" jdbcType="VARCHAR" property="transtatus" />
+    <result column="Shift" jdbcType="VARCHAR" property="shift" />
+    <result column="OUCode" jdbcType="VARCHAR" property="oucode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    OilCan, AlarmType, StartTime, NodeNo, EndTIme, AlarmDesc, TranStatus, Shift, OUCode
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_alarm_InventoryKey" resultMap="BaseResultMap">
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_alarm_Inventory
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and AlarmType = #{alarmtype,jdbcType=INTEGER}
+      and StartTime = #{starttime,jdbcType=TIMESTAMP}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_alarm_InventoryKey">
+    delete from oss_alarm_Inventory
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and AlarmType = #{alarmtype,jdbcType=INTEGER}
+      and StartTime = #{starttime,jdbcType=TIMESTAMP}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_alarm_Inventory">
+    insert into oss_alarm_Inventory (OilCan, AlarmType, StartTime, 
+      NodeNo, EndTIme, AlarmDesc, 
+      TranStatus, Shift, OUCode
+      )
+    values (#{oilcan,jdbcType=INTEGER}, #{alarmtype,jdbcType=INTEGER}, #{starttime,jdbcType=TIMESTAMP}, 
+      #{nodeno,jdbcType=VARCHAR}, #{endtime,jdbcType=TIMESTAMP}, #{alarmdesc,jdbcType=VARCHAR}, 
+      #{transtatus,jdbcType=VARCHAR}, #{shift,jdbcType=VARCHAR}, #{oucode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_alarm_Inventory">
+    insert into oss_alarm_Inventory
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oilcan != null">
+        OilCan,
+      </if>
+      <if test="alarmtype != null">
+        AlarmType,
+      </if>
+      <if test="starttime != null">
+        StartTime,
+      </if>
+      <if test="nodeno != null">
+        NodeNo,
+      </if>
+      <if test="endtime != null">
+        EndTIme,
+      </if>
+      <if test="alarmdesc != null">
+        AlarmDesc,
+      </if>
+      <if test="transtatus != null">
+        TranStatus,
+      </if>
+      <if test="shift != null">
+        Shift,
+      </if>
+      <if test="oucode != null">
+        OUCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oilcan != null">
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="alarmtype != null">
+        #{alarmtype,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null">
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nodeno != null">
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="alarmdesc != null">
+        #{alarmdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null">
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null">
+        #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null">
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <insert id="merge" parameterType="com.kld.gsm.center.domain.oss_alarm_Inventory">
+    replace into oss_alarm_Inventory
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oilcan != null">
+        OilCan,
+      </if>
+      <if test="alarmtype != null">
+        AlarmType,
+      </if>
+      <if test="starttime != null">
+        StartTime,
+      </if>
+      <if test="nodeno != null">
+        NodeNo,
+      </if>
+      <if test="endtime != null">
+        EndTIme,
+      </if>
+      <if test="alarmdesc != null">
+        AlarmDesc,
+      </if>
+      <if test="transtatus != null">
+        TranStatus,
+      </if>
+      <if test="shift != null">
+        Shift,
+      </if>
+      <if test="oucode != null">
+        OUCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oilcan != null">
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="alarmtype != null">
+        #{alarmtype,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null">
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nodeno != null">
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="alarmdesc != null">
+        #{alarmdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null">
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null">
+        #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null">
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_alarm_Inventory">
+    update oss_alarm_Inventory
+    <set>
+      <if test="endtime != null">
+        EndTIme = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="alarmdesc != null">
+        AlarmDesc = #{alarmdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null">
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null">
+        Shift = #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null">
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and AlarmType = #{alarmtype,jdbcType=INTEGER}
+      and StartTime = #{starttime,jdbcType=TIMESTAMP}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_alarm_Inventory">
+    update oss_alarm_Inventory
+    set EndTIme = #{endtime,jdbcType=TIMESTAMP},
+      AlarmDesc = #{alarmdesc,jdbcType=VARCHAR},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      Shift = #{shift,jdbcType=VARCHAR},
+      OUCode = #{oucode,jdbcType=VARCHAR}
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and AlarmType = #{alarmtype,jdbcType=INTEGER}
+      and StartTime = #{starttime,jdbcType=TIMESTAMP}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <select id="selectInventoryInfo" resultType="hashmap" parameterType="hashmap">
+    <![CDATA[
+ SELECT *,
+(select OUName from oss_sys_OrgUnit where oss_sys_OrgUnit.OUCode=oss_alarm_Inventory.OUCode LIMIT 0,1) as OUName,
+(select NAME from  oss_sysmanage_Dict where ParentID=45 and oss_sysmanage_Dict.Value=oss_alarm_Inventory.AlarmType LIMIT 0,1) AS NAME,
+(select OilName from oss_sysmanage_oilType WHERE oss_sysmanage_oilType.OilNo=(select oss_sysmanage_TankInfo.OilNo  from oss_sysmanage_TankInfo where oss_sysmanage_TankInfo.OilCan=oss_alarm_Inventory.OilCan and oss_sysmanage_TankInfo.OUCode=oss_alarm_Inventory.OUCode)) as OilName
+from oss_alarm_Inventory where StartTime>=#{begin,jdbcType=VARCHAR} and StartTime<#{end,jdbcType=VARCHAR}
+    ]]>
+    <if test="oucode != null">
+      and OUCode LIKE #{oucode,jdbcType=VARCHAR}
+    </if>
+    <if test="alarmtype != null">
+      AND AlarmType=#{alarmtype,jdbcType=VARCHAR}
+    </if>
+    ORDER BY Shift DESC
+    <if test="firstRow != null and  pageSize!= null">
+      <![CDATA[ LIMIT #{firstRow},#{pageSize}]]>
+    </if>
+  </select>
+  <select id="selectInventoryAllInfo" resultType="hashmap" parameterType="hashmap">
+    <![CDATA[
+ SELECT *,
+(select OUName from oss_sys_OrgUnit where oss_sys_OrgUnit.OUCode=oss_alarm_Inventory.OUCode LIMIT 0,1) as OUName,
+(select NAME from  oss_sysmanage_Dict where ParentID=45 and oss_sysmanage_Dict.Value=oss_alarm_Inventory.AlarmType LIMIT 0,1) AS NAME,
+(select OilName from oss_sysmanage_oilType WHERE oss_sysmanage_oilType.OilNo=(select oss_sysmanage_TankInfo.OilNo  from oss_sysmanage_TankInfo where oss_sysmanage_TankInfo.OilCan=oss_alarm_Inventory.OilCan and oss_sysmanage_TankInfo.OUCode=oss_alarm_Inventory.OUCode)) as OilName
+from oss_alarm_Inventory
+ where StartTime>=#{begin,jdbcType=VARCHAR} and StartTime<#{end,jdbcType=VARCHAR}
+    ]]>
+    <if test="oucode != null">
+      and OUCode LIKE #{oucode,jdbcType=VARCHAR}
+    </if>
+    <if test="alarmtype != null">
+      AND AlarmType=#{alarmtype,jdbcType=VARCHAR}
+    </if>
+    ORDER BY Shift DESC
+  </select>
+</mapper>

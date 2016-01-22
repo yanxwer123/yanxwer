@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_daily_StationShiftInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_daily_StationShiftInfo" >
+    <id column="Shift" property="shift" jdbcType="INTEGER" />
+    <id column="NodeNo" property="nodeno" jdbcType="VARCHAR" />
+    <result column="Successor" property="successor" jdbcType="VARCHAR" />
+    <result column="SucceedTIme" property="succeedtime" jdbcType="TIMESTAMP" />
+    <result column="ShiftOperator" property="shiftoperator" jdbcType="VARCHAR" />
+    <result column="ShiftTime" property="shifttime" jdbcType="TIMESTAMP" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Shift, NodeNo, Successor, SucceedTIme, ShiftOperator, ShiftTime, TranStatus, OUCode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_daily_StationShiftInfoKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_daily_StationShiftInfo
+    where Shift = #{shift,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+  <select id="selectShiftInfo" resultType="hashmap" parameterType="hashmap" >
+    <![CDATA[ select * from oss_daily_StationShiftInfo where LEFT(Shift,8)>=#{begin,jdbcType=VARCHAR} AND LEFT(Shift,8)<=#{end,jdbcType=VARCHAR}
+    and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+  </select>
+  <select id="selectPageShiftInfo" resultType="hashmap" parameterType="hashmap" >
+    <![CDATA[ select * from oss_daily_StationShiftInfo where LEFT(Shift,8)>=#{begin,jdbcType=VARCHAR} AND LEFT(Shift,8)<=#{end,jdbcType=VARCHAR}
+    and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    <if test="firstRow != null and  pageSize!= null">
+      <![CDATA[ LIMIT #{firstRow},#{pageSize}]]>
+    </if>
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_daily_StationShiftInfoKey" >
+    delete from oss_daily_StationShiftInfo
+    where Shift = #{shift,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_daily_StationShiftInfo" >
+    insert into oss_daily_StationShiftInfo (Shift, NodeNo, Successor, 
+      SucceedTIme, ShiftOperator, ShiftTime, 
+      TranStatus, OUCode)
+    values (#{shift,jdbcType=INTEGER}, #{nodeno,jdbcType=VARCHAR}, #{successor,jdbcType=VARCHAR}, 
+      #{succeedtime,jdbcType=TIMESTAMP}, #{shiftoperator,jdbcType=VARCHAR}, #{shifttime,jdbcType=TIMESTAMP}, 
+      #{transtatus,jdbcType=VARCHAR}, #{oucode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_daily_StationShiftInfo" >
+    insert into oss_daily_StationShiftInfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shift != null" >
+        Shift,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="successor != null" >
+        Successor,
+      </if>
+      <if test="succeedtime != null" >
+        SucceedTIme,
+      </if>
+      <if test="shiftoperator != null" >
+        ShiftOperator,
+      </if>
+      <if test="shifttime != null" >
+        ShiftTime,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shift != null" >
+        #{shift,jdbcType=INTEGER},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="successor != null" >
+        #{successor,jdbcType=VARCHAR},
+      </if>
+      <if test="succeedtime != null" >
+        #{succeedtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shiftoperator != null" >
+        #{shiftoperator,jdbcType=VARCHAR},
+      </if>
+      <if test="shifttime != null" >
+        #{shifttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_daily_StationShiftInfo" >
+    update oss_daily_StationShiftInfo
+    <set >
+      <if test="successor != null" >
+        Successor = #{successor,jdbcType=VARCHAR},
+      </if>
+      <if test="succeedtime != null" >
+        SucceedTIme = #{succeedtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shiftoperator != null" >
+        ShiftOperator = #{shiftoperator,jdbcType=VARCHAR},
+      </if>
+      <if test="shifttime != null" >
+        ShiftTime = #{shifttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Shift = #{shift,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_daily_StationShiftInfo" >
+    update oss_daily_StationShiftInfo
+    set Successor = #{successor,jdbcType=VARCHAR},
+      SucceedTIme = #{succeedtime,jdbcType=TIMESTAMP},
+      ShiftOperator = #{shiftoperator,jdbcType=VARCHAR},
+      ShiftTime = #{shifttime,jdbcType=TIMESTAMP},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      OUCode = #{oucode,jdbcType=VARCHAR}
+    where Shift = #{shift,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+</mapper>

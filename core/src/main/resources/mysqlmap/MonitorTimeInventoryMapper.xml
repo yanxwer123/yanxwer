@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.MonitorTimeInventoryDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.MonitorTimeInventory" >
+    <id column="OilCan" property="oilcan" jdbcType="INTEGER" />
+    <id column="StoreTime" property="storetime" jdbcType="TIMESTAMP" />
+    <result column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <result column="StandardL" property="standardl" jdbcType="DOUBLE" />
+    <result column="HeightTotal" property="heighttotal" jdbcType="DOUBLE" />
+    <result column="OilL" property="oill" jdbcType="DOUBLE" />
+    <result column="HeightWater" property="heightwater" jdbcType="DOUBLE" />
+    <result column="WaterL" property="waterl" jdbcType="DOUBLE" />
+    <result column="Temperature" property="temperature" jdbcType="DOUBLE" />
+    <result column="VolumeEmpty" property="volumeempty" jdbcType="DOUBLE" />
+    <result column="Temp1" property="temp1" jdbcType="DOUBLE" />
+    <result column="Temp2" property="temp2" jdbcType="DOUBLE" />
+    <result column="Temp3" property="temp3" jdbcType="DOUBLE" />
+    <result column="Temp4" property="temp4" jdbcType="DOUBLE" />
+    <result column="Temp5" property="temp5" jdbcType="DOUBLE" />
+    <result column="Densities" property="densities" jdbcType="DOUBLE" />
+    <result column="DensitiesStandard" property="densitiesstandard" jdbcType="DOUBLE" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="Shift" property="shift" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    OilCan, StoreTime, OilNo, StandardL, HeightTotal, OilL, HeightWater, WaterL, Temperature, 
+    VolumeEmpty, Temp1, Temp2, Temp3, Temp4, Temp5, Densities, DensitiesStandard, TranStatus, 
+    CreateTime, Shift
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.ATG.domain.MonitorTimeInventoryKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_monitor_TimeInventory
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and StoreTime = #{storetime,jdbcType=TIMESTAMP}
+  </select>
+  <select id="selectAllOilCanInfoByOilNo" resultMap="BaseResultMap" parameterType="string">
+	select t.* from (select <include refid="Base_Column_List" /> from oss_monitor_TimeInventory where oilno=#{oilNo}order by createtime desc) t group by t.oilcan order by t.oilcan;
+  </select>
+  <select id="selectOilCanInfoByCanNo" resultMap="BaseResultMap" parameterType="string">
+	select t.* from (select <include refid="Base_Column_List" /> from oss_monitor_TimeInventory where canno=#{canNo}order by createtime desc) t group by t.oilcan order by t.oilcan;
+  </select>
+  <select id="selectBeginDataByCanNo" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  	select <include refid="Base_Column_List" /> from oss_monitor_TimeInventory where oilcan=#{canNo} order by createtime desc limit 1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.MonitorTimeInventoryKey" >
+    delete from oss_monitor_TimeInventory
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and StoreTime = #{storetime,jdbcType=TIMESTAMP}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.MonitorTimeInventory" >
+    insert into oss_monitor_TimeInventory (OilCan, StoreTime, OilNo, 
+      StandardL, HeightTotal, OilL, 
+      HeightWater, WaterL, Temperature, 
+      VolumeEmpty, Temp1, Temp2, 
+      Temp3, Temp4, Temp5, Densities, 
+      DensitiesStandard, TranStatus, CreateTime, 
+      Shift)
+    values (#{oilcan,jdbcType=INTEGER}, #{storetime,jdbcType=TIMESTAMP}, #{oilno,jdbcType=VARCHAR}, 
+      #{standardl,jdbcType=DOUBLE}, #{heighttotal,jdbcType=DOUBLE}, #{oill,jdbcType=DOUBLE}, 
+      #{heightwater,jdbcType=DOUBLE}, #{waterl,jdbcType=DOUBLE}, #{temperature,jdbcType=DOUBLE}, 
+      #{volumeempty,jdbcType=DOUBLE}, #{temp1,jdbcType=DOUBLE}, #{temp2,jdbcType=DOUBLE}, 
+      #{temp3,jdbcType=DOUBLE}, #{temp4,jdbcType=DOUBLE}, #{temp5,jdbcType=DOUBLE}, #{densities,jdbcType=DOUBLE}, 
+      #{densitiesstandard,jdbcType=DOUBLE}, #{transtatus,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{shift,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.MonitorTimeInventory" >
+    insert into oss_monitor_TimeInventory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oilcan != null" >
+        OilCan,
+      </if>
+      <if test="storetime != null" >
+        StoreTime,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="standardl != null" >
+        StandardL,
+      </if>
+      <if test="heighttotal != null" >
+        HeightTotal,
+      </if>
+      <if test="oill != null" >
+        OilL,
+      </if>
+      <if test="heightwater != null" >
+        HeightWater,
+      </if>
+      <if test="waterl != null" >
+        WaterL,
+      </if>
+      <if test="temperature != null" >
+        Temperature,
+      </if>
+      <if test="volumeempty != null" >
+        VolumeEmpty,
+      </if>
+      <if test="temp1 != null" >
+        Temp1,
+      </if>
+      <if test="temp2 != null" >
+        Temp2,
+      </if>
+      <if test="temp3 != null" >
+        Temp3,
+      </if>
+      <if test="temp4 != null" >
+        Temp4,
+      </if>
+      <if test="temp5 != null" >
+        Temp5,
+      </if>
+      <if test="densities != null" >
+        Densities,
+      </if>
+      <if test="densitiesstandard != null" >
+        DensitiesStandard,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="shift != null" >
+        Shift,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="storetime != null" >
+        #{storetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="standardl != null" >
+        #{standardl,jdbcType=DOUBLE},
+      </if>
+      <if test="heighttotal != null" >
+        #{heighttotal,jdbcType=DOUBLE},
+      </if>
+      <if test="oill != null" >
+        #{oill,jdbcType=DOUBLE},
+      </if>
+      <if test="heightwater != null" >
+        #{heightwater,jdbcType=DOUBLE},
+      </if>
+      <if test="waterl != null" >
+        #{waterl,jdbcType=DOUBLE},
+      </if>
+      <if test="temperature != null" >
+        #{temperature,jdbcType=DOUBLE},
+      </if>
+      <if test="volumeempty != null" >
+        #{volumeempty,jdbcType=DOUBLE},
+      </if>
+      <if test="temp1 != null" >
+        #{temp1,jdbcType=DOUBLE},
+      </if>
+      <if test="temp2 != null" >
+        #{temp2,jdbcType=DOUBLE},
+      </if>
+      <if test="temp3 != null" >
+        #{temp3,jdbcType=DOUBLE},
+      </if>
+      <if test="temp4 != null" >
+        #{temp4,jdbcType=DOUBLE},
+      </if>
+      <if test="temp5 != null" >
+        #{temp5,jdbcType=DOUBLE},
+      </if>
+      <if test="densities != null" >
+        #{densities,jdbcType=DOUBLE},
+      </if>
+      <if test="densitiesstandard != null" >
+        #{densitiesstandard,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shift != null" >
+        #{shift,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.MonitorTimeInventory" >
+    update oss_monitor_TimeInventory
+    <set >
+      <if test="oilno != null" >
+        OilNo = #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="standardl != null" >
+        StandardL = #{standardl,jdbcType=DOUBLE},
+      </if>
+      <if test="heighttotal != null" >
+        HeightTotal = #{heighttotal,jdbcType=DOUBLE},
+      </if>
+      <if test="oill != null" >
+        OilL = #{oill,jdbcType=DOUBLE},
+      </if>
+      <if test="heightwater != null" >
+        HeightWater = #{heightwater,jdbcType=DOUBLE},
+      </if>
+      <if test="waterl != null" >
+        WaterL = #{waterl,jdbcType=DOUBLE},
+      </if>
+      <if test="temperature != null" >
+        Temperature = #{temperature,jdbcType=DOUBLE},
+      </if>
+      <if test="volumeempty != null" >
+        VolumeEmpty = #{volumeempty,jdbcType=DOUBLE},
+      </if>
+      <if test="temp1 != null" >
+        Temp1 = #{temp1,jdbcType=DOUBLE},
+      </if>
+      <if test="temp2 != null" >
+        Temp2 = #{temp2,jdbcType=DOUBLE},
+      </if>
+      <if test="temp3 != null" >
+        Temp3 = #{temp3,jdbcType=DOUBLE},
+      </if>
+      <if test="temp4 != null" >
+        Temp4 = #{temp4,jdbcType=DOUBLE},
+      </if>
+      <if test="temp5 != null" >
+        Temp5 = #{temp5,jdbcType=DOUBLE},
+      </if>
+      <if test="densities != null" >
+        Densities = #{densities,jdbcType=DOUBLE},
+      </if>
+      <if test="densitiesstandard != null" >
+        DensitiesStandard = #{densitiesstandard,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shift != null" >
+        Shift = #{shift,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and StoreTime = #{storetime,jdbcType=TIMESTAMP}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.MonitorTimeInventory" >
+    update oss_monitor_TimeInventory
+    set OilNo = #{oilno,jdbcType=VARCHAR},
+      StandardL = #{standardl,jdbcType=DOUBLE},
+      HeightTotal = #{heighttotal,jdbcType=DOUBLE},
+      OilL = #{oill,jdbcType=DOUBLE},
+      HeightWater = #{heightwater,jdbcType=DOUBLE},
+      WaterL = #{waterl,jdbcType=DOUBLE},
+      Temperature = #{temperature,jdbcType=DOUBLE},
+      VolumeEmpty = #{volumeempty,jdbcType=DOUBLE},
+      Temp1 = #{temp1,jdbcType=DOUBLE},
+      Temp2 = #{temp2,jdbcType=DOUBLE},
+      Temp3 = #{temp3,jdbcType=DOUBLE},
+      Temp4 = #{temp4,jdbcType=DOUBLE},
+      Temp5 = #{temp5,jdbcType=DOUBLE},
+      Densities = #{densities,jdbcType=DOUBLE},
+      DensitiesStandard = #{densitiesstandard,jdbcType=DOUBLE},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      Shift = #{shift,jdbcType=VARCHAR}
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and StoreTime = #{storetime,jdbcType=TIMESTAMP}
+  </update>
+  <select id="querySdkc" resultMap="BaseResultMap" parameterType="hashmap" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_monitor_TimeInventory
+    where StoreTime >= #{begin,jdbcType=TIMESTAMP} and  #{end,jdbcType=TIMESTAMP}>=StoreTime
+    <if test="oilcan != null and oilcan != ''">
+      and OilCan = #{oilcan,jdbcType=INTEGER}
+    </if>
+    ORDER BY StoreTime DESC
+  </select>
+
+  <select id="selectByTrans" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_monitor_TimeInventory WHERE TranStatus=#{trans,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,88 @@
+<Div class="top">
+    <p class="logobox01">
+        <img src="../resources/img/logo-1.png">
+    </p>
+    <p class="user-messages"><a href="/web/logout"><span style="border:none;color:#000;">退出</span></a><a href="javascript: void(0);" onclick="openEditPwd();"><span style="color: #000">修改密码</span></a><span>帮助文档</span>#*<span>用户中心</span>*#<span id="user">当前用户：$!rname</span>
+        <span id="txtTopDate">
+       #* <script>
+            formatDateWithWeek();
+        </script>*#
+    </span></p>
+</Div>
+
+<div id="dialEditPwd" class="easyui-dialog" style="padding:10px;"
+        data-options="closed:true,title:'修改密码',
+        buttons:[{
+				text:'确认',
+				handler:modifyPwd
+			},{
+				text:'取消',
+				handler:function(){$('#dialEditPwd').dialog('close');}
+			}] ">
+    <form id="fmEditPwd" method="post">
+        <table border="0" cellpadding="5px">
+       <tr><th>原密码：</th><td><input name="pwd" class="easyui-textbox" data-options="type:'password',missingMessage:'请输入原密码'" required /><br />
+       </td></tr>
+            <tr><th>新密码：</th><td><input id="newpwd" name="newpwd" class="easyui-textbox" data-options="validType:'password',type:'password',missingMessage:'请输入新密码'" required /><br />
+            </td></tr>
+            <tr><th>确认密码：</th><td><input id="rpwd" name="rpwd" class="easyui-textbox" required
+                   data-options="type:'password',missingMessage:'请再次输入新密码'" validType="equals['#newpwd']" />
+            </td></tr>
+        </table>
+    </form>
+</div>
+
+<script>
+    $(function() {
+
+        $.extend($.fn.validatebox.defaults.rules, {
+            equals: {
+                validator: function(value,param){
+                    return value == $(param[0]).textbox('getValue');
+                },
+                message: '确认密码不一致.'
+            }
+        });
+
+        $("#txtTopDate").text(formatDateWithWeek());
+    });
+    /*
+        function relogin(){
+            window.location="/home/login";
+        }
+        */
+
+    function formatDateWithWeek(){
+        var today = new Date();
+        return formatDateDefined(today,"yyyy-MM-dd");
+    }
+
+    function openEditPwd(){
+        $('#fmEditPwd').form('reset');
+        $('#dialEditPwd').dialog('open').dialog('vcenter');
+    }
+
+    function modifyPwd(){
+        $('#fmEditPwd').form('submit',{
+            url:'/admin/home/modifyPwd',
+            onSubmit:function(){
+                /*var newpwd = $("#newpwd").val();
+                var regPwd = /^[\@A-Za-z0-9\!\#\$\%\^\&\*\.\~]{6,22}$/;
+                if(regPwd.test(newpwd)){
+
+                    return false;
+                }*/
+                return $(this).form('validate');
+            },
+            success: function(data){
+                var res = $.parseJSON(data);
+                if(res.result){
+                    $.messager.alert("提示","密码修改成功","info");
+                    $('#dialEditPwd').dialog('close');
+                }else{
+                    $.messager.alert("操作失败",res.msg,"error");
+                }
+            }
+        });
+    }
+</script>

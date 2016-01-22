@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_monitor_TimeInventoryMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_monitor_TimeInventory" >
+    <id column="OilCan" property="oilcan" jdbcType="INTEGER" />
+    <id column="StoreTime" property="storetime" jdbcType="TIMESTAMP" />
+    <id column="NodeNo" property="nodeno" jdbcType="VARCHAR" />
+    <result column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <result column="StandardL" property="standardl" jdbcType="DOUBLE" />
+    <result column="HeightTotal" property="heighttotal" jdbcType="DOUBLE" />
+    <result column="OilL" property="oill" jdbcType="DOUBLE" />
+    <result column="HeightWater" property="heightwater" jdbcType="DOUBLE" />
+    <result column="WaterL" property="waterl" jdbcType="DOUBLE" />
+    <result column="Temperature" property="temperature" jdbcType="DOUBLE" />
+    <result column="VolumeEmpty" property="volumeempty" jdbcType="DOUBLE" />
+    <result column="Temp1" property="temp1" jdbcType="DOUBLE" />
+    <result column="Temp2" property="temp2" jdbcType="DOUBLE" />
+    <result column="Temp3" property="temp3" jdbcType="DOUBLE" />
+    <result column="Temp4" property="temp4" jdbcType="DOUBLE" />
+    <result column="Temp5" property="temp5" jdbcType="DOUBLE" />
+    <result column="Densities" property="densities" jdbcType="DOUBLE" />
+    <result column="DensitiesStandard" property="densitiesstandard" jdbcType="DOUBLE" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="Shift" property="shift" jdbcType="VARCHAR" />
+    <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
+    <result column="Version" property="version" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    OilCan, StoreTime, NodeNo, OilNo, StandardL, HeightTotal, OilL, HeightWater, WaterL, 
+    Temperature, VolumeEmpty, Temp1, Temp2, Temp3, Temp4, Temp5, Densities, DensitiesStandard, 
+    TranStatus, CreateTime, Shift, OUCode, Version
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_monitor_TimeInventoryKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_monitor_TimeInventory
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and StoreTime = #{storetime,jdbcType=TIMESTAMP}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_monitor_TimeInventoryKey" >
+    delete from oss_monitor_TimeInventory
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and StoreTime = #{storetime,jdbcType=TIMESTAMP}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_monitor_TimeInventory" >
+    insert into oss_monitor_TimeInventory (OilCan, StoreTime, NodeNo, 
+      OilNo, StandardL, HeightTotal, 
+      OilL, HeightWater, WaterL, 
+      Temperature, VolumeEmpty, Temp1, 
+      Temp2, Temp3, Temp4, Temp5, 
+      Densities, DensitiesStandard, TranStatus, 
+      CreateTime, Shift, OUCode, 
+      Version)
+    values (#{oilcan,jdbcType=INTEGER}, #{storetime,jdbcType=TIMESTAMP}, #{nodeno,jdbcType=VARCHAR}, 
+      #{oilno,jdbcType=VARCHAR}, #{standardl,jdbcType=DOUBLE}, #{heighttotal,jdbcType=DOUBLE}, 
+      #{oill,jdbcType=DOUBLE}, #{heightwater,jdbcType=DOUBLE}, #{waterl,jdbcType=DOUBLE}, 
+      #{temperature,jdbcType=DOUBLE}, #{volumeempty,jdbcType=DOUBLE}, #{temp1,jdbcType=DOUBLE}, 
+      #{temp2,jdbcType=DOUBLE}, #{temp3,jdbcType=DOUBLE}, #{temp4,jdbcType=DOUBLE}, #{temp5,jdbcType=DOUBLE}, 
+      #{densities,jdbcType=DOUBLE}, #{densitiesstandard,jdbcType=DOUBLE}, #{transtatus,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{shift,jdbcType=VARCHAR}, #{oucode,jdbcType=VARCHAR}, 
+      #{version,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_monitor_TimeInventory" >
+    insert into oss_monitor_TimeInventory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oilcan != null" >
+        OilCan,
+      </if>
+      <if test="storetime != null" >
+        StoreTime,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="standardl != null" >
+        StandardL,
+      </if>
+      <if test="heighttotal != null" >
+        HeightTotal,
+      </if>
+      <if test="oill != null" >
+        OilL,
+      </if>
+      <if test="heightwater != null" >
+        HeightWater,
+      </if>
+      <if test="waterl != null" >
+        WaterL,
+      </if>
+      <if test="temperature != null" >
+        Temperature,
+      </if>
+      <if test="volumeempty != null" >
+        VolumeEmpty,
+      </if>
+      <if test="temp1 != null" >
+        Temp1,
+      </if>
+      <if test="temp2 != null" >
+        Temp2,
+      </if>
+      <if test="temp3 != null" >
+        Temp3,
+      </if>
+      <if test="temp4 != null" >
+        Temp4,
+      </if>
+      <if test="temp5 != null" >
+        Temp5,
+      </if>
+      <if test="densities != null" >
+        Densities,
+      </if>
+      <if test="densitiesstandard != null" >
+        DensitiesStandard,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="shift != null" >
+        Shift,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+      <if test="version != null" >
+        Version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="storetime != null" >
+        #{storetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="standardl != null" >
+        #{standardl,jdbcType=DOUBLE},
+      </if>
+      <if test="heighttotal != null" >
+        #{heighttotal,jdbcType=DOUBLE},
+      </if>
+      <if test="oill != null" >
+        #{oill,jdbcType=DOUBLE},
+      </if>
+      <if test="heightwater != null" >
+        #{heightwater,jdbcType=DOUBLE},
+      </if>
+      <if test="waterl != null" >
+        #{waterl,jdbcType=DOUBLE},
+      </if>
+      <if test="temperature != null" >
+        #{temperature,jdbcType=DOUBLE},
+      </if>
+      <if test="volumeempty != null" >
+        #{volumeempty,jdbcType=DOUBLE},
+      </if>
+      <if test="temp1 != null" >
+        #{temp1,jdbcType=DOUBLE},
+      </if>
+      <if test="temp2 != null" >
+        #{temp2,jdbcType=DOUBLE},
+      </if>
+      <if test="temp3 != null" >
+        #{temp3,jdbcType=DOUBLE},
+      </if>
+      <if test="temp4 != null" >
+        #{temp4,jdbcType=DOUBLE},
+      </if>
+      <if test="temp5 != null" >
+        #{temp5,jdbcType=DOUBLE},
+      </if>
+      <if test="densities != null" >
+        #{densities,jdbcType=DOUBLE},
+      </if>
+      <if test="densitiesstandard != null" >
+        #{densitiesstandard,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shift != null" >
+        #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_monitor_TimeInventory" >
+    update oss_monitor_TimeInventory
+    <set >
+      <if test="oilno != null" >
+        OilNo = #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="standardl != null" >
+        StandardL = #{standardl,jdbcType=DOUBLE},
+      </if>
+      <if test="heighttotal != null" >
+        HeightTotal = #{heighttotal,jdbcType=DOUBLE},
+      </if>
+      <if test="oill != null" >
+        OilL = #{oill,jdbcType=DOUBLE},
+      </if>
+      <if test="heightwater != null" >
+        HeightWater = #{heightwater,jdbcType=DOUBLE},
+      </if>
+      <if test="waterl != null" >
+        WaterL = #{waterl,jdbcType=DOUBLE},
+      </if>
+      <if test="temperature != null" >
+        Temperature = #{temperature,jdbcType=DOUBLE},
+      </if>
+      <if test="volumeempty != null" >
+        VolumeEmpty = #{volumeempty,jdbcType=DOUBLE},
+      </if>
+      <if test="temp1 != null" >
+        Temp1 = #{temp1,jdbcType=DOUBLE},
+      </if>
+      <if test="temp2 != null" >
+        Temp2 = #{temp2,jdbcType=DOUBLE},
+      </if>
+      <if test="temp3 != null" >
+        Temp3 = #{temp3,jdbcType=DOUBLE},
+      </if>
+      <if test="temp4 != null" >
+        Temp4 = #{temp4,jdbcType=DOUBLE},
+      </if>
+      <if test="temp5 != null" >
+        Temp5 = #{temp5,jdbcType=DOUBLE},
+      </if>
+      <if test="densities != null" >
+        Densities = #{densities,jdbcType=DOUBLE},
+      </if>
+      <if test="densitiesstandard != null" >
+        DensitiesStandard = #{densitiesstandard,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shift != null" >
+        Shift = #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        Version = #{version,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and StoreTime = #{storetime,jdbcType=TIMESTAMP}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_monitor_TimeInventory" >
+    update oss_monitor_TimeInventory
+    set OilNo = #{oilno,jdbcType=VARCHAR},
+      StandardL = #{standardl,jdbcType=DOUBLE},
+      HeightTotal = #{heighttotal,jdbcType=DOUBLE},
+      OilL = #{oill,jdbcType=DOUBLE},
+      HeightWater = #{heightwater,jdbcType=DOUBLE},
+      WaterL = #{waterl,jdbcType=DOUBLE},
+      Temperature = #{temperature,jdbcType=DOUBLE},
+      VolumeEmpty = #{volumeempty,jdbcType=DOUBLE},
+      Temp1 = #{temp1,jdbcType=DOUBLE},
+      Temp2 = #{temp2,jdbcType=DOUBLE},
+      Temp3 = #{temp3,jdbcType=DOUBLE},
+      Temp4 = #{temp4,jdbcType=DOUBLE},
+      Temp5 = #{temp5,jdbcType=DOUBLE},
+      Densities = #{densities,jdbcType=DOUBLE},
+      DensitiesStandard = #{densitiesstandard,jdbcType=DOUBLE},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      Shift = #{shift,jdbcType=VARCHAR},
+      OUCode = #{oucode,jdbcType=VARCHAR},
+      Version = #{version,jdbcType=VARCHAR}
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and StoreTime = #{storetime,jdbcType=TIMESTAMP}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <select id="selectTimeInventoryInfo" resultType="hashmap" parameterType="hashmap">
+    <![CDATA[
+select OUCode,
+(select OUName from oss_sys_OrgUnit where oss_sys_OrgUnit.OUCode=new.OUCode) AS OUName,
+oil0,oil97,oil93,oil98,StoreTime
+FROM
+(
+select
+OUCode
+,
+SUM(CASE WHEN t.OilName LIKE '0%'  THEN OilL ELSE '0' END) AS oil0
+,
+SUM(CASE WHEN t.OilName LIKE '93%'  THEN OilL ELSE '0' END) AS oil97
+,
+SUM(CASE WHEN t.OilName LIKE '97%'  THEN OilL ELSE '0' END) AS oil93
+,
+SUM(CASE WHEN t.OilName LIKE '98%'  THEN OilL ELSE '0' END) AS oil98
+,StoreTime
+from
+(
+select *,( SELECT  OilName from  oss_sysmanage_oilType where oss_sysmanage_oilType.OilNo=a.OilNo limit 1) as OilName  from oss_monitor_TimeInventory as a
+where a.StoreTime =(SELECT MAX(b.StoreTime) from oss_monitor_TimeInventory as b
+WHERE a.OilNo=b.OilNo
+)
+  GROUP BY OUCode
+) t GROUP BY t.OilName
+) new where OUCode LIKE #{oucode,jdbcType=VARCHAR}
+    ]]>
+    <if test="firstRow != null and  pageSize!= null">
+      <![CDATA[ LIMIT #{firstRow},#{pageSize}]]>
+    </if>
+  </select>
+  <select id="selectPageCount" resultType="hashmap" parameterType="hashmap">
+    <![CDATA[
+select OUCode,
+(select OUName from oss_sys_OrgUnit where oss_sys_OrgUnit.OUCode=new.OUCode) AS OUName,
+oil0,oil97,oil93,oil98,StoreTime
+FROM
+(
+select
+OUCode
+,
+SUM(CASE WHEN t.OilName LIKE '0%'  THEN OilL ELSE '0' END) AS oil0
+,
+SUM(CASE WHEN t.OilName LIKE '93%'  THEN OilL ELSE '0' END) AS oil97
+,
+SUM(CASE WHEN t.OilName LIKE '97%'  THEN OilL ELSE '0' END) AS oil93
+,
+SUM(CASE WHEN t.OilName LIKE '98%'  THEN OilL ELSE '0' END) AS oil98
+,StoreTime
+from
+(
+select *,( SELECT  OilName from  oss_sysmanage_oilType where oss_sysmanage_oilType.OilNo=a.OilNo limit 1) as OilName  from oss_monitor_TimeInventory as a
+where a.StoreTime =(SELECT MAX(b.StoreTime) from oss_monitor_TimeInventory as b
+WHERE a.OilNo=b.OilNo
+)
+  GROUP BY OUCode
+) t GROUP BY t.OilName
+) new where OUCode LIKE #{oucode,jdbcType=VARCHAR}
+    ]]>
+  </select>
+
+  <select id="selectInventory" resultType="hashmap" parameterType="hashmap">
+    select * from
+    (
+    select OilL,(SELECT MAX(StoreTime)),OUCode,(select OilType from oss_sysmanage_oilType where oss_sysmanage_oilType.OilNo=oss_monitor_TimeInventory.OilNo) AS OilType  from oss_monitor_TimeInventory
+    GROUP BY OUCode,OilNo
+    )  a
+    where 1=1
+    <if test="oiltype != null">
+      and OilType=#{oiltype,jdbcType=VARCHAR}
+    </if>
+    <if test="oucode != null and oucode != '' ">
+      and OUCode LIKE #{oucode,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <select id="selectUploadInventory" resultType="hashmap" parameterType="hashmap">
+    select * from
+    (
+    select OilL,(SELECT MAX(StoreTime)),OUCode,(select OilType from oss_sysmanage_oilType where oss_sysmanage_oilType.OilNo=oss_monitor_TimeInventory.OilNo) AS OilType  from oss_monitor_TimeInventory
+    GROUP BY OUCode
+    ) a
+    where 1=1
+    <if test="oucode != null and oucode != '' ">
+      and OUCode LIKE #{oucode,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>

@@ -1,0 +1,177 @@
+#set($layout="layout/emptylayout.vm")
+#set($menuTitle="油站监控")
+<div id="query" title="查询条件" collapsible="true" class="easyui-panel search panel-body panel-body-noheader" style="border:0px;padding: 10px; width: 100%;" icon="icon-search">
+    <table width="800">
+        <tr>
+            <th width="100px">
+                选择油站：
+            </th>
+            <th width="150px">
+                <input id="cc" name="cc"  class="easyui-combobox textbox" type="text"  style="width:150px" data-options="prompt:'--请选择--'"></input>
+            </th>
+            <th width="150px">
+                <input id="aa" name="aa"  class="easyui-combobox textbox" type="text" style="width:150px" data-options="prompt:'--请选择--'"></input>
+            </th>
+            <th width="150px">
+                <input id="ss" name="ss"  class="easyui-combobox textbox" type="text" style="width:150px" data-options="prompt:'--请选择--'"></input>
+            </th>
+            <th width="100px" align="right"></th>
+            <th width="150px" align="left">
+
+            </th>
+
+
+        <tr>
+            <th></th>
+            <th>
+                <a id="btnSelect" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="initData();">查询</a>
+
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </table>
+</div>
+<div id="result">
+    <table id="tt" class="easyui-datagrid">
+    </table>
+</div>
+<div id="divShowOrHide">
+<table width="100%" heigth="100%">
+    <tr>
+        <td width="50%">
+            <div id="resultgun">
+                <table id="gun" fit="true"></table>
+            </div>
+        </td>
+        <td  width="50%">
+            <div id="resultpot">
+                <table id="pot" fit="true"></table>
+            </div>
+        </td>
+    </tr>
+</table>
+</div>
+<script type="text/javascript">
+    var cols=[[
+        {field:'areano',title:'片区',width:100,align:'center'},
+        {field:'nodename',title:'油站',width:100,align:'center'},
+        {field:'updateTime',title:'最后一次通讯时间',width:100,align:'center',formatter: formatDatebox},
+        {field:'action',title:'详情',width:100,
+            formatter:function(value,row,index)
+            {
+                var successor;
+
+                if(row.nodeno!=undefined)
+                {
+
+                    var str = '';
+                    str += "<a href='javascript:void(0);'  onclick='show("+row.nodeno+")'>查看</a>";
+                    return str;
+                }
+
+            },align:'center'
+        }
+    ]];
+    var colsgun=[[
+        {field:'oilGun',title:'枪号',width:100,align:'center'},
+        {field:'pumpUp',title:'泵码',width:100,align:'center'}
+
+    ]];
+    var colspot=[[
+        {field:'oilcan',title:'罐号',width:100,align:'center'},
+        {field:'standardl',title:'实时库存',width:100,align:'center'}
+
+    ]];
+    var  begin;
+    var end;
+    var oucode;
+    var paras;
+
+
+
+    $(function(){
+        LoadOrgunit("cc","aa","ss");
+        //Loadcasbynodeno("cc","aa","ss");
+        $("#result").height(220);
+        $("#resultgun").height(260);
+        $("#resultpot").height(260);
+
+        initData();
+    });
+    function inittext(){
+
+        oucode="";
+        var ss=$('#ss').combobox('getValue');
+        var aa=$('#aa').combobox('getValue');
+        var cc=$('#cc').combobox('getValue');
+        if(ss!="")
+        {
+            oucode=ss;
+        }
+        paras={"keys":oucode};
+    }
+    function initData() {
+        inittext();
+        BindDataGridAjax('tt','油站通讯状态','/web/basic/getlossstation',cols,paras,'true',10,[10,20,30]);
+        $("#divShowOrHide").hide();
+
+        // BindDataGridAjax('gun','枪号泵码信息','',colsgun,paras,'false',null,null);
+        //BindDataGridAjax('pot','罐号库存信息','/web/alarminfo/selectJySaleOutPageList',colspot,paras,'false',null,null);
+
+
+    }
+    function show(nodeno)
+    {
+        /*alert('bb');*/
+        $("#divShowOrHide").show();
+        $('#gun').datagrid({
+            title: '枪号泵码信息',
+            url:'/TI/getguns?nodeno='+nodeno,
+            columns:colsgun,
+            height:"100%",
+            width:'100%',
+            border: true,
+            fitColumns: true,
+            method: 'get',
+            queryParams: paras,
+            pagination:false,//????
+            striped:true,
+            singleSelect:true,
+            remoteSort: false,
+            fit: true   //?????
+        });
+
+        $('#pot').datagrid({
+            title: '罐号库存信息',
+            url:'/TI/gettanks?nodeno='+nodeno,
+            columns:colspot,
+            height:"100%",
+            width:'100%',
+            border: true,
+            fitColumns: true,
+            method: 'get',
+            queryParams: paras,
+            pagination:false,//????
+            striped:true,
+            singleSelect:true,
+            remoteSort: false,
+            fit: true   //?????
+        });
+    }
+    function formatDatebox(value) {
+        if (value == null || value == '') {
+            return '';
+        }
+        var dt;
+        if (value instanceof Date) {
+            dt = value;
+        } else {
+            dt = new Date(value);
+        }
+
+        return dt.format("yyyy-MM-dd hh:mm:ss"); //扩展的Date的format方法(上述插件实现)
+    }
+</script>

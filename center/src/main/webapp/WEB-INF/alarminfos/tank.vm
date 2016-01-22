@@ -1,0 +1,138 @@
+#set($layout="layout/emptylayout.vm")
+#set($menuTitle="库存报警")
+<div id="query" title="查询条件" collapsible="true" class="easyui-panel search panel-body panel-body-noheader" style="border:0px;padding: 10px; width: 100%;" icon="icon-search">
+    <table width="800">
+        <tr>
+            <th width="100px">
+                选择油站：
+            </th>
+            <th width="150px">
+                <input id="cc" name="cc"  class="easyui-combobox textbox" type="text"  style="width:150px" data-options="prompt:'--请选择--'"></input>
+            </th>
+            <th width="150px">
+                <input id="aa" name="aa"  class="easyui-combobox textbox" type="text" style="width:150px" data-options="prompt:'--请选择--'"></input>
+            </th>
+            <th width="150px">
+                <input id="ss" name="ss"  class="easyui-combobox textbox" type="text" style="width:150px" data-options="prompt:'--请选择--'"></input>
+            </th>
+            <th width="100px" align="right"> 报警类型：</th>
+            <th width="150px" align="left">
+                <select id="selectalarmtype"  style=" width: 150px" data-options="prompt:'--请选择--'">
+                </select>
+            </th>
+
+        <tr>
+            <th> 起止时间：</th>
+            <th colspan="5">
+                <input id="dateStartinput" type="text" class="easyui-datebox" required="required"/>至
+                <input id="dateEndinput" type="text" class="easyui-datebox" required="required"/>
+            </th>
+
+
+
+        </tr>
+        <tr>
+            <th></th>
+            <th>
+                <a id="btnSelect" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="initData();">查询</a>
+                <a id="btnExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="ExportExl();">导出</a>
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </table>
+</div>
+<div id="result">
+    <table id="tt" fit="true" style="height: 500px;">
+    </table>
+</div>
+<script>
+    function formatDatebox(value) {
+        if (value == null || value == '') {
+            return '';
+        }
+        var dt;
+        if (value instanceof Date) {
+            dt = value;
+        } else {
+            dt = new Date(value);
+        }
+
+        return dt.format("yyyy-MM-dd hh:mm:ss"); //扩展的Date的format方法(上述插件实现)
+    }
+    var cols=[[
+        {field:'OUName',title:'油站名称',width:100,align:'center'},
+        {field:'OilCan',title:'油罐编号',width:100,align:'center'},
+        //{field:'OilName',title:'油品类型',width:100,align:'center'},
+        {field:'NAME',title:'预警类型',width:100,align:'center'},
+        {field:'StartTime',title:'开始报警时间',width:100,align:'center',formatter: formatDatebox},
+        {field:'EndTIme',title:'解除报警时间',width:100,align:'center',formatter: formatDatebox}
+    ]];
+    var  alarmtype;
+
+    var begin;
+    var  end;
+    var oucode;
+    var paras;
+    $(function(){
+        initOilCombox();
+        Loadcas("cc","aa","ss");
+        var myDate = new Date();
+        var MyTime=new Date();
+        //var time=MyTime.getFullYear() + "-" + (MyTime.getMonth()) + "-" + MyTime.getDate();
+        $("#dateStartinput").datebox('setValue','<%=myDate.toLocaleDateString()%>');
+        $("#dateEndinput").datebox('setValue','<%=myDate.toLocaleDateString()%>');
+        var heigth=$(window).height()-160;
+        $("#result").height(heigth);
+        initData();
+    });
+
+    function inittext(){
+        alarmtype=$('#selectalarmtype').combobox('getValue');
+
+        begin=$('#dateStartinput').datebox('getValue');
+        end=$('#dateEndinput').datebox('getValue');
+        oucode="";
+        var ss=$('#ss').combobox('getValue');
+        var aa=$('#aa').combobox('getValue');
+        var cc=$('#cc').combobox('getValue');
+        if(cc!="")
+        {
+            oucode=cc;
+        }
+        if(aa!="")
+        {
+            oucode=aa;
+        }
+        if(ss!="")
+        {
+            oucode=ss;
+        }
+        paras={"alarmtype":alarmtype,"begin":begin,"end":end,"oucode":oucode};
+
+    }
+    function initData() {
+        inittext();
+        BindDataGridAjax('tt','库存报警','/web/alarm/getalarmInventoryInfo',cols,paras,'true',10,[10,20,30]);
+    }
+
+
+    function ExportExl() {
+        inittext();
+        var filename=encodeURI(encodeURI("库存报警"));
+        window.open("/web/alarm/excelAlarmInventory?alarmtype="+alarmtype+"&begin="+begin+"&end="+end+"&FileName="+filename+"&oucode="+oucode);
+    }
+
+    function initOilCombox() {
+        $('#selectalarmtype').combobox({
+            url:'/web/oiltypeinfo/seletOilAlarmType',
+            valueField:'value',
+            textField:'name'
+        });
+
+    }
+
+</script>
+

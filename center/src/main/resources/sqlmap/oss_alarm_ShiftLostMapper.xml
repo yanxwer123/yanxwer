@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_alarm_ShiftLostMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_alarm_ShiftLost" >
+    <id column="Shift" property="shift" jdbcType="VARCHAR" />
+    <id column="OilCanNo" property="oilcanno" jdbcType="INTEGER" />
+    <id column="NodeNo" property="nodeno" jdbcType="VARCHAR" />
+    <result column="StartOilHeight" property="startoilheight" jdbcType="DOUBLE" />
+    <result column="StartOilL" property="startoill" jdbcType="DOUBLE" />
+    <result column="EndOilHeight" property="endoilheight" jdbcType="DOUBLE" />
+    <result column="EndOilL" property="endoill" jdbcType="DOUBLE" />
+    <result column="AcutalEndOilL" property="acutalendoill" jdbcType="DOUBLE" />
+    <result column="EndWaterHeight" property="endwaterheight" jdbcType="DOUBLE" />
+    <result column="EndWaterL" property="endwaterl" jdbcType="DOUBLE" />
+    <result column="EndTemperature" property="endtemperature" jdbcType="DOUBLE" />
+    <result column="OilDischarge" property="oildischarge" jdbcType="DOUBLE" />
+    <result column="Sale" property="sale" jdbcType="DOUBLE" />
+    <result column="Inventory" property="inventory" jdbcType="DOUBLE" />
+    <result column="Loss" property="loss" jdbcType="DOUBLE" />
+    <result column="State" property="state" jdbcType="INTEGER" />
+    <result column="ShiftTime" property="shifttime" jdbcType="TIMESTAMP" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
+    <result column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <result column="ProfitLossRatio" property="profitlossratio" jdbcType="DOUBLE" />
+  </resultMap>
+  <select id="selectshiftlostbywhere" resultType="hashmap" parameterType="hashmap">
+    SELECT * FROM oss_alarm_ShiftLost WHERE 1=1
+    <if test="start != null">
+    <![CDATA[ AND  LEFT(Shift,8)>=#{start,jdbcType=VARCHAR}]]>
+    </if>
+    <if test="end != null">
+    <![CDATA[ And LEFT(Shift,8)<=#{end,jdbcType=VARCHAR}]]>
+    </if>
+    <if test="oucode != null and oucode != '' ">
+      <![CDATA[  and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    </if>
+    ORDER BY Shift DESC
+  </select>
+  <select id="querypage" resultType="hashmap" parameterType="hashmap">
+  SELECT * FROM oss_alarm_ShiftLost WHERE 1=1
+  <if test="start != null">
+    <![CDATA[ AND  LEFT(Shift,8)>=#{start,jdbcType=VARCHAR}]]>
+  </if>
+  <if test="end != null">
+    <![CDATA[ And LEFT(Shift,8)<=#{end,jdbcType=VARCHAR}]]>
+  </if>
+  <if test="oucode != null and oucode != '' ">
+    <![CDATA[  and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+  </if>
+    ORDER BY Shift DESC
+  <if test="firstRow != null and  pageSize!= null">
+    <![CDATA[ LIMIT #{firstRow},#{pageSize}]]>
+  </if>
+</select>
+  <select id="selectAlarmCount" resultType="hashmap" parameterType="hashmap">
+    select OUCode,LEFT(ShortName,2) as ShortName,COUNT(*) as num
+    from
+    (
+    select (SELECT ShortName from oss_sys_OrgUnit where oss_sys_OrgUnit.OUCode=LEFT(oss_alarm_DailyLost.OUCode,6)) as ShortName,REPLACE(substring(AccountDate,1,10),'-','') as Shift,oss_alarm_DailyLost.OUCode from oss_alarm_DailyLost
+    UNION ALL
+    select (SELECT ShortName from oss_sys_OrgUnit where oss_sys_OrgUnit.OUCode=LEFT(oss_alarm_ShiftLost.OUCode,6)) as ShortName,LEFT(Shift,8) as Shift,oss_alarm_ShiftLost.OUCode from oss_alarm_ShiftLost
+    UNION ALL
+    select (SELECT ShortName from oss_sys_OrgUnit where oss_sys_OrgUnit.OUCode=LEFT(oss_alarm_Equipment.OUCode,6)) as ShortName,LEFT(Shift,8) as Shift,oss_alarm_Equipment.OUCode from oss_alarm_Equipment
+    UNION ALL
+    select (SELECT ShortName from oss_sys_OrgUnit where oss_sys_OrgUnit.OUCode=LEFT(oss_alarm_SaleOut.OUCode,6)) as ShortName,LEFT(Shift,8) as Shift,oss_alarm_SaleOut.OUCode from oss_alarm_SaleOut
+    UNION ALL
+    select (SELECT ShortName from oss_sys_OrgUnit where oss_sys_OrgUnit.OUCode=LEFT(oss_alarm_Inventory.OUCode,6)) as ShortName,LEFT(Shift,8) as Shift,oss_alarm_Inventory.OUCode from oss_alarm_Inventory
+    ) a where 1=1
+    <if test="start != null">
+      <![CDATA[ AND Shift = #{start,jdbcType=VARCHAR}]]>
+    </if>
+    <if test="oucode != null and oucode != '' ">
+      <![CDATA[  and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    </if>
+    GROUP BY LEFT(OUCode,6) ORDER BY num DESC
+  </select>
+  <sql id="Base_Column_List" >
+    Shift, OilCanNo, NodeNo, StartOilHeight, StartOilL, EndOilHeight, EndOilL, AcutalEndOilL, 
+    EndWaterHeight, EndWaterL, EndTemperature, OilDischarge, Sale, Inventory, Loss, State,
+    ShiftTime, TranStatus, OUCode,OilNo,ProfitLossRatio
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_alarm_ShiftLostKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_alarm_ShiftLost
+    where Shift = #{shift,jdbcType=VARCHAR}
+      and OilCanNo = #{oilcanno,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_alarm_ShiftLostKey" >
+    delete from oss_alarm_ShiftLost
+    where Shift = #{shift,jdbcType=VARCHAR}
+      and OilCanNo = #{oilcanno,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_alarm_ShiftLost" >
+    insert into oss_alarm_ShiftLost (Shift, OilCanNo, NodeNo, 
+      StartOilHeight, StartOilL, EndOilHeight, 
+      EndOilL, AcutalEndOilL, EndWaterHeight, 
+      EndWaterL, EndTemperature, OilDischarge, 
+      Sale, Inventory, Loss, 
+      State, ShiftTime, TranStatus, 
+      OUCode,OilNo,ProfitLossRatio)
+    values (#{shift,jdbcType=VARCHAR}, #{oilcanno,jdbcType=INTEGER}, #{nodeno,jdbcType=VARCHAR}, 
+      #{startoilheight,jdbcType=DOUBLE}, #{startoill,jdbcType=DOUBLE}, #{endoilheight,jdbcType=DOUBLE}, 
+      #{endoill,jdbcType=DOUBLE}, #{acutalendoill,jdbcType=DOUBLE}, #{endwaterheight,jdbcType=DOUBLE}, 
+      #{endwaterl,jdbcType=DOUBLE}, #{endtemperature,jdbcType=DOUBLE}, #{oildischarge,jdbcType=DOUBLE}, 
+      #{sale,jdbcType=DOUBLE}, #{inventory,jdbcType=DOUBLE}, #{loss,jdbcType=DOUBLE}, 
+      #{state,jdbcType=INTEGER}, #{shifttime,jdbcType=TIMESTAMP}, #{transtatus,jdbcType=VARCHAR}, 
+      #{oucode,jdbcType=VARCHAR}, #{oilno,jdbcType=VARCHAR}, #{profitlossratio,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_alarm_ShiftLost" >
+    insert into oss_alarm_ShiftLost
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shift != null" >
+        Shift,
+      </if>
+      <if test="oilcanno != null" >
+        OilCanNo,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="startoilheight != null" >
+        StartOilHeight,
+      </if>
+      <if test="startoill != null" >
+        StartOilL,
+      </if>
+      <if test="endoilheight != null" >
+        EndOilHeight,
+      </if>
+      <if test="endoill != null" >
+        EndOilL,
+      </if>
+      <if test="acutalendoill != null" >
+        AcutalEndOilL,
+      </if>
+      <if test="endwaterheight != null" >
+        EndWaterHeight,
+      </if>
+      <if test="endwaterl != null" >
+        EndWaterL,
+      </if>
+      <if test="endtemperature != null" >
+        EndTemperature,
+      </if>
+      <if test="oildischarge != null" >
+        OilDischarge,
+      </if>
+      <if test="sale != null" >
+        Sale,
+      </if>
+      <if test="inventory != null" >
+        Inventory,
+      </if>
+      <if test="loss != null" >
+        Loss,
+      </if>
+      <if test="state != null" >
+        State,
+      </if>
+      <if test="shifttime != null" >
+        ShiftTime,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="profitlossratio != null" >
+        ProfitLossRatio,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shift != null" >
+        #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="oilcanno != null" >
+        #{oilcanno,jdbcType=INTEGER},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="startoilheight != null" >
+        #{startoilheight,jdbcType=DOUBLE},
+      </if>
+      <if test="startoill != null" >
+        #{startoill,jdbcType=DOUBLE},
+      </if>
+      <if test="endoilheight != null" >
+        #{endoilheight,jdbcType=DOUBLE},
+      </if>
+      <if test="endoill != null" >
+        #{endoill,jdbcType=DOUBLE},
+      </if>
+      <if test="acutalendoill != null" >
+        #{acutalendoill,jdbcType=DOUBLE},
+      </if>
+      <if test="endwaterheight != null" >
+        #{endwaterheight,jdbcType=DOUBLE},
+      </if>
+      <if test="endwaterl != null" >
+        #{endwaterl,jdbcType=DOUBLE},
+      </if>
+      <if test="endtemperature != null" >
+        #{endtemperature,jdbcType=DOUBLE},
+      </if>
+      <if test="oildischarge != null" >
+        #{oildischarge,jdbcType=DOUBLE},
+      </if>
+      <if test="sale != null" >
+        #{sale,jdbcType=DOUBLE},
+      </if>
+      <if test="inventory != null" >
+        #{inventory,jdbcType=DOUBLE},
+      </if>
+      <if test="loss != null" >
+        #{loss,jdbcType=DOUBLE},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="shifttime != null" >
+        #{shifttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="profitlossratio != null" >
+        #{profitlossratio,jdbcType=Double},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_alarm_ShiftLost" >
+    update oss_alarm_ShiftLost
+    <set >
+      <if test="startoilheight != null" >
+        StartOilHeight = #{startoilheight,jdbcType=DOUBLE},
+      </if>
+      <if test="startoill != null" >
+        StartOilL = #{startoill,jdbcType=DOUBLE},
+      </if>
+      <if test="endoilheight != null" >
+        EndOilHeight = #{endoilheight,jdbcType=DOUBLE},
+      </if>
+      <if test="endoill != null" >
+        EndOilL = #{endoill,jdbcType=DOUBLE},
+      </if>
+      <if test="acutalendoill != null" >
+        AcutalEndOilL = #{acutalendoill,jdbcType=DOUBLE},
+      </if>
+      <if test="endwaterheight != null" >
+        EndWaterHeight = #{endwaterheight,jdbcType=DOUBLE},
+      </if>
+      <if test="endwaterl != null" >
+        EndWaterL = #{endwaterl,jdbcType=DOUBLE},
+      </if>
+      <if test="endtemperature != null" >
+        EndTemperature = #{endtemperature,jdbcType=DOUBLE},
+      </if>
+      <if test="oildischarge != null" >
+        OilDischarge = #{oildischarge,jdbcType=DOUBLE},
+      </if>
+      <if test="sale != null" >
+        Sale = #{sale,jdbcType=DOUBLE},
+      </if>
+      <if test="inventory != null" >
+        Inventory = #{inventory,jdbcType=DOUBLE},
+      </if>
+      <if test="loss != null" >
+        Loss = #{loss,jdbcType=DOUBLE},
+      </if>
+      <if test="state != null" >
+        State = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="shifttime != null" >
+        ShiftTime = #{shifttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="oilno != null" >
+        OilNo = #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="profitlossratio != null" >
+        ProfitLossRatio = #{profitlossratio,jdbcType=Double},
+      </if>
+    </set>
+    where Shift = #{shift,jdbcType=VARCHAR}
+      and OilCanNo = #{oilcanno,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_alarm_ShiftLost" >
+    update oss_alarm_ShiftLost
+    set StartOilHeight = #{startoilheight,jdbcType=DOUBLE},
+      StartOilL = #{startoill,jdbcType=DOUBLE},
+      EndOilHeight = #{endoilheight,jdbcType=DOUBLE},
+      EndOilL = #{endoill,jdbcType=DOUBLE},
+      AcutalEndOilL = #{acutalendoill,jdbcType=DOUBLE},
+      EndWaterHeight = #{endwaterheight,jdbcType=DOUBLE},
+      EndWaterL = #{endwaterl,jdbcType=DOUBLE},
+      EndTemperature = #{endtemperature,jdbcType=DOUBLE},
+      OilDischarge = #{oildischarge,jdbcType=DOUBLE},
+      Sale = #{sale,jdbcType=DOUBLE},
+      Inventory = #{inventory,jdbcType=DOUBLE},
+      Loss = #{loss,jdbcType=DOUBLE},
+      State = #{state,jdbcType=INTEGER},
+      ShiftTime = #{shifttime,jdbcType=TIMESTAMP},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      OUCode = #{oucode,jdbcType=VARCHAR},
+       OilNo = #{oilno,jdbcType=VARCHAR},
+        ProfitLossRatio = #{profitlossratio,jdbcType=DOUBLE}
+    where Shift = #{shift,jdbcType=VARCHAR}
+      and OilCanNo = #{oilcanno,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+</mapper>

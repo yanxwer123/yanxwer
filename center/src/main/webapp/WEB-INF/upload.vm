@@ -1,0 +1,12 @@
+#set($layout="layout/emptylayout.vm")
+#set($menuTitle="文件上传")
+<body style="margin:50px">
+<iframe name="upload_iframe" width="0" height="0" frameborder="0"></iframe>
+<form action="/web/upload/doPostupload" method="post" enctype="multipart/form-data"
+      target="upload_iframe">
+    选择文件：<input type="file" name="file1"/><br/>
+    请输入版本号：<input type="text" name="version"/>
+    <input type="submit" id="btnSubmit" value=" 导入 "/>
+</form>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>gsm</artifactId>
+        <groupId>com.kld.gsm</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <version>1.5.31-SNAPSHOT</version>
+    <artifactId>core</artifactId>
+<properties>
+    <spring.version>4.0.5.RELEASE</spring.version>
+    <mybatis.version>3.2.8</mybatis.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+</properties>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>http://123.57.78.118:8081/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+     <dependencies>
+        <!-- <dependency>
+             <groupId>com.kld.gsm</groupId>
+             <artifactId>util</artifactId>
+	         <version>1.1.8-SNAPSHOT</version>
+         </dependency>-->
+
+         <dependency>
+             <groupId>net.sf.ehcache</groupId>
+             <artifactId>ehcache</artifactId>
+             <version>2.9.0</version>
+         </dependency>
+         <dependency>
+             <groupId>commons-io</groupId>
+             <artifactId>commons-io</artifactId>
+             <version>2.4</version>
+         </dependency>
+
+         <dependency>
+             <groupId>commons-logging</groupId>
+             <artifactId>commons-logging</artifactId>
+             <version>1.2</version>
+         </dependency>
+
+         <dependency>
+             <groupId>org.apache.commons</groupId>
+             <artifactId>commons-lang3</artifactId>
+             <version>3.3.2</version>
+         </dependency>
+         <dependency>
+             <groupId>commons-lang</groupId>
+             <artifactId>commons-lang</artifactId>
+             <version>2.6</version>
+         </dependency>
+         <dependency>
+             <groupId>log4j</groupId>
+             <artifactId>log4j</artifactId>
+             <version>1.2.17</version>
+         </dependency>
+
+<!--
+
+         <dependency>
+             <groupId>com.fasterxml.jackson.core</groupId>
+             <artifactId>jackson-core</artifactId>
+             <version>2.5.2</version>
+         </dependency>
+
+         <dependency>
+             <groupId>com.fasterxml.jackson.core</groupId>
+             <artifactId>jackson-databind</artifactId>
+             <version>2.5.2</version>
+         </dependency>
+
+         <dependency>
+             <groupId>com.fasterxml.jackson.core</groupId>
+             <artifactId>jackson-annotations</artifactId>
+             <version>2.5.2</version>
+         </dependency>
+
+
+         <dependency>
+             <groupId>org.codehaus.jackson</groupId>
+             <artifactId>jackson-jaxrs</artifactId>
+             <version>1.9.13</version>
+         </dependency>
+-->
+
+
+         <!--Netty-->
+         <dependency>
+             <groupId>io.netty</groupId>
+             <artifactId>netty-all</artifactId>
+             <version>4.0.30.Final</version>
+         </dependency>
+         <!--Netty-->
+
+         <!--spring-->
+         <dependency>
+             <groupId>org.springframework</groupId>
+             <artifactId>spring-core</artifactId>
+             <version>${spring.version}</version>
+         </dependency>
+
+         <dependency>
+             <groupId>org.springframework</groupId>
+             <artifactId>spring-web</artifactId>
+             <version>${spring.version}</version>
+         </dependency>
+
+         <dependency>
+             <groupId>org.springframework</groupId>
+             <artifactId>spring-webmvc</artifactId>
+             <version>${spring.version}</version>
+         </dependency>
+         <dependency>
+             <groupId>org.springframework</groupId>
+             <artifactId>spring-aop</artifactId>
+             <version>${spring.version}</version>
+         </dependency>
+
+         <dependency>
+             <groupId>org.springframework</groupId>
+             <artifactId>spring-beans</artifactId>
+             <version>${spring.version}</version>
+         </dependency>
+
+         <dependency>
+             <groupId>org.springframework</groupId>
+             <artifactId>spring-context</artifactId>
+             <version>${spring.version}</version>
+         </dependency>
+
+         <dependency>
+             <groupId>org.springframework</groupId>
+             <artifactId>spring-expression</artifactId>
+             <version>${spring.version}</version>
+         </dependency>
+
+         <dependency>
+             <groupId>org.springframework</groupId>
+             <artifactId>spring-test</artifactId>
+             <version>${spring.version}</version>
+         </dependency>
+
+
+         <dependency>
+             <groupId>org.springframework</groupId>
+             <artifactId>spring-context-support</artifactId>
+             <version>${spring.version}</version>
+         </dependency>
+
+         <dependency>
+             <groupId>org.springframework</groupId>
+             <artifactId>spring-jdbc</artifactId>
+             <version>${spring.version}</version>
+         </dependency>
+
+         <!--spring-->
+         <!--mybatis-->
+         <dependency>
+             <groupId>org.mybatis</groupId>
+             <artifactId>mybatis</artifactId>
+             <version>${mybatis.version}</version>
+         </dependency>
+
+
+         <!--mybatis-->
+     </dependencies>
+   <!-- <build>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+
+            </plugin>
+
+
+        </plugins>
+
+    </build>-->
+
+    <build>
+        <!--输出资源文件到指定目录-->
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <!--<resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <targetPath>${project.build.directory}/conf</targetPath>
+            </resource>
+        </resources>-->
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+
+                                <source>../util/src/main/java</source>
+
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--配置项目清单-->
+
+            <!--输出依赖jar包到指定目录-->
+           <!-- <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.directory}/lib
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>-->
+        </plugins>
+    </build>
+</project>

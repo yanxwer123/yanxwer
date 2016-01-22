@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.MonitorOilgunMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.MonitorOilgun" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <id column="gunNo" property="gunno" jdbcType="INTEGER" />
+    <result column="oilcan" property="oilcan" jdbcType="INTEGER" />
+    <result column="pumpUp" property="pumpup" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, gunNo, oilcan, pumpUp
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.ATG.domain.MonitorOilgunKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from oss_monitor_oilgun
+    where ID = #{id,jdbcType=VARCHAR}
+      and gunNo = #{gunno,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.MonitorOilgunKey" >
+    delete from oss_monitor_oilgun
+    where ID = #{id,jdbcType=VARCHAR}
+      and gunNo = #{gunno,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.MonitorOilgun" >
+    insert into oss_monitor_oilgun (ID, gunNo, oilcan, 
+      pumpUp)
+    values (#{id,jdbcType=VARCHAR}, #{gunno,jdbcType=INTEGER}, #{oilcan,jdbcType=INTEGER}, 
+      #{pumpup,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertList" parameterType="java.util.List">
+     insert into oss_monitor_oilgun (ID, gunNo, oilcan,
+      pumpUp)
+    values
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{item.id},#{item.gunno},#{item.oilcan},#{item.pumpup})
+    </foreach>
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.MonitorOilgun" >
+    insert into oss_monitor_oilgun
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="gunno != null" >
+        gunNo,
+      </if>
+      <if test="oilcan != null" >
+        oilcan,
+      </if>
+      <if test="pumpup != null" >
+        pumpUp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="gunno != null" >
+        #{gunno,jdbcType=INTEGER},
+      </if>
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="pumpup != null" >
+        #{pumpup,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.MonitorOilgun" >
+    update oss_monitor_oilgun
+    <set >
+      <if test="oilcan != null" >
+        oilcan = #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="pumpup != null" >
+        pumpUp = #{pumpup,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+      and gunNo = #{gunno,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.MonitorOilgun" >
+    update oss_monitor_oilgun
+    set oilcan = #{oilcan,jdbcType=INTEGER},
+      pumpUp = #{pumpup,jdbcType=DOUBLE}
+    where ID = #{id,jdbcType=VARCHAR}
+      and gunNo = #{gunno,jdbcType=INTEGER}
+  </update>
+  <select id="selectByID" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_monitor_oilgun WHERE ID=#{0,jdbcType=VARCHAR}
+  </select>
+</mapper>

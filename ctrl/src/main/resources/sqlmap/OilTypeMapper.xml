@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.kld.gsm.coord.dao.OilTypeDao">
+    <select id="selectOilType" resultType="com.kld.gsm.coord.domain.OilType">
+        SELECT * FROM oiltype
+    </select>
+</mapper>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.DailyStationShiftInfoDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.DailyStationShiftInfo" >
+    <id column="Shift" property="shift" jdbcType="INTEGER" />
+    <result column="Successor" property="successor" jdbcType="VARCHAR" />
+    <result column="SucceedTIme" property="succeedtime" jdbcType="TIMESTAMP" />
+    <result column="ShiftOperator" property="shiftoperator" jdbcType="VARCHAR" />
+    <result column="ShiftTime" property="shifttime" jdbcType="TIMESTAMP" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Shift, Successor, SucceedTIme, ShiftOperator, ShiftTime, TranStatus
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_daily_StationShiftInfo
+    where Shift = #{shift,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from oss_daily_StationShiftInfo
+    where Shift = #{shift,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.DailyStationShiftInfo" >
+    insert into oss_daily_StationShiftInfo (Shift, Successor, SucceedTIme, 
+      ShiftOperator, ShiftTime, TranStatus
+      )
+    values (#{shift,jdbcType=INTEGER}, #{successor,jdbcType=VARCHAR}, #{succeedtime,jdbcType=TIMESTAMP}, 
+      #{shiftoperator,jdbcType=VARCHAR}, #{shifttime,jdbcType=TIMESTAMP}, #{transtatus,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.DailyStationShiftInfo" >
+    insert into oss_daily_StationShiftInfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shift != null" >
+        Shift,
+      </if>
+      <if test="successor != null" >
+        Successor,
+      </if>
+      <if test="succeedtime != null" >
+        SucceedTIme,
+      </if>
+      <if test="shiftoperator != null" >
+        ShiftOperator,
+      </if>
+      <if test="shifttime != null" >
+        ShiftTime,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shift != null" >
+        #{shift,jdbcType=INTEGER},
+      </if>
+      <if test="successor != null" >
+        #{successor,jdbcType=VARCHAR},
+      </if>
+      <if test="succeedtime != null" >
+        #{succeedtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shiftoperator != null" >
+        #{shiftoperator,jdbcType=VARCHAR},
+      </if>
+      <if test="shifttime != null" >
+        #{shifttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.DailyStationShiftInfo" >
+    update oss_daily_StationShiftInfo
+    <set >
+      <if test="successor != null" >
+        Successor = #{successor,jdbcType=VARCHAR},
+      </if>
+      <if test="succeedtime != null" >
+        SucceedTIme = #{succeedtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shiftoperator != null" >
+        ShiftOperator = #{shiftoperator,jdbcType=VARCHAR},
+      </if>
+      <if test="shifttime != null" >
+        ShiftTime = #{shifttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Shift = #{shift,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.DailyStationShiftInfo" >
+    update oss_daily_StationShiftInfo
+    set Successor = #{successor,jdbcType=VARCHAR},
+      SucceedTIme = #{succeedtime,jdbcType=TIMESTAMP},
+      ShiftOperator = #{shiftoperator,jdbcType=VARCHAR},
+      ShiftTime = #{shifttime,jdbcType=TIMESTAMP},
+      TranStatus = #{transtatus,jdbcType=VARCHAR}
+    where Shift = #{shift,jdbcType=INTEGER}
+  </update>
+  <select id="selectByDate" resultType="com.kld.gsm.ATG.domain.DailyStationShiftInfo" parameterType="hashmap">
+    SELECT <include refid="Base_Column_List" />
+    <![CDATA[ FROM oss_daily_StationShiftInfo WHERE shifttime >= #{begin,jdbcType=TIMESTAMP} and shifttime < #{end,jdbcType=TIMESTAMP}
+ 	]]>
+  </select>
+  <select id="selectByTrans" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_daily_StationShiftInfo WHERE TranStatus=#{trans,jdbcType=VARCHAR}
+  </select>
+</mapper>

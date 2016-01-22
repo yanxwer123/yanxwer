@@ -1,0 +1,47 @@
+Manifest-Version: 1.0
+Class-Path: lib\struts-taglib-1.3.8.jar lib\aopalliance-1.0.jar lib\sp
+ ring-security-oauth2-1.0.5.RELEASE.jar lib\swagger-annotations-1.3.11
+ .jar lib\commons-lang-2.6.jar lib\jaxb-impl-2.1.12.jar lib\slf4j-log4
+ j12-1.7.5.jar lib\json-lib-ext-spring-1.0.2.jar lib\spring-tx-4.0.5.R
+ ELEASE.jar lib\dom4j-1.6.jar lib\spring-expression-4.0.5.RELEASE.jar 
+ lib\json-lib-2.4-jdk15.jar lib\spring-context-support-4.0.5.RELEASE.j
+ ar lib\struts-tiles-1.3.8.jar lib\httpclient-4.3.5.jar lib\jackson-mo
+ dule-jaxb-annotations-2.1.2.jar lib\commons-cli-1.0.jar lib\c3p0-0.9.
+ 5.jar lib\poi-excelant-3.11.jar lib\mybatis-spring-1.2.2.jar lib\jack
+ son-jaxrs-1.9.13.jar lib\swagger-springmvc-1.0.2.jar lib\fastjson-1.2
+ .0.jar lib\core-1.3.46-20151118.124025-1.jar lib\mchange-commons-java
+ -0.2.9.jar lib\joda-time-2.5.jar lib\jcl-over-slf4j-1.7.5.jar lib\com
+ mons-chain-1.1.jar lib\commons-lang3-3.3.2.jar lib\ooxml-schemas-1.1.
+ jar lib\spring-beans-4.0.5.RELEASE.jar lib\commons-pool2-2.0.jar lib\
+ swagger-models-1.0.2.jar lib\commons-digester-1.8.jar lib\mysql-conne
+ ctor-java-5.1.21.jar lib\struts-core-1.3.8.jar lib\commons-httpclient
+ -3.1.jar lib\spring-aop-4.0.5.RELEASE.jar lib\spring-web-4.0.5.RELEAS
+ E.jar lib\poi-examples-3.11.jar lib\classmate-1.1.0.jar lib\mybatis-3
+ .2.8.jar lib\jersey-core-1.19.jar lib\spring-security-crypto-3.1.4.RE
+ LEASE.jar lib\ant-1.8.2.jar lib\spring-core-4.0.5.RELEASE.jar lib\com
+ mons-validator-1.3.1.jar lib\commons-codec-1.6.jar lib\javassist-3.11
+ .0.GA.jar lib\spring-test-4.0.5.RELEASE.jar lib\jackson-mapper-asl-1.
+ 9.11.jar lib\jackson-core-2.1.2.jar lib\ant-launcher-1.8.2.jar lib\sp
+ ring-jdbc-4.0.5.RELEASE.jar lib\spring-security-taglibs-3.1.4.RELEASE
+ .jar lib\httpcore-4.3.2.jar lib\jackson-core-asl-1.9.11.jar lib\commo
+ ns-dbutils-1.6.jar lib\netty-all-4.0.30.Final.jar lib\quartz-1.8.6.ja
+ r lib\jersey-client-1.19.jar lib\slf4j-api-1.7.7.jar lib\json-2009021
+ 1.jar lib\swagger-ui-2.1.8-M1.jar lib\c3p0-0.9.1.2.jar lib\poi-ooxml-
+ schemas-3.11.jar lib\ezmorph-1.0.6.jar lib\spring-context-4.0.5.RELEA
+ SE.jar lib\commons-io-2.4.jar lib\hamcrest-core-1.3.jar lib\guava-15.
+ 0.jar lib\sslext-1.2-0.jar lib\xml-apis-1.0.b2.jar lib\httpmime-4.3.4
+ .jar lib\commons-logging-1.2.jar lib\commons-fileupload-1.2.1.jar lib
+ \spring-security-config-3.1.4.RELEASE.jar lib\spring-security-acl-3.1
+ .4.RELEASE.jar lib\jsr311-api-1.1.1.jar lib\poi-scratchpad-3.11.jar l
+ ib\commons-beanutils-1.7.0.jar lib\cglib-nodep-2.1_3.jar lib\spring-s
+ ecurity-core-3.1.4.RELEASE.jar lib\velocity-1.7.jar lib\jaxen-1.1.4.j
+ ar lib\avalon-framework-impl-4.2.0.jar lib\xmlbeans-2.3.0.jar lib\poi
+ -ooxml-3.11.jar lib\jsqlparser-0.9.1.jar lib\jackson-annotations-2.1.
+ 2.jar lib\jackson-databind-2.1.2.jar lib\barcode4j-2.1.jar lib\common
+ s-collections-3.2.1.jar lib\velocity-tools-2.0.jar lib\jedis-2.5.1.ja
+ r lib\poi-3.11.jar lib\antlr-2.7.2.jar lib\stax-api-1.0.1.jar lib\pag
+ ehelper-3.7.5.jar lib\spring-webmvc-4.0.5.RELEASE.jar lib\ehcache-2.9
+ .0.jar lib\junit-4.11.jar lib\spring-security-web-3.1.4.RELEASE.jar l
+ ib\log4j-1.2.17.jar lib\oro-2.0.8.jar
+Main-Class: com.kld.gsm.syntocenter.server.ApplicationMain
+

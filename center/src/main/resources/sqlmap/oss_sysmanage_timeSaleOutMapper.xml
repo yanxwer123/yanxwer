@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_sysmanage_timeSaleOutMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_sysmanage_timeSaleOut" >
+    <id column="OilCan" property="oilcan" jdbcType="INTEGER" />
+    <id column="SaleTime" property="saletime" jdbcType="INTEGER" />
+    <id column="NodeNo" property="nodeno" jdbcType="VARCHAR" />
+    <result column="Sales" property="sales" jdbcType="DOUBLE" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    OilCan, SaleTime, NodeNo, Sales, CreateTime, OUCode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_sysmanage_timeSaleOutKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_timeSaleOut
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and SaleTime = #{saletime,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_sysmanage_timeSaleOutKey" >
+    delete from oss_sysmanage_timeSaleOut
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and SaleTime = #{saletime,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_sysmanage_timeSaleOut" >
+    insert into oss_sysmanage_timeSaleOut (OilCan, SaleTime, NodeNo, 
+      Sales, CreateTime, OUCode
+      )
+    values (#{oilcan,jdbcType=INTEGER}, #{saletime,jdbcType=INTEGER}, #{nodeno,jdbcType=VARCHAR}, 
+      #{sales,jdbcType=DOUBLE}, #{createtime,jdbcType=TIMESTAMP}, #{oucode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_sysmanage_timeSaleOut" >
+    insert into oss_sysmanage_timeSaleOut
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oilcan != null" >
+        OilCan,
+      </if>
+      <if test="saletime != null" >
+        SaleTime,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="sales != null" >
+        Sales,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="saletime != null" >
+        #{saletime,jdbcType=INTEGER},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="sales != null" >
+        #{sales,jdbcType=DOUBLE},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_sysmanage_timeSaleOut" >
+    update oss_sysmanage_timeSaleOut
+    <set >
+      <if test="sales != null" >
+        Sales = #{sales,jdbcType=DOUBLE},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and SaleTime = #{saletime,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_sysmanage_timeSaleOut" >
+    update oss_sysmanage_timeSaleOut
+    set Sales = #{sales,jdbcType=DOUBLE},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      OUCode = #{oucode,jdbcType=VARCHAR}
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and SaleTime = #{saletime,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+</mapper>

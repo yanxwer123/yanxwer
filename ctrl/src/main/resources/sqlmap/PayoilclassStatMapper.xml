@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.kld.gsm.coord.dao.PayoilclassStatDao">
+    <select id="getPayoilclassStat" parameterType="java.lang.String" resultType="com.kld.gsm.coord.domain.PayoilclassStat">
+       SELECT teamvouchno,takedate,oilno,oilname,payoiltype,
+       oilamount,unitprice,amount,transflag,hotoflag,dayflag,accountdate
+       FROM payoilclass_stat
+       WHERE teamvouchno=#{oilvoch}
+    </select>
+</mapper>

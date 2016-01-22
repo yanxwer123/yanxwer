@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_sysmanage_oilTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_sysmanage_oilType" >
+    <id column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <result column="OilName" property="oilname" jdbcType="VARCHAR" />
+    <result column="MacOilNo" property="macoilno" jdbcType="VARCHAR" />
+    <result column="OilType" property="oiltype" jdbcType="VARCHAR" />
+    <result column="Control" property="control" jdbcType="VARCHAR" />
+    <result column="ValidFlag" property="validflag" jdbcType="VARCHAR" />
+    <result column="ValidTime" property="validtime" jdbcType="TIMESTAMP" />
+    <result column="ModifyTime" property="modifytime" jdbcType="TIMESTAMP" />
+    <result column="ModifyNodeNo" property="modifynodeno" jdbcType="VARCHAR" />
+    <result column="ModifyOpe" property="modifyope" jdbcType="INTEGER" />
+    <result column="LevelCode" property="levelcode" jdbcType="VARCHAR" />
+    <result column="LastOilFlag" property="lastoilflag" jdbcType="VARCHAR" />
+    <result column="OilLevel" property="oillevel" jdbcType="INTEGER" />
+    <result column="InUseFlag" property="inuseflag" jdbcType="VARCHAR" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+     OilNo, OilName, MacOilNo, OilType, Control, ValidFlag, ValidTime, ModifyTime,
+    ModifyNodeNo, ModifyOpe, LevelCode, LastOilFlag, OilLevel, InUseFlag, TranStatus
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_oilType
+    where NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+  <select id="selectinuse" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_sysmanage_oilType where InUseFlag="1"
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from oss_sysmanage_oilType
+    where NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_sysmanage_oilType" >
+    insert into oss_sysmanage_oilType (NodeNo, OilNo, OilName, 
+      MacOilNo, OilType, Control, 
+      ValidFlag, ValidTime, ModifyTime, 
+      ModifyNodeNo, ModifyOpe, LevelCode, 
+      LastOilFlag, OilLevel, InUseFlag, 
+      TranStatus, OUCode)
+    values (#{nodeno,jdbcType=VARCHAR}, #{oilno,jdbcType=VARCHAR}, #{oilname,jdbcType=VARCHAR}, 
+      #{macoilno,jdbcType=VARCHAR}, #{oiltype,jdbcType=VARCHAR}, #{control,jdbcType=VARCHAR}, 
+      #{validflag,jdbcType=VARCHAR}, #{validtime,jdbcType=TIMESTAMP}, #{modifytime,jdbcType=TIMESTAMP}, 
+      #{modifynodeno,jdbcType=VARCHAR}, #{modifyope,jdbcType=INTEGER}, #{levelcode,jdbcType=VARCHAR}, 
+      #{lastoilflag,jdbcType=VARCHAR}, #{oillevel,jdbcType=INTEGER}, #{inuseflag,jdbcType=VARCHAR}, 
+      #{transtatus,jdbcType=VARCHAR}, #{oucode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_sysmanage_oilType" >
+    insert into oss_sysmanage_oilType
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="oilname != null" >
+        OilName,
+      </if>
+      <if test="macoilno != null" >
+        MacOilNo,
+      </if>
+      <if test="oiltype != null" >
+        OilType,
+      </if>
+      <if test="control != null" >
+        Control,
+      </if>
+      <if test="validflag != null" >
+        ValidFlag,
+      </if>
+      <if test="validtime != null" >
+        ValidTime,
+      </if>
+      <if test="modifytime != null" >
+        ModifyTime,
+      </if>
+      <if test="modifynodeno != null" >
+        ModifyNodeNo,
+      </if>
+      <if test="modifyope != null" >
+        ModifyOpe,
+      </if>
+      <if test="levelcode != null" >
+        LevelCode,
+      </if>
+      <if test="lastoilflag != null" >
+        LastOilFlag,
+      </if>
+      <if test="oillevel != null" >
+        OilLevel,
+      </if>
+      <if test="inuseflag != null" >
+        InUseFlag,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilname != null" >
+        #{oilname,jdbcType=VARCHAR},
+      </if>
+      <if test="macoilno != null" >
+        #{macoilno,jdbcType=VARCHAR},
+      </if>
+      <if test="oiltype != null" >
+        #{oiltype,jdbcType=VARCHAR},
+      </if>
+      <if test="control != null" >
+        #{control,jdbcType=VARCHAR},
+      </if>
+      <if test="validflag != null" >
+        #{validflag,jdbcType=VARCHAR},
+      </if>
+      <if test="validtime != null" >
+        #{validtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null" >
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifynodeno != null" >
+        #{modifynodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyope != null" >
+        #{modifyope,jdbcType=INTEGER},
+      </if>
+      <if test="levelcode != null" >
+        #{levelcode,jdbcType=VARCHAR},
+      </if>
+      <if test="lastoilflag != null" >
+        #{lastoilflag,jdbcType=VARCHAR},
+      </if>
+      <if test="oillevel != null" >
+        #{oillevel,jdbcType=INTEGER},
+      </if>
+      <if test="inuseflag != null" >
+        #{inuseflag,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <insert id="merge" parameterType="com.kld.gsm.center.domain.oss_sysmanage_oilType" >
+    replace into oss_sysmanage_oilType
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="oilname != null" >
+        OilName,
+      </if>
+      <if test="macoilno != null" >
+        MacOilNo,
+      </if>
+      <if test="oiltype != null" >
+        OilType,
+      </if>
+      <if test="control != null" >
+        Control,
+      </if>
+      <if test="validflag != null" >
+        ValidFlag,
+      </if>
+      <if test="validtime != null" >
+        ValidTime,
+      </if>
+      <if test="modifytime != null" >
+        ModifyTime,
+      </if>
+      <if test="modifynodeno != null" >
+        ModifyNodeNo,
+      </if>
+      <if test="modifyope != null" >
+        ModifyOpe,
+      </if>
+      <if test="levelcode != null" >
+        LevelCode,
+      </if>
+      <if test="lastoilflag != null" >
+        LastOilFlag,
+      </if>
+      <if test="oillevel != null" >
+        OilLevel,
+      </if>
+      <if test="inuseflag != null" >
+        InUseFlag,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilname != null" >
+        #{oilname,jdbcType=VARCHAR},
+      </if>
+      <if test="macoilno != null" >
+        #{macoilno,jdbcType=VARCHAR},
+      </if>
+      <if test="oiltype != null" >
+        #{oiltype,jdbcType=VARCHAR},
+      </if>
+      <if test="control != null" >
+        #{control,jdbcType=VARCHAR},
+      </if>
+      <if test="validflag != null" >
+        #{validflag,jdbcType=VARCHAR},
+      </if>
+      <if test="validtime != null" >
+        #{validtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null" >
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifynodeno != null" >
+        #{modifynodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyope != null" >
+        #{modifyope,jdbcType=INTEGER},
+      </if>
+      <if test="levelcode != null" >
+        #{levelcode,jdbcType=VARCHAR},
+      </if>
+      <if test="lastoilflag != null" >
+        #{lastoilflag,jdbcType=VARCHAR},
+      </if>
+      <if test="oillevel != null" >
+        #{oillevel,jdbcType=INTEGER},
+      </if>
+      <if test="inuseflag != null" >
+        #{inuseflag,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_sysmanage_oilType" >
+    update oss_sysmanage_oilType
+    <set >
+      <if test="oilno != null" >
+        OilNo = #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilname != null" >
+        OilName = #{oilname,jdbcType=VARCHAR},
+      </if>
+      <if test="macoilno != null" >
+        MacOilNo = #{macoilno,jdbcType=VARCHAR},
+      </if>
+      <if test="oiltype != null" >
+        OilType = #{oiltype,jdbcType=VARCHAR},
+      </if>
+      <if test="control != null" >
+        Control = #{control,jdbcType=VARCHAR},
+      </if>
+      <if test="validflag != null" >
+        ValidFlag = #{validflag,jdbcType=VARCHAR},
+      </if>
+      <if test="validtime != null" >
+        ValidTime = #{validtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null" >
+        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifynodeno != null" >
+        ModifyNodeNo = #{modifynodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyope != null" >
+        ModifyOpe = #{modifyope,jdbcType=INTEGER},
+      </if>
+      <if test="levelcode != null" >
+        LevelCode = #{levelcode,jdbcType=VARCHAR},
+      </if>
+      <if test="lastoilflag != null" >
+        LastOilFlag = #{lastoilflag,jdbcType=VARCHAR},
+      </if>
+      <if test="oillevel != null" >
+        OilLevel = #{oillevel,jdbcType=INTEGER},
+      </if>
+      <if test="inuseflag != null" >
+        InUseFlag = #{inuseflag,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_sysmanage_oilType" >
+    update oss_sysmanage_oilType
+    set OilNo = #{oilno,jdbcType=VARCHAR},
+      OilName = #{oilname,jdbcType=VARCHAR},
+      MacOilNo = #{macoilno,jdbcType=VARCHAR},
+      OilType = #{oiltype,jdbcType=VARCHAR},
+      Control = #{control,jdbcType=VARCHAR},
+      ValidFlag = #{validflag,jdbcType=VARCHAR},
+      ValidTime = #{validtime,jdbcType=TIMESTAMP},
+      ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      ModifyNodeNo = #{modifynodeno,jdbcType=VARCHAR},
+      ModifyOpe = #{modifyope,jdbcType=INTEGER},
+      LevelCode = #{levelcode,jdbcType=VARCHAR},
+      LastOilFlag = #{lastoilflag,jdbcType=VARCHAR},
+      OilLevel = #{oillevel,jdbcType=INTEGER},
+      InUseFlag = #{inuseflag,jdbcType=VARCHAR},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      OUCode = #{oucode,jdbcType=VARCHAR}
+    where NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <select id="selectOilType"    resultType="hashmap">
+    select  'true' as QUERYID,
+    <include refid="Base_Column_List" />
+     from oss_sysmanage_oilType where OilType ='01' or  OilType ='03'
+  </select>
+  <select id="selectByoilCanNo" resultType="java.lang.String" parameterType="hashmap" >
+    <![CDATA[select
+    (select OilName from oss_sysmanage_oilType WHERE oss_sysmanage_oilType.OilNo=oss_sysmanage_TankInfo.OilNo) as oilname
+    from oss_sysmanage_TankInfo
+    where oss_sysmanage_TankInfo.OUCode=#{oucode,jdbcType=VARCHAR} and oss_sysmanage_TankInfo.OilCan=#{oilcan,jdbcType=VARCHAR}
+]]>
+  </select>
+  <select id="selectByoilNo" resultType="java.lang.String" parameterType="hashmap" >
+  <![CDATA[
+SELECT OilName FROM  oss_sysmanage_oilType where OilNo=#{oilno,jdbcType=VARCHAR}
+]]>
+  </select>
+</mapper>

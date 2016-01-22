@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task-4.0.xsd">
+
+    <context:component-scan base-package="com">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />
+    </context:component-scan>
+    <mvc:annotation-driven  ignore-default-model-on-redirect="true"   >
+        <mvc:message-converters register-defaults="false">
+            <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+            <!--<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes" value="text/plain;charset=UTF-8" />
+            </bean>-->
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+
+              <!--  <property name="supportedMediaTypes" value="text/plain;charset=UTF-8" />-->
+                <property name="objectMapper" ref="jsonObjectMapper"/>
+            </bean>
+
+        </mvc:message-converters>
+
+    </mvc:annotation-driven>
+
+    <bean id="jsonObjectMapper" class="com.kld.gsm.center.web.util.JsonConverter" />
+    <!-- ***************************** velocity tools Configurer ********************* -->
+
+
+    <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="resourceLoaderPath" value="/WEB-INF/"/>
+        <property name="configLocation" value="/WEB-INF/velocity.properties"/>
+    </bean>
+	
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+        <property name="suffix" value=".vm"/>
+        <property name="prefix" value=""/>
+        <!-- 使用springMacro的对象 -->
+        <property name="exposeSpringMacroHelpers" value="true"/>
+        <property name="requestContextAttribute" value="content"/>
+        <property name="exposeRequestAttributes" value="true"/>
+        <property name="exposeSessionAttributes" value="true"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
+        <!-- spring的日期格式化 -->
+        <property name="dateToolAttribute" value="dateTool"/>
+        <!-- velocity toolbox -->
+        <property name="toolboxConfigLocation" value="/WEB-INF/toolbox.xml"/>
+
+        <property name="layoutUrl" value="/layout/layout.vm"/>
+        <property name="attributesMap" ref="velocityTools"/>
+    </bean>
+
+    <!-- 通用多部分解析器 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8"></property>
+        <property name="maxUploadSize" value="10485760000"></property>
+        <property name="maxInMemorySize" value="40960"></property>
+    </bean>
+</beans>

@@ -1,0 +1,118 @@
+#set($layout="layout/emptylayout.vm")
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>加油站信息管理</title>
+    <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
+    <script type="text/javascript" src="easyui/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+</head>
+<body>
+## Velocity  注释
+
+#*
+Velocity 注释块内容
+ *#
+
+#**
+ * Velocity 文档注释块
+ *#
+
+#*
+#[[
+Velocity 直接输出的内容
+]]#
+*#
+
+#* $!{city}*#
+
+
+#*
+<ul class="easyui-tree" data-options="url:'/web/basicdata/go'">
+
+</ul>*#
+#*
+<ul   class="easyui-tree">
+        #if($citylist)
+            #foreach($item in $citylist)
+                <li>
+                    <span>$item.city</span>
+                    <ul>
+                        #if($!item.body)
+                            #foreach($items in $item.body)
+                                <li >
+                                    <span>$items.name</span>
+                                </li>
+                            #end
+                        #end
+                    </ul>
+                </li>
+            #end
+
+        #end
+
+
+</ul>*#
+<ul id="tt"></ul>
+</div>
+<script type="text/javascript">
+      /*  var a ;
+        $('#tt').tree({
+            url: "/web/basicdata/tojson",
+            loadFilter: function(data) {
+                if(data!=null){
+                    return data;
+
+                }
+            }
+        });*/
+
+
+   /* $('#tt').tree({
+        data:[{
+            "id":1,
+            "text":"Folder1",
+            "iconCls":"icon-save",
+            "children":[{
+                "text":"File1",
+                "checked":true
+            },{
+                "text":"Books",
+                "state":"open",
+                "attributes":{
+                    "url":"/web/basicdata/tojson",
+                    "price":100
+                },
+                "children":[{
+                    "text":"PhotoShop",
+                    "checked":true,
+                    "attributes":{
+                        "url":"/web/basicdata/tojson",
+                        "price":100
+                },{
+                    "id": 8,
+                    "text":"Sub Bookds",
+                    "state":"closed",
+
+                }
+
+                ]
+            }]
+        },{
+            "text":"Languages",
+            "state":"closed",
+            "children":[{
+                "text":"Java"
+            },{
+                "text":"C#"
+            }]
+        }]
+
+    });*/
+
+</script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_daily_remoteinventoryMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_daily_remoteinventory" >
+    <id column="rid" property="rid" jdbcType="VARCHAR" />
+    <result column="ouname" property="ouname" jdbcType="VARCHAR" />
+    <result column="startStock" property="startstock" jdbcType="VARCHAR" />
+    <result column="startTime" property="starttime" jdbcType="TIMESTAMP" />
+    <result column="oilname" property="oilname" jdbcType="VARCHAR" />
+    <result column="unloadQty" property="unloadqty" jdbcType="VARCHAR" />
+    <result column="saleQty" property="saleqty" jdbcType="VARCHAR" />
+    <result column="backTankQty" property="backtankqty" jdbcType="VARCHAR" />
+    <result column="lossRate" property="lossrate" jdbcType="VARCHAR" />
+    <result column="lossQty" property="lossqty" jdbcType="VARCHAR" />
+    <result column="endStock" property="endstock" jdbcType="VARCHAR" />
+    <result column="endTime" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="oucode" property="oucode" jdbcType="VARCHAR" />
+    <result column="bqjc" property="bqjc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    rid, ouname, startStock, startTime, oilname, unloadQty, saleQty, backTankQty, lossRate,
+    lossQty, endStock, endTime,oucode,bqjc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_daily_remoteinventory
+    where rid = #{rid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectOilName" parameterType="java.util.Map"  resultType="java.lang.String" >
+    <![CDATA[
+     select (select OilName FROM oss_sysmanage_oilType where oss_sysmanage_oilType.OilNo=oss_sysmanage_TankInfo.OilNo) as OilName from  oss_sysmanage_TankInfo WHERE OilCan=#{oilcan,jdbcType=VARCHAR} and OUCode=#{oucode,jdbcType=VARCHAR}
+    ]]>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from oss_daily_remoteinventory
+    where rid = #{rid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_daily_remoteinventory"  useGeneratedKeys="true" keyProperty="rid" >
+    insert into oss_daily_remoteinventory (rid,ouname, startStock,
+    startTime, oilname, unloadQty,
+    saleQty, backTankQty, lossRate,
+    lossQty, endStock, endTime,oucode,bqjc
+    )
+    values (#{rid,jdbcType=VARCHAR},#{ouname,jdbcType=VARCHAR},  #{startstock,jdbcType=VARCHAR},
+    #{starttime,jdbcType=TIMESTAMP}, #{oilname,jdbcType=VARCHAR}, #{unloadqty,jdbcType=VARCHAR},
+    #{saleqty,jdbcType=VARCHAR}, #{backtankqty,jdbcType=VARCHAR}, #{lossrate,jdbcType=VARCHAR},
+    #{lossqty,jdbcType=VARCHAR}, #{endstock,jdbcType=VARCHAR}, #{endtime,jdbcType=TIMESTAMP},
+    #{oucode,jdbcType=VARCHAR},#{bqjc,jdbcType=VARCHAR}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_daily_remoteinventory" >
+    insert into oss_daily_remoteinventory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        rid,
+      </if>
+      <if test="ouname != null" >
+        ouname,
+      </if>
+      <if test="startstock != null" >
+        startStock,
+      </if>
+      <if test="starttime != null" >
+        startTime,
+      </if>
+      <if test="oilname != null" >
+        oilname,
+      </if>
+      <if test="unloadqty != null" >
+        unloadQty,
+      </if>
+      <if test="saleqty != null" >
+        saleQty,
+      </if>
+      <if test="backtankqty != null" >
+        backTankQty,
+      </if>
+      <if test="lossrate != null" >
+        lossRate,
+      </if>
+      <if test="lossqty != null" >
+        lossQty,
+      </if>
+      <if test="endstock != null" >
+        endStock,
+      </if>
+      <if test="endtime != null" >
+        endTime,
+      </if>
+      <if test="oucode != null" >
+        oucode,
+      </if>
+      <if test="bqjc != null" >
+        bqjc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        #{rid,jdbcType=VARCHAR},
+      </if>
+      <if test="ouname != null" >
+        #{ouname,jdbcType=VARCHAR},
+      </if>
+      <if test="startstock != null" >
+        #{startstock,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oilname != null" >
+        #{oilname,jdbcType=VARCHAR},
+      </if>
+      <if test="unloadqty != null" >
+        #{unloadqty,jdbcType=VARCHAR},
+      </if>
+      <if test="saleqty != null" >
+        #{saleqty,jdbcType=VARCHAR},
+      </if>
+      <if test="backtankqty != null" >
+        #{backtankqty,jdbcType=VARCHAR},
+      </if>
+      <if test="lossrate != null" >
+        #{lossrate,jdbcType=VARCHAR},
+      </if>
+      <if test="lossqty != null" >
+        #{lossqty,jdbcType=VARCHAR},
+      </if>
+      <if test="endstock != null" >
+        #{endstock,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="bqjc != null" >
+        #{bqjc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_daily_remoteinventory" >
+    update oss_daily_remoteinventory
+    <set >
+      <if test="ouname != null" >
+        ouname = #{ouname,jdbcType=VARCHAR},
+      </if>
+      <if test="startstock != null" >
+        startStock = #{startstock,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        startTime = #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oilname != null" >
+        oilname = #{oilname,jdbcType=VARCHAR},
+      </if>
+      <if test="unloadqty != null" >
+        unloadQty = #{unloadqty,jdbcType=VARCHAR},
+      </if>
+      <if test="saleqty != null" >
+        saleQty = #{saleqty,jdbcType=VARCHAR},
+      </if>
+      <if test="backtankqty != null" >
+        backTankQty = #{backtankqty,jdbcType=VARCHAR},
+      </if>
+      <if test="lossrate != null" >
+        lossRate = #{lossrate,jdbcType=VARCHAR},
+      </if>
+      <if test="lossqty != null" >
+        lossQty = #{lossqty,jdbcType=VARCHAR},
+      </if>
+      <if test="endstock != null" >
+        endStock = #{endstock,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null" >
+        endTime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oucode != null" >
+        oucode = #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="bqjc != null" >
+        bqjc = #{bqjc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where rid = #{rid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_daily_remoteinventory" >
+    update oss_daily_remoteinventory
+    set ouname = #{ouname,jdbcType=VARCHAR},
+    startStock = #{startstock,jdbcType=VARCHAR},
+    startTime = #{starttime,jdbcType=TIMESTAMP},
+    oilname = #{oilname,jdbcType=VARCHAR},
+    unloadQty = #{unloadqty,jdbcType=VARCHAR},
+    saleQty = #{saleqty,jdbcType=VARCHAR},
+    backTankQty = #{backtankqty,jdbcType=VARCHAR},
+    lossRate = #{lossrate,jdbcType=VARCHAR},
+    lossQty = #{lossqty,jdbcType=VARCHAR},
+    endStock = #{endstock,jdbcType=VARCHAR},
+    endTime = #{endtime,jdbcType=TIMESTAMP},
+    oucode = #{oucode,jdbcType=VARCHAR},
+    bqjc = #{bqjc,jdbcType=VARCHAR}
+    where rid = #{rid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectRemoteInfo" resultMap="BaseResultMap" parameterType="hashmap">
+    <![CDATA[
+SELECT * from
+  oss_daily_remoteinventory
+where startTime>=#{begin,jdbcType=TIMESTAMP} and endTime<#{end,jdbcType=TIMESTAMP} and oucode LIKE #{oucode,jdbcType=VARCHAR}
+    ]]>
+    <if test="firstRow != null and  pageSize!= null">
+      <![CDATA[ LIMIT #{firstRow},#{pageSize}]]>
+    </if>
+  </select>
+  <select id="selectRemoteAllInfo" resultMap="BaseResultMap" parameterType="hashmap">
+    <![CDATA[
+SELECT * from
+  oss_daily_remoteinventory
+where startTime>=#{begin,jdbcType=TIMESTAMP} and endTime<#{end,jdbcType=TIMESTAMP} and oucode LIKE #{oucode,jdbcType=VARCHAR}     ]]>
+  </select>
+</mapper>

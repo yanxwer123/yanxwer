@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.DailyDeviceInfoDetailDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.DailyDeviceInfoDetail" >
+    <id column="OilCanNo" property="oilcanno" jdbcType="INTEGER" />
+    <id column="Probeno" property="probeno" jdbcType="VARCHAR" />
+    <result column="ProbeModel" property="probemodel" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    OilCanNo, Probeno, ProbeModel
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.ATG.domain.DailyDeviceInfoDetailKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_daily_DevicdInfoDetail
+    where OilCanNo = #{oilcanno,jdbcType=INTEGER}
+      and Probeno = #{probeno,jdbcType=VARCHAR}
+  </select>
+  <!--<select id="findByOilCanNo" resultType="com.kld.gsm.ATG.domain.DailyDeviceInfo" parameterType="java.lang.String" >
+   SELECT * FROM oss_daily_DeviceInfo
+      WHERE oilcanno=#{oilcanno}
+   </select>
+  -->
+  <select id="findByOilCanNo" resultType="com.kld.gsm.ATG.domain.DailyDailyBaseEquipment" parameterType="java.lang.String" >
+   SELECT a.*,b.Probeno    FROM oss_daily_DeviceInfo AS a JOIN oss_daily_DevicdInfoDetail AS b ON a.OilCanNo=b.OilCanNo WHERE a.OilCanNo =  #{oilcanno}
+   </select>
+  <!--<select id="findAll" resultType="com.kld.gsm.ATG.domain.DailyDeviceInfo" >
+    SELECT * FROM oss_daily_DeviceInfo
+  </select>
+  -->
+  <select id="findAll" resultType="com.kld.gsm.ATG.domain.DailyDailyBaseEquipment" >
+    SELECT a.*,b.Probeno    FROM oss_daily_DeviceInfo AS a JOIN oss_daily_DevicdInfoDetail AS b ON a.OilCanNo=b.OilCanNo
+  </select>
+  <select id="findByNO" resultType="com.kld.gsm.ATG.domain.DailyDeviceInfoDetail" parameterType="java.lang.String" >
+   SELECT * FROM  oss_daily_DevicdInfoDetail WHERE oilcanno=#{oilcanno}
+  </select>
+
+
+
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.DailyDeviceInfoDetailKey" >
+    delete from oss_daily_DevicdInfoDetail
+    where OilCanNo = #{oilcanno,jdbcType=INTEGER}
+      and Probeno = #{probeno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.DailyDeviceInfoDetail" >
+    insert into oss_daily_DevicdInfoDetail (OilCanNo, Probeno, ProbeModel
+      )
+    values (#{oilcanno,jdbcType=INTEGER}, #{probeno,jdbcType=VARCHAR}, #{probemodel,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.DailyDeviceInfoDetail" >
+    insert into oss_daily_DevicdInfoDetail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oilcanno != null" >
+        OilCanNo,
+      </if>
+      <if test="probeno != null" >
+        Probeno,
+      </if>
+      <if test="probemodel != null" >
+        ProbeModel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oilcanno != null" >
+        #{oilcanno,jdbcType=INTEGER},
+      </if>
+      <if test="probeno != null" >
+        #{probeno,jdbcType=VARCHAR},
+      </if>
+      <if test="probemodel != null" >
+        #{probemodel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.DailyDeviceInfoDetail" >
+    update oss_daily_DevicdInfoDetail
+    <set >
+      <if test="probemodel != null" >
+        ProbeModel = #{probemodel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OilCanNo = #{oilcanno,jdbcType=INTEGER}
+      and Probeno = #{probeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.DailyDeviceInfoDetail" >
+    update oss_daily_DevicdInfoDetail
+    set ProbeModel = #{probemodel,jdbcType=VARCHAR}
+    where OilCanNo = #{oilcanno,jdbcType=INTEGER}
+      and Probeno = #{probeno,jdbcType=VARCHAR}
+  </update>
+</mapper>

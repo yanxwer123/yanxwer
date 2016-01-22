@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_alarm_EquipmentMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_alarm_Equipment" >
+    <id column="OilCan" property="oilcan" jdbcType="INTEGER" />
+    <id column="StartAlarmTime" property="startalarmtime" jdbcType="TIMESTAMP" />
+    <id column="NodeNo" property="nodeno" jdbcType="VARCHAR" />
+    <result column="EndAlarmTime" property="endalarmtime" jdbcType="TIMESTAMP" />
+    <result column="FailureType" property="failuretype" jdbcType="VARCHAR" />
+    <result column="EquipCode" property="equipcode" jdbcType="VARCHAR" />
+    <result column="MalfunctionCode" property="malfunctioncode" jdbcType="VARCHAR" />
+    <result column="EquipBrand" property="equipbrand" jdbcType="VARCHAR" />
+    <result column="ProbeModel" property="probemodel" jdbcType="VARCHAR" />
+    <result column="Remark" property="remark" jdbcType="VARCHAR" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="Shift" property="shift" jdbcType="VARCHAR" />
+    <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    OilCan, StartAlarmTime, NodeNo, EndAlarmTime, FailureType, EquipCode, MalfunctionCode, 
+    EquipBrand, ProbeModel, Remark, TranStatus, Shift, OUCode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_alarm_EquipmentKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_alarm_Equipment
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and StartAlarmTime = #{startalarmtime,jdbcType=TIMESTAMP}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_alarm_EquipmentKey" >
+    delete from oss_alarm_Equipment
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and StartAlarmTime = #{startalarmtime,jdbcType=TIMESTAMP}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_alarm_Equipment" >
+    insert into oss_alarm_Equipment (OilCan, StartAlarmTime, NodeNo, 
+      EndAlarmTime, FailureType, EquipCode, 
+      MalfunctionCode, EquipBrand, ProbeModel, 
+      Remark, TranStatus, Shift, 
+      OUCode)
+    values (#{oilcan,jdbcType=INTEGER}, #{startalarmtime,jdbcType=TIMESTAMP}, #{nodeno,jdbcType=VARCHAR}, 
+      #{endalarmtime,jdbcType=TIMESTAMP}, #{failuretype,jdbcType=VARCHAR}, #{equipcode,jdbcType=VARCHAR}, 
+      #{malfunctioncode,jdbcType=VARCHAR}, #{equipbrand,jdbcType=VARCHAR}, #{probemodel,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{transtatus,jdbcType=VARCHAR}, #{shift,jdbcType=VARCHAR}, 
+      #{oucode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_alarm_Equipment" >
+    insert into oss_alarm_Equipment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oilcan != null" >
+        OilCan,
+      </if>
+      <if test="startalarmtime != null" >
+        StartAlarmTime,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="endalarmtime != null" >
+        EndAlarmTime,
+      </if>
+      <if test="failuretype != null" >
+        FailureType,
+      </if>
+      <if test="equipcode != null" >
+        EquipCode,
+      </if>
+      <if test="malfunctioncode != null" >
+        MalfunctionCode,
+      </if>
+      <if test="equipbrand != null" >
+        EquipBrand,
+      </if>
+      <if test="probemodel != null" >
+        ProbeModel,
+      </if>
+      <if test="remark != null" >
+        Remark,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="shift != null" >
+        Shift,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="startalarmtime != null" >
+        #{startalarmtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="endalarmtime != null" >
+        #{endalarmtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="failuretype != null" >
+        #{failuretype,jdbcType=VARCHAR},
+      </if>
+      <if test="equipcode != null" >
+        #{equipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="malfunctioncode != null" >
+        #{malfunctioncode,jdbcType=VARCHAR},
+      </if>
+      <if test="equipbrand != null" >
+        #{equipbrand,jdbcType=VARCHAR},
+      </if>
+      <if test="probemodel != null" >
+        #{probemodel,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null" >
+        #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_alarm_Equipment" >
+    update oss_alarm_Equipment
+    <set >
+      <if test="endalarmtime != null" >
+        EndAlarmTime = #{endalarmtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="failuretype != null" >
+        FailureType = #{failuretype,jdbcType=VARCHAR},
+      </if>
+      <if test="equipcode != null" >
+        EquipCode = #{equipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="malfunctioncode != null" >
+        MalfunctionCode = #{malfunctioncode,jdbcType=VARCHAR},
+      </if>
+      <if test="equipbrand != null" >
+        EquipBrand = #{equipbrand,jdbcType=VARCHAR},
+      </if>
+      <if test="probemodel != null" >
+        ProbeModel = #{probemodel,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        Remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null" >
+        Shift = #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and StartAlarmTime = #{startalarmtime,jdbcType=TIMESTAMP}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_alarm_Equipment" >
+    update oss_alarm_Equipment
+    set EndAlarmTime = #{endalarmtime,jdbcType=TIMESTAMP},
+      FailureType = #{failuretype,jdbcType=VARCHAR},
+      EquipCode = #{equipcode,jdbcType=VARCHAR},
+      MalfunctionCode = #{malfunctioncode,jdbcType=VARCHAR},
+      EquipBrand = #{equipbrand,jdbcType=VARCHAR},
+      ProbeModel = #{probemodel,jdbcType=VARCHAR},
+      Remark = #{remark,jdbcType=VARCHAR},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      Shift = #{shift,jdbcType=VARCHAR},
+      OUCode = #{oucode,jdbcType=VARCHAR}
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and StartAlarmTime = #{startalarmtime,jdbcType=TIMESTAMP}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectiq" resultType="hashmap" parameterType="hashmap">
+    select iq.*,st.OUName,dic.`Name` from oss_alarm_Equipment  iq inner join oss_sys_OrgUnit  st
+    on iq.OUCode=st.OUCode inner JOIN oss_sysmanage_Dict dic
+    on iq.FailureType=dic.`Value`
+    where 1=1 and dic.ParentID=39
+    <if test="start != null" >
+      and  iq.StartAlarmTime  &gt; #{start,jdbcType=TIMESTAMP}
+    </if>
+    <if test="end !=null" >
+      and iq.StartAlarmTime &lt; #{end,jdbcType=TIMESTAMP}
+    </if>
+    <if test="failuretype != null and failuretype !=''" >
+      and iq.FailureType = #{failuretype,jdbcType=VARCHAR}
+    </if>
+    <if test="oucode != null and oucode != '' ">
+      <![CDATA[  and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    </if>
+  </select>
+
+  <select id="queryPrepayPageList" resultType="hashmap" parameterType="hashmap">
+    select iq.*,st.OUName,dic.`Name` from oss_alarm_Equipment  iq inner join oss_sys_OrgUnit  st
+    on iq.OUCode=st.OUCode inner JOIN oss_sysmanage_Dict dic
+    on iq.FailureType=dic.`Value`
+    where 1=1 and dic.ParentID=39
+    <if test="start != null" >
+      and  iq.StartAlarmTime  &gt; #{start,jdbcType=TIMESTAMP}
+    </if>
+    <if test="end !=null" >
+      and iq.StartAlarmTime &lt; #{end,jdbcType=TIMESTAMP}
+    </if>
+    <if test="failuretype != null" >
+      and iq.FailureType = #{failuretype,jdbcType=VARCHAR}
+    </if>
+    <if test="oucode != null and oucode != '' ">
+      <![CDATA[  and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    </if>
+    <if test="firstRow != null and  pageSize!= null">
+      <![CDATA[ limit  #{firstRow},#{pageSize} ]]>
+    </if>
+  </select>
+
+  <select id="queryPrepayCount"  resultType="Integer"  parameterType="hashmap">
+    select count(*) from oss_alarm_Equipment  iq inner join oss_sys_OrgUnit  st
+    on iq.OUCode=st.OUCode inner JOIN oss_sysmanage_Dict dic
+    on iq.FailureType=dic.`Value`
+    where 1=1 and dic.ParentID=39
+    <if test="start != null" >
+      and  iq.StartAlarmTime  &gt; #{start,jdbcType=TIMESTAMP}
+    </if>
+    <if test="end !=null" >
+      and iq.StartAlarmTime &lt; #{end,jdbcType=TIMESTAMP}
+    </if>
+    <if test="failuretype != null" >
+      and iq.FailureType = #{failuretype,jdbcType=VARCHAR}
+    </if>
+    <if test="oucode != null and oucode != '' ">
+      <![CDATA[  and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    </if>
+  </select>
+  <select id="selectEqbywhere" resultType="hashmap" parameterType="hashmap">
+    SELECT * FROM oss_alarm_Equipment WHERE 1=1
+    <if test="start != null">
+      <![CDATA[ AND  LEFT(Shift,8)>=#{start,jdbcType=VARCHAR}]]>
+    </if>
+    <if test="end != null">
+      <![CDATA[ And LEFT(Shift,8)<=#{end,jdbcType=VARCHAR}]]>
+    </if>
+    <if test="oucode != null and oucode != '' ">
+      <![CDATA[  and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    </if>
+  </select>
+</mapper>

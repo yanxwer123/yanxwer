@@ -1,0 +1,137 @@
+#set($layout="layout/emptylayout.vm")
+#set($menuTitle="班报详情")
+班次：<label id="shift"></label> ；接班人：<label id="successor"></label>；接班时间：<label id="succeedtime"></label>交班人：<label id="shiftoperator"></label>；交班时间：<label id="shifttime"></label>
+
+<div class="easyui-panel" style="height: 200px">
+    <table id="tt" class="easyui-datagrid" style=" height: 200px;">
+    </table>
+</div>
+<div id="queryResult" title="付油信息" class="easyui-panel" collapsible="true" style=" height: 200px;">
+    <table id="fyxx" class="easyui-datagrid" style=" height: 200px;">
+    </table>
+</div>
+<div  class="easyui-panel" collapsible="true" style=" height: 200px;">
+    <table id="ygxx" class="easyui-datagrid" style=" height: 200px;">
+    </table>
+</div>
+<script type="text/javascript">
+
+    function formatDatebox(value) {
+        if (value == null || value == '') {
+            return '';
+        }
+        var dt;
+        if (value instanceof Date) {
+            dt = value;
+        } else {
+            dt = new Date(value);
+        }
+
+        return dt.format("yyyy-MM-dd hh:mm"); //扩展的Date的format方法(上述插件实现)
+    }
+    function GetQueryString(name)
+    {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r!=null) return unescape(r[2]); return null;
+    }
+    var cols=[[
+        {field:'oilgun',title:'枪号',width:100},
+        {field:'topump',title:'接班时泵码',width:100},
+        {field:'hopump',title:'当前泵码',width:100},
+        {field:'pumpnum',title:'走字数',width:100}
+    ]];
+
+    $(function(){
+        initData();
+        initData1();
+        initData2();
+        //绑定班结信息
+        $("#shift").html(GetQueryString("shift"));
+        //alert(GetQueryString("successor"));
+        $("#successor").html(decodeURI(GetQueryString("successor")));
+        $("#shiftoperator").html(decodeURI(GetQueryString("shiftoperator")));
+        $("#succeedtime").html(GetQueryString("succeedtime"));
+        $("#shifttime").html(GetQueryString("shifttime"));
+    });
+var paras;
+    var paras1; var paras2;
+    function inittext(){
+        var shift=GetQueryString("shift");
+        paras={ "shift": shift};
+
+    }
+
+    function initData() {
+        inittext();
+        BindDataGridAjax('tt','泵码信息','/web/alarm/getPumpList',cols,paras,'true',10,[10,20,30]);
+        //dataGridAjax('tt','/web/alarm/getPumpList','',paras,cols,undefined,undefined,function(data){
+
+        //});
+    }
+    $('#tt').datagrid({pagination:false,//分页控件
+     });
+
+    var cols1=[[
+        {field:'oilname',title:'油品',width:100},
+        {field:'total',title:'合计',width:100},
+        {field:'money',title:'现金',width:100},
+        {field:'yp',title:'油票',width:100},
+        {field:'jz',title:'记账',width:100},
+        {field:'yhk',title:'银行卡',width:100},
+        {field:'other1',title:'其他1',width:100},
+        {field:'other2',title:'其他2',width:100},
+        {field:'ic',title:'IC卡',width:100},
+        {field:'icjf',title:'IC卡积分',width:100},
+        {field:'yswt',title:'已售未提',width:100},
+        {field:'ytws',title:'已提未售',width:100},
+        {field:'dcdf',title:'代存代付',width:100},
+        {field:'ypdg',title:'邮票代替',width:100},
+        {field:'zyy',title:'自用油',width:100},
+        {field:'fjz',title:'非机走',width:100},
+    ]];
+    function inittext1(){
+
+        var shift=GetQueryString("shift");
+        paras1={ "shift": shift};
+    }
+
+    function initData1() {
+        inittext1();
+        dataGridAjax('fyxx','/web/alarm/getOpot','',paras1,cols1,undefined,undefined,function(data){
+
+        });
+
+    }
+    $('#fyxx').datagrid({pagination:false,//分页控件
+    });
+    var cols2=[[
+        {field:'OilCan',title:'油罐编号',width:100},
+        {field:'OilName',title:'油品',width:100},
+        {field:'ToOilL',title:'接班油量(L)',width:100},
+        {field:'HoOilHigh',title:'交班油高(mm)',width:100},
+        {field:'HoOilL',title:'交班升数',width:100},
+        {field:'HeightWater',title:'交班水高（mm）',width:100},
+        {field:'WaterL',title:'其交班水量（L）',width:100},
+        {field:'SaleL',title:'付油量',width:100},
+        {field:'InOilL',title:'卸油量',width:100},
+        {field:'kc',title:'库存',width:100},
+        {field:'sh',title:'损耗',width:100}
+    ]];
+    function inittext2(){
+        var shift=GetQueryString("shift");
+        paras2={ "shift": shift};
+
+    }
+
+    function initData2() {
+        inittext2();
+      /*  dataGridAjax('ygxx','/web/alarm/getTankShift','',paras2,cols2,undefined,undefined,function(data){
+
+        });*/
+        BindDataGridAjax('ygxx','油罐信息','/web/alarm/getTankShift',cols2,paras,'true',10,[10,20,30]);
+    }
+    $('#ygxx').datagrid({pagination:false,//分页控件
+    });
+
+</script>

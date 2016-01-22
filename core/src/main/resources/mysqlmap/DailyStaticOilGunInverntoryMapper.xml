@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.DailyStaticOilGunInverntoryDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.DailyStaticOilGunInverntory" >
+    <id column="oilcan" property="oilcan" jdbcType="INTEGER" />
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="gunNo" property="gunno" jdbcType="INTEGER" />
+    <result column="pumpUp" property="pumpup" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    oilcan, ID, gunNo, pumpUp
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.ATG.domain.DailyStaticOilGunInverntoryKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_daily_StaticOilGunInverntory
+    where oilcan = #{oilcan,jdbcType=INTEGER}
+      and ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.DailyStaticOilGunInverntoryKey" >
+    delete from oss_daily_StaticOilGunInverntory
+    where oilcan = #{oilcan,jdbcType=INTEGER}
+      and ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.DailyStaticOilGunInverntory" >
+    insert into oss_daily_StaticOilGunInverntory (oilcan, ID,
+      gunNo, pumpUp)
+    values (#{oilcan,jdbcType=INTEGER}, #{id,jdbcType=VARCHAR},
+      #{gunno,jdbcType=INTEGER}, #{pumpup,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.DailyStaticOilGunInverntory" >
+    insert into oss_daily_StaticOilGunInverntory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oilcan != null" >
+        oilcan,
+      </if>
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="gunno != null" >
+        gunNo,
+      </if>
+      <if test="pumpup != null" >
+        pumpUp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="gunno != null" >
+        #{gunno,jdbcType=INTEGER},
+      </if>
+      <if test="pumpup != null" >
+        #{pumpup,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.DailyStaticOilGunInverntory" >
+    update oss_daily_StaticOilGunInverntory
+    <set >
+      <if test="gunno != null" >
+        gunNo = #{gunno,jdbcType=INTEGER},
+      </if>
+      <if test="pumpup != null" >
+        pumpUp = #{pumpup,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where oilcan = #{oilcan,jdbcType=INTEGER}
+      and ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.DailyStaticOilGunInverntory" >
+    update oss_daily_StaticOilGunInverntory
+    set gunNo = #{gunno,jdbcType=INTEGER},
+      pumpUp = #{pumpup,jdbcType=DOUBLE}
+    where oilcan = #{oilcan,jdbcType=INTEGER}
+      and ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByid" parameterType="String" resultMap="BaseResultMap">
+    SELECT  <include refid="Base_Column_List"/>
+    FROM oss_daily_StaticOilGunInverntory WHERE  ID=#{id,jdbcType=VARCHAR}
+  </select>
+</mapper>

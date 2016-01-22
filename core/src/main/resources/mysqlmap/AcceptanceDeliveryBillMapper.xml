@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.AcceptanceDeliveryBillDao" >
+  <resultMap id="ADBBaseResultMap" type="com.kld.gsm.ATG.domain.AcceptanceDeliveryBills" >
+    <id column="DeliveryNo" property="deliveryno" jdbcType="VARCHAR" />
+    <result column="PSD_ID" property="psdId" jdbcType="VARCHAR"/>
+    <result column="DeliveryTime" property="deliverytime" jdbcType="TIMESTAMP" />
+    <result column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <result column="ToNodeNo" property="tonodeno" jdbcType="VARCHAR" />
+    <result column="FromOilDepot" property="fromoildepot" jdbcType="VARCHAR" />
+    <result column="DeliveryTemp" property="deliverytemp" jdbcType="DOUBLE" />
+    <result column="PlanL" property="planl" jdbcType="DOUBLE" />
+    <result column="PlanTon" property="planton" jdbcType="DOUBLE" />
+    <result column="ShipmentTime" property="shipmenttime" jdbcType="TIMESTAMP" />
+    <result column="CarNo" property="carno" jdbcType="VARCHAR" />
+    <result column="OutSealNo" property="outsealno" jdbcType="VARCHAR" />
+    <result column="ArrivalTime" property="arrivaltime" jdbcType="TIMESTAMP" />
+    <result column="RelevanceDelveryNo" property="relevancedelveryno" jdbcType="VARCHAR" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="IsComplete" property="iscomplete" jdbcType="VARCHAR" />
+    <result column="Density" property="density" jdbcType="DOUBLE"/>
+    <result column="OUCode" property="oucode" jdbcType="VARCHAR"/>
+    <result column="FromDepotName" property="fromdepotname" jdbcType="VARCHAR"/>
+    <result column="ToStationName" property="tostationname" jdbcType="VARCHAR"/>
+    <result column="Type" property="type" jdbcType="VARCHAR"/>
+  </resultMap>
+  <resultMap id="querymap" type="com.kld.gsm.ATG.domain.AcceptanceDeliveryBills" extends="ADBBaseResultMap">
+    <result column="beginTime" property="begintime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    DeliveryNo,PSD_ID, DeliveryTime, OilNo, ToNodeNo, FromOilDepot, DeliveryTemp, PlanL, PlanTon,
+    ShipmentTime, CarNo, OutSealNo, ArrivalTime, RelevanceDelveryNo, TranStatus, IsComplete,Density,OUCode,FromDepotName,ToStationName
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ADBBaseResultMap" parameterType="java.lang.String" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_acceptance_deliveryBill
+    where DeliveryNo = #{deliveryno,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAcceptanceDeliveryBill" resultMap="ADBBaseResultMap" parameterType="java.lang.String" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_acceptance_deliveryBill
+    where DeliveryNo = #{deliveryno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from oss_acceptance_deliveryBill
+    where DeliveryNo = #{deliveryno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.AcceptanceDeliveryBills" >
+    insert into oss_acceptance_deliveryBill (DeliveryNo, DeliveryTime, OilNo, 
+      ToNodeNo, FromOilDepot, DeliveryTemp, 
+      PlanL, PlanTon, ShipmentTime, 
+      CarNo, OutSealNo, ArrivalTime, 
+      RelevanceDelveryNo, TranStatus, IsComplete,OUCode,FromDepotName,ToStationName,Density,PSD_ID
+      )
+    values (#{deliveryno,jdbcType=VARCHAR}, #{deliverytime,jdbcType=TIMESTAMP}, #{oilno,jdbcType=VARCHAR}, 
+      #{tonodeno,jdbcType=VARCHAR}, #{fromoildepot,jdbcType=VARCHAR}, #{deliverytemp,jdbcType=DOUBLE}, 
+      #{planl,jdbcType=DOUBLE}, #{planton,jdbcType=DOUBLE}, #{shipmenttime,jdbcType=TIMESTAMP}, 
+      #{carno,jdbcType=VARCHAR}, #{outsealno,jdbcType=VARCHAR}, #{arrivaltime,jdbcType=TIMESTAMP}, 
+      #{relevancedelveryno,jdbcType=VARCHAR}, #{transtatus,jdbcType=VARCHAR}, #{iscomplete,jdbcType=VARCHAR},
+      #{oucode,jdbcType=VARCHAR},#{fromdepotname,jdbcType=VARCHAR},#{tostationname,jdbcType=VARCHAR},
+      #{density,jdbcType=DOUBLE},#{psdId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.AcceptanceDeliveryBills" >
+    insert into oss_acceptance_deliveryBill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="deliveryno != null" >
+        DeliveryNo,
+      </if>
+      <if test="deliverytime != null" >
+        DeliveryTime,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="tonodeno != null" >
+        ToNodeNo,
+      </if>
+      <if test="fromoildepot != null" >
+        FromOilDepot,
+      </if>
+      <if test="deliverytemp != null" >
+        DeliveryTemp,
+      </if>
+      <if test="planl != null" >
+        PlanL,
+      </if>
+      <if test="planton != null" >
+        PlanTon,
+      </if>
+      <if test="shipmenttime != null" >
+        ShipmentTime,
+      </if>
+      <if test="carno != null" >
+        CarNo,
+      </if>
+      <if test="outsealno != null" >
+        OutSealNo,
+      </if>
+      <if test="arrivaltime != null" >
+        ArrivalTime,
+      </if>
+      <if test="relevancedelveryno != null" >
+        RelevanceDelveryNo,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="iscomplete != null" >
+        IsComplete,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+      <if test="fromdepotname != null" >
+        FromDepotName,
+      </if>
+      <if test="tostationname != null" >
+        ToStationName,
+      </if>
+      <if test="density != null" >
+        Density,
+      </if>
+      <if test="psdId != null" >
+        PSD_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="deliveryno != null" >
+        #{deliveryno,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverytime != null" >
+        #{deliverytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="tonodeno != null" >
+        #{tonodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="fromoildepot != null" >
+        #{fromoildepot,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverytemp != null" >
+        #{deliverytemp,jdbcType=DOUBLE},
+      </if>
+      <if test="planl != null" >
+        #{planl,jdbcType=DOUBLE},
+      </if>
+      <if test="planton != null" >
+        #{planton,jdbcType=DOUBLE},
+      </if>
+      <if test="shipmenttime != null" >
+        #{shipmenttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="carno != null" >
+        #{carno,jdbcType=VARCHAR},
+      </if>
+      <if test="outsealno != null" >
+        #{outsealno,jdbcType=VARCHAR},
+      </if>
+      <if test="arrivaltime != null" >
+        #{arrivaltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="relevancedelveryno != null" >
+        #{relevancedelveryno,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="iscomplete != null" >
+        #{iscomplete,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="fromdepotname != null" >
+        #{fromdepotname,jdbcType=VARCHAR},
+      </if>
+      <if test="tostationname != null" >
+        #{tostationname,jdbcType=VARCHAR},
+      </if>
+      <if test="density != null" >
+        #{density,jdbcType=DOUBLE},
+      </if>
+      <if test="psdId != null" >
+        #{psdId,jdbcType=VARCHAR},
+      </if>
+
+    </trim>
+  </insert>
+  <insert id="merge" parameterType="com.kld.gsm.ATG.domain.AcceptanceDeliveryBills" >
+    replace into oss_acceptance_deliveryBill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="deliveryno != null" >
+        DeliveryNo,
+      </if>
+      <if test="deliverytime != null" >
+        DeliveryTime,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="tonodeno != null" >
+        ToNodeNo,
+      </if>
+      <if test="fromoildepot != null" >
+        FromOilDepot,
+      </if>
+      <if test="deliverytemp != null" >
+        DeliveryTemp,
+      </if>
+      <if test="planl != null" >
+        PlanL,
+      </if>
+      <if test="planton != null" >
+        PlanTon,
+      </if>
+      <if test="shipmenttime != null" >
+        ShipmentTime,
+      </if>
+      <if test="carno != null" >
+        CarNo,
+      </if>
+      <if test="outsealno != null" >
+        OutSealNo,
+      </if>
+      <if test="arrivaltime != null" >
+        ArrivalTime,
+      </if>
+      <if test="relevancedelveryno != null" >
+        RelevanceDelveryNo,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="iscomplete != null" >
+        IsComplete,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+      <if test="fromdepotname != null" >
+        FromDepotName,
+      </if>
+      <if test="tostationname != null" >
+        ToStationName,
+      </if>
+      <if test="psdId != null" >
+        PSD_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="deliveryno != null" >
+        #{deliveryno,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverytime != null" >
+        #{deliverytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="tonodeno != null" >
+        #{tonodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="fromoildepot != null" >
+        #{fromoildepot,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverytemp != null" >
+        #{deliverytemp,jdbcType=DOUBLE},
+      </if>
+      <if test="planl != null" >
+        #{planl,jdbcType=DOUBLE},
+      </if>
+      <if test="planton != null" >
+        #{planton,jdbcType=DOUBLE},
+      </if>
+      <if test="shipmenttime != null" >
+        #{shipmenttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="carno != null" >
+        #{carno,jdbcType=VARCHAR},
+      </if>
+      <if test="outsealno != null" >
+        #{outsealno,jdbcType=VARCHAR},
+      </if>
+      <if test="arrivaltime != null" >
+        #{arrivaltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="relevancedelveryno != null" >
+        #{relevancedelveryno,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="iscomplete != null" >
+        #{iscomplete,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="fromdepotname != null" >
+        #{fromdepotname,jdbcType=VARCHAR},
+      </if>
+      <if test="tostationname != null" >
+        #{tostationname,jdbcType=VARCHAR},
+      </if>
+      <if test="psdId != null" >
+        #{psdId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.AcceptanceDeliveryBills" >
+    update oss_acceptance_deliveryBill
+    <set >
+      <if test="deliverytime != null" >
+        DeliveryTime = #{deliverytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oilno != null" >
+        OilNo = #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="tonodeno != null" >
+        ToNodeNo = #{tonodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="fromoildepot != null" >
+        FromOilDepot = #{fromoildepot,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverytemp != null" >
+        DeliveryTemp = #{deliverytemp,jdbcType=DOUBLE},
+      </if>
+      <if test="planl != null" >
+        PlanL = #{planl,jdbcType=DOUBLE},
+      </if>
+      <if test="planton != null" >
+        PlanTon = #{planton,jdbcType=DOUBLE},
+      </if>
+      <if test="shipmenttime != null" >
+        ShipmentTime = #{shipmenttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="carno != null" >
+        CarNo = #{carno,jdbcType=VARCHAR},
+      </if>
+      <if test="outsealno != null" >
+        OutSealNo = #{outsealno,jdbcType=VARCHAR},
+      </if>
+      <if test="arrivaltime != null" >
+        ArrivalTime = #{arrivaltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="relevancedelveryno != null" >
+        RelevanceDelveryNo = #{relevancedelveryno,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="iscomplete != null" >
+        IsComplete = #{iscomplete,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="fromdepotname != null" >
+        FromDepotName = #{fromdepotname,jdbcType=VARCHAR},
+      </if>
+      <if test="tostationname != null" >
+        ToStationName = #{tostationname,jdbcType=VARCHAR},
+      </if>
+      <if test="density != null" >
+        Density = #{density,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where DeliveryNo = #{deliveryno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.AcceptanceDeliveryBills" >
+    update oss_acceptance_deliveryBill
+    set DeliveryTime = #{deliverytime,jdbcType=TIMESTAMP},
+      OilNo = #{oilno,jdbcType=VARCHAR},
+      ToNodeNo = #{tonodeno,jdbcType=VARCHAR},
+      FromOilDepot = #{fromoildepot,jdbcType=VARCHAR},
+      DeliveryTemp = #{deliverytemp,jdbcType=DOUBLE},
+      PlanL = #{planl,jdbcType=DOUBLE},
+      PlanTon = #{planton,jdbcType=DOUBLE},
+      ShipmentTime = #{shipmenttime,jdbcType=TIMESTAMP},
+      CarNo = #{carno,jdbcType=VARCHAR},
+      OutSealNo = #{outsealno,jdbcType=VARCHAR},
+      ArrivalTime = #{arrivaltime,jdbcType=TIMESTAMP},
+      RelevanceDelveryNo = #{relevancedelveryno,jdbcType=VARCHAR},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      IsComplete = #{iscomplete,jdbcType=VARCHAR},
+      OUCode = #{oucode,jdbcType=VARCHAR},
+      FromDepotName = #{fromdepotname,jdbcType=VARCHAR},
+      ToStationName = #{tostationname,jdbcType=VARCHAR},
+      Density=#{density,jdbcType=DOUBLE},
+      PSD_ID=#{psdId,jdbcType=VARCHAR}
+    where DeliveryNo = #{deliveryno,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByTrans" parameterType="String" resultMap="ADBBaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_acceptance_deliveryBill WHERE TranStatus=#{trans,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByIsComplete"  parameterType="String" resultMap="querymap">
+    SELECT
+    <include refid="Base_Column_List"/>,Type,beginTime
+    FROM View_uncompletedebill WHERE  IsComplete = #{iscomplete,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByDeliveryNoDate" resultMap="ADBBaseResultMap" parameterType="hashmap">
+    select
+    <include refid="Base_Column_List" />
+    from oss_acceptance_deliveryBill where IsComplete=1
+    <if test="deliveryNo != null and deliveryNo != ''">
+      and ma = #{deliveryNo}
+    </if>
+    <if test="begin != null">
+      <![CDATA[and CreateTime >= #{begin, jdbcType=TIMESTAMP}]]>
+    </if>
+    <if test="end != null">
+      <![CDATA[and CreateTime <= #{end, jdbcType=TIMESTAMP}]]>
+    </if>
+    order by createtime desc
+  </select>
+</mapper>

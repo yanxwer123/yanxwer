@@ -1,0 +1,26 @@
+<html>
+<head>
+    #parse("/common/webhead.vm")
+</head>
+<body style="overflow-x: hidden;">
+    #parse("/common/webtop.vm")
+   $screen_content
+    #parse("/common/webfooter.vm")
+  </body>
+</html>
+<script type="text/javascript">
+    $(function(){
+        $(".shop-cart").hover(function(){
+            $(".shop-cart-list").show();
+        },function(){
+            $(".shop-cart-list").hide();
+        })
+        $(".shop-cart-list").hover(function(){
+            $(".shop-cart").addClass("shop-hover");
+            $(this).show();
+        },function(){
+            $(this).hide();
+        })
+
+    })
+</script>

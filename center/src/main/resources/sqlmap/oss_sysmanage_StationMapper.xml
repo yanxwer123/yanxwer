@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_sysmanage_StationMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_sysmanage_Station" >
+    <id column="STATION_CODE" property="stationCode" jdbcType="VARCHAR" />
+    <result column="STATION_NAME" property="stationName" jdbcType="VARCHAR" />
+    <result column="SHORT_NAME" property="shortName" jdbcType="VARCHAR" />
+    <result column="DSGS" property="dsgs" jdbcType="VARCHAR" />
+    <result column="LSPQ" property="lspq" jdbcType="VARCHAR" />
+    <result column="LSGC" property="lsgc" jdbcType="VARCHAR" />
+    <result column="KCDD" property="kcdd" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    STATION_CODE, STATION_NAME, SHORT_NAME, DSGS, LSPQ, LSGC, KCDD
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_Station
+    where STATION_CODE = #{stationCode,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByLsgcandKcdd" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_Station
+    where LSGC = #{0,jdbcType=VARCHAR} and KCDD=#{1,jdbcType=VARCHAR}
+  </select>
+  <select id="getStationsByArea" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_sysmanage_Station WHERE LSPQ=#{ano,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from oss_sysmanage_Station
+    where STATION_CODE = #{stationCode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_sysmanage_Station" >
+    insert into oss_sysmanage_Station (STATION_CODE, STATION_NAME, SHORT_NAME, 
+      DSGS, LSPQ, LSGC, KCDD
+      )
+    values (#{stationCode,jdbcType=VARCHAR}, #{stationName,jdbcType=VARCHAR}, #{shortName,jdbcType=VARCHAR}, 
+      #{dsgs,jdbcType=VARCHAR}, #{lspq,jdbcType=VARCHAR}, #{lsgc,jdbcType=VARCHAR}, #{kcdd,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_sysmanage_Station" >
+    insert into oss_sysmanage_Station
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stationCode != null" >
+        STATION_CODE,
+      </if>
+      <if test="stationName != null" >
+        STATION_NAME,
+      </if>
+      <if test="shortName != null" >
+        SHORT_NAME,
+      </if>
+      <if test="dsgs != null" >
+        DSGS,
+      </if>
+      <if test="lspq != null" >
+        LSPQ,
+      </if>
+      <if test="lsgc != null" >
+        LSGC,
+      </if>
+      <if test="kcdd != null" >
+        KCDD,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stationCode != null" >
+        #{stationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stationName != null" >
+        #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="shortName != null" >
+        #{shortName,jdbcType=VARCHAR},
+      </if>
+      <if test="dsgs != null" >
+        #{dsgs,jdbcType=VARCHAR},
+      </if>
+      <if test="lspq != null" >
+        #{lspq,jdbcType=VARCHAR},
+      </if>
+      <if test="lsgc != null" >
+        #{lsgc,jdbcType=VARCHAR},
+      </if>
+      <if test="kcdd != null" >
+        #{kcdd,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <insert id="merge" parameterType="com.kld.gsm.center.domain.oss_sysmanage_Station" >
+    replace into oss_sysmanage_Station
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stationCode != null" >
+        STATION_CODE,
+      </if>
+      <if test="stationName != null" >
+        STATION_NAME,
+      </if>
+      <if test="shortName != null" >
+        SHORT_NAME,
+      </if>
+      <if test="dsgs != null" >
+        DSGS,
+      </if>
+      <if test="lspq != null" >
+        LSPQ,
+      </if>
+      <if test="lsgc != null" >
+        LSGC,
+      </if>
+      <if test="kcdd != null" >
+        KCDD,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stationCode != null" >
+        #{stationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stationName != null" >
+        #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="shortName != null" >
+        #{shortName,jdbcType=VARCHAR},
+      </if>
+      <if test="dsgs != null" >
+        #{dsgs,jdbcType=VARCHAR},
+      </if>
+      <if test="lspq != null" >
+        #{lspq,jdbcType=VARCHAR},
+      </if>
+      <if test="lsgc != null" >
+        #{lsgc,jdbcType=VARCHAR},
+      </if>
+      <if test="kcdd != null" >
+        #{kcdd,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_sysmanage_Station" >
+    update oss_sysmanage_Station
+    <set >
+      <if test="stationName != null" >
+        STATION_NAME = #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="shortName != null" >
+        SHORT_NAME = #{shortName,jdbcType=VARCHAR},
+      </if>
+      <if test="dsgs != null" >
+        DSGS = #{dsgs,jdbcType=VARCHAR},
+      </if>
+      <if test="lspq != null" >
+        LSPQ = #{lspq,jdbcType=VARCHAR},
+      </if>
+      <if test="lsgc != null" >
+        LSGC = #{lsgc,jdbcType=VARCHAR},
+      </if>
+      <if test="kcdd != null" >
+        KCDD = #{kcdd,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where STATION_CODE = #{stationCode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_sysmanage_Station" >
+    update oss_sysmanage_Station
+    set STATION_NAME = #{stationName,jdbcType=VARCHAR},
+      SHORT_NAME = #{shortName,jdbcType=VARCHAR},
+      DSGS = #{dsgs,jdbcType=VARCHAR},
+      LSPQ = #{lspq,jdbcType=VARCHAR},
+      LSGC = #{lsgc,jdbcType=VARCHAR},
+      KCDD = #{kcdd,jdbcType=VARCHAR}
+    where STATION_CODE = #{stationCode,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_sys_OrgUnitMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_sys_OrgUnit" >
+    <id column="NodeNo" property="nodeno" jdbcType="VARCHAR" />
+    <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
+    <result column="OUID" property="ouid" jdbcType="INTEGER" />
+    <result column="ParentOUCode" property="parentoucode" jdbcType="VARCHAR" />
+    <result column="UniversalCode" property="universalcode" jdbcType="VARCHAR" />
+    <result column="OULevel" property="oulevel" jdbcType="INTEGER" />
+    <result column="OUName" property="ouname" jdbcType="VARCHAR" />
+    <result column="ShortName" property="shortname" jdbcType="VARCHAR" />
+    <result column="ABName" property="abname" jdbcType="VARCHAR" />
+    <result column="OUType" property="outype" jdbcType="VARCHAR" />
+    <result column="IsUnit" property="isunit" jdbcType="INTEGER" />
+    <result column="PortalUrl" property="portalurl" jdbcType="VARCHAR" />
+    <result column="OrderNo" property="orderno" jdbcType="INTEGER" />
+    <result column="Oulabel" property="oulabel" jdbcType="VARCHAR" />
+    <result column="Status" property="status" jdbcType="INTEGER" />
+    <result column="Extend1" property="extend1" jdbcType="VARCHAR" />
+    <result column="Extend2" property="extend2" jdbcType="VARCHAR" />
+    <result column="CreatedBy" property="createdby" jdbcType="VARCHAR" />
+    <result column="CreatedDate" property="createddate" jdbcType="TIMESTAMP" />
+    <result column="ModifiedBy" property="modifiedby" jdbcType="VARCHAR" />
+    <result column="ModifiedDate" property="modifieddate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    NodeNo, OUCode, OUID, ParentOUCode, UniversalCode, OULevel, OUName, ShortName, ABName, 
+    OUType, IsUnit, PortalUrl, OrderNo, Oulabel, Status, Extend1, Extend2, CreatedBy, 
+    CreatedDate, ModifiedBy, ModifiedDate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sys_OrgUnit
+    where NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPOUCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sys_OrgUnit
+    where ParentOUCode = #{parentoucode,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByOUCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sys_OrgUnit
+    where OUCode = #{oucode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from oss_sys_OrgUnit
+    where NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_sys_OrgUnit" >
+    insert into oss_sys_OrgUnit (NodeNo, OUCode, OUID, 
+      ParentOUCode, UniversalCode, OULevel, 
+      OUName, ShortName, ABName, 
+      OUType, IsUnit, PortalUrl, 
+      OrderNo, Oulabel, Status, 
+      Extend1, Extend2, CreatedBy, 
+      CreatedDate, ModifiedBy, ModifiedDate
+      )
+    values (#{nodeno,jdbcType=VARCHAR}, #{oucode,jdbcType=VARCHAR}, #{ouid,jdbcType=INTEGER}, 
+      #{parentoucode,jdbcType=VARCHAR}, #{universalcode,jdbcType=VARCHAR}, #{oulevel,jdbcType=INTEGER}, 
+      #{ouname,jdbcType=VARCHAR}, #{shortname,jdbcType=VARCHAR}, #{abname,jdbcType=VARCHAR}, 
+      #{outype,jdbcType=VARCHAR}, #{isunit,jdbcType=INTEGER}, #{portalurl,jdbcType=VARCHAR}, 
+      #{orderno,jdbcType=INTEGER}, #{oulabel,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, #{createdby,jdbcType=VARCHAR}, 
+      #{createddate,jdbcType=TIMESTAMP}, #{modifiedby,jdbcType=VARCHAR}, #{modifieddate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_sys_OrgUnit" >
+    insert into oss_sys_OrgUnit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+      <if test="ouid != null" >
+        OUID,
+      </if>
+      <if test="parentoucode != null" >
+        ParentOUCode,
+      </if>
+      <if test="universalcode != null" >
+        UniversalCode,
+      </if>
+      <if test="oulevel != null" >
+        OULevel,
+      </if>
+      <if test="ouname != null" >
+        OUName,
+      </if>
+      <if test="shortname != null" >
+        ShortName,
+      </if>
+      <if test="abname != null" >
+        ABName,
+      </if>
+      <if test="outype != null" >
+        OUType,
+      </if>
+      <if test="isunit != null" >
+        IsUnit,
+      </if>
+      <if test="portalurl != null" >
+        PortalUrl,
+      </if>
+      <if test="orderno != null" >
+        OrderNo,
+      </if>
+      <if test="oulabel != null" >
+        Oulabel,
+      </if>
+      <if test="status != null" >
+        Status,
+      </if>
+      <if test="extend1 != null" >
+        Extend1,
+      </if>
+      <if test="extend2 != null" >
+        Extend2,
+      </if>
+      <if test="createdby != null" >
+        CreatedBy,
+      </if>
+      <if test="createddate != null" >
+        CreatedDate,
+      </if>
+      <if test="modifiedby != null" >
+        ModifiedBy,
+      </if>
+      <if test="modifieddate != null" >
+        ModifiedDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="ouid != null" >
+        #{ouid,jdbcType=INTEGER},
+      </if>
+      <if test="parentoucode != null" >
+        #{parentoucode,jdbcType=VARCHAR},
+      </if>
+      <if test="universalcode != null" >
+        #{universalcode,jdbcType=VARCHAR},
+      </if>
+      <if test="oulevel != null" >
+        #{oulevel,jdbcType=INTEGER},
+      </if>
+      <if test="ouname != null" >
+        #{ouname,jdbcType=VARCHAR},
+      </if>
+      <if test="shortname != null" >
+        #{shortname,jdbcType=VARCHAR},
+      </if>
+      <if test="abname != null" >
+        #{abname,jdbcType=VARCHAR},
+      </if>
+      <if test="outype != null" >
+        #{outype,jdbcType=VARCHAR},
+      </if>
+      <if test="isunit != null" >
+        #{isunit,jdbcType=INTEGER},
+      </if>
+      <if test="portalurl != null" >
+        #{portalurl,jdbcType=VARCHAR},
+      </if>
+      <if test="orderno != null" >
+        #{orderno,jdbcType=INTEGER},
+      </if>
+      <if test="oulabel != null" >
+        #{oulabel,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="extend1 != null" >
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="createdby != null" >
+        #{createdby,jdbcType=VARCHAR},
+      </if>
+      <if test="createddate != null" >
+        #{createddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedby != null" >
+        #{modifiedby,jdbcType=VARCHAR},
+      </if>
+      <if test="modifieddate != null" >
+        #{modifieddate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_sys_OrgUnit" >
+    update oss_sys_OrgUnit
+    <set >
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="ouid != null" >
+        OUID = #{ouid,jdbcType=INTEGER},
+      </if>
+      <if test="parentoucode != null" >
+        ParentOUCode = #{parentoucode,jdbcType=VARCHAR},
+      </if>
+      <if test="universalcode != null" >
+        UniversalCode = #{universalcode,jdbcType=VARCHAR},
+      </if>
+      <if test="oulevel != null" >
+        OULevel = #{oulevel,jdbcType=INTEGER},
+      </if>
+      <if test="ouname != null" >
+        OUName = #{ouname,jdbcType=VARCHAR},
+      </if>
+      <if test="shortname != null" >
+        ShortName = #{shortname,jdbcType=VARCHAR},
+      </if>
+      <if test="abname != null" >
+        ABName = #{abname,jdbcType=VARCHAR},
+      </if>
+      <if test="outype != null" >
+        OUType = #{outype,jdbcType=VARCHAR},
+      </if>
+      <if test="isunit != null" >
+        IsUnit = #{isunit,jdbcType=INTEGER},
+      </if>
+      <if test="portalurl != null" >
+        PortalUrl = #{portalurl,jdbcType=VARCHAR},
+      </if>
+      <if test="orderno != null" >
+        OrderNo = #{orderno,jdbcType=INTEGER},
+      </if>
+      <if test="oulabel != null" >
+        Oulabel = #{oulabel,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        Status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="extend1 != null" >
+        Extend1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        Extend2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="createdby != null" >
+        CreatedBy = #{createdby,jdbcType=VARCHAR},
+      </if>
+      <if test="createddate != null" >
+        CreatedDate = #{createddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedby != null" >
+        ModifiedBy = #{modifiedby,jdbcType=VARCHAR},
+      </if>
+      <if test="modifieddate != null" >
+        ModifiedDate = #{modifieddate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_sys_OrgUnit" >
+    update oss_sys_OrgUnit
+    set OUCode = #{oucode,jdbcType=VARCHAR},
+      OUID = #{ouid,jdbcType=INTEGER},
+      ParentOUCode = #{parentoucode,jdbcType=VARCHAR},
+      UniversalCode = #{universalcode,jdbcType=VARCHAR},
+      OULevel = #{oulevel,jdbcType=INTEGER},
+      OUName = #{ouname,jdbcType=VARCHAR},
+      ShortName = #{shortname,jdbcType=VARCHAR},
+      ABName = #{abname,jdbcType=VARCHAR},
+      OUType = #{outype,jdbcType=VARCHAR},
+      IsUnit = #{isunit,jdbcType=INTEGER},
+      PortalUrl = #{portalurl,jdbcType=VARCHAR},
+      OrderNo = #{orderno,jdbcType=INTEGER},
+      Oulabel = #{oulabel,jdbcType=VARCHAR},
+      Status = #{status,jdbcType=INTEGER},
+      Extend1 = #{extend1,jdbcType=VARCHAR},
+      Extend2 = #{extend2,jdbcType=VARCHAR},
+      CreatedBy = #{createdby,jdbcType=VARCHAR},
+      CreatedDate = #{createddate,jdbcType=TIMESTAMP},
+      ModifiedBy = #{modifiedby,jdbcType=VARCHAR},
+      ModifiedDate = #{modifieddate,jdbcType=TIMESTAMP}
+    where NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <select id="selectOUInfo" resultType="hashmap" parameterType="hashmap">
+    select * from oss_sys_OrgUnit Where OULevel=4
+    <if test="oucode != null and oucode != '' ">
+      and OUCode LIKE #{oucode,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_alarm_OilInContrastMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_alarm_OilInContrast" >
+    <id column="DeliveryNo" property="deliveryno" jdbcType="VARCHAR" />
+    <result column="Shift" property="shift" jdbcType="VARCHAR" />
+    <result column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <result column="PlanL" property="planl" jdbcType="DOUBLE" />
+    <result column="RealRecieve" property="realrecieve" jdbcType="DOUBLE" />
+    <result column="Loss" property="loss" jdbcType="DOUBLE" />
+    <result column="LossRate" property="lossrate" jdbcType="DOUBLE" />
+    <result column="DuringSales" property="duringsales" jdbcType="DOUBLE" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="NodeNo" property="nodeno" jdbcType="VARCHAR" />
+    <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
+    <result column="CreatTime" property="creattime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <select id="selectoilincontrastbywhere" resultType="hashmap" parameterType="hashmap">
+    <![CDATA[SELECT * FROM oss_alarm_OilInContrast WHERE LEFT(Shift,8)>=#{start,jdbcType=VARCHAR} And LEFT(Shift,8)<=#{end,jdbcType=VARCHAR}
+    ]]>
+    <if test="oucode != null and  oucode!= ''">
+      <![CDATA[ and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    </if>
+    ORDER BY Shift DESC
+  </select>
+  <select id="querypage" resultType="hashmap" parameterType="hashmap">
+    <![CDATA[SELECT * FROM oss_alarm_OilInContrast WHERE LEFT(Shift,8)>=#{start,jdbcType=VARCHAR} And LEFT(Shift,8)<=#{end,jdbcType=VARCHAR}
+  ]]>
+    <if test="oucode != null and  oucode!= ''">
+      <![CDATA[ and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    </if>
+    ORDER BY Shift DESC
+    <if test="firstRow != null and  pageSize!= null">
+      <![CDATA[ LIMIT #{firstRow},#{pageSize}]]>
+    </if>
+  </select>
+  <sql id="Base_Column_List" >
+    DeliveryNo, Shift, OilNo, PlanL, RealRecieve, Loss, LossRate, DuringSales, TranStatus, 
+    NodeNo, OUCode,CreatTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_alarm_OilInContrast
+    where DeliveryNo = #{deliveryno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from oss_alarm_OilInContrast
+    where DeliveryNo = #{deliveryno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_alarm_OilInContrast" >
+    insert into oss_alarm_OilInContrast (DeliveryNo, Shift, OilNo, 
+      PlanL, RealRecieve, Loss, 
+      LossRate, DuringSales, TranStatus, 
+      NodeNo, OUCode,CreatTime)
+    values (#{deliveryno,jdbcType=VARCHAR}, #{shift,jdbcType=VARCHAR}, #{oilno,jdbcType=VARCHAR}, 
+      #{planl,jdbcType=DOUBLE}, #{realrecieve,jdbcType=DOUBLE}, #{loss,jdbcType=DOUBLE}, 
+      #{lossrate,jdbcType=DOUBLE}, #{duringsales,jdbcType=DOUBLE}, #{transtatus,jdbcType=VARCHAR}, 
+      #{nodeno,jdbcType=VARCHAR}, #{oucode,jdbcType=VARCHAR}, #{creattime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_alarm_OilInContrast" >
+    insert into oss_alarm_OilInContrast
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="deliveryno != null" >
+        DeliveryNo,
+      </if>
+      <if test="shift != null" >
+        Shift,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="planl != null" >
+        PlanL,
+      </if>
+      <if test="realrecieve != null" >
+        RealRecieve,
+      </if>
+      <if test="loss != null" >
+        Loss,
+      </if>
+      <if test="lossrate != null" >
+        LossRate,
+      </if>
+      <if test="duringsales != null" >
+        DuringSales,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+      <if test="creattime != null" >
+        CreatTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="deliveryno != null" >
+        #{deliveryno,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null" >
+        #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="planl != null" >
+        #{planl,jdbcType=DOUBLE},
+      </if>
+      <if test="realrecieve != null" >
+        #{realrecieve,jdbcType=DOUBLE},
+      </if>
+      <if test="loss != null" >
+        #{loss,jdbcType=DOUBLE},
+      </if>
+      <if test="lossrate != null" >
+        #{lossrate,jdbcType=DOUBLE},
+      </if>
+      <if test="duringsales != null" >
+        #{duringsales,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="creattime != null" >
+        #{creattime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_alarm_OilInContrast" >
+    update oss_alarm_OilInContrast
+    <set >
+      <if test="shift != null" >
+        Shift = #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="oilno != null" >
+        OilNo = #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="planl != null" >
+        PlanL = #{planl,jdbcType=DOUBLE},
+      </if>
+      <if test="realrecieve != null" >
+        RealRecieve = #{realrecieve,jdbcType=DOUBLE},
+      </if>
+      <if test="loss != null" >
+        Loss = #{loss,jdbcType=DOUBLE},
+      </if>
+      <if test="lossrate != null" >
+        LossRate = #{lossrate,jdbcType=DOUBLE},
+      </if>
+      <if test="duringsales != null" >
+        DuringSales = #{duringsales,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeno != null" >
+        NodeNo = #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="creattime != null" >
+        CreatTime = #{creattime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where DeliveryNo = #{deliveryno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_alarm_OilInContrast" >
+    update oss_alarm_OilInContrast
+    set Shift = #{shift,jdbcType=VARCHAR},
+      OilNo = #{oilno,jdbcType=VARCHAR},
+      PlanL = #{planl,jdbcType=DOUBLE},
+      RealRecieve = #{realrecieve,jdbcType=DOUBLE},
+      Loss = #{loss,jdbcType=DOUBLE},
+      LossRate = #{lossrate,jdbcType=DOUBLE},
+      DuringSales = #{duringsales,jdbcType=DOUBLE},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      NodeNo = #{nodeno,jdbcType=VARCHAR},
+      OUCode = #{oucode,jdbcType=VARCHAR},
+           CreatTime = #{creattime,jdbcType=TIMESTAMP}
+    where DeliveryNo = #{deliveryno,jdbcType=VARCHAR}
+  </update>
+</mapper>

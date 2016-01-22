@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_daily_tankshiftMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_daily_tankshift" >
+    <id column="Shift" property="shift" jdbcType="VARCHAR" />
+    <id column="OilCan" property="oilcan" jdbcType="INTEGER" />
+    <id column="NodeNo" property="nodeno" jdbcType="VARCHAR" />
+    <result column="TakeDate" property="takedate" jdbcType="TIMESTAMP" />
+    <result column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <result column="OilName" property="oilname" jdbcType="VARCHAR" />
+    <result column="ToOilHigh" property="tooilhigh" jdbcType="DOUBLE" />
+    <result column="ToOilL" property="tooill" jdbcType="DOUBLE" />
+    <result column="InOilL" property="inoill" jdbcType="DOUBLE" />
+    <result column="HoOilHigh" property="hooilhigh" jdbcType="DOUBLE" />
+    <result column="HoOilL" property="hooill" jdbcType="DOUBLE" />
+    <result column="SaleL" property="salel" jdbcType="DOUBLE" />
+    <result column="AccountDate" property="accountdate" jdbcType="TIMESTAMP" />
+    <result column="CanRealL" property="canreall" jdbcType="DOUBLE" />
+    <result column="HeightWater" property="heightwater" jdbcType="DOUBLE" />
+    <result column="WaterL" property="waterl" jdbcType="DOUBLE" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Shift, OilCan, NodeNo, TakeDate, OilNo, OilName, ToOilHigh, ToOilL, InOilL, HoOilHigh, 
+    HoOilL, SaleL, AccountDate, CanRealL, HeightWater, WaterL, TranStatus, OUCode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_daily_tankshiftKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_daily_tankshift
+    where Shift = #{shift,jdbcType=VARCHAR}
+      and OilCan = #{oilcan,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_daily_tankshiftKey" >
+    delete from oss_daily_tankshift
+    where Shift = #{shift,jdbcType=VARCHAR}
+      and OilCan = #{oilcan,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_daily_tankshift" >
+    insert into oss_daily_tankshift (Shift, OilCan, NodeNo, 
+      TakeDate, OilNo, OilName, 
+      ToOilHigh, ToOilL, InOilL, 
+      HoOilHigh, HoOilL, SaleL, 
+      AccountDate, CanRealL, HeightWater, 
+      WaterL, TranStatus, OUCode
+      )
+    values (#{shift,jdbcType=VARCHAR}, #{oilcan,jdbcType=INTEGER}, #{nodeno,jdbcType=VARCHAR}, 
+      #{takedate,jdbcType=TIMESTAMP}, #{oilno,jdbcType=VARCHAR}, #{oilname,jdbcType=VARCHAR}, 
+      #{tooilhigh,jdbcType=DOUBLE}, #{tooill,jdbcType=DOUBLE}, #{inoill,jdbcType=DOUBLE}, 
+      #{hooilhigh,jdbcType=DOUBLE}, #{hooill,jdbcType=DOUBLE}, #{salel,jdbcType=DOUBLE}, 
+      #{accountdate,jdbcType=TIMESTAMP}, #{canreall,jdbcType=DOUBLE}, #{heightwater,jdbcType=DOUBLE}, 
+      #{waterl,jdbcType=DOUBLE}, #{transtatus,jdbcType=VARCHAR}, #{oucode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="merge" parameterType="com.kld.gsm.center.domain.oss_daily_tankshift" >
+    replace into oss_daily_tankshift
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shift != null" >
+        Shift,
+      </if>
+      <if test="oilcan != null" >
+        OilCan,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="takedate != null" >
+        TakeDate,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="oilname != null" >
+        OilName,
+      </if>
+      <if test="tooilhigh != null" >
+        ToOilHigh,
+      </if>
+      <if test="tooill != null" >
+        ToOilL,
+      </if>
+      <if test="inoill != null" >
+        InOilL,
+      </if>
+      <if test="hooilhigh != null" >
+        HoOilHigh,
+      </if>
+      <if test="hooill != null" >
+        HoOilL,
+      </if>
+      <if test="salel != null" >
+        SaleL,
+      </if>
+      <if test="accountdate != null" >
+        AccountDate,
+      </if>
+      <if test="canreall != null" >
+        CanRealL,
+      </if>
+      <if test="heightwater != null" >
+        HeightWater,
+      </if>
+      <if test="waterl != null" >
+        WaterL,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shift != null" >
+        #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="takedate != null" >
+        #{takedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilname != null" >
+        #{oilname,jdbcType=VARCHAR},
+      </if>
+      <if test="tooilhigh != null" >
+        #{tooilhigh,jdbcType=DOUBLE},
+      </if>
+      <if test="tooill != null" >
+        #{tooill,jdbcType=DOUBLE},
+      </if>
+      <if test="inoill != null" >
+        #{inoill,jdbcType=DOUBLE},
+      </if>
+      <if test="hooilhigh != null" >
+        #{hooilhigh,jdbcType=DOUBLE},
+      </if>
+      <if test="hooill != null" >
+        #{hooill,jdbcType=DOUBLE},
+      </if>
+      <if test="salel != null" >
+        #{salel,jdbcType=DOUBLE},
+      </if>
+      <if test="accountdate != null" >
+        #{accountdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="canreall != null" >
+        #{canreall,jdbcType=DOUBLE},
+      </if>
+      <if test="heightwater != null" >
+        #{heightwater,jdbcType=DOUBLE},
+      </if>
+      <if test="waterl != null" >
+        #{waterl,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_daily_tankshift" >
+    insert into oss_daily_tankshift
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shift != null" >
+        Shift,
+      </if>
+      <if test="oilcan != null" >
+        OilCan,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="takedate != null" >
+        TakeDate,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="oilname != null" >
+        OilName,
+      </if>
+      <if test="tooilhigh != null" >
+        ToOilHigh,
+      </if>
+      <if test="tooill != null" >
+        ToOilL,
+      </if>
+      <if test="inoill != null" >
+        InOilL,
+      </if>
+      <if test="hooilhigh != null" >
+        HoOilHigh,
+      </if>
+      <if test="hooill != null" >
+        HoOilL,
+      </if>
+      <if test="salel != null" >
+        SaleL,
+      </if>
+      <if test="accountdate != null" >
+        AccountDate,
+      </if>
+      <if test="canreall != null" >
+        CanRealL,
+      </if>
+      <if test="heightwater != null" >
+        HeightWater,
+      </if>
+      <if test="waterl != null" >
+        WaterL,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shift != null" >
+        #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="takedate != null" >
+        #{takedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilname != null" >
+        #{oilname,jdbcType=VARCHAR},
+      </if>
+      <if test="tooilhigh != null" >
+        #{tooilhigh,jdbcType=DOUBLE},
+      </if>
+      <if test="tooill != null" >
+        #{tooill,jdbcType=DOUBLE},
+      </if>
+      <if test="inoill != null" >
+        #{inoill,jdbcType=DOUBLE},
+      </if>
+      <if test="hooilhigh != null" >
+        #{hooilhigh,jdbcType=DOUBLE},
+      </if>
+      <if test="hooill != null" >
+        #{hooill,jdbcType=DOUBLE},
+      </if>
+      <if test="salel != null" >
+        #{salel,jdbcType=DOUBLE},
+      </if>
+      <if test="accountdate != null" >
+        #{accountdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="canreall != null" >
+        #{canreall,jdbcType=DOUBLE},
+      </if>
+      <if test="heightwater != null" >
+        #{heightwater,jdbcType=DOUBLE},
+      </if>
+      <if test="waterl != null" >
+        #{waterl,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_daily_tankshift" >
+    update oss_daily_tankshift
+    <set >
+      <if test="takedate != null" >
+        TakeDate = #{takedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oilno != null" >
+        OilNo = #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilname != null" >
+        OilName = #{oilname,jdbcType=VARCHAR},
+      </if>
+      <if test="tooilhigh != null" >
+        ToOilHigh = #{tooilhigh,jdbcType=DOUBLE},
+      </if>
+      <if test="tooill != null" >
+        ToOilL = #{tooill,jdbcType=DOUBLE},
+      </if>
+      <if test="inoill != null" >
+        InOilL = #{inoill,jdbcType=DOUBLE},
+      </if>
+      <if test="hooilhigh != null" >
+        HoOilHigh = #{hooilhigh,jdbcType=DOUBLE},
+      </if>
+      <if test="hooill != null" >
+        HoOilL = #{hooill,jdbcType=DOUBLE},
+      </if>
+      <if test="salel != null" >
+        SaleL = #{salel,jdbcType=DOUBLE},
+      </if>
+      <if test="accountdate != null" >
+        AccountDate = #{accountdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="canreall != null" >
+        CanRealL = #{canreall,jdbcType=DOUBLE},
+      </if>
+      <if test="heightwater != null" >
+        HeightWater = #{heightwater,jdbcType=DOUBLE},
+      </if>
+      <if test="waterl != null" >
+        WaterL = #{waterl,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Shift = #{shift,jdbcType=VARCHAR}
+      and OilCan = #{oilcan,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_daily_tankshift" >
+    update oss_daily_tankshift
+    set TakeDate = #{takedate,jdbcType=TIMESTAMP},
+      OilNo = #{oilno,jdbcType=VARCHAR},
+      OilName = #{oilname,jdbcType=VARCHAR},
+      ToOilHigh = #{tooilhigh,jdbcType=DOUBLE},
+      ToOilL = #{tooill,jdbcType=DOUBLE},
+      InOilL = #{inoill,jdbcType=DOUBLE},
+      HoOilHigh = #{hooilhigh,jdbcType=DOUBLE},
+      HoOilL = #{hooill,jdbcType=DOUBLE},
+      SaleL = #{salel,jdbcType=DOUBLE},
+      AccountDate = #{accountdate,jdbcType=TIMESTAMP},
+      CanRealL = #{canreall,jdbcType=DOUBLE},
+      HeightWater = #{heightwater,jdbcType=DOUBLE},
+      WaterL = #{waterl,jdbcType=DOUBLE},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      OUCode = #{oucode,jdbcType=VARCHAR}
+    where Shift = #{shift,jdbcType=VARCHAR}
+      and OilCan = #{oilcan,jdbcType=INTEGER}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByShift" resultType="hashmap" parameterType="java.lang.String" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_daily_tankshift
+    where Shift = #{shift,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,57 @@
+#set($layout="layout/emptylayout.vm")
+#set($menuTitle="油站日平衡")
+
+油站监控  >>  湛江海头加油站
+<div class="row">
+    <div class="col-md-6" id="table">
+        <div class="row">
+            <div class="col-lg-2" align="center" id="td" style="background-color: red">总揽</div>
+            <div class="col-lg-2" align="center" id="td">罐枪实时监控</div>
+            <div class="col-lg-2" align="center" id="td">油站站点库存</div>
+            <div class="col-lg-2" align="center" id="td">油站日平衡</div>
+            <div class="col-lg-2" align="center" id="td">油站班报</div>
+            <div class="col-lg-2" align="center" id="td">报警信息</div>
+        </div>
+    </div>
+    <div class="col-md-6"></div>
+</div>
+<div class="row">
+<div class="col-md-1">日期：</div>
+<div class="col-md-2"><input type="text" class="easyui-datebox"/></div>
+<div class="col-md-2">—<input type="text" class="easyui-datebox"/></div>
+<div class="col-md-1"><input type="button" value="查询"/></div>
+    <div class="col-md-6"></div>
+</div>
+<table class="easyui-datagrid">
+    <thead>
+    <tr>
+        <th data-options="field:'code'" ROWSPAN="2">品种</th>
+        <th data-options="field:'name'" ROWSPAN="2">期初罐存（帐存）</th>
+        <th data-options="field:'name'" colspan="2">期间进货</th>
+
+        <th data-options="field:'JBSJ'" ROWSPAN="2">期间付出</th>
+        <th data-options="field:'JBR2'" ROWSPAN="2">期末库存</th>
+        <th data-options="field:'JBSJ2'" ROWSPAN="2">实测库存</th>
+        <th data-options="field:'SYL'" ROWSPAN="2">损溢量</th>
+        <th data-options="field:'SYL2'" ROWSPAN="2">损溢率</th>
+    </tr>
+    <tr>
+        <th data-options="field:'price'">出库单号</th>
+        <th data-options="field:'JBR'">进货数量（L）</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+
+    </tbody>
+</table>

@@ -1,0 +1,7 @@
+@charset "utf-8";
+/* CSS Document */
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, em, p, font, img, small, strong, center, dl, dt, dd, ol, ul, li, form, label, table, caption, tbody, tr, th, td,p {margin:0;padding:0;border:0;outline:0; vertical-align:baseline; font-family:"微软雅黑";} 
+a{ text-decoration:none;}
+input{ cursor:pointer; background:none;border:1px solid #bbb;font-family:"微软雅黑";}
+li{ list-style:none;}

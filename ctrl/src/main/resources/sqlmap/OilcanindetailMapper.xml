@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.kld.gsm.coord.dao.OilcanindetailDao">
+    <insert id="insertOilcanindetail"  parameterType="com.kld.gsm.coord.domain.OilCanIndeTail">
+        insert into  oilcanindetail(
+        Vouchno,Oilno,Oilcanno,Ingoodsdate,Ingoodsperson,Goodsbillno,
+        Inbefofootage,Inbefoliter,Inaftefootage,Inafteliter,Accountdate,Billstatus,Transflag
+        )
+        values(
+       #{vouchno},#{oilno},#{oilcanno}, #{ingoodsdate}, #{ingoodsperson},#{goodsbillno},
+       #{inbefofootage}, #{inbefoliter},#{inaftefootage}, #{inafteliter}, #{accountdate},
+       #{billstatus}, #{transflag}
+              )
+    </insert>
+    <update id="updateOilcanindetail" parameterType="java.lang.String">
+        UPDATE oilcanindetail set billstatus=1 where goodsbillno=#{DeliveryNo}
+    </update>
+    <update id="updateManualno" parameterType="hashmap">
+        UPDATE oilcanindetail set goodsbillno=#{manualno} where goodsbillno=#{DeliveryNo}
+    </update>
+    <select id="selectByOilvoch"  resultType="com.kld.gsm.coord.domain.OilCanIndeTail" parameterType="java.lang.String">
+        select * from oilcanindetail where teamvouchno=#{oilvoch}
+    </select>
+</mapper>

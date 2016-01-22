@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.AlarmSaleOutDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.AlarmSaleOut" >
+    <id column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <id column="MesasureTime" property="mesasuretime" jdbcType="TIMESTAMP" />
+    <result column="NowVolume" property="nowvolume" jdbcType="DOUBLE" />
+    <result column="CanSaleVolume" property="cansalevolume" jdbcType="DOUBLE" />
+    <result column="DayAverageSales" property="dayaveragesales" jdbcType="DOUBLE" />
+    <result column="HourAverageSales" property="houraveragesales" jdbcType="DOUBLE" />
+    <result column="PredictSales" property="predictsales" jdbcType="DOUBLE" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="StartAlarmTime" property="startalarmtime" jdbcType="TIMESTAMP" />
+    <result column="EndAlarmTime" property="endalarmtime" jdbcType="TIMESTAMP" />
+    <result column="Shift" property="shift" jdbcType="VARCHAR" />
+    <result column="PredictHours" property="PredictHours" jdbcType="DOUBLE"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    OilNo, MesasureTime, NowVolume, CanSaleVolume, DayAverageSales, HourAverageSales, 
+    PredictSales, TranStatus, StartAlarmTime, EndAlarmTime, Shift,PredictHours
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.ATG.domain.AlarmSaleOutKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_alarm_SaleOut
+    where OilNo = #{oilno,jdbcType=VARCHAR}
+      and MesasureTime = #{mesasuretime,jdbcType=TIMESTAMP}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.AlarmSaleOutKey" >
+    delete from oss_alarm_SaleOut
+    where OilNo = #{oilno,jdbcType=VARCHAR}
+      and MesasureTime = #{mesasuretime,jdbcType=TIMESTAMP}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.AlarmSaleOut" >
+    insert into oss_alarm_SaleOut (OilNo, MesasureTime, NowVolume, 
+      CanSaleVolume, DayAverageSales, HourAverageSales, 
+      PredictSales, TranStatus, StartAlarmTime, 
+      EndAlarmTime, Shift,PredictHours)
+    values (#{oilno,jdbcType=VARCHAR}, #{mesasuretime,jdbcType=TIMESTAMP}, #{nowvolume,jdbcType=DOUBLE}, 
+      #{cansalevolume,jdbcType=DOUBLE}, #{dayaveragesales,jdbcType=DOUBLE}, #{houraveragesales,jdbcType=DOUBLE}, 
+      #{predictsales,jdbcType=DOUBLE}, #{transtatus,jdbcType=VARCHAR}, #{startalarmtime,jdbcType=TIMESTAMP}, 
+      #{endalarmtime,jdbcType=TIMESTAMP}, #{shift,jdbcType=VARCHAR}, #{PredictHours,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.AlarmSaleOut" >
+    insert into oss_alarm_SaleOut
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="mesasuretime != null" >
+        MesasureTime,
+      </if>
+      <if test="nowvolume != null" >
+        NowVolume,
+      </if>
+      <if test="cansalevolume != null" >
+        CanSaleVolume,
+      </if>
+      <if test="dayaveragesales != null" >
+        DayAverageSales,
+      </if>
+      <if test="houraveragesales != null" >
+        HourAverageSales,
+      </if>
+      <if test="predictsales != null" >
+        PredictSales,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="startalarmtime != null" >
+        StartAlarmTime,
+      </if>
+      <if test="endalarmtime != null" >
+        EndAlarmTime,
+      </if>
+      <if test="shift != null" >
+        Shift,
+      </if>
+      <if test="PredictHours != null" >
+        PredictHours,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="mesasuretime != null" >
+        #{mesasuretime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nowvolume != null" >
+        #{nowvolume,jdbcType=DOUBLE},
+      </if>
+      <if test="cansalevolume != null" >
+        #{cansalevolume,jdbcType=DOUBLE},
+      </if>
+      <if test="dayaveragesales != null" >
+        #{dayaveragesales,jdbcType=DOUBLE},
+      </if>
+      <if test="houraveragesales != null" >
+        #{houraveragesales,jdbcType=DOUBLE},
+      </if>
+      <if test="predictsales != null" >
+        #{predictsales,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="startalarmtime != null" >
+        #{startalarmtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endalarmtime != null" >
+        #{endalarmtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shift != null" >
+        #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="PredictHours != null" >
+        #{PredictHours,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.AlarmSaleOut" >
+    update oss_alarm_SaleOut
+    <set >
+      <if test="nowvolume != null" >
+        NowVolume = #{nowvolume,jdbcType=DOUBLE},
+      </if>
+      <if test="cansalevolume != null" >
+        CanSaleVolume = #{cansalevolume,jdbcType=DOUBLE},
+      </if>
+      <if test="dayaveragesales != null" >
+        DayAverageSales = #{dayaveragesales,jdbcType=DOUBLE},
+      </if>
+      <if test="houraveragesales != null" >
+        HourAverageSales = #{houraveragesales,jdbcType=DOUBLE},
+      </if>
+      <if test="predictsales != null" >
+        PredictSales = #{predictsales,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="startalarmtime != null" >
+        StartAlarmTime = #{startalarmtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endalarmtime != null" >
+        EndAlarmTime = #{endalarmtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shift != null" >
+        Shift = #{shift,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OilNo = #{oilno,jdbcType=VARCHAR}
+      and MesasureTime = #{mesasuretime,jdbcType=TIMESTAMP}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.AlarmSaleOut" >
+    update oss_alarm_SaleOut
+    set NowVolume = #{nowvolume,jdbcType=DOUBLE},
+      CanSaleVolume = #{cansalevolume,jdbcType=DOUBLE},
+      DayAverageSales = #{dayaveragesales,jdbcType=DOUBLE},
+      HourAverageSales = #{houraveragesales,jdbcType=DOUBLE},
+      PredictSales = #{predictsales,jdbcType=DOUBLE},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      StartAlarmTime = #{startalarmtime,jdbcType=TIMESTAMP},
+      EndAlarmTime = #{endalarmtime,jdbcType=TIMESTAMP},
+      Shift = #{shift,jdbcType=VARCHAR}
+    where OilNo = #{oilno,jdbcType=VARCHAR}
+      and MesasureTime = #{mesasuretime,jdbcType=TIMESTAMP}
+  </update>
+  
+   <select id="selectByDate" resultType="com.kld.gsm.ATG.domain.AlarmSaleOut" parameterType="hashmap">
+    SELECT <include refid="Base_Column_List" />
+    FROM oss_alarm_SaleOut
+     WHERE    StartAlarmTime >= #{begin,jdbcType=TIMESTAMP} and #{end,jdbcType=TIMESTAMP}>StartAlarmTime
+     ORDER BY StartAlarmTime desc
+  </select>
+  <select id="selectByTrans" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_alarm_SaleOut WHERE TranStatus=#{trans,jdbcType=VARCHAR}
+  </select>
+  <select id="selectEndTime" resultType="com.kld.gsm.ATG.domain.AlarmSaleOut" parameterType="com.kld.gsm.ATG.domain.AlarmSaleOut">
+    SELECT
+    OilNo FROM oss_alarm_SaleOut
+    WHERE OilNo = #{oilno,jdbcType=VARCHAR}
+      AND EndAlarmTime is NULL
+  </select>
+  <update id="updateByOilno" parameterType="com.kld.gsm.ATG.domain.AlarmSaleOut" >
+    update oss_alarm_SaleOut
+    set EndAlarmTime = #{endalarmtime,jdbcType=TIMESTAMP}
+    where OilNo = #{oilno,jdbcType=VARCHAR} AND EndAlarmTime is NULL
+  </update>
+
+</mapper>

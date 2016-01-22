@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.kld.gsm.coord.dao.OilcanhotobillDao">
+    <select id="getOilcanhotobill" parameterType="java.lang.String" resultType="com.kld.gsm.coord.domain.Oilcanhotobill">
+       SELECT vouchno,teamvouchno,takedate,oilcanno,oilno,oilname,tooilhigh,
+       tooilliter,inoilliter,hooilhigh,hooilliter,saleliter,accountdate,
+       canfact,waterheight,pureheight,billstatus,hotoflag,transflag
+       FROM oilcanhotobill
+       WHERE teamvouchno=#{teamvouchno}
+    </select>
+</mapper>

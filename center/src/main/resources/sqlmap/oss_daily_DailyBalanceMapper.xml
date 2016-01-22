@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_daily_DailyBalanceMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_daily_DailyBalance" >
+    <id column="AccountDate" property="accountdate" jdbcType="TIMESTAMP" />
+    <id column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <id column="NodeNo" property="nodeno" jdbcType="VARCHAR" />
+    <result column="DarlyankStock" property="darlyankstock" jdbcType="DECIMAL" />
+    <result column="DeliveryNo" property="deliveryno" jdbcType="VARCHAR" />
+    <result column="ReceiveL" property="receivel" jdbcType="DECIMAL" />
+    <result column="TodayOut" property="todayout" jdbcType="DECIMAL" />
+    <result column="TodayStock" property="todaystock" jdbcType="DECIMAL" />
+    <result column="RealStock" property="realstock" jdbcType="DECIMAL" />
+    <result column="Loss" property="loss" jdbcType="DECIMAL" />
+    <result column="LossSent" property="losssent" jdbcType="DECIMAL" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    AccountDate, OilNo, NodeNo, DarlyankStock, DeliveryNo, ReceiveL, TodayOut, TodayStock, 
+    RealStock, Loss, LossSent, CreateTime, TranStatus, OUCode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_daily_DailyBalanceKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_daily_DailyBalance
+    where AccountDate = #{accountdate,jdbcType=TIMESTAMP}
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_daily_DailyBalanceKey" >
+    delete from oss_daily_DailyBalance
+    where AccountDate = #{accountdate,jdbcType=TIMESTAMP}
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_daily_DailyBalance" >
+    insert into oss_daily_DailyBalance (AccountDate, OilNo, NodeNo, 
+      DarlyankStock, DeliveryNo, ReceiveL, 
+      TodayOut, TodayStock, RealStock, 
+      Loss, LossSent, CreateTime, 
+      TranStatus, OUCode)
+    values (#{accountdate,jdbcType=TIMESTAMP}, #{oilno,jdbcType=VARCHAR}, #{nodeno,jdbcType=VARCHAR}, 
+      #{darlyankstock,jdbcType=DECIMAL}, #{deliveryno,jdbcType=VARCHAR}, #{receivel,jdbcType=DECIMAL}, 
+      #{todayout,jdbcType=DECIMAL}, #{todaystock,jdbcType=DECIMAL}, #{realstock,jdbcType=DECIMAL}, 
+      #{loss,jdbcType=DECIMAL}, #{losssent,jdbcType=DECIMAL}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{transtatus,jdbcType=VARCHAR}, #{oucode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_daily_DailyBalance" >
+    insert into oss_daily_DailyBalance
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="accountdate != null" >
+        AccountDate,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="darlyankstock != null" >
+        DarlyankStock,
+      </if>
+      <if test="deliveryno != null" >
+        DeliveryNo,
+      </if>
+      <if test="receivel != null" >
+        ReceiveL,
+      </if>
+      <if test="todayout != null" >
+        TodayOut,
+      </if>
+      <if test="todaystock != null" >
+        TodayStock,
+      </if>
+      <if test="realstock != null" >
+        RealStock,
+      </if>
+      <if test="loss != null" >
+        Loss,
+      </if>
+      <if test="losssent != null" >
+        LossSent,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="accountdate != null" >
+        #{accountdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="darlyankstock != null" >
+        #{darlyankstock,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryno != null" >
+        #{deliveryno,jdbcType=VARCHAR},
+      </if>
+      <if test="receivel != null" >
+        #{receivel,jdbcType=DECIMAL},
+      </if>
+      <if test="todayout != null" >
+        #{todayout,jdbcType=DECIMAL},
+      </if>
+      <if test="todaystock != null" >
+        #{todaystock,jdbcType=DECIMAL},
+      </if>
+      <if test="realstock != null" >
+        #{realstock,jdbcType=DECIMAL},
+      </if>
+      <if test="loss != null" >
+        #{loss,jdbcType=DECIMAL},
+      </if>
+      <if test="losssent != null" >
+        #{losssent,jdbcType=DECIMAL},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_daily_DailyBalance" >
+    update oss_daily_DailyBalance
+    <set >
+      <if test="darlyankstock != null" >
+        DarlyankStock = #{darlyankstock,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryno != null" >
+        DeliveryNo = #{deliveryno,jdbcType=VARCHAR},
+      </if>
+      <if test="receivel != null" >
+        ReceiveL = #{receivel,jdbcType=DECIMAL},
+      </if>
+      <if test="todayout != null" >
+        TodayOut = #{todayout,jdbcType=DECIMAL},
+      </if>
+      <if test="todaystock != null" >
+        TodayStock = #{todaystock,jdbcType=DECIMAL},
+      </if>
+      <if test="realstock != null" >
+        RealStock = #{realstock,jdbcType=DECIMAL},
+      </if>
+      <if test="loss != null" >
+        Loss = #{loss,jdbcType=DECIMAL},
+      </if>
+      <if test="losssent != null" >
+        LossSent = #{losssent,jdbcType=DECIMAL},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where AccountDate = #{accountdate,jdbcType=TIMESTAMP}
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_daily_DailyBalance" >
+    update oss_daily_DailyBalance
+    set DarlyankStock = #{darlyankstock,jdbcType=DECIMAL},
+      DeliveryNo = #{deliveryno,jdbcType=VARCHAR},
+      ReceiveL = #{receivel,jdbcType=DECIMAL},
+      TodayOut = #{todayout,jdbcType=DECIMAL},
+      TodayStock = #{todaystock,jdbcType=DECIMAL},
+      RealStock = #{realstock,jdbcType=DECIMAL},
+      Loss = #{loss,jdbcType=DECIMAL},
+      LossSent = #{losssent,jdbcType=DECIMAL},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      OUCode = #{oucode,jdbcType=VARCHAR}
+    where AccountDate = #{accountdate,jdbcType=TIMESTAMP}
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <select id="selectbalancebywhere" resultType="hashmap" parameterType="hashmap">
+    <![CDATA[SELECT * FROM oss_daily_DailyBalance WHERE AccountDate>=#{start,jdbcType=TIMESTAMP} And AccountDate<#{end,jdbcType=TIMESTAMP}
+    and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+  </select>
+  <select id="selectbalance" resultType="com.kld.gsm.center.domain.oss_daily_DailyBalance" parameterType="hashmap">
+    <![CDATA[SELECT * FROM oss_daily_DailyBalance WHERE AccountDate>=#{start,jdbcType=TIMESTAMP} And AccountDate<#{end,jdbcType=TIMESTAMP}
+    and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+  </select>
+  <select id="querypage" resultType="hashmap" parameterType="hashmap">
+    <![CDATA[SELECT * FROM oss_daily_DailyBalance WHERE AccountDate>=#{start,jdbcType=TIMESTAMP} And AccountDate<#{end,jdbcType=TIMESTAMP}
+    and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    <if test="firstRow != null and  pageSize!= null">
+      <![CDATA[ LIMIT #{firstRow},#{pageSize}]]>
+    </if>
+  </select>
+</mapper>

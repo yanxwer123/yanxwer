@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.Sys_funcMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.Sys_func" >
+    <id column="funccode" property="funccode" jdbcType="VARCHAR" />
+    <result column="parentcode" property="parentcode" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="picurl" property="picurl" jdbcType="VARCHAR" />
+    <result column="targeturl" property="targeturl" jdbcType="VARCHAR" />
+    <result column="isopenwindow" property="isopenwindow" jdbcType="INTEGER" />
+    <result column="orderno" property="orderno" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="moditime" property="moditime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    funccode, parentcode, name, description, picurl, targeturl, isopenwindow, orderno, 
+    creator, createtime, modifier, moditime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from Sys_func
+    where funccode = #{funccode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from Sys_func
+    where funccode = #{funccode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.Sys_func" >
+    insert into Sys_func (funccode, parentcode, name, 
+      description, picurl, targeturl, 
+      isopenwindow, orderno, creator, 
+      createtime, modifier, moditime
+      )
+    values (#{funccode,jdbcType=VARCHAR}, #{parentcode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{picurl,jdbcType=VARCHAR}, #{targeturl,jdbcType=VARCHAR}, 
+      #{isopenwindow,jdbcType=INTEGER}, #{orderno,jdbcType=INTEGER}, #{creator,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, #{moditime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.Sys_func" >
+    insert into Sys_func
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="funccode != null" >
+        funccode,
+      </if>
+      <if test="parentcode != null" >
+        parentcode,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="picurl != null" >
+        picurl,
+      </if>
+      <if test="targeturl != null" >
+        targeturl,
+      </if>
+      <if test="isopenwindow != null" >
+        isopenwindow,
+      </if>
+      <if test="orderno != null" >
+        orderno,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="moditime != null" >
+        moditime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="funccode != null" >
+        #{funccode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentcode != null" >
+        #{parentcode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="picurl != null" >
+        #{picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="targeturl != null" >
+        #{targeturl,jdbcType=VARCHAR},
+      </if>
+      <if test="isopenwindow != null" >
+        #{isopenwindow,jdbcType=INTEGER},
+      </if>
+      <if test="orderno != null" >
+        #{orderno,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="moditime != null" >
+        #{moditime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.Sys_func" >
+    update Sys_func
+    <set >
+      <if test="parentcode != null" >
+        parentcode = #{parentcode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="picurl != null" >
+        picurl = #{picurl,jdbcType=VARCHAR},
+      </if>
+      <if test="targeturl != null" >
+        targeturl = #{targeturl,jdbcType=VARCHAR},
+      </if>
+      <if test="isopenwindow != null" >
+        isopenwindow = #{isopenwindow,jdbcType=INTEGER},
+      </if>
+      <if test="orderno != null" >
+        orderno = #{orderno,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="moditime != null" >
+        moditime = #{moditime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where funccode = #{funccode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.Sys_func" >
+    update Sys_func
+    set parentcode = #{parentcode,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      picurl = #{picurl,jdbcType=VARCHAR},
+      targeturl = #{targeturl,jdbcType=VARCHAR},
+      isopenwindow = #{isopenwindow,jdbcType=INTEGER},
+      orderno = #{orderno,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      moditime = #{moditime,jdbcType=TIMESTAMP}
+    where funccode = #{funccode,jdbcType=VARCHAR}
+  </update>
+  <select id="getFuncList" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select * from sys_func
+  </select>
+</mapper>

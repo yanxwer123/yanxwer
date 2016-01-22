@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.kld.gsm.coord.dao.MenuinForDao">
+<!--通过菜单名称查-->
+    <select id="getByMenuName" parameterType="java.lang.String" resultType="com.kld.gsm.coord.domain.MenuinFor">
+        select * from menuinfor where menuname=#{menuname}
+    </select>
+    <select id="findAll" parameterType="java.util.Map" resultType="com.kld.gsm.coord.domain.MenuinFor">
+        select * from menuinfor
+    </select>
+</mapper>

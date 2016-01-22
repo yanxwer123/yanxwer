@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.AlarmMeasureLeakDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.AlarmMeasureLeak" >
+    <id column="OilCanNo" property="oilcanno" jdbcType="INTEGER" />
+    <id column="StartDate" property="startdate" jdbcType="TIMESTAMP" />
+    <result column="RevealStatus" property="revealstatus" jdbcType="VARCHAR" />
+    <result column="RevealRate" property="revealrate" jdbcType="VARCHAR" />
+    <result column="StartOilHeight" property="startoilheight" jdbcType="DOUBLE" />
+    <result column="StartWaterHeight" property="startwaterheight" jdbcType="DOUBLE" />
+    <result column="StartOilTemp1" property="startoiltemp1" jdbcType="DOUBLE" />
+    <result column="StartOilTemp2" property="startoiltemp2" jdbcType="DOUBLE" />
+    <result column="StartOilTemp3" property="startoiltemp3" jdbcType="DOUBLE" />
+    <result column="StartOilTemp4" property="startoiltemp4" jdbcType="DOUBLE" />
+    <result column="StartOilTemp5" property="startoiltemp5" jdbcType="DOUBLE" />
+    <result column="EndDate" property="enddate" jdbcType="TIMESTAMP" />
+    <result column="EndOilHeight" property="endoilheight" jdbcType="DOUBLE" />
+    <result column="EndWaterHeight" property="endwaterheight" jdbcType="DOUBLE" />
+    <result column="EndOilTemp1" property="endoiltemp1" jdbcType="DOUBLE" />
+    <result column="EndOilTemp2" property="endoiltemp2" jdbcType="DOUBLE" />
+    <result column="EndOilTemp3" property="endoiltemp3" jdbcType="DOUBLE" />
+    <result column="EndOilTemp4" property="endoiltemp4" jdbcType="DOUBLE" />
+    <result column="EndOilTemp5" property="endoiltemp5" jdbcType="DOUBLE" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="Shift" property="shift" jdbcType="VARCHAR" />
+    <result column="StartWaterL" property="startwaterl" jdbcType="DOUBLE" />
+    <result column="StartOilL" property="startoill" jdbcType="DOUBLE" />
+    <result column="EndWaterL" property="endwaterl" jdbcType="DOUBLE" />
+    <result column="EndOilL" property="endoill" jdbcType="DOUBLE" />
+    <result column="time" property="time" jdbcType="INTEGER" />
+    <result column="Valid" property="valid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    OilCanNo, StartDate, RevealStatus, RevealRate, StartOilHeight, StartWaterHeight, 
+    StartOilTemp1, StartOilTemp2, StartOilTemp3, StartOilTemp4, StartOilTemp5, EndDate, 
+    EndOilHeight, EndWaterHeight, EndOilTemp1, EndOilTemp2, EndOilTemp3, EndOilTemp4,
+    EndOilTemp5, TranStatus,Shift,StartWaterL,StartOilL,EndWaterL,EndOilL,time,Valid
+  </sql>
+  <select id="selectByPrimaryKey" resultType="com.kld.gsm.ATG.domain.AlarmMeasureLeak"  parameterType="com.kld.gsm.ATG.domain.AlarmMeasureLeakKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_alarm_measureLeak
+    where OilCanNo = #{oilcanno,jdbcType=INTEGER}
+    and StartDate = #{startdate,jdbcType=TIMESTAMP}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.AlarmMeasureLeakKey" >
+    delete from oss_alarm_measureLeak
+    where OilCanNo = #{oilcanno,jdbcType=INTEGER}
+      and StartDate = #{startdate,jdbcType=TIMESTAMP}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.AlarmMeasureLeak" >
+    insert into oss_alarm_measureLeak (OilCanNo, StartDate, RevealStatus, 
+      RevealRate, StartOilHeight, StartWaterHeight, 
+      StartOilTemp1, StartOilTemp2, StartOilTemp3, 
+      StartOilTemp4, StartOilTemp5, EndDate, 
+      EndOilHeight, EndWaterHeight, EndOilTemp1, 
+      EndOilTemp2, EndOilTemp3, EndOilTemp4, 
+      EndOilTemp5,TranStatus,Shift,StartWaterL,StartOilL,EndWaterL,EndOilL,time,Valid
+      )
+    values (#{oilcanno,jdbcType=INTEGER}, #{startdate,jdbcType=TIMESTAMP}, #{revealstatus,jdbcType=VARCHAR}, 
+      #{revealrate,jdbcType=VARCHAR}, #{startoilheight,jdbcType=DOUBLE}, #{startwaterheight,jdbcType=DOUBLE}, 
+      #{startoiltemp1,jdbcType=DOUBLE}, #{startoiltemp2,jdbcType=DOUBLE}, #{startoiltemp3,jdbcType=DOUBLE}, 
+      #{startoiltemp4,jdbcType=DOUBLE}, #{startoiltemp5,jdbcType=DOUBLE}, #{enddate,jdbcType=TIMESTAMP}, 
+      #{endoilheight,jdbcType=DOUBLE}, #{endwaterheight,jdbcType=DOUBLE}, #{endoiltemp1,jdbcType=DOUBLE}, 
+      #{endoiltemp2,jdbcType=DOUBLE}, #{endoiltemp3,jdbcType=DOUBLE}, #{endoiltemp4,jdbcType=DOUBLE}, 
+      #{endoiltemp5,jdbcType=DOUBLE}, #{transtatus,jdbcType=VARCHAR}, #{shift,jdbcType=VARCHAR}，#{startwaterl,jdbcType=DOUBLE}，
+      #{startoill,jdbcType=DOUBLE}， #{endwaterl,jdbcType=DOUBLE}，#{endoill,jdbcType=DOUBLE}，#{time,jdbcType=INTEGER}，#{valid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.AlarmMeasureLeak" >
+    insert into oss_alarm_measureLeak
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oilcanno != null" >
+        OilCanNo,
+      </if>
+      <if test="startdate != null" >
+        StartDate,
+      </if>
+      <if test="revealstatus != null" >
+        RevealStatus,
+      </if>
+      <if test="revealrate != null" >
+        RevealRate,
+      </if>
+      <if test="startoilheight != null" >
+        StartOilHeight,
+      </if>
+      <if test="startwaterheight != null" >
+        StartWaterHeight,
+      </if>
+      <if test="startoiltemp1 != null" >
+        StartOilTemp1,
+      </if>
+      <if test="startoiltemp2 != null" >
+        StartOilTemp2,
+      </if>
+      <if test="startoiltemp3 != null" >
+        StartOilTemp3,
+      </if>
+      <if test="startoiltemp4 != null" >
+        StartOilTemp4,
+      </if>
+      <if test="startoiltemp5 != null" >
+        StartOilTemp5,
+      </if>
+      <if test="enddate != null" >
+        EndDate,
+      </if>
+      <if test="endoilheight != null" >
+        EndOilHeight,
+      </if>
+      <if test="endwaterheight != null" >
+        EndWaterHeight,
+      </if>
+      <if test="endoiltemp1 != null" >
+        EndOilTemp1,
+      </if>
+      <if test="endoiltemp2 != null" >
+        EndOilTemp2,
+      </if>
+      <if test="endoiltemp3 != null" >
+        EndOilTemp3,
+      </if>
+      <if test="endoiltemp4 != null" >
+        EndOilTemp4,
+      </if>
+      <if test="endoiltemp5 != null" >
+        EndOilTemp5,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="shift != null" >
+        Shift,
+      </if>
+      <if test="startwaterl != null" >
+        StartWaterL,
+      </if>
+      <if test="startoill != null" >
+        StartOilL,
+      </if>
+      <if test="endwaterl != null" >
+        EndWaterL,
+      </if>
+      <if test="endoill != null" >
+        EndOilL,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="valid != null" >
+        valid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oilcanno != null" >
+        #{oilcanno,jdbcType=INTEGER},
+      </if>
+      <if test="startdate != null" >
+        #{startdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="revealstatus != null" >
+        #{revealstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="revealrate != null" >
+        #{revealrate,jdbcType=VARCHAR},
+      </if>
+      <if test="startoilheight != null" >
+        #{startoilheight,jdbcType=DOUBLE},
+      </if>
+      <if test="startwaterheight != null" >
+        #{startwaterheight,jdbcType=DOUBLE},
+      </if>
+      <if test="startoiltemp1 != null" >
+        #{startoiltemp1,jdbcType=DOUBLE},
+      </if>
+      <if test="startoiltemp2 != null" >
+        #{startoiltemp2,jdbcType=DOUBLE},
+      </if>
+      <if test="startoiltemp3 != null" >
+        #{startoiltemp3,jdbcType=DOUBLE},
+      </if>
+      <if test="startoiltemp4 != null" >
+        #{startoiltemp4,jdbcType=DOUBLE},
+      </if>
+      <if test="startoiltemp5 != null" >
+        #{startoiltemp5,jdbcType=DOUBLE},
+      </if>
+      <if test="enddate != null" >
+        #{enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endoilheight != null" >
+        #{endoilheight,jdbcType=DOUBLE},
+      </if>
+      <if test="endwaterheight != null" >
+        #{endwaterheight,jdbcType=DOUBLE},
+      </if>
+      <if test="endoiltemp1 != null" >
+        #{endoiltemp1,jdbcType=DOUBLE},
+      </if>
+      <if test="endoiltemp2 != null" >
+        #{endoiltemp2,jdbcType=DOUBLE},
+      </if>
+      <if test="endoiltemp3 != null" >
+        #{endoiltemp3,jdbcType=DOUBLE},
+      </if>
+      <if test="endoiltemp4 != null" >
+        #{endoiltemp4,jdbcType=DOUBLE},
+      </if>
+      <if test="endoiltemp5 != null" >
+        #{endoiltemp5,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null" >
+        #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="startwaterl != null" >
+        #{startwaterl,jdbcType=DOUBLE},
+      </if>
+      <if test="startoill != null" >
+        #{startoill,jdbcType=DOUBLE},
+      </if>
+      <if test="endwaterl != null" >
+        #{endwaterl,jdbcType=DOUBLE},
+      </if>
+      <if test="endoill != null" >
+        #{endoill,jdbcType=DOUBLE},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=INTEGER},
+      </if>
+      <if test="valid != null" >
+        #{valid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.AlarmMeasureLeak" >
+    update oss_alarm_measureLeak
+    <set >
+      <if test="revealstatus != null" >
+        RevealStatus = #{revealstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="revealrate != null" >
+        RevealRate = #{revealrate,jdbcType=VARCHAR},
+      </if>
+      <if test="startoilheight != null" >
+        StartOilHeight = #{startoilheight,jdbcType=DOUBLE},
+      </if>
+      <if test="startwaterheight != null" >
+        StartWaterHeight = #{startwaterheight,jdbcType=DOUBLE},
+      </if>
+      <if test="startoiltemp1 != null" >
+        StartOilTemp1 = #{startoiltemp1,jdbcType=DOUBLE},
+      </if>
+      <if test="startoiltemp2 != null" >
+        StartOilTemp2 = #{startoiltemp2,jdbcType=DOUBLE},
+      </if>
+      <if test="startoiltemp3 != null" >
+        StartOilTemp3 = #{startoiltemp3,jdbcType=DOUBLE},
+      </if>
+      <if test="startoiltemp4 != null" >
+        StartOilTemp4 = #{startoiltemp4,jdbcType=DOUBLE},
+      </if>
+      <if test="startoiltemp5 != null" >
+        StartOilTemp5 = #{startoiltemp5,jdbcType=DOUBLE},
+      </if>
+      <if test="enddate != null" >
+        EndDate = #{enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endoilheight != null" >
+        EndOilHeight = #{endoilheight,jdbcType=DOUBLE},
+      </if>
+      <if test="endwaterheight != null" >
+        EndWaterHeight = #{endwaterheight,jdbcType=DOUBLE},
+      </if>
+      <if test="endoiltemp1 != null" >
+        EndOilTemp1 = #{endoiltemp1,jdbcType=DOUBLE},
+      </if>
+      <if test="endoiltemp2 != null" >
+        EndOilTemp2 = #{endoiltemp2,jdbcType=DOUBLE},
+      </if>
+      <if test="endoiltemp3 != null" >
+        EndOilTemp3 = #{endoiltemp3,jdbcType=DOUBLE},
+      </if>
+      <if test="endoiltemp4 != null" >
+        EndOilTemp4 = #{endoiltemp4,jdbcType=DOUBLE},
+      </if>
+      <if test="endoiltemp5 != null" >
+        EndOilTemp5 = #{endoiltemp5,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null" >
+        Shift = #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="startwaterl != null" >
+        StartWaterL = #{startwaterl,jdbcType=DOUBLE},
+      </if>
+      <if test="startoill != null" >
+        StartOilL = #{startoill,jdbcType=DOUBLE},
+      </if>
+      <if test="endwaterl != null" >
+        EndWaterL = #{endwaterl,jdbcType=DOUBLE},
+      </if>
+      <if test="endoill != null" >
+        EndOilL = #{endoill,jdbcType=DOUBLE},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=INTEGER},
+      </if>
+      <if test="valid != null" >
+        Valid = #{valid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where OilCanNo = #{oilcanno,jdbcType=INTEGER}
+      and StartDate = #{startdate,jdbcType=TIMESTAMP}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.AlarmMeasureLeak" >
+    update oss_alarm_measureLeak
+    set RevealStatus = #{revealstatus,jdbcType=VARCHAR},
+      RevealRate = #{revealrate,jdbcType=VARCHAR},
+      StartOilHeight = #{startoilheight,jdbcType=DOUBLE},
+      StartWaterHeight = #{startwaterheight,jdbcType=DOUBLE},
+      StartOilTemp1 = #{startoiltemp1,jdbcType=DOUBLE},
+      StartOilTemp2 = #{startoiltemp2,jdbcType=DOUBLE},
+      StartOilTemp3 = #{startoiltemp3,jdbcType=DOUBLE},
+      StartOilTemp4 = #{startoiltemp4,jdbcType=DOUBLE},
+      StartOilTemp5 = #{startoiltemp5,jdbcType=DOUBLE},
+      EndDate = #{enddate,jdbcType=TIMESTAMP},
+      EndOilHeight = #{endoilheight,jdbcType=DOUBLE},
+      EndWaterHeight = #{endwaterheight,jdbcType=DOUBLE},
+      EndOilTemp1 = #{endoiltemp1,jdbcType=DOUBLE},
+      EndOilTemp2 = #{endoiltemp2,jdbcType=DOUBLE},
+      EndOilTemp3 = #{endoiltemp3,jdbcType=DOUBLE},
+      EndOilTemp4 = #{endoiltemp4,jdbcType=DOUBLE},
+      EndOilTemp5 = #{endoiltemp5,jdbcType=DOUBLE},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      Shift = #{shift,jdbcType=VARCHAR},
+      StartWaterL = #{startwaterl,jdbcType=DOUBLE},
+      StartOilL = #{startoill,jdbcType=DOUBLE},
+      EndWaterL = #{endwaterl,jdbcType=DOUBLE},
+      EndOilL = #{endoill,jdbcType=DOUBLE},
+      time = #{time,jdbcType=INTEGER},
+      Valid = #{valid,jdbcType=INTEGER}
+    where OilCanNo = #{oilcanno,jdbcType=INTEGER}
+      and StartDate = #{startdate,jdbcType=TIMESTAMP}
+  </update>
+  
+   <select id="selectByDate" resultType="com.kld.gsm.ATG.domain.AlarmMeasureLeak" parameterType="hashmap">
+    SELECT <include refid="Base_Column_List" />
+      FROM oss_alarm_measureLeak
+    WHERE StartDate >= #{begin,jdbcType=TIMESTAMP}
+       and #{end,jdbcType=TIMESTAMP}>StartDate
+     <if test="oilcan != null and oilcan != ''">
+       and OilCanNo = #{oilcan,jdbcType=INTEGER}
+     </if>
+     ORDER BY StartDate DESC
+   </select>
+  <select id="selectByTrans" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_alarm_measureLeak WHERE TranStatus=#{trans,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByOilcan" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_alarm_measureLeak WHERE OilCanNo=#{oilcanno,jdbcType=INTEGER}
+  </select>
+  <select id="selecthasStartByOilcan" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_alarm_measureLeak WHERE OilCanNo=#{oilcanno,jdbcType=INTEGER} AND EndDate is null and StartDate is not  null
+  </select>
+  <update id="updateEndDate" parameterType="hashmap">
+      update oss_alarm_measureLeak
+      set RevealStatus = #{revealstatus,jdbcType=VARCHAR},
+      RevealRate = #{revealRate,jdbcType=VARCHAR},
+      StartOilHeight = #{startoilheight,jdbcType=DOUBLE},
+      StartWaterHeight = #{startwaterheight,jdbcType=DOUBLE},
+      StartOilTemp1 = #{startoiltemp1,jdbcType=DOUBLE},
+      StartOilTemp2 = #{startoiltemp2,jdbcType=DOUBLE},
+      StartOilTemp3 = #{startoiltemp3,jdbcType=DOUBLE},
+      StartOilTemp4 = #{startoiltemp4,jdbcType=DOUBLE},
+      StartOilTemp5 = #{startoiltemp5,jdbcType=DOUBLE},
+      EndDate = #{enddate,jdbcType=TIMESTAMP},
+      EndOilHeight = #{endoilheight,jdbcType=DOUBLE},
+      EndWaterHeight = #{endwaterheight,jdbcType=DOUBLE},
+      EndOilTemp1 = #{endoiltemp1,jdbcType=DOUBLE},
+      EndOilTemp2 = #{endoiltemp2,jdbcType=DOUBLE},
+      EndOilTemp3 = #{endoiltemp3,jdbcType=DOUBLE},
+      EndOilTemp4 = #{endoiltemp4,jdbcType=DOUBLE},
+      EndOilTemp5 = #{endoiltemp5,jdbcType=DOUBLE},
+      EndOilL = #{endoill,jdbcType=DOUBLE},
+      EndWaterL = #{endwaterl,jdbcType=DOUBLE}
+      WHERE  OilCanNo = #{oilCanNo,jdbcType=INTEGER}
+      AND EndDate is null
+  </update>
+  <select id="selectByOilCanNo" parameterType="Integer" resultType="Integer">
+    select time from oss_alarm_measureLeak where OilCanNo = #{oilCanNo,jdbcType=INTEGER}
+    and  EndDate is null
+  </select>
+  <select id="selectinfoBycanno"  parameterType="Integer" resultType="com.kld.gsm.ATG.domain.AlarmMeasureLeak">
+    select
+     <include refid="Base_Column_List"/>
+     from oss_alarm_measureLeak where OilCanNo = #{oilCanNo,jdbcType=INTEGER}
+    and  EndDate is null
+  </select>
+</mapper>

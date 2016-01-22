@@ -1,0 +1,117 @@
+<style>
+    .tree-node{ padding-top:10px; padding-bottom: 10px; }
+    .easyui-accordion{ margin-bottom: 20px;}
+</style>
+
+#if($list.size()==0)
+{
+    #*没有任何权限*#
+    <script>
+        window.location.href="/web/login";
+    </script>
+}
+#end
+    <div id="manageMenu" class="easyui-accordion"  data-options="fit:true,border:false" >
+     <div id="SupervisionManage" title="油站监控"  data-options="iconCls:'icon-search'"  >
+        <ul class="easyui-tree">
+            <li id="RealTimeList"><a class="three-title " onclick=" javascript: addTab('实时监控平台', '/web/desktop/desktop');">实时监控平台</a>
+            </li>
+        </ul>
+    </div>
+        <div id="businessManage" title="业务管理"  data-options="iconCls:'icon-search'"  >
+            <ul class="easyui-tree">
+                <li id="PurchaseList"><a class="three-title " onclick=" javascript: addTab('进货验收记录', '/web/business/accept');">进货验收记录</a>
+                </li>
+                <li id="OilStationList"><a class="three-title " onclick=" javascript: addTab('油站配送建议', '/web/business/sd');">油站配送建议</a>
+                </li>
+                <li id="ShiftList"><a class="three-title " onclick=" javascript: addTab('班结查询', '/web/business/shift');">班结查询</a>
+                </li>
+                <li id="DailyList"><a class="three-title " onclick=" javascript: addTab('日结查询', '/web/business/daily');">日结查询</a>
+                </li>
+                <li id="InStockList"><a class="three-title " onclick=" javascript: addTab('实时库存', '/web/alarm/timeinventory');">实时库存</a>
+                </li>
+                <li id="RemoteList"><a class="three-title " onclick=" javascript: addTab('远程盘点', '/web/business/remotechk');">远程盘点</a>
+                </li>
+            </ul>
+        </div>
+        <div id="AlarmManage" title="报警信息"  data-options="iconCls:'icon-search'"  >
+            <ul class="easyui-tree">
+                </li>
+                <li id="TubingList"><a class="three-title " onclick=" javascript: addTab('油罐异常报警', '/web/alarm/tank');">油罐异常报警</a>
+                </li>
+
+                <li id="EquipmentList"><a class="three-title " onclick=" javascript: addTab('设备故障报警', '/web/alarm/iq');">设备故障报警</a>
+                </li>
+                <li id="BanKnotLossList"><a class="three-title " onclick=" javascript: addTab('班结损溢报警', '/web/alarm/shiftlost');">班结损溢报警</a>
+                </li>
+                <li id="DailyLossList"><a class="three-title " onclick=" javascript: addTab('日结损溢报警', '/web/alarm/dailylost');">日结损溢报警</a>
+                </li>
+                </li>
+                <li id="OilInList"><a class="three-title " onclick=" javascript: addTab('进油损溢报警', '/web/alarm/oilinlost');">进油损溢报警</a>
+            </li>
+                <li id="StaticList"><a class="three-title " onclick=" javascript: addTab('静态液位异常', '/web/alarm/staticlevel');">静态液位异常</a>
+                </li>
+                <li id="DynaList"><a class="three-title " onclick=" javascript: addTab('动态液位异常', '/web/alarm/dynamiclevel');">动态液位异常</a>
+                </li>
+                <li id="OUtOfStockList"><a class="three-title " onclick=" javascript: addTab('油站脱销报警', '/web/alarm/saleout');">油站脱销报警</a>
+                </li>
+            </ul>
+        </div>
+        <div id="VolumeManage" title="容积表管理"  data-options="iconCls:'icon-search'"  >
+            <ul class="easyui-tree">
+                <li id="VolumeList"><a class="three-title " onclick=" javascript: addTab('容积表管理', '/web/cubage/mgr');">容积表管理</a>
+                </li>
+                <li id="VolumeAnalysis"><a class="three-title " onclick=" javascript: addTab('容积表分析', '/web/cubage/analysis');">容积表分析</a>
+                </li>
+            </ul>
+        </div>
+
+	#if ($list.contains("1000101"))
+    <div id="sysManage" title="系统管理"   data-options="iconCls:'icon-search'"   >
+        <ul class="easyui-tree">
+           <!--
+            <li id="sysUserUserList"><a class="three-title current" onclick=" javascript: addTab('机构管理', '/admin/sysOrgunit/orgunitList');">机构管理</a>
+           -->
+            #if ($list.contains("1000102"))
+            <li id="sysUserUserList"><a class="three-title current" onclick=" javascript: addTab('操作员管理', '/admin/sysUser/userList');">操作员管理</a>
+            </li>
+            #end
+            #if ($list.contains("1000103"))
+            <li id="sysRoleRoleList"><a class="three-title " onclick=" javascript: addTab('角色管理', '/admin/sysRole/roleList');">角色管理</a>
+            </li>
+            #end
+            #if ($list.contains("1000104"))
+            <li id="sysDictDictList"><a class="three-title " onclick=" javascript: addTab('系统字典', '/admin/sysDict/dictList');">系统字典</a>
+            </li>
+            #end
+
+            <li id="sysUserUserApprovalList"><a class="three-title " onclick=" javascript: addTab('审核操作员', '/admin/sysUser/userApprovalList');">审核操作员</a>
+            </li>
+
+            <li id="sysAdList"><a class="three-title " onclick=" javascript: addTab('首页广告设置', '/admin/ad/adList');">首页广告设置</a>
+            </li>
+
+            <li id="sysActicleList"><a class="three-title " onclick=" javascript: addTab('动态发布', '/admin/article/articleList');">动态发布</a>
+            </li>
+        </ul>
+    </div>
+    #end
+       #* <div id="actlogManage" title="抽奖管理"  data-options="iconCls:'icon-search'"  >
+
+            <ul class="easyui-tree">
+                <li id="pointsDrawList"><a class="three-title " onclick=" javascript: addTab('积分抽奖订单', '/admin/actorder/pointsDrawList');">积分抽奖订单</a>
+                </li>
+            </ul>
+
+        </div>*#
+</div>
+<script>
+    $('.easyui-tree').tree({
+        onClick: function(node){
+            $("#"+node.domId).find("a") .trigger("onclick");
+        }
+    });
+
+
+</script>
+

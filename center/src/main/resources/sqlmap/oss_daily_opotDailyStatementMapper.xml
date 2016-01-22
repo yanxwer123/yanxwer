@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_daily_opotDailyStatementMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_daily_opotDailyStatement" >
+    <id column="AccountDate" property="accountdate" jdbcType="TIMESTAMP" />
+    <id column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <id column="Type" property="type" jdbcType="VARCHAR" />
+    <id column="NodeNo" property="nodeno" jdbcType="VARCHAR" />
+    <result column="OilName" property="oilname" jdbcType="VARCHAR" />
+    <result column="Liter" property="liter" jdbcType="DOUBLE" />
+    <result column="Price" property="price" jdbcType="DOUBLE" />
+    <result column="Amount" property="amount" jdbcType="DOUBLE" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="DayStatus" property="daystatus" jdbcType="VARCHAR" />
+    <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    AccountDate, OilNo, Type, NodeNo, OilName, Liter, Price, Amount, TranStatus, DayStatus, 
+    OUCode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_daily_opotDailyStatementKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_daily_opotDailyStatement
+    where AccountDate = #{accountdate,jdbcType=TIMESTAMP}
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+      and Type = #{type,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_daily_opotDailyStatementKey" >
+    delete from oss_daily_opotDailyStatement
+    where AccountDate = #{accountdate,jdbcType=TIMESTAMP}
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+      and Type = #{type,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_daily_opotDailyStatement" >
+    insert into oss_daily_opotDailyStatement (AccountDate, OilNo, Type, 
+      NodeNo, OilName, Liter, 
+      Price, Amount, TranStatus, 
+      DayStatus, OUCode)
+    values (#{accountdate,jdbcType=TIMESTAMP}, #{oilno,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{nodeno,jdbcType=VARCHAR}, #{oilname,jdbcType=VARCHAR}, #{liter,jdbcType=DOUBLE}, 
+      #{price,jdbcType=DOUBLE}, #{amount,jdbcType=DOUBLE}, #{transtatus,jdbcType=VARCHAR}, 
+      #{daystatus,jdbcType=VARCHAR}, #{oucode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_daily_opotDailyStatement" >
+    insert into oss_daily_opotDailyStatement
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="accountdate != null" >
+        AccountDate,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="type != null" >
+        Type,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="oilname != null" >
+        OilName,
+      </if>
+      <if test="liter != null" >
+        Liter,
+      </if>
+      <if test="price != null" >
+        Price,
+      </if>
+      <if test="amount != null" >
+        Amount,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="daystatus != null" >
+        DayStatus,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="accountdate != null" >
+        #{accountdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilname != null" >
+        #{oilname,jdbcType=VARCHAR},
+      </if>
+      <if test="liter != null" >
+        #{liter,jdbcType=DOUBLE},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="daystatus != null" >
+        #{daystatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_daily_opotDailyStatement" >
+    update oss_daily_opotDailyStatement
+    <set >
+      <if test="oilname != null" >
+        OilName = #{oilname,jdbcType=VARCHAR},
+      </if>
+      <if test="liter != null" >
+        Liter = #{liter,jdbcType=DOUBLE},
+      </if>
+      <if test="price != null" >
+        Price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="amount != null" >
+        Amount = #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="daystatus != null" >
+        DayStatus = #{daystatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where AccountDate = #{accountdate,jdbcType=TIMESTAMP}
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+      and Type = #{type,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_daily_opotDailyStatement" >
+    update oss_daily_opotDailyStatement
+    set OilName = #{oilname,jdbcType=VARCHAR},
+      Liter = #{liter,jdbcType=DOUBLE},
+      Price = #{price,jdbcType=DOUBLE},
+      Amount = #{amount,jdbcType=DOUBLE},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      DayStatus = #{daystatus,jdbcType=VARCHAR},
+      OUCode = #{oucode,jdbcType=VARCHAR}
+    where AccountDate = #{accountdate,jdbcType=TIMESTAMP}
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+      and Type = #{type,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+</mapper>

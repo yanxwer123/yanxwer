@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_sysmanage_DepotMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_sysmanage_Depot" >
+    <id column="YK_ID" property="ykId" jdbcType="VARCHAR" />
+    <result column="YK_Name" property="ykName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    YK_ID, YK_Name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_Depot
+    where YK_ID = #{ykId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from oss_sysmanage_Depot
+    where YK_ID = #{ykId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_sysmanage_Depot" >
+    insert into oss_sysmanage_Depot (YK_ID, YK_Name)
+    values (#{ykId,jdbcType=VARCHAR}, #{ykName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_sysmanage_Depot" >
+    insert into oss_sysmanage_Depot
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ykId != null" >
+        YK_ID,
+      </if>
+      <if test="ykName != null" >
+        YK_Name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ykId != null" >
+        #{ykId,jdbcType=VARCHAR},
+      </if>
+      <if test="ykName != null" >
+        #{ykName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <insert id="merge" parameterType="com.kld.gsm.center.domain.oss_sysmanage_Depot" >
+    replace into oss_sysmanage_Depot
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ykId != null" >
+        YK_ID,
+      </if>
+      <if test="ykName != null" >
+        YK_Name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ykId != null" >
+        #{ykId,jdbcType=VARCHAR},
+      </if>
+      <if test="ykName != null" >
+        #{ykName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_sysmanage_Depot" >
+    update oss_sysmanage_Depot
+    <set >
+      <if test="ykName != null" >
+        YK_Name = #{ykName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where YK_ID = #{ykId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_sysmanage_Depot" >
+    update oss_sysmanage_Depot
+    set YK_Name = #{ykName,jdbcType=VARCHAR}
+    where YK_ID = #{ykId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.SysManageOilInDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.SysManageOilIn" >
+    <id column="OilCanNo" property="oilcanno" jdbcType="INTEGER" />
+    <id column="StartDate" property="startdate" jdbcType="VARCHAR" />
+    <id column="StartTime" property="starttime" jdbcType="VARCHAR" />
+    <result column="EndDate" property="enddate" jdbcType="VARCHAR" />
+    <result column="EndTime" property="endtime" jdbcType="VARCHAR" />
+    <result column="StartCubage" property="startcubage" jdbcType="DOUBLE" />
+    <result column="StartStandCubage" property="startstandcubage" jdbcType="DOUBLE" />
+    <result column="StartOilHeight" property="startoilheight" jdbcType="DOUBLE" />
+    <result column="StartWaterHeight" property="startwaterheight" jdbcType="DOUBLE" />
+    <result column="StartOilTemp" property="startoiltemp" jdbcType="DOUBLE" />
+    <result column="StartOilTemp1" property="startoiltemp1" jdbcType="DOUBLE" />
+    <result column="StartOilTemp2" property="startoiltemp2" jdbcType="DOUBLE" />
+    <result column="StartOilTemp3" property="startoiltemp3" jdbcType="DOUBLE" />
+    <result column="StartOilTemp4" property="startoiltemp4" jdbcType="DOUBLE" />
+    <result column="StartOilTemp5" property="startoiltemp5" jdbcType="DOUBLE" />
+    <result column="EndCubage" property="endcubage" jdbcType="DOUBLE" />
+    <result column="EndStandCubage" property="endstandcubage" jdbcType="DOUBLE" />
+    <result column="EndOilHeight" property="endoilheight" jdbcType="DOUBLE" />
+    <result column="EndWaterHeight" property="endwaterheight" jdbcType="DOUBLE" />
+    <result column="EndOilTemp" property="endoiltemp" jdbcType="DOUBLE" />
+    <result column="EndOilTemp1" property="endoiltemp1" jdbcType="DOUBLE" />
+    <result column="EndOilTemp2" property="endoiltemp2" jdbcType="DOUBLE" />
+    <result column="EndOilTemp3" property="endoiltemp3" jdbcType="DOUBLE" />
+    <result column="EndOilTemp4" property="endoiltemp4" jdbcType="DOUBLE" />
+    <result column="EndOilTemp5" property="endoiltemp5" jdbcType="DOUBLE" />
+    <result column="EmptyCubage" property="emptycubage" jdbcType="DOUBLE" />
+    <result column="ApparentDensity" property="apparentdensity" jdbcType="DOUBLE" />
+    <result column="StandDensity" property="standdensity" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    OilCanNo, StartDate, StartTime, EndDate, EndTime, StartCubage, StartStandCubage, 
+    StartOilHeight, StartWaterHeight, StartOilTemp, StartOilTemp1, StartOilTemp2, StartOilTemp3, 
+    StartOilTemp4, StartOilTemp5, EndCubage, EndStandCubage, EndOilHeight, EndWaterHeight, 
+    EndOilTemp, EndOilTemp1, EndOilTemp2, EndOilTemp3, EndOilTemp4, EndOilTemp5, EmptyCubage, 
+    ApparentDensity, StandDensity
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.ATG.domain.SysManageOilInKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_oilin
+    where OilCanNo = #{oilcanno,jdbcType=INTEGER}
+      and StartDate = #{startdate,jdbcType=VARCHAR}
+      and StartTime = #{starttime,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.SysManageOilInKey" >
+    delete from oss_sysmanage_oilin
+    where OilCanNo = #{oilcanno,jdbcType=INTEGER}
+      and StartDate = #{startdate,jdbcType=VARCHAR}
+      and StartTime = #{starttime,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.SysManageOilIn" >
+    insert into oss_sysmanage_oilin (OilCanNo, StartDate, StartTime, 
+      EndDate, EndTime, StartCubage, 
+      StartStandCubage, StartOilHeight, StartWaterHeight, 
+      StartOilTemp, StartOilTemp1, StartOilTemp2, 
+      StartOilTemp3, StartOilTemp4, StartOilTemp5, 
+      EndCubage, EndStandCubage, EndOilHeight, 
+      EndWaterHeight, EndOilTemp, EndOilTemp1, 
+      EndOilTemp2, EndOilTemp3, EndOilTemp4, 
+      EndOilTemp5, EmptyCubage, ApparentDensity, 
+      StandDensity)
+    values (#{oilcanno,jdbcType=INTEGER}, #{startdate,jdbcType=VARCHAR}, #{starttime,jdbcType=VARCHAR}, 
+      #{enddate,jdbcType=VARCHAR}, #{endtime,jdbcType=VARCHAR}, #{startcubage,jdbcType=DOUBLE}, 
+      #{startstandcubage,jdbcType=DOUBLE}, #{startoilheight,jdbcType=DOUBLE}, #{startwaterheight,jdbcType=DOUBLE}, 
+      #{startoiltemp,jdbcType=DOUBLE}, #{startoiltemp1,jdbcType=DOUBLE}, #{startoiltemp2,jdbcType=DOUBLE}, 
+      #{startoiltemp3,jdbcType=DOUBLE}, #{startoiltemp4,jdbcType=DOUBLE}, #{startoiltemp5,jdbcType=DOUBLE}, 
+      #{endcubage,jdbcType=DOUBLE}, #{endstandcubage,jdbcType=DOUBLE}, #{endoilheight,jdbcType=DOUBLE}, 
+      #{endwaterheight,jdbcType=DOUBLE}, #{endoiltemp,jdbcType=DOUBLE}, #{endoiltemp1,jdbcType=DOUBLE}, 
+      #{endoiltemp2,jdbcType=DOUBLE}, #{endoiltemp3,jdbcType=DOUBLE}, #{endoiltemp4,jdbcType=DOUBLE}, 
+      #{endoiltemp5,jdbcType=DOUBLE}, #{emptycubage,jdbcType=DOUBLE}, #{apparentdensity,jdbcType=DOUBLE}, 
+      #{standdensity,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.SysManageOilIn" >
+    insert into oss_sysmanage_oilin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oilcanno != null" >
+        OilCanNo,
+      </if>
+      <if test="startdate != null" >
+        StartDate,
+      </if>
+      <if test="starttime != null" >
+        StartTime,
+      </if>
+      <if test="enddate != null" >
+        EndDate,
+      </if>
+      <if test="endtime != null" >
+        EndTime,
+      </if>
+      <if test="startcubage != null" >
+        StartCubage,
+      </if>
+      <if test="startstandcubage != null" >
+        StartStandCubage,
+      </if>
+      <if test="startoilheight != null" >
+        StartOilHeight,
+      </if>
+      <if test="startwaterheight != null" >
+        StartWaterHeight,
+      </if>
+      <if test="startoiltemp != null" >
+        StartOilTemp,
+      </if>
+      <if test="startoiltemp1 != null" >
+        StartOilTemp1,
+      </if>
+      <if test="startoiltemp2 != null" >
+        StartOilTemp2,
+      </if>
+      <if test="startoiltemp3 != null" >
+        StartOilTemp3,
+      </if>
+      <if test="startoiltemp4 != null" >
+        StartOilTemp4,
+      </if>
+      <if test="startoiltemp5 != null" >
+        StartOilTemp5,
+      </if>
+      <if test="endcubage != null" >
+        EndCubage,
+      </if>
+      <if test="endstandcubage != null" >
+        EndStandCubage,
+      </if>
+      <if test="endoilheight != null" >
+        EndOilHeight,
+      </if>
+      <if test="endwaterheight != null" >
+        EndWaterHeight,
+      </if>
+      <if test="endoiltemp != null" >
+        EndOilTemp,
+      </if>
+      <if test="endoiltemp1 != null" >
+        EndOilTemp1,
+      </if>
+      <if test="endoiltemp2 != null" >
+        EndOilTemp2,
+      </if>
+      <if test="endoiltemp3 != null" >
+        EndOilTemp3,
+      </if>
+      <if test="endoiltemp4 != null" >
+        EndOilTemp4,
+      </if>
+      <if test="endoiltemp5 != null" >
+        EndOilTemp5,
+      </if>
+      <if test="emptycubage != null" >
+        EmptyCubage,
+      </if>
+      <if test="apparentdensity != null" >
+        ApparentDensity,
+      </if>
+      <if test="standdensity != null" >
+        StandDensity,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oilcanno != null" >
+        #{oilcanno,jdbcType=INTEGER},
+      </if>
+      <if test="startdate != null" >
+        #{startdate,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=VARCHAR},
+      </if>
+      <if test="enddate != null" >
+        #{enddate,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=VARCHAR},
+      </if>
+      <if test="startcubage != null" >
+        #{startcubage,jdbcType=DOUBLE},
+      </if>
+      <if test="startstandcubage != null" >
+        #{startstandcubage,jdbcType=DOUBLE},
+      </if>
+      <if test="startoilheight != null" >
+        #{startoilheight,jdbcType=DOUBLE},
+      </if>
+      <if test="startwaterheight != null" >
+        #{startwaterheight,jdbcType=DOUBLE},
+      </if>
+      <if test="startoiltemp != null" >
+        #{startoiltemp,jdbcType=DOUBLE},
+      </if>
+      <if test="startoiltemp1 != null" >
+        #{startoiltemp1,jdbcType=DOUBLE},
+      </if>
+      <if test="startoiltemp2 != null" >
+        #{startoiltemp2,jdbcType=DOUBLE},
+      </if>
+      <if test="startoiltemp3 != null" >
+        #{startoiltemp3,jdbcType=DOUBLE},
+      </if>
+      <if test="startoiltemp4 != null" >
+        #{startoiltemp4,jdbcType=DOUBLE},
+      </if>
+      <if test="startoiltemp5 != null" >
+        #{startoiltemp5,jdbcType=DOUBLE},
+      </if>
+      <if test="endcubage != null" >
+        #{endcubage,jdbcType=DOUBLE},
+      </if>
+      <if test="endstandcubage != null" >
+        #{endstandcubage,jdbcType=DOUBLE},
+      </if>
+      <if test="endoilheight != null" >
+        #{endoilheight,jdbcType=DOUBLE},
+      </if>
+      <if test="endwaterheight != null" >
+        #{endwaterheight,jdbcType=DOUBLE},
+      </if>
+      <if test="endoiltemp != null" >
+        #{endoiltemp,jdbcType=DOUBLE},
+      </if>
+      <if test="endoiltemp1 != null" >
+        #{endoiltemp1,jdbcType=DOUBLE},
+      </if>
+      <if test="endoiltemp2 != null" >
+        #{endoiltemp2,jdbcType=DOUBLE},
+      </if>
+      <if test="endoiltemp3 != null" >
+        #{endoiltemp3,jdbcType=DOUBLE},
+      </if>
+      <if test="endoiltemp4 != null" >
+        #{endoiltemp4,jdbcType=DOUBLE},
+      </if>
+      <if test="endoiltemp5 != null" >
+        #{endoiltemp5,jdbcType=DOUBLE},
+      </if>
+      <if test="emptycubage != null" >
+        #{emptycubage,jdbcType=DOUBLE},
+      </if>
+      <if test="apparentdensity != null" >
+        #{apparentdensity,jdbcType=DOUBLE},
+      </if>
+      <if test="standdensity != null" >
+        #{standdensity,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.SysManageOilIn" >
+    update oss_sysmanage_oilin
+    <set >
+      <if test="enddate != null" >
+        EndDate = #{enddate,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null" >
+        EndTime = #{endtime,jdbcType=VARCHAR},
+      </if>
+      <if test="startcubage != null" >
+        StartCubage = #{startcubage,jdbcType=DOUBLE},
+      </if>
+      <if test="startstandcubage != null" >
+        StartStandCubage = #{startstandcubage,jdbcType=DOUBLE},
+      </if>
+      <if test="startoilheight != null" >
+        StartOilHeight = #{startoilheight,jdbcType=DOUBLE},
+      </if>
+      <if test="startwaterheight != null" >
+        StartWaterHeight = #{startwaterheight,jdbcType=DOUBLE},
+      </if>
+      <if test="startoiltemp != null" >
+        StartOilTemp = #{startoiltemp,jdbcType=DOUBLE},
+      </if>
+      <if test="startoiltemp1 != null" >
+        StartOilTemp1 = #{startoiltemp1,jdbcType=DOUBLE},
+      </if>
+      <if test="startoiltemp2 != null" >
+        StartOilTemp2 = #{startoiltemp2,jdbcType=DOUBLE},
+      </if>
+      <if test="startoiltemp3 != null" >
+        StartOilTemp3 = #{startoiltemp3,jdbcType=DOUBLE},
+      </if>
+      <if test="startoiltemp4 != null" >
+        StartOilTemp4 = #{startoiltemp4,jdbcType=DOUBLE},
+      </if>
+      <if test="startoiltemp5 != null" >
+        StartOilTemp5 = #{startoiltemp5,jdbcType=DOUBLE},
+      </if>
+      <if test="endcubage != null" >
+        EndCubage = #{endcubage,jdbcType=DOUBLE},
+      </if>
+      <if test="endstandcubage != null" >
+        EndStandCubage = #{endstandcubage,jdbcType=DOUBLE},
+      </if>
+      <if test="endoilheight != null" >
+        EndOilHeight = #{endoilheight,jdbcType=DOUBLE},
+      </if>
+      <if test="endwaterheight != null" >
+        EndWaterHeight = #{endwaterheight,jdbcType=DOUBLE},
+      </if>
+      <if test="endoiltemp != null" >
+        EndOilTemp = #{endoiltemp,jdbcType=DOUBLE},
+      </if>
+      <if test="endoiltemp1 != null" >
+        EndOilTemp1 = #{endoiltemp1,jdbcType=DOUBLE},
+      </if>
+      <if test="endoiltemp2 != null" >
+        EndOilTemp2 = #{endoiltemp2,jdbcType=DOUBLE},
+      </if>
+      <if test="endoiltemp3 != null" >
+        EndOilTemp3 = #{endoiltemp3,jdbcType=DOUBLE},
+      </if>
+      <if test="endoiltemp4 != null" >
+        EndOilTemp4 = #{endoiltemp4,jdbcType=DOUBLE},
+      </if>
+      <if test="endoiltemp5 != null" >
+        EndOilTemp5 = #{endoiltemp5,jdbcType=DOUBLE},
+      </if>
+      <if test="emptycubage != null" >
+        EmptyCubage = #{emptycubage,jdbcType=DOUBLE},
+      </if>
+      <if test="apparentdensity != null" >
+        ApparentDensity = #{apparentdensity,jdbcType=DOUBLE},
+      </if>
+      <if test="standdensity != null" >
+        StandDensity = #{standdensity,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where OilCanNo = #{oilcanno,jdbcType=INTEGER}
+      and StartDate = #{startdate,jdbcType=VARCHAR}
+      and StartTime = #{starttime,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.SysManageOilIn" >
+    update oss_sysmanage_oilin
+    set EndDate = #{enddate,jdbcType=VARCHAR},
+      EndTime = #{endtime,jdbcType=VARCHAR},
+      StartCubage = #{startcubage,jdbcType=DOUBLE},
+      StartStandCubage = #{startstandcubage,jdbcType=DOUBLE},
+      StartOilHeight = #{startoilheight,jdbcType=DOUBLE},
+      StartWaterHeight = #{startwaterheight,jdbcType=DOUBLE},
+      StartOilTemp = #{startoiltemp,jdbcType=DOUBLE},
+      StartOilTemp1 = #{startoiltemp1,jdbcType=DOUBLE},
+      StartOilTemp2 = #{startoiltemp2,jdbcType=DOUBLE},
+      StartOilTemp3 = #{startoiltemp3,jdbcType=DOUBLE},
+      StartOilTemp4 = #{startoiltemp4,jdbcType=DOUBLE},
+      StartOilTemp5 = #{startoiltemp5,jdbcType=DOUBLE},
+      EndCubage = #{endcubage,jdbcType=DOUBLE},
+      EndStandCubage = #{endstandcubage,jdbcType=DOUBLE},
+      EndOilHeight = #{endoilheight,jdbcType=DOUBLE},
+      EndWaterHeight = #{endwaterheight,jdbcType=DOUBLE},
+      EndOilTemp = #{endoiltemp,jdbcType=DOUBLE},
+      EndOilTemp1 = #{endoiltemp1,jdbcType=DOUBLE},
+      EndOilTemp2 = #{endoiltemp2,jdbcType=DOUBLE},
+      EndOilTemp3 = #{endoiltemp3,jdbcType=DOUBLE},
+      EndOilTemp4 = #{endoiltemp4,jdbcType=DOUBLE},
+      EndOilTemp5 = #{endoiltemp5,jdbcType=DOUBLE},
+      EmptyCubage = #{emptycubage,jdbcType=DOUBLE},
+      ApparentDensity = #{apparentdensity,jdbcType=DOUBLE},
+      StandDensity = #{standdensity,jdbcType=DOUBLE}
+    where OilCanNo = #{oilcanno,jdbcType=INTEGER}
+      and StartDate = #{startdate,jdbcType=VARCHAR}
+      and StartTime = #{starttime,jdbcType=VARCHAR}
+  </update>
+</mapper>

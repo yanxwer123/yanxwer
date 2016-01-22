@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: com.kld.gsm.syntocenter.server.ApplicationMain
+Main-Class: com.kld.gsm.syntocenter.server.ApplicationMain
+

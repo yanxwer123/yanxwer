@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.oss_monitor_PumpMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.oss_monitor_Pump" >
+    <id column="Gunno" property="gunno" jdbcType="INTEGER" />
+    <result column="Pump" property="pump" jdbcType="DOUBLE" />
+    <result column="ModifyDate" property="modifydate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Gunno, Pump, ModifyDate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from oss_monitor_Pump
+    where Gunno = #{gunno,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from oss_monitor_Pump
+    where Gunno = #{gunno,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.oss_monitor_Pump" >
+    insert into oss_monitor_Pump (Gunno, Pump, ModifyDate
+      )
+    values (#{gunno,jdbcType=INTEGER}, #{pump,jdbcType=DOUBLE}, #{modifydate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="merge" parameterType="com.kld.gsm.ATG.domain.oss_monitor_Pump" >
+    replace into oss_monitor_Pump
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gunno != null" >
+        Gunno,
+      </if>
+      <if test="pump != null" >
+        Pump,
+      </if>
+      <if test="modifydate != null" >
+        ModifyDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gunno != null" >
+        #{gunno,jdbcType=INTEGER},
+      </if>
+      <if test="pump != null" >
+        #{pump,jdbcType=DOUBLE},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.oss_monitor_Pump" >
+    insert into oss_monitor_Pump
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gunno != null" >
+        Gunno,
+      </if>
+      <if test="pump != null" >
+        Pump,
+      </if>
+      <if test="modifydate != null" >
+        ModifyDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gunno != null" >
+        #{gunno,jdbcType=INTEGER},
+      </if>
+      <if test="pump != null" >
+        #{pump,jdbcType=DOUBLE},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.oss_monitor_Pump" >
+    update oss_monitor_Pump
+    <set >
+      <if test="pump != null" >
+        Pump = #{pump,jdbcType=DOUBLE},
+      </if>
+      <if test="modifydate != null" >
+        ModifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where Gunno = #{gunno,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.oss_monitor_Pump" >
+    update oss_monitor_Pump
+    set Pump = #{pump,jdbcType=DOUBLE},
+      ModifyDate = #{modifydate,jdbcType=TIMESTAMP}
+    where Gunno = #{gunno,jdbcType=INTEGER}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from oss_monitor_Pump
+  </select>
+</mapper>

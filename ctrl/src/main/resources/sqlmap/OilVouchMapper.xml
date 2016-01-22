@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.kld.gsm.coord.dao.OilVouchDao">
+    <select id="getOilVouch" parameterType="Map" resultType="com.kld.gsm.ATG.domain.OilVouch">
+       SELECT macno,ttc,cardno,machineoilno,oilno,takedate,
+       ctc,oilgunno,openo,liter,price,amount,balance,pumpno,tac,gmac,psam_tac,
+       psam_asn,terminalno,psam_ttc,moneysou,paymode,payunit,t_mac,accountdate,
+       tracode,gettime,key_version,key_index,compmatchflag,compno,backmatchflag,
+       paymatchflag,teamvouchno,transflag,teamhotoflag,billstatus
+       FROM oilvouch vouch
+       WHERE macno = #{MacNo} AND oilgunno = #{GunNo} AND ttc=#{TTC}
+       AND takedate =  #{TakeDate}
+    </select>
+    <select id="selectByshift" parameterType="String" resultType="com.kld.gsm.ATG.domain.OilVouch">
+
+        SELECT macno,ttc,takedate,oilgunno,teamvouchno,oilno
+        FROM oilvouch
+        WHERE teamvouchno = #{oilvoch}
+    </select>
+    <select id="selectByshift1" parameterType="String" resultType="com.kld.gsm.ATG.domain.OilVouch">
+        SELECT macno,ttc,takedate,oilgunno,teamvouchno
+        FROM oilvouch
+        WHERE teamvouchno = #{oilvoch}
+    </select>
+</mapper>

@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.AlarmShiftLostDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.AlarmShiftLost" >
+    <id column="Shift" property="shift" jdbcType="VARCHAR" />
+    <id column="OilCanNo" property="oilcanno" jdbcType="INTEGER" />
+    <id column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <result column="StartOilHeight" property="startoilheight" jdbcType="DOUBLE" />
+    <result column="StartOilL" property="startoill" jdbcType="DOUBLE" />
+    <result column="EndOilHeight" property="endoilheight" jdbcType="DOUBLE" />
+    <result column="EndOilL" property="endoill" jdbcType="DOUBLE" />
+    <result column="AcutalEndOilL" property="acutalendoill" jdbcType="DOUBLE" />
+    <result column="EndWaterHeight" property="endwaterheight" jdbcType="DOUBLE" />
+    <result column="EndWaterL" property="endwaterl" jdbcType="DOUBLE" />
+    <result column="EndTemperature" property="endtemperature" jdbcType="DOUBLE" />
+    <result column="OilDischarge" property="oildischarge" jdbcType="DOUBLE" />
+    <result column="Sale" property="sale" jdbcType="DOUBLE" />
+    <result column="Inventory" property="inventory" jdbcType="DOUBLE" />
+    <result column="Loss" property="loss" jdbcType="DOUBLE" />
+    <result column="State" property="state" jdbcType="INTEGER" />
+    <result column="ShiftTime" property="shifttime" jdbcType="TIMESTAMP" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Shift, OilCanNo, OilNo,StartOilHeight, StartOilL, EndOilHeight, EndOilL, AcutalEndOilL,
+    EndWaterHeight, EndWaterL, EndTemperature, OilDischarge, Sale, Inventory, Loss, State, 
+    ShiftTime, TranStatus
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.ATG.domain.AlarmShiftLostKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_alarm_ShiftLost
+    where Shift = #{shift,jdbcType=VARCHAR}
+      and OilCanNo = #{oilcanno,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.AlarmShiftLostKey" >
+    delete from oss_alarm_ShiftLost
+    where Shift = #{shift,jdbcType=VARCHAR}
+      and OilCanNo = #{oilcanno,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.AlarmShiftLost" >
+    insert into oss_alarm_ShiftLost (Shift, OilNo,OilCanNo, StartOilHeight,
+      StartOilL, EndOilHeight, EndOilL, 
+      AcutalEndOilL, EndWaterHeight, EndWaterL, 
+      EndTemperature, OilDischarge, Sale, 
+      Inventory, Loss, State, 
+      ShiftTime, TranStatus,Profitlossratio)
+    values (#{shift,jdbcType=VARCHAR},#{oilno,jdbcType=VARCHAR}, #{oilcanno,jdbcType=INTEGER}, #{startoilheight,jdbcType=DOUBLE},
+      #{startoill,jdbcType=DOUBLE}, #{endoilheight,jdbcType=DOUBLE}, #{endoill,jdbcType=DOUBLE}, 
+      #{acutalendoill,jdbcType=DOUBLE}, #{endwaterheight,jdbcType=DOUBLE}, #{endwaterl,jdbcType=DOUBLE}, 
+      #{endtemperature,jdbcType=DOUBLE}, #{oildischarge,jdbcType=DOUBLE}, #{sale,jdbcType=DOUBLE}, 
+      #{inventory,jdbcType=DOUBLE}, #{loss,jdbcType=DOUBLE}, #{state,jdbcType=INTEGER}, 
+      #{shifttime,jdbcType=TIMESTAMP}, #{transtatus,jdbcType=VARCHAR},#{profitLossRatio,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.AlarmShiftLost" >
+    insert into oss_alarm_ShiftLost
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shift != null" >
+        Shift,
+      </if>
+      <if test="oilcanno != null" >
+        OilCanNo,
+      </if>
+      <if test="startoilheight != null" >
+        StartOilHeight,
+      </if>
+      <if test="startoill != null" >
+        StartOilL,
+      </if>
+      <if test="endoilheight != null" >
+        EndOilHeight,
+      </if>
+      <if test="endoill != null" >
+        EndOilL,
+      </if>
+      <if test="acutalendoill != null" >
+        AcutalEndOilL,
+      </if>
+      <if test="endwaterheight != null" >
+        EndWaterHeight,
+      </if>
+      <if test="endwaterl != null" >
+        EndWaterL,
+      </if>
+      <if test="endtemperature != null" >
+        EndTemperature,
+      </if>
+      <if test="oildischarge != null" >
+        OilDischarge,
+      </if>
+      <if test="sale != null" >
+        Sale,
+      </if>
+      <if test="inventory != null" >
+        Inventory,
+      </if>
+      <if test="loss != null" >
+        Loss,
+      </if>
+      <if test="state != null" >
+        State,
+      </if>
+      <if test="shifttime != null" >
+        ShiftTime,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shift != null" >
+        #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="oilcanno != null" >
+        #{oilcanno,jdbcType=INTEGER},
+      </if>
+      <if test="startoilheight != null" >
+        #{startoilheight,jdbcType=DOUBLE},
+      </if>
+      <if test="startoill != null" >
+        #{startoill,jdbcType=DOUBLE},
+      </if>
+      <if test="endoilheight != null" >
+        #{endoilheight,jdbcType=DOUBLE},
+      </if>
+      <if test="endoill != null" >
+        #{endoill,jdbcType=DOUBLE},
+      </if>
+      <if test="acutalendoill != null" >
+        #{acutalendoill,jdbcType=DOUBLE},
+      </if>
+      <if test="endwaterheight != null" >
+        #{endwaterheight,jdbcType=DOUBLE},
+      </if>
+      <if test="endwaterl != null" >
+        #{endwaterl,jdbcType=DOUBLE},
+      </if>
+      <if test="endtemperature != null" >
+        #{endtemperature,jdbcType=DOUBLE},
+      </if>
+      <if test="oildischarge != null" >
+        #{oildischarge,jdbcType=DOUBLE},
+      </if>
+      <if test="sale != null" >
+        #{sale,jdbcType=DOUBLE},
+      </if>
+      <if test="inventory != null" >
+        #{inventory,jdbcType=DOUBLE},
+      </if>
+      <if test="loss != null" >
+        #{loss,jdbcType=DOUBLE},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="shifttime != null" >
+        #{shifttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.AlarmShiftLost" >
+    update oss_alarm_ShiftLost
+    <set >
+      <if test="startoilheight != null" >
+        StartOilHeight = #{startoilheight,jdbcType=DOUBLE},
+      </if>
+      <if test="startoill != null" >
+        StartOilL = #{startoill,jdbcType=DOUBLE},
+      </if>
+      <if test="endoilheight != null" >
+        EndOilHeight = #{endoilheight,jdbcType=DOUBLE},
+      </if>
+      <if test="endoill != null" >
+        EndOilL = #{endoill,jdbcType=DOUBLE},
+      </if>
+      <if test="acutalendoill != null" >
+        AcutalEndOilL = #{acutalendoill,jdbcType=DOUBLE},
+      </if>
+      <if test="endwaterheight != null" >
+        EndWaterHeight = #{endwaterheight,jdbcType=DOUBLE},
+      </if>
+      <if test="endwaterl != null" >
+        EndWaterL = #{endwaterl,jdbcType=DOUBLE},
+      </if>
+      <if test="endtemperature != null" >
+        EndTemperature = #{endtemperature,jdbcType=DOUBLE},
+      </if>
+      <if test="oildischarge != null" >
+        OilDischarge = #{oildischarge,jdbcType=DOUBLE},
+      </if>
+      <if test="sale != null" >
+        Sale = #{sale,jdbcType=DOUBLE},
+      </if>
+      <if test="inventory != null" >
+        Inventory = #{inventory,jdbcType=DOUBLE},
+      </if>
+      <if test="loss != null" >
+        Loss = #{loss,jdbcType=DOUBLE},
+      </if>
+      <if test="state != null" >
+        State = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="shifttime != null" >
+        ShiftTime = #{shifttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Shift = #{shift,jdbcType=VARCHAR}
+      and OilCanNo = #{oilcanno,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.AlarmShiftLost" >
+    update oss_alarm_ShiftLost
+    set StartOilHeight = #{startoilheight,jdbcType=DOUBLE},
+      StartOilL = #{startoill,jdbcType=DOUBLE},
+      EndOilHeight = #{endoilheight,jdbcType=DOUBLE},
+      EndOilL = #{endoill,jdbcType=DOUBLE},
+      AcutalEndOilL = #{acutalendoill,jdbcType=DOUBLE},
+      EndWaterHeight = #{endwaterheight,jdbcType=DOUBLE},
+      EndWaterL = #{endwaterl,jdbcType=DOUBLE},
+      EndTemperature = #{endtemperature,jdbcType=DOUBLE},
+      OilDischarge = #{oildischarge,jdbcType=DOUBLE},
+      Sale = #{sale,jdbcType=DOUBLE},
+      Inventory = #{inventory,jdbcType=DOUBLE},
+      Loss = #{loss,jdbcType=DOUBLE},
+      State = #{state,jdbcType=INTEGER},
+      ShiftTime = #{shifttime,jdbcType=TIMESTAMP},
+      TranStatus = #{transtatus,jdbcType=VARCHAR}
+    where Shift = #{shift,jdbcType=VARCHAR}
+      and OilCanNo = #{oilcanno,jdbcType=INTEGER}
+  </update>
+  <select id="selectByTrans" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_alarm_ShiftLost WHERE TranStatus=#{trans,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByDate" resultType="com.kld.gsm.ATG.domain.AlarmShiftLost" parameterType="hashmap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_alarm_ShiftLost
+    WHERE
+    ShiftTime >= #{begin,jdbcType=TIMESTAMP} AND #{end,jdbcType=TIMESTAMP} > ShiftTime
+    <if test="oilcanno != null and oilcanno != ''"  >
+      AND oilcanno=#{oilcanno,jdbcType=VARCHAR}
+    </if>
+    ORDER BY ShiftTime DESC
+  </select>
+
+</mapper>

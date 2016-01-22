@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.Sys_rolefuncrelMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.Sys_rolefuncrel" >
+    <id column="rolecode" property="rolecode" jdbcType="VARCHAR" />
+    <id column="funccode" property="funccode" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="moditime" property="moditime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    rolecode, funccode, creator, createtime, modifier, moditime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.Sys_rolefuncrelKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from Sys_rolefuncrel
+    where rolecode = #{rolecode,jdbcType=VARCHAR}
+      and funccode = #{funccode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.Sys_rolefuncrelKey" >
+    delete from Sys_rolefuncrel
+    where rolecode = #{rolecode,jdbcType=VARCHAR}
+      and funccode = #{funccode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.Sys_rolefuncrel" >
+    insert into Sys_rolefuncrel (rolecode, funccode, creator, 
+      createtime, modifier, moditime
+      )
+    values (#{rolecode,jdbcType=VARCHAR}, #{funccode,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, #{moditime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.Sys_rolefuncrel" >
+    insert into Sys_rolefuncrel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rolecode != null" >
+        rolecode,
+      </if>
+      <if test="funccode != null" >
+        funccode,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="moditime != null" >
+        moditime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rolecode != null" >
+        #{rolecode,jdbcType=VARCHAR},
+      </if>
+      <if test="funccode != null" >
+        #{funccode,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="moditime != null" >
+        #{moditime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.Sys_rolefuncrel" >
+    update Sys_rolefuncrel
+    <set >
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="moditime != null" >
+        moditime = #{moditime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where rolecode = #{rolecode,jdbcType=VARCHAR}
+      and funccode = #{funccode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.Sys_rolefuncrel" >
+    update Sys_rolefuncrel
+    set creator = #{creator,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      moditime = #{moditime,jdbcType=TIMESTAMP}
+    where rolecode = #{rolecode,jdbcType=VARCHAR}
+      and funccode = #{funccode,jdbcType=VARCHAR}
+  </update>
+  <delete id="deleteRoleFuncByRolecode" parameterType="java.lang.String">
+    delete from sys_rolefuncrel where rolecode=#{rolecode}
+  </delete>
+</mapper>

@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_acceptance_deliveryPlanMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_acceptance_deliveryPlan" >
+    <id column="PSD_ID" property="psdId" jdbcType="VARCHAR" />
+    <id column="NodeNo" property="nodeno" jdbcType="VARCHAR" />
+    <result column="OIL_ID" property="oilId" jdbcType="VARCHAR" />
+    <result column="DEPOT_CODE" property="depotCode" jdbcType="VARCHAR" />
+    <result column="XQL" property="xql" jdbcType="DOUBLE" />
+    <result column="XQUNIT" property="xqunit" jdbcType="VARCHAR" />
+    <result column="CP_NO" property="cpNo" jdbcType="VARCHAR" />
+    <result column="PS_DATE" property="psDate" jdbcType="TIMESTAMP" />
+    <result column="LSGC" property="lsgc" jdbcType="VARCHAR" />
+    <result column="KCDD" property="kcdd" jdbcType="VARCHAR" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PSD_ID, NodeNo, OIL_ID, DEPOT_CODE, XQL, XQUNIT, CP_NO, PS_DATE, LSGC, KCDD, TranStatus, 
+    OUCode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_acceptance_deliveryPlanKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_acceptance_deliveryPlan
+    where PSD_ID = #{psdId,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_acceptance_deliveryPlanKey" >
+    delete from oss_acceptance_deliveryPlan
+    where PSD_ID = #{psdId,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_acceptance_deliveryPlan" >
+    insert into oss_acceptance_deliveryPlan (PSD_ID, NodeNo, OIL_ID, 
+      DEPOT_CODE, XQL, XQUNIT, 
+      CP_NO, PS_DATE, LSGC, 
+      KCDD, TranStatus, OUCode
+      )
+    values (#{psdId,jdbcType=VARCHAR}, #{nodeno,jdbcType=VARCHAR}, #{oilId,jdbcType=VARCHAR}, 
+      #{depotCode,jdbcType=VARCHAR}, #{xql,jdbcType=DOUBLE}, #{xqunit,jdbcType=VARCHAR}, 
+      #{cpNo,jdbcType=VARCHAR}, #{psDate,jdbcType=TIMESTAMP}, #{lsgc,jdbcType=VARCHAR}, 
+      #{kcdd,jdbcType=VARCHAR}, #{transtatus,jdbcType=VARCHAR}, #{oucode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_acceptance_deliveryPlan" >
+    insert into oss_acceptance_deliveryPlan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="psdId != null" >
+        PSD_ID,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="oilId != null" >
+        OIL_ID,
+      </if>
+      <if test="depotCode != null" >
+        DEPOT_CODE,
+      </if>
+      <if test="xql != null" >
+        XQL,
+      </if>
+      <if test="xqunit != null" >
+        XQUNIT,
+      </if>
+      <if test="cpNo != null" >
+        CP_NO,
+      </if>
+      <if test="psDate != null" >
+        PS_DATE,
+      </if>
+      <if test="lsgc != null" >
+        LSGC,
+      </if>
+      <if test="kcdd != null" >
+        KCDD,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="psdId != null" >
+        #{psdId,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilId != null" >
+        #{oilId,jdbcType=VARCHAR},
+      </if>
+      <if test="depotCode != null" >
+        #{depotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="xql != null" >
+        #{xql,jdbcType=DOUBLE},
+      </if>
+      <if test="xqunit != null" >
+        #{xqunit,jdbcType=VARCHAR},
+      </if>
+      <if test="cpNo != null" >
+        #{cpNo,jdbcType=VARCHAR},
+      </if>
+      <if test="psDate != null" >
+        #{psDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lsgc != null" >
+        #{lsgc,jdbcType=VARCHAR},
+      </if>
+      <if test="kcdd != null" >
+        #{kcdd,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_acceptance_deliveryPlan" >
+    update oss_acceptance_deliveryPlan
+    <set >
+      <if test="oilId != null" >
+        OIL_ID = #{oilId,jdbcType=VARCHAR},
+      </if>
+      <if test="depotCode != null" >
+        DEPOT_CODE = #{depotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="xql != null" >
+        XQL = #{xql,jdbcType=DOUBLE},
+      </if>
+      <if test="xqunit != null" >
+        XQUNIT = #{xqunit,jdbcType=VARCHAR},
+      </if>
+      <if test="cpNo != null" >
+        CP_NO = #{cpNo,jdbcType=VARCHAR},
+      </if>
+      <if test="psDate != null" >
+        PS_DATE = #{psDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lsgc != null" >
+        LSGC = #{lsgc,jdbcType=VARCHAR},
+      </if>
+      <if test="kcdd != null" >
+        KCDD = #{kcdd,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PSD_ID = #{psdId,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_acceptance_deliveryPlan" >
+    update oss_acceptance_deliveryPlan
+    set OIL_ID = #{oilId,jdbcType=VARCHAR},
+      DEPOT_CODE = #{depotCode,jdbcType=VARCHAR},
+      XQL = #{xql,jdbcType=DOUBLE},
+      XQUNIT = #{xqunit,jdbcType=VARCHAR},
+      CP_NO = #{cpNo,jdbcType=VARCHAR},
+      PS_DATE = #{psDate,jdbcType=TIMESTAMP},
+      LSGC = #{lsgc,jdbcType=VARCHAR},
+      KCDD = #{kcdd,jdbcType=VARCHAR},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      OUCode = #{oucode,jdbcType=VARCHAR}
+    where PSD_ID = #{psdId,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <insert id="merge" parameterType="com.kld.gsm.center.domain.oss_acceptance_deliveryPlan" >
+    replace into oss_acceptance_deliveryPlan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="psdId != null" >
+        PSD_ID,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="oilId != null" >
+        OIL_ID,
+      </if>
+      <if test="depotCode != null" >
+        DEPOT_CODE,
+      </if>
+      <if test="xql != null" >
+        XQL,
+      </if>
+      <if test="xqunit != null" >
+        XQUNIT,
+      </if>
+      <if test="cpNo != null" >
+        CP_NO,
+      </if>
+      <if test="psDate != null" >
+        PS_DATE,
+      </if>
+      <if test="lsgc != null" >
+        LSGC,
+      </if>
+      <if test="kcdd != null" >
+        KCDD,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="psdId != null" >
+        #{psdId,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilId != null" >
+        #{oilId,jdbcType=VARCHAR},
+      </if>
+      <if test="depotCode != null" >
+        #{depotCode,jdbcType=VARCHAR},
+      </if>
+      <if test="xql != null" >
+        #{xql,jdbcType=DOUBLE},
+      </if>
+      <if test="xqunit != null" >
+        #{xqunit,jdbcType=VARCHAR},
+      </if>
+      <if test="cpNo != null" >
+        #{cpNo,jdbcType=VARCHAR},
+      </if>
+      <if test="psDate != null" >
+        #{psDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lsgc != null" >
+        #{lsgc,jdbcType=VARCHAR},
+      </if>
+      <if test="kcdd != null" >
+        #{kcdd,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

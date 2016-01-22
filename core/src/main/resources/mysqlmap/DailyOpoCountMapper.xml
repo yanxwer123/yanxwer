@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.DailyOpoCountDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.DailyOpoCount" >
+    <id column="Shift" property="shift" jdbcType="VARCHAR" />
+    <id column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <result column="TakeDate" property="takedate" jdbcType="TIMESTAMP" />
+    <result column="OilName" property="oilname" jdbcType="VARCHAR" />
+    <result column="BackCanL" property="backcanl" jdbcType="DOUBLE" />
+    <result column="OilCan" property="oilcan" jdbcType="VARCHAR" />
+    <result column="PumpNum" property="pumpnum" jdbcType="DOUBLE" />
+    <result column="OilTotal" property="oiltotal" jdbcType="DOUBLE" />
+    <result column="Amount" property="amount" jdbcType="DOUBLE" />
+    <result column="AccountDate" property="accountdate" jdbcType="TIMESTAMP" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Shift, OilNo, TakeDate, OilName, BackCanL, OilCan, PumpNum, OilTotal, Amount, AccountDate, 
+    TranStatus
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.ATG.domain.DailyOpoCountKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_daily_opoCount
+    where Shift = #{shift,jdbcType=VARCHAR}
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.DailyOpoCountKey" >
+    delete from oss_daily_opoCount
+    where Shift = #{shift,jdbcType=VARCHAR}
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.DailyOpoCount" >
+    insert into oss_daily_opoCount (Shift, OilNo, TakeDate, 
+      OilName, BackCanL, OilCan, 
+      PumpNum, OilTotal, Amount, 
+      AccountDate, TranStatus)
+    values (#{shift,jdbcType=VARCHAR}, #{oilno,jdbcType=VARCHAR}, #{takedate,jdbcType=TIMESTAMP}, 
+      #{oilname,jdbcType=VARCHAR}, #{backcanl,jdbcType=DOUBLE}, #{oilcan,jdbcType=VARCHAR}, 
+      #{pumpnum,jdbcType=DOUBLE}, #{oiltotal,jdbcType=DOUBLE}, #{amount,jdbcType=DOUBLE}, 
+      #{accountdate,jdbcType=TIMESTAMP}, #{transtatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.DailyOpoCount" >
+    insert into oss_daily_opoCount
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shift != null" >
+        Shift,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="takedate != null" >
+        TakeDate,
+      </if>
+      <if test="oilname != null" >
+        OilName,
+      </if>
+      <if test="backcanl != null" >
+        BackCanL,
+      </if>
+      <if test="oilcan != null" >
+        OilCan,
+      </if>
+      <if test="pumpnum != null" >
+        PumpNum,
+      </if>
+      <if test="oiltotal != null" >
+        OilTotal,
+      </if>
+      <if test="amount != null" >
+        Amount,
+      </if>
+      <if test="accountdate != null" >
+        AccountDate,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shift != null" >
+        #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="takedate != null" >
+        #{takedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oilname != null" >
+        #{oilname,jdbcType=VARCHAR},
+      </if>
+      <if test="backcanl != null" >
+        #{backcanl,jdbcType=DOUBLE},
+      </if>
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=VARCHAR},
+      </if>
+      <if test="pumpnum != null" >
+        #{pumpnum,jdbcType=DOUBLE},
+      </if>
+      <if test="oiltotal != null" >
+        #{oiltotal,jdbcType=DOUBLE},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="accountdate != null" >
+        #{accountdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.DailyOpoCount" >
+    update oss_daily_opoCount
+    <set >
+      <if test="takedate != null" >
+        TakeDate = #{takedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oilname != null" >
+        OilName = #{oilname,jdbcType=VARCHAR},
+      </if>
+      <if test="backcanl != null" >
+        BackCanL = #{backcanl,jdbcType=DOUBLE},
+      </if>
+      <if test="oilcan != null" >
+        OilCan = #{oilcan,jdbcType=VARCHAR},
+      </if>
+      <if test="pumpnum != null" >
+        PumpNum = #{pumpnum,jdbcType=DOUBLE},
+      </if>
+      <if test="oiltotal != null" >
+        OilTotal = #{oiltotal,jdbcType=DOUBLE},
+      </if>
+      <if test="amount != null" >
+        Amount = #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="accountdate != null" >
+        AccountDate = #{accountdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Shift = #{shift,jdbcType=VARCHAR}
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.DailyOpoCount" >
+    update oss_daily_opoCount
+    set TakeDate = #{takedate,jdbcType=TIMESTAMP},
+      OilName = #{oilname,jdbcType=VARCHAR},
+      BackCanL = #{backcanl,jdbcType=DOUBLE},
+      OilCan = #{oilcan,jdbcType=VARCHAR},
+      PumpNum = #{pumpnum,jdbcType=DOUBLE},
+      OilTotal = #{oiltotal,jdbcType=DOUBLE},
+      Amount = #{amount,jdbcType=DOUBLE},
+      AccountDate = #{accountdate,jdbcType=TIMESTAMP},
+      TranStatus = #{transtatus,jdbcType=VARCHAR}
+    where Shift = #{shift,jdbcType=VARCHAR}
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByTrans" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_daily_opoCount WHERE TranStatus=#{trans,jdbcType=VARCHAR}
+  </select>
+
+  <!--根据班次号更新Account-->
+  <update id="updateByShift"  parameterType="java.util.Map"  >
+    <![CDATA[ update oss_daily_opoCount
+    set AccountDate = #{accountdate}
+    WHERE Shift>=#{minshift} AND Shift <=#{maxshift}]]>
+  </update>
+</mapper>

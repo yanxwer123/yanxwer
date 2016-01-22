@@ -1,0 +1,13 @@
+<!doctype html>
+<html>
+<head>
+    #parse("/common/webhead.vm")
+
+</head>
+<style>
+    html{background: #f4f4f4;}
+</style>
+<body>
+   $screen_content
+</body>
+</html>

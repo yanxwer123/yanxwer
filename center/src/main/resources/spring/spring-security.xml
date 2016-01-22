@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:beans="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
+            http://www.springframework.org/schema/security   
+            http://www.springframework.org/schema/security/spring-security-3.1.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+    <!--  Spring-Security  的配置 -->
+    <security:http auto-config="true" use-expressions="true"  entry-point-ref="loginUrlAuthenticationEntryPoint" access-denied-page="/web/message?msg=no grant!" >
+
+ <!--       <security:intercept-url pattern="/web/generateVerifyCode" access="permitAll"/>
+        <security:intercept-url pattern="/web/message" access="permitAll"/>
+        <security:intercept-url pattern="/web/login" access="permitAll"/>
+        <security:intercept-url pattern="/web/loginout" access="permitAll"/>
+        -->
+        <security:intercept-url pattern="/web/" access="permitAll"/>
+        <security:intercept-url pattern="/api/" access="permitAll"/>
+        <!--配置自定义登录-->
+      <!--  <security:intercept-url pattern="/admin/approval/list" access="hasAnyRole('1000206')"/>
+
+		<security:intercept-url pattern="/admin/approval/approveProduct" access="hasAnyRole('100020601','100020602')"/>
+		<security:intercept-url pattern="/admin/billException/processException" access="hasAnyRole('100040301','100040302')"/>
+		<security:intercept-url pattern="/admin/message/delMessage" access="hasAnyRole('100020405','100020503')"/>
+		<security:intercept-url pattern="/admin/product/setPoints" access="hasAnyRole('100020204','100020402','100020501')"/>
+		<security:intercept-url pattern="/admin/product/updateProductState" access="hasAnyRole('100020201','100020202','100020403','100020404')"/>
+		&lt;!&ndash;<security:intercept-url pattern="/admin/**" access="hasAnyRole('1000000','1000101')"/>&ndash;&gt;
+		<security:intercept-url pattern="/admin/merchant/**" access="hasAnyRole('1000501')"/>
+		<security:intercept-url pattern="/admin/product/**" access="hasAnyRole('1000201','1000301')"/>-->
+
+        <security:form-login
+                login-page="/web/login"
+                authentication-failure-url="/web/loginerror"
+                authentication-success-handler-ref="expaiSuccessHandler" />  
+
+        <!--登出配置-->
+        <security:logout   
+                invalidate-session="true"   
+                logout-success-url="/web/login"
+                logout-url="/web/logout"/>
+      
+    </security:http>
+
+    <!--认证管理器-->
+    <security:authentication-manager>
+        <!--UserDetailsService实现 主要用于用户的查询-->
+        <security:authentication-provider user-service-ref="customUserDetailsService">
+                     <security:password-encoder ref="passwordEncoder"/>
+            </security:authentication-provider>
+    </security:authentication-manager>
+
+     <!--密码加密工具类-->
+    <bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"/>
+
+    <bean id="customUserDetailsService" class="com.kld.gsm.center.service.impl.CustomUserDetailsService"/>
+
+    <bean id="expaiSuccessHandler" class="com.kld.gsm.center.web.security.MyAuthenticationSuccessHandler"></bean>
+    
+    <bean id="loginUrlAuthenticationEntryPoint" class="com.kld.gsm.center.web.security.MyLoginUrlAuthenticationEntryPoint">
+        <property name="useForward" value="true" />  
+        <property name="loginFormUrl" value="/web/login" />
+    </bean>
+</beans>  

@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_daily_TradeInventoryMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_daily_TradeInventory" >
+    <id column="MacNo" property="macno" jdbcType="INTEGER" />
+    <id column="TTC" property="ttc" jdbcType="INTEGER" />
+    <id column="TakeDate" property="takedate" jdbcType="TIMESTAMP" />
+    <id column="OilGun" property="oilgun" jdbcType="VARCHAR" />
+    <id column="NodeNo" property="nodeno" jdbcType="VARCHAR" />
+    <result column="OilCan" property="oilcan" jdbcType="INTEGER" />
+    <result column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <result column="OpeTime" property="opetime" jdbcType="TIMESTAMP" />
+    <result column="StockDate" property="stockdate" jdbcType="VARCHAR" />
+    <result column="StockTime" property="stocktime" jdbcType="VARCHAR" />
+    <result column="OilL" property="oill" jdbcType="DOUBLE" />
+    <result column="StandardL" property="standardl" jdbcType="DOUBLE" />
+    <result column="EmptyL" property="emptyl" jdbcType="DOUBLE" />
+    <result column="HeightTotal" property="heighttotal" jdbcType="DOUBLE" />
+    <result column="HeightWater" property="heightwater" jdbcType="DOUBLE" />
+    <result column="OilTemp" property="oiltemp" jdbcType="DOUBLE" />
+    <result column="WaterL" property="waterl" jdbcType="DOUBLE" />
+    <result column="Density" property="density" jdbcType="DOUBLE" />
+    <result column="DensityStandard" property="densitystandard" jdbcType="DOUBLE" />
+    <result column="Shift" property="shift" jdbcType="VARCHAR" />
+    <result column="Remark" property="remark" jdbcType="VARCHAR" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
+    <result column="Liter" property="liter" jdbcType="DOUBLE" />
+    <result column="PumpNo" property="pumpno" jdbcType="DOUBLE" />
+    <result column="BackMatchFlag" property="backmatchflag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    MacNo, TTC, TakeDate, OilGun, NodeNo, OilCan, OilNo, OpeTime, StockDate, StockTime, 
+    OilL, StandardL, EmptyL, HeightTotal, HeightWater, OilTemp, WaterL, Density, DensityStandard, 
+    Shift, Remark, TranStatus, OUCode,Liter,PumpNo,BackMatchFlag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_daily_TradeInventoryKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_daily_TradeInventory
+    where MacNo = #{macno,jdbcType=INTEGER}
+      and TTC = #{ttc,jdbcType=INTEGER}
+      and TakeDate = #{takedate,jdbcType=TIMESTAMP}
+      and OilGun = #{oilgun,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_daily_TradeInventoryKey" >
+    delete from oss_daily_TradeInventory
+    where MacNo = #{macno,jdbcType=INTEGER}
+      and TTC = #{ttc,jdbcType=INTEGER}
+      and TakeDate = #{takedate,jdbcType=TIMESTAMP}
+      and OilGun = #{oilgun,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_daily_TradeInventory" >
+    insert into oss_daily_TradeInventory (MacNo, TTC, TakeDate, 
+      OilGun, NodeNo, OilCan, 
+      OilNo, OpeTime, StockDate, 
+      StockTime, OilL, StandardL, 
+      EmptyL, HeightTotal, HeightWater, 
+      OilTemp, WaterL, Density, 
+      DensityStandard, Shift, Remark, 
+      TranStatus, OUCode,Liter,PumpNo,BackMatchFlag)
+    values (#{macno,jdbcType=INTEGER}, #{ttc,jdbcType=INTEGER}, #{takedate,jdbcType=TIMESTAMP}, 
+      #{oilgun,jdbcType=VARCHAR}, #{nodeno,jdbcType=VARCHAR}, #{oilcan,jdbcType=INTEGER}, 
+      #{oilno,jdbcType=VARCHAR}, #{opetime,jdbcType=TIMESTAMP}, #{stockdate,jdbcType=VARCHAR}, 
+      #{stocktime,jdbcType=VARCHAR}, #{oill,jdbcType=DOUBLE}, #{standardl,jdbcType=DOUBLE}, 
+      #{emptyl,jdbcType=DOUBLE}, #{heighttotal,jdbcType=DOUBLE}, #{heightwater,jdbcType=DOUBLE}, 
+      #{oiltemp,jdbcType=DOUBLE}, #{waterl,jdbcType=DOUBLE}, #{density,jdbcType=DOUBLE}, 
+      #{densitystandard,jdbcType=DOUBLE}, #{shift,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{transtatus,jdbcType=VARCHAR}, #{oucode,jdbcType=VARCHAR},
+      #{liter,jdbcType=DOUBLE},#{pumpno,jdbcType=DOUBLE},#{backmatchflag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_daily_TradeInventory" >
+    insert into oss_daily_TradeInventory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="macno != null" >
+        MacNo,
+      </if>
+      <if test="ttc != null" >
+        TTC,
+      </if>
+      <if test="takedate != null" >
+        TakeDate,
+      </if>
+      <if test="oilgun != null" >
+        OilGun,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="oilcan != null" >
+        OilCan,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="opetime != null" >
+        OpeTime,
+      </if>
+      <if test="stockdate != null" >
+        StockDate,
+      </if>
+      <if test="stocktime != null" >
+        StockTime,
+      </if>
+      <if test="oill != null" >
+        OilL,
+      </if>
+      <if test="standardl != null" >
+        StandardL,
+      </if>
+      <if test="emptyl != null" >
+        EmptyL,
+      </if>
+      <if test="heighttotal != null" >
+        HeightTotal,
+      </if>
+      <if test="heightwater != null" >
+        HeightWater,
+      </if>
+      <if test="oiltemp != null" >
+        OilTemp,
+      </if>
+      <if test="waterl != null" >
+        WaterL,
+      </if>
+      <if test="density != null" >
+        Density,
+      </if>
+      <if test="densitystandard != null" >
+        DensityStandard,
+      </if>
+      <if test="shift != null" >
+        Shift,
+      </if>
+      <if test="remark != null" >
+        Remark,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+      <if test="liter != null" >
+        Liter,
+      </if>
+      <if test="pumpno != null" >
+        PumpNo,
+      </if>
+      <if test="backmatchflag != null" >
+        BackMatchFlag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="macno != null" >
+        #{macno,jdbcType=INTEGER},
+      </if>
+      <if test="ttc != null" >
+        #{ttc,jdbcType=INTEGER},
+      </if>
+      <if test="takedate != null" >
+        #{takedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oilgun != null" >
+        #{oilgun,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="opetime != null" >
+        #{opetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stockdate != null" >
+        #{stockdate,jdbcType=VARCHAR},
+      </if>
+      <if test="stocktime != null" >
+        #{stocktime,jdbcType=VARCHAR},
+      </if>
+      <if test="oill != null" >
+        #{oill,jdbcType=DOUBLE},
+      </if>
+      <if test="standardl != null" >
+        #{standardl,jdbcType=DOUBLE},
+      </if>
+      <if test="emptyl != null" >
+        #{emptyl,jdbcType=DOUBLE},
+      </if>
+      <if test="heighttotal != null" >
+        #{heighttotal,jdbcType=DOUBLE},
+      </if>
+      <if test="heightwater != null" >
+        #{heightwater,jdbcType=DOUBLE},
+      </if>
+      <if test="oiltemp != null" >
+        #{oiltemp,jdbcType=DOUBLE},
+      </if>
+      <if test="waterl != null" >
+        #{waterl,jdbcType=DOUBLE},
+      </if>
+      <if test="density != null" >
+        #{density,jdbcType=DOUBLE},
+      </if>
+      <if test="densitystandard != null" >
+        #{densitystandard,jdbcType=DOUBLE},
+      </if>
+      <if test="shift != null" >
+        #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="liter != null" >
+        #{liter,jdbcType=DOUBLE},
+      </if>
+      <if test="pumpno != null" >
+        #{pumpno,jdbcType=DOUBLE},
+      </if>
+      <if test="backmatchflag != null" >
+        #{backmatchflag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_daily_TradeInventory" >
+    update oss_daily_TradeInventory
+    <set >
+      <if test="oilcan != null" >
+        OilCan = #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="oilno != null" >
+        OilNo = #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="opetime != null" >
+        OpeTime = #{opetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stockdate != null" >
+        StockDate = #{stockdate,jdbcType=VARCHAR},
+      </if>
+      <if test="stocktime != null" >
+        StockTime = #{stocktime,jdbcType=VARCHAR},
+      </if>
+      <if test="oill != null" >
+        OilL = #{oill,jdbcType=DOUBLE},
+      </if>
+      <if test="standardl != null" >
+        StandardL = #{standardl,jdbcType=DOUBLE},
+      </if>
+      <if test="emptyl != null" >
+        EmptyL = #{emptyl,jdbcType=DOUBLE},
+      </if>
+      <if test="heighttotal != null" >
+        HeightTotal = #{heighttotal,jdbcType=DOUBLE},
+      </if>
+      <if test="heightwater != null" >
+        HeightWater = #{heightwater,jdbcType=DOUBLE},
+      </if>
+      <if test="oiltemp != null" >
+        OilTemp = #{oiltemp,jdbcType=DOUBLE},
+      </if>
+      <if test="waterl != null" >
+        WaterL = #{waterl,jdbcType=DOUBLE},
+      </if>
+      <if test="density != null" >
+        Density = #{density,jdbcType=DOUBLE},
+      </if>
+      <if test="densitystandard != null" >
+        DensityStandard = #{densitystandard,jdbcType=DOUBLE},
+      </if>
+      <if test="shift != null" >
+        Shift = #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        Remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="liter != null" >
+        Liter = #{liter,jdbcType=DOUBLE},
+      </if>
+      <if test="pumpno != null" >
+        PumpNo= #{pumpno,jdbcType=DOUBLE},
+      </if>
+      <if test="backmatchflag != null" >
+        BackMatchFlag = #{backmatchflag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where MacNo = #{macno,jdbcType=INTEGER}
+      and TTC = #{ttc,jdbcType=INTEGER}
+      and TakeDate = #{takedate,jdbcType=TIMESTAMP}
+      and OilGun = #{oilgun,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_daily_TradeInventory" >
+    update oss_daily_TradeInventory
+    set OilCan = #{oilcan,jdbcType=INTEGER},
+      OilNo = #{oilno,jdbcType=VARCHAR},
+      OpeTime = #{opetime,jdbcType=TIMESTAMP},
+      StockDate = #{stockdate,jdbcType=VARCHAR},
+      StockTime = #{stocktime,jdbcType=VARCHAR},
+      OilL = #{oill,jdbcType=DOUBLE},
+      StandardL = #{standardl,jdbcType=DOUBLE},
+      EmptyL = #{emptyl,jdbcType=DOUBLE},
+      HeightTotal = #{heighttotal,jdbcType=DOUBLE},
+      HeightWater = #{heightwater,jdbcType=DOUBLE},
+      OilTemp = #{oiltemp,jdbcType=DOUBLE},
+      WaterL = #{waterl,jdbcType=DOUBLE},
+      Density = #{density,jdbcType=DOUBLE},
+      DensityStandard = #{densitystandard,jdbcType=DOUBLE},
+      Shift = #{shift,jdbcType=VARCHAR},
+      Remark = #{remark,jdbcType=VARCHAR},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      OUCode = #{oucode,jdbcType=VARCHAR},
+      Liter = #{liter,jdbcType=DOUBLE},
+      PumpNo= #{pumpno,jdbcType=DOUBLE},
+      BackMatchFlag = #{backmatchflag,jdbcType=VARCHAR}
+    where MacNo = #{macno,jdbcType=INTEGER}
+      and TTC = #{ttc,jdbcType=INTEGER}
+      and TakeDate = #{takedate,jdbcType=TIMESTAMP}
+      and OilGun = #{oilgun,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+</mapper>

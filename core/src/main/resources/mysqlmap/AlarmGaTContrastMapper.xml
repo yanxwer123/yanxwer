@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.AlarmGaTContrastDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.AlarmGaTContrast" >
+    <id column="OilCan" property="oilcan" jdbcType="INTEGER" />
+    <id column="FristMeasureTime" property="fristmeasuretime" jdbcType="TIMESTAMP" />
+    <result column="FristMeasureStore" property="fristmeasurestore" jdbcType="DOUBLE" />
+    <result column="SecodeMeasureTime" property="secodemeasuretime" jdbcType="TIMESTAMP" />
+    <result column="SecodeMeasureStore" property="secodemeasurestore" jdbcType="DOUBLE" />
+    <result column="IntervalSales" property="intervalsales" jdbcType="DOUBLE" />
+    <result column="IntervalTime" property="intervaltime" jdbcType="VARCHAR" />
+    <result column="Difference" property="difference" jdbcType="DOUBLE" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="Shift" property="shift" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    OilCan, FristMeasureTime, FristMeasureStore, SecodeMeasureTime, SecodeMeasureStore, 
+    IntervalSales, IntervalTime, Difference, TranStatus, Shift
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.ATG.domain.AlarmGaTContrastKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_alarm_GaTContrast
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and FristMeasureTime = #{fristmeasuretime,jdbcType=TIMESTAMP}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.AlarmGaTContrastKey" >
+    delete from oss_alarm_GaTContrast
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and FristMeasureTime = #{fristmeasuretime,jdbcType=TIMESTAMP}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.AlarmGaTContrast" >
+    insert into oss_alarm_GaTContrast (OilCan, FristMeasureTime, FristMeasureStore, 
+      SecodeMeasureTime, SecodeMeasureStore, 
+      IntervalSales, IntervalTime, Difference, 
+      TranStatus, Shift)
+    values (#{oilcan,jdbcType=INTEGER}, #{fristmeasuretime,jdbcType=TIMESTAMP}, #{fristmeasurestore,jdbcType=DOUBLE}, 
+      #{secodemeasuretime,jdbcType=TIMESTAMP}, #{secodemeasurestore,jdbcType=DOUBLE}, 
+      #{intervalsales,jdbcType=DOUBLE}, #{intervaltime,jdbcType=VARCHAR}, #{difference,jdbcType=DOUBLE}, 
+      #{transtatus,jdbcType=VARCHAR}, #{shift,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.AlarmGaTContrast" >
+    insert into oss_alarm_GaTContrast
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oilcan != null" >
+        OilCan,
+      </if>
+      <if test="fristmeasuretime != null" >
+        FristMeasureTime,
+      </if>
+      <if test="fristmeasurestore != null" >
+        FristMeasureStore,
+      </if>
+      <if test="secodemeasuretime != null" >
+        SecodeMeasureTime,
+      </if>
+      <if test="secodemeasurestore != null" >
+        SecodeMeasureStore,
+      </if>
+      <if test="intervalsales != null" >
+        IntervalSales,
+      </if>
+      <if test="intervaltime != null" >
+        IntervalTime,
+      </if>
+      <if test="difference != null" >
+        Difference,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="shift != null" >
+        Shift,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="fristmeasuretime != null" >
+        #{fristmeasuretime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fristmeasurestore != null" >
+        #{fristmeasurestore,jdbcType=DOUBLE},
+      </if>
+      <if test="secodemeasuretime != null" >
+        #{secodemeasuretime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="secodemeasurestore != null" >
+        #{secodemeasurestore,jdbcType=DOUBLE},
+      </if>
+      <if test="intervalsales != null" >
+        #{intervalsales,jdbcType=DOUBLE},
+      </if>
+      <if test="intervaltime != null" >
+        #{intervaltime,jdbcType=VARCHAR},
+      </if>
+      <if test="difference != null" >
+        #{difference,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null" >
+        #{shift,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.AlarmGaTContrast" >
+    update oss_alarm_GaTContrast
+    <set >
+      <if test="fristmeasurestore != null" >
+        FristMeasureStore = #{fristmeasurestore,jdbcType=DOUBLE},
+      </if>
+      <if test="secodemeasuretime != null" >
+        SecodeMeasureTime = #{secodemeasuretime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="secodemeasurestore != null" >
+        SecodeMeasureStore = #{secodemeasurestore,jdbcType=DOUBLE},
+      </if>
+      <if test="intervalsales != null" >
+        IntervalSales = #{intervalsales,jdbcType=DOUBLE},
+      </if>
+      <if test="intervaltime != null" >
+        IntervalTime = #{intervaltime,jdbcType=VARCHAR},
+      </if>
+      <if test="difference != null" >
+        Difference = #{difference,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null" >
+        Shift = #{shift,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and FristMeasureTime = #{fristmeasuretime,jdbcType=TIMESTAMP}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.AlarmGaTContrast" >
+    update oss_alarm_GaTContrast
+    set FristMeasureStore = #{fristmeasurestore,jdbcType=DOUBLE},
+      SecodeMeasureTime = #{secodemeasuretime,jdbcType=TIMESTAMP},
+      SecodeMeasureStore = #{secodemeasurestore,jdbcType=DOUBLE},
+      IntervalSales = #{intervalsales,jdbcType=DOUBLE},
+      IntervalTime = #{intervaltime,jdbcType=VARCHAR},
+      Difference = #{difference,jdbcType=DOUBLE},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      Shift = #{shift,jdbcType=VARCHAR}
+    where OilCan = #{oilcan,jdbcType=INTEGER}
+      and FristMeasureTime = #{fristmeasuretime,jdbcType=TIMESTAMP}
+  </update>
+  
+   <select id="selectByDate" resultType="com.kld.gsm.ATG.domain.AlarmGaTContrast" parameterType="hashmap">
+    SELECT <include refid="Base_Column_List" />
+    FROM oss_alarm_GaTContrast
+    WHERE  FristMeasureTime >= #{begin,jdbcType=TIMESTAMP}
+      and  #{end,jdbcType=TIMESTAMP}>FristMeasureTime
+     <if test="oilcan != null and oilcan != ''">
+       AND oilcan=#{oilcan,jdbcType=VARCHAR}
+     </if>
+     ORDER BY FristMeasureTime DESC
+   </select>
+  <select id="selectByTrans" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_alarm_GaTContrast WHERE TranStatus=#{trans,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.MonitorTankOilMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.MonitorTankOil" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="OilCan" property="oilcan" jdbcType="INTEGER" />
+    <result column="MeasureTime" property="measuretime" jdbcType="TIMESTAMP" />
+    <result column="OilL" property="oill" jdbcType="DOUBLE" />
+    <result column="StandardL" property="standardl" jdbcType="DOUBLE" />
+    <result column="HeightTotal" property="heighttotal" jdbcType="DOUBLE" />
+    <result column="WaterHeight" property="waterheight" jdbcType="DOUBLE" />
+    <result column="WaterL" property="waterl" jdbcType="DOUBLE" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="Temperature" property="temperature" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, OilCan, MeasureTime, OilL, StandardL, HeightTotal, WaterHeight, WaterL, TranStatus, 
+    Temperature
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from oss_monitor_tankoil
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from oss_monitor_tankoil
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.MonitorTankOil" >
+    insert into oss_monitor_tankoil (ID, OilCan, MeasureTime, 
+      OilL, StandardL, HeightTotal, 
+      WaterHeight, WaterL, TranStatus, 
+      Temperature)
+    values (#{id,jdbcType=VARCHAR}, #{oilcan,jdbcType=INTEGER}, #{measuretime,jdbcType=TIMESTAMP}, 
+      #{oill,jdbcType=DOUBLE}, #{standardl,jdbcType=DOUBLE}, #{heighttotal,jdbcType=DOUBLE}, 
+      #{waterheight,jdbcType=DOUBLE}, #{waterl,jdbcType=DOUBLE}, #{transtatus,jdbcType=VARCHAR}, 
+      #{temperature,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.MonitorTankOil" >
+    insert into oss_monitor_tankoil
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="oilcan != null" >
+        OilCan,
+      </if>
+      <if test="measuretime != null" >
+        MeasureTime,
+      </if>
+      <if test="oill != null" >
+        OilL,
+      </if>
+      <if test="standardl != null" >
+        StandardL,
+      </if>
+      <if test="heighttotal != null" >
+        HeightTotal,
+      </if>
+      <if test="waterheight != null" >
+        WaterHeight,
+      </if>
+      <if test="waterl != null" >
+        WaterL,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="temperature != null" >
+        Temperature,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="measuretime != null" >
+        #{measuretime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oill != null" >
+        #{oill,jdbcType=DOUBLE},
+      </if>
+      <if test="standardl != null" >
+        #{standardl,jdbcType=DOUBLE},
+      </if>
+      <if test="heighttotal != null" >
+        #{heighttotal,jdbcType=DOUBLE},
+      </if>
+      <if test="waterheight != null" >
+        #{waterheight,jdbcType=DOUBLE},
+      </if>
+      <if test="waterl != null" >
+        #{waterl,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="temperature != null" >
+        #{temperature,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.MonitorTankOil" >
+    update oss_monitor_tankoil
+    <set >
+      <if test="oilcan != null" >
+        OilCan = #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="measuretime != null" >
+        MeasureTime = #{measuretime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oill != null" >
+        OilL = #{oill,jdbcType=DOUBLE},
+      </if>
+      <if test="standardl != null" >
+        StandardL = #{standardl,jdbcType=DOUBLE},
+      </if>
+      <if test="heighttotal != null" >
+        HeightTotal = #{heighttotal,jdbcType=DOUBLE},
+      </if>
+      <if test="waterheight != null" >
+        WaterHeight = #{waterheight,jdbcType=DOUBLE},
+      </if>
+      <if test="waterl != null" >
+        WaterL = #{waterl,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="temperature != null" >
+        Temperature = #{temperature,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.MonitorTankOil" >
+    update oss_monitor_tankoil
+    set OilCan = #{oilcan,jdbcType=INTEGER},
+      MeasureTime = #{measuretime,jdbcType=TIMESTAMP},
+      OilL = #{oill,jdbcType=DOUBLE},
+      StandardL = #{standardl,jdbcType=DOUBLE},
+      HeightTotal = #{heighttotal,jdbcType=DOUBLE},
+      WaterHeight = #{waterheight,jdbcType=DOUBLE},
+      WaterL = #{waterl,jdbcType=DOUBLE},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      Temperature = #{temperature,jdbcType=DOUBLE}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByTrans" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_monitor_tankoil WHERE TranStatus=#{trans,jdbcType=VARCHAR}
+  </select>
+</mapper>

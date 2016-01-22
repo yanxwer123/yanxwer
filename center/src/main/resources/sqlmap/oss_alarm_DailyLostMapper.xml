@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_alarm_DailyLostMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_alarm_DailyLost" >
+    <id column="AccountDate" property="accountdate" jdbcType="TIMESTAMP" />
+    <id column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <id column="NodeNo" property="nodeno" jdbcType="VARCHAR" />
+    <result column="DarlyankStock" property="darlyankstock" jdbcType="DOUBLE" />
+    <result column="DeliveryNo" property="deliveryno" jdbcType="VARCHAR" />
+    <result column="ReceiveL" property="receivel" jdbcType="DOUBLE" />
+    <result column="TodayOut" property="todayout" jdbcType="DOUBLE" />
+    <result column="TodayEndStock" property="todayendstock" jdbcType="DOUBLE" />
+    <result column="RealStock" property="realstock" jdbcType="DOUBLE" />
+    <result column="Cost" property="cost" jdbcType="DOUBLE" />
+    <result column="CostSent" property="costsent" jdbcType="DOUBLE" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    AccountDate, OilNo, NodeNo, DarlyankStock, DeliveryNo, ReceiveL, TodayOut, TodayEndStock,
+    RealStock, Cost, CostSent, CreateTime, TranStatus, OUCode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_alarm_DailyLostKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_alarm_DailyLost
+    where AccountDate = #{accountdate,jdbcType=TIMESTAMP}
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_alarm_DailyLostKey" >
+    delete from oss_alarm_DailyLost
+    where AccountDate = #{accountdate,jdbcType=TIMESTAMP}
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <select id="selectDailyLost" resultType="hashmap" parameterType="hashmap">
+    select * from oss_alarm_DailyLost where 1=1
+    <if test="begin != null">
+      <![CDATA[ AND AccountDate>=#{begin,jdbcType=TIMESTAMP}]]>
+    </if>
+    <if test="end != null">
+      <![CDATA[ AND AccountDate < #{end,jdbcType=TIMESTAMP}]]>
+    </if>
+    <if test="oucode != null ">
+      <![CDATA[  and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    </if>
+    ORDER BY AccountDate DESC
+  </select>
+  <select id="selectPageDailyLost" resultType="hashmap" parameterType="hashmap">
+    select * from oss_alarm_DailyLost where  1=1
+    <if test="begin != null">
+      <![CDATA[ AND AccountDate>=#{begin,jdbcType=TIMESTAMP}]]>
+    </if>
+    <if test="end != null">
+      <![CDATA[ AND AccountDate < #{end,jdbcType=TIMESTAMP}]]>
+    </if>
+    <if test="oucode != null ">
+      <![CDATA[  and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    </if>
+    ORDER BY AccountDate DESC
+    <if test="firstRow != null and  pageSize!= null">
+      <![CDATA[ LIMIT #{firstRow},#{pageSize}]]>
+    </if>
+  </select>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_alarm_DailyLost" >
+    insert into oss_alarm_DailyLost (AccountDate, OilNo, NodeNo,
+      DarlyankStock, DeliveryNo, ReceiveL,
+      TodayOut, TodayEndStock, RealStock,
+      Cost, CostSent, CreateTime,
+      TranStatus, OUCode)
+    values (#{accountdate,jdbcType=TIMESTAMP}, #{oilno,jdbcType=VARCHAR}, #{nodeno,jdbcType=VARCHAR},
+      #{darlyankstock,jdbcType=DOUBLE}, #{deliveryno,jdbcType=VARCHAR}, #{receivel,jdbcType=DOUBLE},
+      #{todayout,jdbcType=DOUBLE}, #{todayendstock,jdbcType=DOUBLE}, #{realstock,jdbcType=DOUBLE},
+      #{cost,jdbcType=DOUBLE}, #{costsent,jdbcType=DOUBLE}, #{createtime,jdbcType=TIMESTAMP},
+      #{transtatus,jdbcType=VARCHAR}, #{oucode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_alarm_DailyLost" >
+    insert into oss_alarm_DailyLost
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="accountdate != null" >
+        AccountDate,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="darlyankstock != null" >
+        DarlyankStock,
+      </if>
+      <if test="deliveryno != null" >
+        DeliveryNo,
+      </if>
+      <if test="receivel != null" >
+        ReceiveL,
+      </if>
+      <if test="todayout != null" >
+        TodayOut,
+      </if>
+      <if test="todayendstock != null" >
+        TodayEndStock,
+      </if>
+      <if test="realstock != null" >
+        RealStock,
+      </if>
+      <if test="cost != null" >
+        Cost,
+      </if>
+      <if test="costsent != null" >
+        CostSent,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="accountdate != null" >
+        #{accountdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="darlyankstock != null" >
+        #{darlyankstock,jdbcType=DOUBLE},
+      </if>
+      <if test="deliveryno != null" >
+        #{deliveryno,jdbcType=VARCHAR},
+      </if>
+      <if test="receivel != null" >
+        #{receivel,jdbcType=DOUBLE},
+      </if>
+      <if test="todayout != null" >
+        #{todayout,jdbcType=DOUBLE},
+      </if>
+      <if test="todayendstock != null" >
+        #{todayendstock,jdbcType=DOUBLE},
+      </if>
+      <if test="realstock != null" >
+        #{realstock,jdbcType=DOUBLE},
+      </if>
+      <if test="cost != null" >
+        #{cost,jdbcType=DOUBLE},
+      </if>
+      <if test="costsent != null" >
+        #{costsent,jdbcType=DOUBLE},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_alarm_DailyLost" >
+    update oss_alarm_DailyLost
+    <set >
+      <if test="darlyankstock != null" >
+        DarlyankStock = #{darlyankstock,jdbcType=DOUBLE},
+      </if>
+      <if test="deliveryno != null" >
+        DeliveryNo = #{deliveryno,jdbcType=VARCHAR},
+      </if>
+      <if test="receivel != null" >
+        ReceiveL = #{receivel,jdbcType=DOUBLE},
+      </if>
+      <if test="todayout != null" >
+        TodayOut = #{todayout,jdbcType=DOUBLE},
+      </if>
+      <if test="todayendstock != null" >
+        TodayEndStock = #{todayendstock,jdbcType=DOUBLE},
+      </if>
+      <if test="realstock != null" >
+        RealStock = #{realstock,jdbcType=DOUBLE},
+      </if>
+      <if test="cost != null" >
+        Cost = #{cost,jdbcType=DOUBLE},
+      </if>
+      <if test="costsent != null" >
+        CostSent = #{costsent,jdbcType=DOUBLE},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where AccountDate = #{accountdate,jdbcType=TIMESTAMP}
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_alarm_DailyLost" >
+    update oss_alarm_DailyLost
+    set DarlyankStock = #{darlyankstock,jdbcType=DOUBLE},
+      DeliveryNo = #{deliveryno,jdbcType=VARCHAR},
+      ReceiveL = #{receivel,jdbcType=DOUBLE},
+      TodayOut = #{todayout,jdbcType=DOUBLE},
+      TodayEndStock = #{todayendstock,jdbcType=DOUBLE},
+      RealStock = #{realstock,jdbcType=DOUBLE},
+      Cost = #{cost,jdbcType=DOUBLE},
+      CostSent = #{costsent,jdbcType=DOUBLE},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      OUCode = #{oucode,jdbcType=VARCHAR}
+    where AccountDate = #{accountdate,jdbcType=TIMESTAMP}
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+</mapper>

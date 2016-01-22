@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_acceptance_odRegisterMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_acceptance_odRegister" >
+    <id column="ManualNo" property="manualno" jdbcType="VARCHAR" />
+    <id column="NodeNo" property="nodeno" jdbcType="VARCHAR" />
+    <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
+    <result column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <result column="Shift" property="shift" jdbcType="VARCHAR" />
+    <result column="DeliveryNo" property="deliveryno" jdbcType="VARCHAR" />
+    <result column="DischargeLoss" property="dischargeloss" jdbcType="DOUBLE" />
+    <result column="DischargeLossV20" property="dischargelossv20" jdbcType="DOUBLE" />
+    <result column="DischargeRate" property="dischargerate" jdbcType="DOUBLE" />
+    <result column="DischargeRateV20" property="dischargeratev20" jdbcType="DOUBLE" />
+    <result column="PlanL" property="planl" jdbcType="DOUBLE" />
+    <result column="RealReceiveL" property="realreceivel" jdbcType="DOUBLE" />
+    <result column="HeightEmpey" property="heightempey" jdbcType="DOUBLE" />
+    <result column="HeightTotal" property="heighttotal" jdbcType="DOUBLE" />
+    <result column="HeightWater" property="heightwater" jdbcType="DOUBLE" />
+    <result column="CubageTable" property="cubagetable" jdbcType="DOUBLE" />
+    <result column="PlumbunBankOperator" property="plumbunbankoperator" jdbcType="VARCHAR" />
+    <result column="CalculateOperator" property="calculateoperator" jdbcType="VARCHAR" />
+    <result column="BackBankNo" property="backbankno" jdbcType="VARCHAR" />
+    <result column="CanTruckTemp" property="cantrucktemp" jdbcType="DOUBLE" />
+    <result column="IsFullDose" property="isfulldose" jdbcType="INTEGER" />
+    <result column="ServiceLevel" property="servicelevel" jdbcType="INTEGER" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="IsDel" property="isdel" jdbcType="INTEGER" />
+    <result column="RealGetLV20" property="realgetlv20" jdbcType="DOUBLE" />
+    <result column="RealGetL" property="realgetl" jdbcType="DOUBLE" />
+    <result column="DuringSales" property="duringsales" jdbcType="DOUBLE" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="InStationTime" property="instationtime" jdbcType="TIMESTAMP" />
+    <result column="IndemnityLoss" property="indemnityloss" jdbcType="DOUBLE" />
+    <result column="BeginTime" property="begintime" jdbcType="TIMESTAMP" />
+    <result column="EndTime" property="endtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ManualNo, NodeNo, OUCode, OilNo, Shift, DeliveryNo, DischargeLoss, DischargeLossV20, 
+    DischargeRate, DischargeRateV20, PlanL, RealReceiveL, HeightEmpey, HeightTotal, HeightWater, 
+    CubageTable, PlumbunBankOperator, CalculateOperator, BackBankNo, CanTruckTemp, IsFullDose, 
+    ServiceLevel, CreateTime, IsDel, RealGetLV20, RealGetL, DuringSales, TranStatus, 
+    InStationTime, IndemnityLoss,BeginTime,EndTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_acceptance_odRegisterKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_acceptance_odRegister
+    where ManualNo = #{manualno,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_acceptance_odRegisterKey" >
+    delete from oss_acceptance_odRegister
+    where (ManualNo = #{manualno,jdbcType=VARCHAR} OR DeliveryNo=#{manualno,jdbcType=VARCHAR})
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deletebybillnoAndnodeno" parameterType="String" >
+    delete from oss_acceptance_odRegister
+    where (ManualNo = #{0,jdbcType=VARCHAR} OR DeliveryNo=#{0,jdbcType=VARCHAR})
+    and NodeNo = #{1,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_acceptance_odRegister" >
+    insert into oss_acceptance_odRegister (ManualNo, NodeNo, OUCode, 
+      OilNo, Shift, DeliveryNo, 
+      DischargeLoss, DischargeLossV20, DischargeRate, 
+      DischargeRateV20, PlanL, RealReceiveL, 
+      HeightEmpey, HeightTotal, HeightWater, 
+      CubageTable, PlumbunBankOperator, CalculateOperator, 
+      BackBankNo, CanTruckTemp, IsFullDose, 
+      ServiceLevel, CreateTime, IsDel, 
+      RealGetLV20, RealGetL, DuringSales, 
+      TranStatus, InStationTime, IndemnityLoss,BeginTime,EndTime
+      )
+    values (#{manualno,jdbcType=VARCHAR}, #{nodeno,jdbcType=VARCHAR}, #{oucode,jdbcType=VARCHAR}, 
+      #{oilno,jdbcType=VARCHAR}, #{shift,jdbcType=VARCHAR}, #{deliveryno,jdbcType=VARCHAR}, 
+      #{dischargeloss,jdbcType=DOUBLE}, #{dischargelossv20,jdbcType=DOUBLE}, #{dischargerate,jdbcType=DOUBLE}, 
+      #{dischargeratev20,jdbcType=DOUBLE}, #{planl,jdbcType=DOUBLE}, #{realreceivel,jdbcType=DOUBLE}, 
+      #{heightempey,jdbcType=DOUBLE}, #{heighttotal,jdbcType=DOUBLE}, #{heightwater,jdbcType=DOUBLE}, 
+      #{cubagetable,jdbcType=DOUBLE}, #{plumbunbankoperator,jdbcType=VARCHAR}, #{calculateoperator,jdbcType=VARCHAR}, 
+      #{backbankno,jdbcType=VARCHAR}, #{cantrucktemp,jdbcType=DOUBLE}, #{isfulldose,jdbcType=INTEGER}, 
+      #{servicelevel,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{isdel,jdbcType=INTEGER}, 
+      #{realgetlv20,jdbcType=DOUBLE}, #{realgetl,jdbcType=DOUBLE}, #{duringsales,jdbcType=DOUBLE}, 
+      #{transtatus,jdbcType=VARCHAR}, #{instationtime,jdbcType=TIMESTAMP}, #{indemnityloss,jdbcType=DOUBLE},
+      ,#{begintime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="merge" parameterType="com.kld.gsm.center.domain.oss_acceptance_odRegister" >
+    replace into oss_acceptance_odRegister
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="manualno != null" >
+        ManualNo,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="shift != null" >
+        Shift,
+      </if>
+      <if test="deliveryno != null" >
+        DeliveryNo,
+      </if>
+      <if test="dischargeloss != null" >
+        DischargeLoss,
+      </if>
+      <if test="dischargelossv20 != null" >
+        DischargeLossV20,
+      </if>
+      <if test="dischargerate != null" >
+        DischargeRate,
+      </if>
+      <if test="dischargeratev20 != null" >
+        DischargeRateV20,
+      </if>
+      <if test="planl != null" >
+        PlanL,
+      </if>
+      <if test="realreceivel != null" >
+        RealReceiveL,
+      </if>
+      <if test="heightempey != null" >
+        HeightEmpey,
+      </if>
+      <if test="heighttotal != null" >
+        HeightTotal,
+      </if>
+      <if test="heightwater != null" >
+        HeightWater,
+      </if>
+      <if test="cubagetable != null" >
+        CubageTable,
+      </if>
+      <if test="plumbunbankoperator != null" >
+        PlumbunBankOperator,
+      </if>
+      <if test="calculateoperator != null" >
+        CalculateOperator,
+      </if>
+      <if test="backbankno != null" >
+        BackBankNo,
+      </if>
+      <if test="cantrucktemp != null" >
+        CanTruckTemp,
+      </if>
+      <if test="isfulldose != null" >
+        IsFullDose,
+      </if>
+      <if test="servicelevel != null" >
+        ServiceLevel,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="isdel != null" >
+        IsDel,
+      </if>
+      <if test="realgetlv20 != null" >
+        RealGetLV20,
+      </if>
+      <if test="realgetl != null" >
+        RealGetL,
+      </if>
+      <if test="duringsales != null" >
+        DuringSales,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="instationtime != null" >
+        InStationTime,
+      </if>
+      <if test="indemnityloss != null" >
+        IndemnityLoss,
+      </if>
+      <if test="begintime != null" >
+        BeginTime,
+      </if>
+      <if test="endtime != null" >
+        EndTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="manualno != null" >
+        #{manualno,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null" >
+        #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryno != null" >
+        #{deliveryno,jdbcType=VARCHAR},
+      </if>
+      <if test="dischargeloss != null" >
+        #{dischargeloss,jdbcType=DOUBLE},
+      </if>
+      <if test="dischargelossv20 != null" >
+        #{dischargelossv20,jdbcType=DOUBLE},
+      </if>
+      <if test="dischargerate != null" >
+        #{dischargerate,jdbcType=DOUBLE},
+      </if>
+      <if test="dischargeratev20 != null" >
+        #{dischargeratev20,jdbcType=DOUBLE},
+      </if>
+      <if test="planl != null" >
+        #{planl,jdbcType=DOUBLE},
+      </if>
+      <if test="realreceivel != null" >
+        #{realreceivel,jdbcType=DOUBLE},
+      </if>
+      <if test="heightempey != null" >
+        #{heightempey,jdbcType=DOUBLE},
+      </if>
+      <if test="heighttotal != null" >
+        #{heighttotal,jdbcType=DOUBLE},
+      </if>
+      <if test="heightwater != null" >
+        #{heightwater,jdbcType=DOUBLE},
+      </if>
+      <if test="cubagetable != null" >
+        #{cubagetable,jdbcType=DOUBLE},
+      </if>
+      <if test="plumbunbankoperator != null" >
+        #{plumbunbankoperator,jdbcType=VARCHAR},
+      </if>
+      <if test="calculateoperator != null" >
+        #{calculateoperator,jdbcType=VARCHAR},
+      </if>
+      <if test="backbankno != null" >
+        #{backbankno,jdbcType=VARCHAR},
+      </if>
+      <if test="cantrucktemp != null" >
+        #{cantrucktemp,jdbcType=DOUBLE},
+      </if>
+      <if test="isfulldose != null" >
+        #{isfulldose,jdbcType=INTEGER},
+      </if>
+      <if test="servicelevel != null" >
+        #{servicelevel,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="realgetlv20 != null" >
+        #{realgetlv20,jdbcType=DOUBLE},
+      </if>
+      <if test="realgetl != null" >
+        #{realgetl,jdbcType=DOUBLE},
+      </if>
+      <if test="duringsales != null" >
+        #{duringsales,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="instationtime != null" >
+        #{instationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="indemnityloss != null" >
+        #{indemnityloss,jdbcType=DOUBLE},
+      </if>
+      <if test="begintime != null" >
+        #{begintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_acceptance_odRegister" >
+    insert into oss_acceptance_odRegister
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="manualno != null" >
+        ManualNo,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="shift != null" >
+        Shift,
+      </if>
+      <if test="deliveryno != null" >
+        DeliveryNo,
+      </if>
+      <if test="dischargeloss != null" >
+        DischargeLoss,
+      </if>
+      <if test="dischargelossv20 != null" >
+        DischargeLossV20,
+      </if>
+      <if test="dischargerate != null" >
+        DischargeRate,
+      </if>
+      <if test="dischargeratev20 != null" >
+        DischargeRateV20,
+      </if>
+      <if test="planl != null" >
+        PlanL,
+      </if>
+      <if test="realreceivel != null" >
+        RealReceiveL,
+      </if>
+      <if test="heightempey != null" >
+        HeightEmpey,
+      </if>
+      <if test="heighttotal != null" >
+        HeightTotal,
+      </if>
+      <if test="heightwater != null" >
+        HeightWater,
+      </if>
+      <if test="cubagetable != null" >
+        CubageTable,
+      </if>
+      <if test="plumbunbankoperator != null" >
+        PlumbunBankOperator,
+      </if>
+      <if test="calculateoperator != null" >
+        CalculateOperator,
+      </if>
+      <if test="backbankno != null" >
+        BackBankNo,
+      </if>
+      <if test="cantrucktemp != null" >
+        CanTruckTemp,
+      </if>
+      <if test="isfulldose != null" >
+        IsFullDose,
+      </if>
+      <if test="servicelevel != null" >
+        ServiceLevel,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="isdel != null" >
+        IsDel,
+      </if>
+      <if test="realgetlv20 != null" >
+        RealGetLV20,
+      </if>
+      <if test="realgetl != null" >
+        RealGetL,
+      </if>
+      <if test="duringsales != null" >
+        DuringSales,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="instationtime != null" >
+        InStationTime,
+      </if>
+      <if test="indemnityloss != null" >
+        IndemnityLoss,
+      </if>
+      <if test="begintime != null" >
+        BeginTime,
+      </if>
+      <if test="endtime != null" >
+        EndTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="manualno != null" >
+        #{manualno,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null" >
+        #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryno != null" >
+        #{deliveryno,jdbcType=VARCHAR},
+      </if>
+      <if test="dischargeloss != null" >
+        #{dischargeloss,jdbcType=DOUBLE},
+      </if>
+      <if test="dischargelossv20 != null" >
+        #{dischargelossv20,jdbcType=DOUBLE},
+      </if>
+      <if test="dischargerate != null" >
+        #{dischargerate,jdbcType=DOUBLE},
+      </if>
+      <if test="dischargeratev20 != null" >
+        #{dischargeratev20,jdbcType=DOUBLE},
+      </if>
+      <if test="planl != null" >
+        #{planl,jdbcType=DOUBLE},
+      </if>
+      <if test="realreceivel != null" >
+        #{realreceivel,jdbcType=DOUBLE},
+      </if>
+      <if test="heightempey != null" >
+        #{heightempey,jdbcType=DOUBLE},
+      </if>
+      <if test="heighttotal != null" >
+        #{heighttotal,jdbcType=DOUBLE},
+      </if>
+      <if test="heightwater != null" >
+        #{heightwater,jdbcType=DOUBLE},
+      </if>
+      <if test="cubagetable != null" >
+        #{cubagetable,jdbcType=DOUBLE},
+      </if>
+      <if test="plumbunbankoperator != null" >
+        #{plumbunbankoperator,jdbcType=VARCHAR},
+      </if>
+      <if test="calculateoperator != null" >
+        #{calculateoperator,jdbcType=VARCHAR},
+      </if>
+      <if test="backbankno != null" >
+        #{backbankno,jdbcType=VARCHAR},
+      </if>
+      <if test="cantrucktemp != null" >
+        #{cantrucktemp,jdbcType=DOUBLE},
+      </if>
+      <if test="isfulldose != null" >
+        #{isfulldose,jdbcType=INTEGER},
+      </if>
+      <if test="servicelevel != null" >
+        #{servicelevel,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="realgetlv20 != null" >
+        #{realgetlv20,jdbcType=DOUBLE},
+      </if>
+      <if test="realgetl != null" >
+        #{realgetl,jdbcType=DOUBLE},
+      </if>
+      <if test="duringsales != null" >
+        #{duringsales,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="instationtime != null" >
+        #{instationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="indemnityloss != null" >
+        #{indemnityloss,jdbcType=DOUBLE},
+      </if>
+      <if test="begintime != null" >
+        #{begintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_acceptance_odRegister" >
+    update oss_acceptance_odRegister
+    <set >
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="oilno != null" >
+        OilNo = #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="shift != null" >
+        Shift = #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryno != null" >
+        DeliveryNo = #{deliveryno,jdbcType=VARCHAR},
+      </if>
+      <if test="dischargeloss != null" >
+        DischargeLoss = #{dischargeloss,jdbcType=DOUBLE},
+      </if>
+      <if test="dischargelossv20 != null" >
+        DischargeLossV20 = #{dischargelossv20,jdbcType=DOUBLE},
+      </if>
+      <if test="dischargerate != null" >
+        DischargeRate = #{dischargerate,jdbcType=DOUBLE},
+      </if>
+      <if test="dischargeratev20 != null" >
+        DischargeRateV20 = #{dischargeratev20,jdbcType=DOUBLE},
+      </if>
+      <if test="planl != null" >
+        PlanL = #{planl,jdbcType=DOUBLE},
+      </if>
+      <if test="realreceivel != null" >
+        RealReceiveL = #{realreceivel,jdbcType=DOUBLE},
+      </if>
+      <if test="heightempey != null" >
+        HeightEmpey = #{heightempey,jdbcType=DOUBLE},
+      </if>
+      <if test="heighttotal != null" >
+        HeightTotal = #{heighttotal,jdbcType=DOUBLE},
+      </if>
+      <if test="heightwater != null" >
+        HeightWater = #{heightwater,jdbcType=DOUBLE},
+      </if>
+      <if test="cubagetable != null" >
+        CubageTable = #{cubagetable,jdbcType=DOUBLE},
+      </if>
+      <if test="plumbunbankoperator != null" >
+        PlumbunBankOperator = #{plumbunbankoperator,jdbcType=VARCHAR},
+      </if>
+      <if test="calculateoperator != null" >
+        CalculateOperator = #{calculateoperator,jdbcType=VARCHAR},
+      </if>
+      <if test="backbankno != null" >
+        BackBankNo = #{backbankno,jdbcType=VARCHAR},
+      </if>
+      <if test="cantrucktemp != null" >
+        CanTruckTemp = #{cantrucktemp,jdbcType=DOUBLE},
+      </if>
+      <if test="isfulldose != null" >
+        IsFullDose = #{isfulldose,jdbcType=INTEGER},
+      </if>
+      <if test="servicelevel != null" >
+        ServiceLevel = #{servicelevel,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdel != null" >
+        IsDel = #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="realgetlv20 != null" >
+        RealGetLV20 = #{realgetlv20,jdbcType=DOUBLE},
+      </if>
+      <if test="realgetl != null" >
+        RealGetL = #{realgetl,jdbcType=DOUBLE},
+      </if>
+      <if test="duringsales != null" >
+        DuringSales = #{duringsales,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="instationtime != null" >
+        InStationTime = #{instationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="indemnityloss != null" >
+        IndemnityLoss = #{indemnityloss,jdbcType=DOUBLE},
+      </if>
+      <if test="begintime != null" >
+        BeginTime = #{begintime,jdbcType=DOUBLE},
+      </if>
+      <if test="endtime != null" >
+        EndTime = #{endtime,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where ManualNo = #{manualno,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_acceptance_odRegister" >
+    update oss_acceptance_odRegister
+    set OUCode = #{oucode,jdbcType=VARCHAR},
+      OilNo = #{oilno,jdbcType=VARCHAR},
+      Shift = #{shift,jdbcType=VARCHAR},
+      DeliveryNo = #{deliveryno,jdbcType=VARCHAR},
+      DischargeLoss = #{dischargeloss,jdbcType=DOUBLE},
+      DischargeLossV20 = #{dischargelossv20,jdbcType=DOUBLE},
+      DischargeRate = #{dischargerate,jdbcType=DOUBLE},
+      DischargeRateV20 = #{dischargeratev20,jdbcType=DOUBLE},
+      PlanL = #{planl,jdbcType=DOUBLE},
+      RealReceiveL = #{realreceivel,jdbcType=DOUBLE},
+      HeightEmpey = #{heightempey,jdbcType=DOUBLE},
+      HeightTotal = #{heighttotal,jdbcType=DOUBLE},
+      HeightWater = #{heightwater,jdbcType=DOUBLE},
+      CubageTable = #{cubagetable,jdbcType=DOUBLE},
+      PlumbunBankOperator = #{plumbunbankoperator,jdbcType=VARCHAR},
+      CalculateOperator = #{calculateoperator,jdbcType=VARCHAR},
+      BackBankNo = #{backbankno,jdbcType=VARCHAR},
+      CanTruckTemp = #{cantrucktemp,jdbcType=DOUBLE},
+      IsFullDose = #{isfulldose,jdbcType=INTEGER},
+      ServiceLevel = #{servicelevel,jdbcType=INTEGER},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      IsDel = #{isdel,jdbcType=INTEGER},
+      RealGetLV20 = #{realgetlv20,jdbcType=DOUBLE},
+      RealGetL = #{realgetl,jdbcType=DOUBLE},
+      DuringSales = #{duringsales,jdbcType=DOUBLE},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      InStationTime = #{instationtime,jdbcType=TIMESTAMP},
+      IndemnityLoss = #{indemnityloss,jdbcType=DOUBLE},
+      BeginTime=#{begintime,jdbcType=TIMESTAMP},
+      EndTime=#{endtime,jdbcType=TIMESTAMP}
+    where ManualNo = #{manualno,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <select id="selectBytranstatus" resultMap="BaseResultMap">
+    SELECT  <include refid="Base_Column_List"/>
+    FROM  oss_acceptance_odRegister WHERE TranStatus=0
+  </select>
+  <select id="selectYYS" resultType="hashmap" parameterType="hashmap">
+    select SUM(RealGetL) AS RealGetL FROM
+    (
+    select *,(select OilType from oss_sysmanage_oilType Where oss_sysmanage_oilType.OilNo=oss_acceptance_odRegister.OilNo) as OilType from oss_acceptance_odRegister where EndTime IS NOT NULL
+    ) a
+    where 1=1
+    <if test="start != null">
+      <![CDATA[and BeginTime>#{start,jdbcType=VARCHAR}]]>
+    </if>
+    <if test="end != null">
+      <![CDATA[and BeginTime<#{end,jdbcType=VARCHAR}]]>
+    </if>
+    <if test="oiltype != null">
+      and OilType=#{oiltype,jdbcType=VARCHAR}
+    </if>
+    <if test="oucode != null and oucode != '' ">
+      and OUCode LIKE #{oucode,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>

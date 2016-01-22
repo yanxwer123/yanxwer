@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.UserAuthorityPointDao" >
+  <resultMap id="BaseResultMap" type="hashmap" >
+      <result property="funccode"   column="funccode" javaType="string"    jdbcType="VARCHAR" />
+      <result property="parentcode"   column="parentcode" javaType="string"    jdbcType="VARCHAR" />
+      <result property="name"   column="name"  javaType="string"    jdbcType="VARCHAR" />
+      <result property="picurl"   column="picurl" javaType="string"    jdbcType="VARCHAR" />
+      <result property="targeturl"   column="targeturl" javaType="string"    jdbcType="VARCHAR" />
+      <result property="isopenwindow"   column="isopenwindow" javaType="java.math.BigDecimal"    jdbcType="DECIMAL" />
+      <result property="orderno"   column="orderno" javaType="java.math.BigDecimal"    jdbcType="DECIMAL" />
+  </resultMap>
+  
+  <select id="getauthorityPointListByUserId" parameterType="string" resultMap="BaseResultMap">
+    select distinct d.funccode,d.parentcode,d.name,d.picurl,d.targeturl,d.isopenwindow,d.orderno
+		  from sys_user a inner join sys_rolefuncrel c on a.rolecode=c.rolecode 
+		  inner join sys_func d on c.funccode=d.funccode
+		  where a.state=1 AND a.username=#{username} order by d.orderno asc
+  </select>
+</mapper>

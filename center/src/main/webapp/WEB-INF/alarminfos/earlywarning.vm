@@ -1,0 +1,78 @@
+#set($layout="layout/emptylayout.vm")
+#set($menuTitle="报警信息")
+
+<div id="query" title="查询条件" collapsible="true" class="easyui-panel" icon="icon-search">
+    <table cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <th width="8%">
+                选择油站：
+            </th>
+            <th colspan="3">
+                #parse("business/realstock.vm")
+            </th>
+        </tr>
+        <tr>
+            <th>
+                起止日期：
+            </th>
+            <th>
+                <input id="dateStartinput" type="text" class="easyui-datebox" required="required"/>--
+                <input id="dateEndinput" type="text"  class="easyui-datebox" required="required"/>
+            </th>
+        </tr>
+            <tr>
+            <th>状态：</th>
+            <th>
+                <select  class="easyui-combobox">
+                    <option selected value="请选择">请选择</option>
+                    <option value="正常">正常</option>
+                    <option value="异常">异常</option>
+                </select>
+            </th>
+        </tr>
+
+        <tr>
+            <th></th>
+            <th>
+                <a id="btnSelect" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </table>
+
+</div>
+
+<div id="queryResult" title="报警统计" class="easyui-panel">
+    <table class="easyui-datagrid">
+        <thead>
+        <tr>
+            <th data-options="field:'code'">油站名称</th>
+            <th data-options="field:'name'">报警类型</th>
+            <th data-options="field:'date'">开始时间</th>
+            <th data-options="field:'JBSJ'">结束时间</th>
+            <th data-options="field:'JBSJJ'">状态</th>
+        </tr>
+        </thead>
+
+    </table>
+</div>
+<script>
+    var cols=[[
+        {field:'STATION_NAME',title:'油站名称',width:100},
+        {field:'AlarmType',title:'报警类型',width:100},
+        {field:'StartTime',title:'开始时间',width:100},
+        {field:'EndTime',title:'结束时间',width:100},
+        {field:'State',title:'状态',width:100},
+    ]];
+    var alarmType;
+    var startTime;
+    var endTime;
+    var state;
+    $(function(){
+        initData();
+            });
+
+    }
+
+</script>

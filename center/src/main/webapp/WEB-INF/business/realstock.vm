@@ -1,0 +1,19 @@
+#set($layout="layout/emptylayout.vm")
+#set($menuTitle="实时库存")
+
+<input id="cc" name="cc"  class="easyui-combobox textbox" type="text"  style="width:150px" data-options="prompt:'--请选择--'"></input>
+
+<input id="aa" name="aa"  class="easyui-combobox textbox" type="text" style="width:150px" data-options="prompt:'--请选择--'"></input>
+
+<input id="ss" name="ss"  class="easyui-combobox textbox" type="text" style="width:150px" data-options="prompt:'--请选择--'"></input>
+
+
+
+<script type="text/javascript">
+    LoadOrgunit("cc","aa","ss");
+    //Loadcas("cc","aa","ss");
+   /* var data = $('#cc').combobox('getData');
+    alert(data);
+    $("#cc ").combobox('select',data[0].oucode);*/
+</script>
+

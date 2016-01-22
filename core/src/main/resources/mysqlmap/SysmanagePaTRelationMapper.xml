@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.SysManagePaTRelationDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.SysManagePaTRelation" >
+    <id column="ProbeModel" property="probemodel" jdbcType="VARCHAR" />
+    <id column="OilCan" property="oilcan" jdbcType="INTEGER" />
+    <result column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <result column="LastAdjustTime" property="lastadjusttime" jdbcType="TIMESTAMP" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ProbeModel, OilCan, OilNo, LastAdjustTime, TranStatus
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.ATG.domain.SysManagePaTRelationKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_PaTRelation
+    where ProbeModel = #{probemodel,jdbcType=VARCHAR}
+      and OilCan = #{oilcan,jdbcType=INTEGER}
+  </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+      select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_PaTRelation
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.SysManagePaTRelationKey" >
+    delete from oss_sysmanage_PaTRelation
+    where ProbeModel = #{probemodel,jdbcType=VARCHAR}
+      and OilCan = #{oilcan,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.SysManagePaTRelation" >
+    insert into oss_sysmanage_PaTRelation (ProbeModel, OilCan, OilNo, 
+      LastAdjustTime, TranStatus)
+    values (#{probemodel,jdbcType=VARCHAR}, #{oilcan,jdbcType=INTEGER}, #{oilno,jdbcType=VARCHAR}, 
+      #{lastadjusttime,jdbcType=TIMESTAMP}, #{transtatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.SysManagePaTRelation" >
+    insert into oss_sysmanage_PaTRelation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="probemodel != null" >
+        ProbeModel,
+      </if>
+      <if test="oilcan != null" >
+        OilCan,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="lastadjusttime != null" >
+        LastAdjustTime,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="probemodel != null" >
+        #{probemodel,jdbcType=VARCHAR},
+      </if>
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="lastadjusttime != null" >
+        #{lastadjusttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.SysManagePaTRelation" >
+    update oss_sysmanage_PaTRelation
+    <set >
+      <if test="oilno != null" >
+        OilNo = #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="lastadjusttime != null" >
+        LastAdjustTime = #{lastadjusttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ProbeModel = #{probemodel,jdbcType=VARCHAR}
+      and OilCan = #{oilcan,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.SysManagePaTRelation" >
+    update oss_sysmanage_PaTRelation
+    set OilNo = #{oilno,jdbcType=VARCHAR},
+      LastAdjustTime = #{lastadjusttime,jdbcType=TIMESTAMP},
+      TranStatus = #{transtatus,jdbcType=VARCHAR}
+    where ProbeModel = #{probemodel,jdbcType=VARCHAR}
+      and OilCan = #{oilcan,jdbcType=INTEGER}
+  </update>
+  <select id="selectByTrans" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_sysmanage_PaTRelation WHERE TranStatus = #{transtatus,jdbcType=VARCHAR}
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.kld.gsm.ATG.domain.SysManagePaTRelation" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_PaTRelation
+    where 1=1
+    <if test="probemodel != null" >
+      AND probemodel = #{probemodel,jdbcType=VARCHAR}
+    </if>
+    <if test="oilcan != null" >
+      AND oilcan = #{oilcan,jdbcType=INTEGER}
+    </if>
+    <if test="oilno != null" >
+      AND oilno = #{oilno,jdbcType=VARCHAR}
+    </if>
+    <if test="lastadjusttime != null" >
+      AND lastadjusttime = #{lastadjusttime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="transtatus != null" >
+      AND transtatus = #{transtatus,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>

@@ -1,0 +1,184 @@
+#set($layout="layout/emptylayout.vm")
+#set($menuTitle="设备故障报警")
+
+<div id="query" title="查询条件" collapsible="true" class="easyui-panel" icon="icon-search">
+    <table width="80%">
+        <tr>
+            <th width="8%">
+                选择油站：
+            </th>
+            <th colspan="3">
+                #parse("business/realstock.vm")
+            </th>
+        </tr>
+        #*<tr>
+            <th width="8%">
+                选择油站：
+            </th>
+            <th width="20%">
+                <select id="u204_input" class="easyui-combobox">
+                    <option selected value="请选择">请选择</option>
+                    <option  value="AA石油分公司">AA石油分公司</option>
+                    <option value="BB石油分公司">BB石油分公司</option>
+                    <option value="CC石油分公司">CC石油分公司</option>
+                </select>
+            </th>
+            <th width="20%">
+                <select id="u205_input" class="easyui-combobox">
+                    <option selected value="请选择">请选择</option>
+                    <option value="A片区">A片区</option>
+                    <option  value="B片区">B片区</option>
+                    <option value="C片区">C片区</option>
+                </select>
+            </th>
+            <th width="20%">
+                <select id="u206_input" class="easyui-combobox">
+                    <option selected value="请选择">请选择</option>
+                    <option value="X加油站">X加油站</option>
+                    <option value="Y加油站">Y加油站</option>
+                    <option  value="Z加油站">Z加油站</option>
+                </select>
+            </th>*#
+        </tr>
+        <tr>
+            <th>
+                起止日期：
+            </th>
+            <th colspan="2">
+                <input id="dateStartinput" type="text" class="easyui-datebox" required="required"/>--
+                <input id="dateEndinput" type="text"  class="easyui-datebox" required="required"/>
+            </th>
+            <th></th>
+        </tr>
+        <th>预警类型：</th>
+        <th>
+            <select id="selectGZLX" style="width: 150px;">
+
+            </select>
+        </th>
+        <tr>
+            <th></th>
+            <th>
+                <a id="btnSelect" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchDatabyParams();">查询</a>
+                <a id="btnExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="ExportExl();">导出</a>
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </table>
+
+</div>
+
+<div id="result">
+    <table id="tt" class="easyui-datagrid" >
+
+    </table>
+</div>
+<script>
+
+    var cols=[[
+        {field:'OUName',title:'油站名称',width:100,align:'center'},
+        {field:'OilCan',title:'油罐编号',width:100,align:'center'},
+        {field:'StartAlarmTime',title:'开始报警时间',width:100,align:'center'},
+        {field:'EndAlarmTime',title:'结束报警时间',width:100,align:'center'},
+        {field:'Name',title:'故障类型',width:100,align:'center'},
+        {field:'EquipCode',title:'设备代码',width:100,align:'center'},
+      /*  {field:'MalfunctionCode',title:'故障信息代码',width:100},*/
+        {field:'EquipBrand',title:'设备品牌',width:100,align:'center'},
+        {field:'ProbeModel',title:'探棒型号',width:100,align:'center'},
+        {field:'Remark',title:'备注',width:100,align:'center'}
+    ]];
+    var  failuretype;//油品编号
+    var startTime;
+    var  endTime;
+    var paras;
+    var oucode;
+    $(function(){
+
+        Loadcas("cc","aa","ss");
+        var myDate = new Date();
+        var MyTime=new Date();
+        //var time=MyTime.getFullYear() + "-" + (MyTime.getMonth()) + "-" + MyTime.getDate();
+        $("#dateStartinput").datebox('setValue','<%=myDate.toLocaleDateString()%>');
+        $("#dateEndinput").datebox('setValue','<%=myDate.toLocaleDateString()%>');
+        var heigth=$(window).height()-160;
+        $("#result").height(heigth);
+
+
+
+        initCombox();
+        initData();
+    });
+
+    function inittext(){
+        failuretype=$('#selectGZLX').combobox('getValue');
+        startTime=$('#dateStartinput').datebox('getValue');
+        endTime=$('#dateEndinput').datebox('getValue');
+
+        var end = new Date();
+        var date = end.getDate();
+        date = date + 1;
+        end.setDate(date);
+        var over=end.toLocaleDateString();
+
+
+        endTime=over;
+
+        var ss=$('#ss').combobox('getValue');
+        var aa=$('#aa').combobox('getValue');
+        var cc=$('#cc').combobox('getValue');
+        oucode="";
+        if(cc!="")
+        {
+            oucode=cc;
+        }
+        if(aa!="")
+        {
+            oucode=aa;
+        }
+        if(ss!="")
+        {
+            oucode=ss;
+        }
+        paras={'FailureType':failuretype,'StartAlarmTime':startTime,'EndAlarmTime':endTime,'oucode':oucode};
+
+    }
+    function initData() {
+        inittext();
+    /*    dataGridAjax('tt','','',paras,cols,undefined,undefined,function(data){
+            // alert('加载成功!');
+        });*/
+        //分页
+        BindDataGridAjax('tt','进油损耗报警','/web/alarminfo/selectIqPageList',cols,paras,'true',10,[10,20,30]);
+
+
+    }
+
+
+    function  searchDatabyParams() {
+        initData();
+    }
+    function pageData(list,total){
+        var obj=new Object();
+        obj.total=total;
+        obj.rows=list;
+        return obj;
+    }
+
+    function ExportExl() {
+        inittext();
+        var filename=encodeURI(encodeURI("设备故障报警"));
+        window.open("/web/export/SBGZYJexportExcel?FailureType="+failuretype+"&StartAlarmTime="+startTime+"&EndAlarmTime="+endTime+"&FileName="+filename+"&oucode="+oucode);
+    }
+
+    function initCombox() {
+        //需要绑定字典表 预警类型
+        $('#selectGZLX').combobox({
+            url:'/web/dictinfo/selectYJLX',
+            valueField:'Code',
+            textField:'Name'
+        });
+
+    }
+
+</script>

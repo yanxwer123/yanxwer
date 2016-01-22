@@ -1,0 +1,60 @@
+#set($layout="layout/emptylayout.vm")
+#set($menuTitle="版本查询")
+<div id="result">
+    <table id="tt" class="easyui-datagrid">
+    </table>
+</div>
+<script type="text/javascript">
+    var cols=[[
+        {field:'version',title:'版本号',width:'50%',align:'center'},
+        {field:'cz',title:'操作',width:'50%',align:'center',
+            formatter:function(value,row,index)
+            {
+                var str="";
+                str += "<a href='javascript:ExportExl("+row.version+");' onclick='#'>导出</a>" +
+                        "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+                        "<a href='javascript:qy("+row.version+")' onclick='#'>启用</a>";
+                return str;
+            }
+        }
+    ]];
+    $(function(){
+        $("#result").height(300);
+        initData();
+    });
+    var paras;
+    var oucode;
+    var oilcanno;
+    function inittext(){
+        oucode=GetQueryString("oucode");
+        oilcanno=GetQueryString("oilcanno");
+        paras={"oucode":oucode,"oilcanno": oilcanno};
+    }
+    function initData() {
+        inittext();
+        BindDataGridAjax('tt','版本查询','/web/cubage/getCubageVersions',cols,paras);
+    }
+    function GetQueryString(name)
+    {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r!=null) return unescape(r[2]); return null;
+    }
+    function ExportExl(version) {
+        inittext();
+        var filename=encodeURI(encodeURI("容积表"));
+        window.open("/web/cubage/excelCubageInfos?oilcanno="+oilcanno+"&oucode="+oucode+"&version="+version+"&FileName="+filename);
+    }
+    //启用版本号
+    function qy(version){
+        inittext();
+        $.ajax({
+            type: "get",
+            url: "/web/cubage/useCubageSave?oilcanno="+oilcanno+"&oucode="+oucode+"&version="+version,//这里的地址是选择select后执行后台的url，然后做处理
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+                alert("启用成功！");
+            }
+        });
+    }
+</script>

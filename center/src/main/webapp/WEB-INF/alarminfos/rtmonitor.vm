@@ -1,0 +1,25 @@
+#set($layout="layout/emptylayout.vm")
+#set($menuTitle="罐枪实时监控")
+油站监控  >>  湛江海头加油站
+<div class="row">
+    <div class="col-md-6" id="table">
+        <div class="row">
+            <div class="col-lg-2" align="center" id="td" style="background-color: red">总揽</div>
+            <div class="col-lg-2" align="center" id="td">罐枪实时监控</div>
+            <div class="col-lg-2" align="center" id="td">油站站点库存</div>
+            <div class="col-lg-2" align="center" id="td">油站日平衡</div>
+            <div class="col-lg-2" align="center" id="td">油站班报</div>
+            <div class="col-lg-2" align="center" id="td">报警信息</div>
+        </div>
+    </div>
+    <div class="col-md-6"></div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        空闲/上班/挂枪：黑色 提枪：红色
+    </div>
+    <div class="col-md-8"></div>
+</div>
+<div class="row">
+    <div class="col-md-3">1111111</div><div class="col-md-9">222222222</div>
+</div>

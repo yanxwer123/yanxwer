@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.ATG.dao.DailyOilTankRegisterDao" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.DailyOilTankRegister" >
+    <id column="AccountDate" property="accountdate" jdbcType="TIMESTAMP" />
+    <id column="OilCan" property="oilcan" jdbcType="INTEGER" />
+    <result column="VouchNo" property="vouchno" jdbcType="VARCHAR" />
+    <result column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <result column="OilName" property="oilname" jdbcType="VARCHAR" />
+    <result column="Intro" property="intro" jdbcType="VARCHAR" />
+    <result column="PlanAmount" property="planamount" jdbcType="DOUBLE" />
+    <result column="PlanL" property="planl" jdbcType="DOUBLE" />
+    <result column="CanRealGet" property="canrealget" jdbcType="DOUBLE" />
+    <result column="ShopInde" property="shopinde" jdbcType="DOUBLE" />
+    <result column="BeforeLiter" property="beforeliter" jdbcType="DOUBLE" />
+    <result column="AfterLiter" property="afterliter" jdbcType="DOUBLE" />
+    <result column="RealGet" property="realget" jdbcType="DOUBLE" />
+    <result column="InInde" property="ininde" jdbcType="DOUBLE" />
+    <result column="DayOutOil" property="dayoutoil" jdbcType="DOUBLE" />
+    <result column="ChkInde" property="chkinde" jdbcType="DOUBLE" />
+    <result column="LedgerL" property="ledgerl" jdbcType="DOUBLE" />
+    <result column="CanRealL" property="canreall" jdbcType="DOUBLE" />
+    <result column="HeightWater" property="heightwater" jdbcType="DOUBLE" />
+    <result column="WaterL" property="waterl" jdbcType="DOUBLE" />
+    <result column="OilL" property="oill" jdbcType="DOUBLE" />
+    <result column="TotalInde" property="totalinde" jdbcType="DOUBLE" />
+    <result column="DayInde" property="dayinde" jdbcType="DOUBLE" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    AccountDate, OilCan, VouchNo, OilNo, OilName, Intro, PlanAmount, PlanL, CanRealGet, 
+    ShopInde, BeforeLiter, AfterLiter, RealGet, InInde, DayOutOil, ChkInde, LedgerL, 
+    CanRealL, HeightWater, WaterL, OilL, TotalInde, DayInde, TranStatus
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.ATG.domain.DailyOilTankRegisterKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_daily_OilTankRegister
+    where AccountDate = #{accountdate,jdbcType=TIMESTAMP}
+      and OilCan = #{oilcan,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.DailyOilTankRegisterKey" >
+    delete from oss_daily_OilTankRegister
+    where AccountDate = #{accountdate,jdbcType=TIMESTAMP}
+      and OilCan = #{oilcan,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.DailyOilTankRegister" >
+    insert into oss_daily_OilTankRegister (AccountDate, OilCan, VouchNo, 
+      OilNo, OilName, Intro, 
+      PlanAmount, PlanL, CanRealGet, 
+      ShopInde, BeforeLiter, AfterLiter, 
+      RealGet, InInde, DayOutOil, 
+      ChkInde, LedgerL, CanRealL, 
+      HeightWater, WaterL, OilL, 
+      TotalInde, DayInde, TranStatus
+      )
+    values (#{accountdate,jdbcType=TIMESTAMP}, #{oilcan,jdbcType=INTEGER}, #{vouchno,jdbcType=VARCHAR}, 
+      #{oilno,jdbcType=VARCHAR}, #{oilname,jdbcType=VARCHAR}, #{intro,jdbcType=VARCHAR}, 
+      #{planamount,jdbcType=DOUBLE}, #{planl,jdbcType=DOUBLE}, #{canrealget,jdbcType=DOUBLE}, 
+      #{shopinde,jdbcType=DOUBLE}, #{beforeliter,jdbcType=DOUBLE}, #{afterliter,jdbcType=DOUBLE}, 
+      #{realget,jdbcType=DOUBLE}, #{ininde,jdbcType=DOUBLE}, #{dayoutoil,jdbcType=DOUBLE}, 
+      #{chkinde,jdbcType=DOUBLE}, #{ledgerl,jdbcType=DOUBLE}, #{canreall,jdbcType=DOUBLE}, 
+      #{heightwater,jdbcType=DOUBLE}, #{waterl,jdbcType=DOUBLE}, #{oill,jdbcType=DOUBLE}, 
+      #{totalinde,jdbcType=DOUBLE}, #{dayinde,jdbcType=DOUBLE}, #{transtatus,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.DailyOilTankRegister" >
+    insert into oss_daily_OilTankRegister
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="accountdate != null" >
+        AccountDate,
+      </if>
+      <if test="oilcan != null" >
+        OilCan,
+      </if>
+      <if test="vouchno != null" >
+        VouchNo,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="oilname != null" >
+        OilName,
+      </if>
+      <if test="intro != null" >
+        Intro,
+      </if>
+      <if test="planamount != null" >
+        PlanAmount,
+      </if>
+      <if test="planl != null" >
+        PlanL,
+      </if>
+      <if test="canrealget != null" >
+        CanRealGet,
+      </if>
+      <if test="shopinde != null" >
+        ShopInde,
+      </if>
+      <if test="beforeliter != null" >
+        BeforeLiter,
+      </if>
+      <if test="afterliter != null" >
+        AfterLiter,
+      </if>
+      <if test="realget != null" >
+        RealGet,
+      </if>
+      <if test="ininde != null" >
+        InInde,
+      </if>
+      <if test="dayoutoil != null" >
+        DayOutOil,
+      </if>
+      <if test="chkinde != null" >
+        ChkInde,
+      </if>
+      <if test="ledgerl != null" >
+        LedgerL,
+      </if>
+      <if test="canreall != null" >
+        CanRealL,
+      </if>
+      <if test="heightwater != null" >
+        HeightWater,
+      </if>
+      <if test="waterl != null" >
+        WaterL,
+      </if>
+      <if test="oill != null" >
+        OilL,
+      </if>
+      <if test="totalinde != null" >
+        TotalInde,
+      </if>
+      <if test="dayinde != null" >
+        DayInde,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="accountdate != null" >
+        #{accountdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oilcan != null" >
+        #{oilcan,jdbcType=INTEGER},
+      </if>
+      <if test="vouchno != null" >
+        #{vouchno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilname != null" >
+        #{oilname,jdbcType=VARCHAR},
+      </if>
+      <if test="intro != null" >
+        #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="planamount != null" >
+        #{planamount,jdbcType=DOUBLE},
+      </if>
+      <if test="planl != null" >
+        #{planl,jdbcType=DOUBLE},
+      </if>
+      <if test="canrealget != null" >
+        #{canrealget,jdbcType=DOUBLE},
+      </if>
+      <if test="shopinde != null" >
+        #{shopinde,jdbcType=DOUBLE},
+      </if>
+      <if test="beforeliter != null" >
+        #{beforeliter,jdbcType=DOUBLE},
+      </if>
+      <if test="afterliter != null" >
+        #{afterliter,jdbcType=DOUBLE},
+      </if>
+      <if test="realget != null" >
+        #{realget,jdbcType=DOUBLE},
+      </if>
+      <if test="ininde != null" >
+        #{ininde,jdbcType=DOUBLE},
+      </if>
+      <if test="dayoutoil != null" >
+        #{dayoutoil,jdbcType=DOUBLE},
+      </if>
+      <if test="chkinde != null" >
+        #{chkinde,jdbcType=DOUBLE},
+      </if>
+      <if test="ledgerl != null" >
+        #{ledgerl,jdbcType=DOUBLE},
+      </if>
+      <if test="canreall != null" >
+        #{canreall,jdbcType=DOUBLE},
+      </if>
+      <if test="heightwater != null" >
+        #{heightwater,jdbcType=DOUBLE},
+      </if>
+      <if test="waterl != null" >
+        #{waterl,jdbcType=DOUBLE},
+      </if>
+      <if test="oill != null" >
+        #{oill,jdbcType=DOUBLE},
+      </if>
+      <if test="totalinde != null" >
+        #{totalinde,jdbcType=DOUBLE},
+      </if>
+      <if test="dayinde != null" >
+        #{dayinde,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.DailyOilTankRegister" >
+    update oss_daily_OilTankRegister
+    <set >
+      <if test="vouchno != null" >
+        VouchNo = #{vouchno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilno != null" >
+        OilNo = #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilname != null" >
+        OilName = #{oilname,jdbcType=VARCHAR},
+      </if>
+      <if test="intro != null" >
+        Intro = #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="planamount != null" >
+        PlanAmount = #{planamount,jdbcType=DOUBLE},
+      </if>
+      <if test="planl != null" >
+        PlanL = #{planl,jdbcType=DOUBLE},
+      </if>
+      <if test="canrealget != null" >
+        CanRealGet = #{canrealget,jdbcType=DOUBLE},
+      </if>
+      <if test="shopinde != null" >
+        ShopInde = #{shopinde,jdbcType=DOUBLE},
+      </if>
+      <if test="beforeliter != null" >
+        BeforeLiter = #{beforeliter,jdbcType=DOUBLE},
+      </if>
+      <if test="afterliter != null" >
+        AfterLiter = #{afterliter,jdbcType=DOUBLE},
+      </if>
+      <if test="realget != null" >
+        RealGet = #{realget,jdbcType=DOUBLE},
+      </if>
+      <if test="ininde != null" >
+        InInde = #{ininde,jdbcType=DOUBLE},
+      </if>
+      <if test="dayoutoil != null" >
+        DayOutOil = #{dayoutoil,jdbcType=DOUBLE},
+      </if>
+      <if test="chkinde != null" >
+        ChkInde = #{chkinde,jdbcType=DOUBLE},
+      </if>
+      <if test="ledgerl != null" >
+        LedgerL = #{ledgerl,jdbcType=DOUBLE},
+      </if>
+      <if test="canreall != null" >
+        CanRealL = #{canreall,jdbcType=DOUBLE},
+      </if>
+      <if test="heightwater != null" >
+        HeightWater = #{heightwater,jdbcType=DOUBLE},
+      </if>
+      <if test="waterl != null" >
+        WaterL = #{waterl,jdbcType=DOUBLE},
+      </if>
+      <if test="oill != null" >
+        OilL = #{oill,jdbcType=DOUBLE},
+      </if>
+      <if test="totalinde != null" >
+        TotalInde = #{totalinde,jdbcType=DOUBLE},
+      </if>
+      <if test="dayinde != null" >
+        DayInde = #{dayinde,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where AccountDate = #{accountdate,jdbcType=TIMESTAMP}
+      and OilCan = #{oilcan,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.DailyOilTankRegister" >
+    update oss_daily_OilTankRegister
+    set VouchNo = #{vouchno,jdbcType=VARCHAR},
+      OilNo = #{oilno,jdbcType=VARCHAR},
+      OilName = #{oilname,jdbcType=VARCHAR},
+      Intro = #{intro,jdbcType=VARCHAR},
+      PlanAmount = #{planamount,jdbcType=DOUBLE},
+      PlanL = #{planl,jdbcType=DOUBLE},
+      CanRealGet = #{canrealget,jdbcType=DOUBLE},
+      ShopInde = #{shopinde,jdbcType=DOUBLE},
+      BeforeLiter = #{beforeliter,jdbcType=DOUBLE},
+      AfterLiter = #{afterliter,jdbcType=DOUBLE},
+      RealGet = #{realget,jdbcType=DOUBLE},
+      InInde = #{ininde,jdbcType=DOUBLE},
+      DayOutOil = #{dayoutoil,jdbcType=DOUBLE},
+      ChkInde = #{chkinde,jdbcType=DOUBLE},
+      LedgerL = #{ledgerl,jdbcType=DOUBLE},
+      CanRealL = #{canreall,jdbcType=DOUBLE},
+      HeightWater = #{heightwater,jdbcType=DOUBLE},
+      WaterL = #{waterl,jdbcType=DOUBLE},
+      OilL = #{oill,jdbcType=DOUBLE},
+      TotalInde = #{totalinde,jdbcType=DOUBLE},
+      DayInde = #{dayinde,jdbcType=DOUBLE},
+      TranStatus = #{transtatus,jdbcType=VARCHAR}
+    where AccountDate = #{accountdate,jdbcType=TIMESTAMP}
+      and OilCan = #{oilcan,jdbcType=INTEGER}
+  </update>
+  <select id="selectByTrans" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM oss_daily_OilTankRegister WHERE TranStatus=#{trans,jdbcType=VARCHAR}
+  </select>
+</mapper>

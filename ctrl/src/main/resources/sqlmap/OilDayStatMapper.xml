@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.coord.dao.OilDayStatDao">
+
+    <select id="findByDate" parameterType="java.util.Date" resultType="com.kld.gsm.coord.domain.OilDayStat">
+       select *
+            from oildaystat where accountdate LIKE #{accountdate}
+    </select>
+
+</mapper>

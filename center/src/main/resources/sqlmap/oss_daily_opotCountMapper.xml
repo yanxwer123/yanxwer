@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_daily_opotCountMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_daily_opotCount" >
+    <id column="Shift" property="shift" jdbcType="VARCHAR" />
+    <id column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <id column="Type" property="type" jdbcType="VARCHAR" />
+    <id column="NodeNo" property="nodeno" jdbcType="VARCHAR" />
+    <result column="OilName" property="oilname" jdbcType="VARCHAR" />
+    <result column="Liter" property="liter" jdbcType="DOUBLE" />
+    <result column="Price" property="price" jdbcType="DOUBLE" />
+    <result column="Amount" property="amount" jdbcType="DOUBLE" />
+    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
+    <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Shift, OilNo, Type, NodeNo, OilName, Liter, Price, Amount, TranStatus, OUCode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_daily_opotCountKey" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_daily_opotCount
+    where Shift = #{shift,jdbcType=VARCHAR}
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+      and Type = #{type,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_daily_opotCountKey" >
+    delete from oss_daily_opotCount
+    where Shift = #{shift,jdbcType=VARCHAR}
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+      and Type = #{type,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_daily_opotCount" >
+    insert into oss_daily_opotCount (Shift, OilNo, Type, 
+      NodeNo, OilName, Liter, 
+      Price, Amount, TranStatus, 
+      OUCode)
+    values (#{shift,jdbcType=VARCHAR}, #{oilno,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{nodeno,jdbcType=VARCHAR}, #{oilname,jdbcType=VARCHAR}, #{liter,jdbcType=DOUBLE}, 
+      #{price,jdbcType=DOUBLE}, #{amount,jdbcType=DOUBLE}, #{transtatus,jdbcType=VARCHAR}, 
+      #{oucode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_daily_opotCount" >
+    insert into oss_daily_opotCount
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shift != null" >
+        Shift,
+      </if>
+      <if test="oilno != null" >
+        OilNo,
+      </if>
+      <if test="type != null" >
+        Type,
+      </if>
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="oilname != null" >
+        OilName,
+      </if>
+      <if test="liter != null" >
+        Liter,
+      </if>
+      <if test="price != null" >
+        Price,
+      </if>
+      <if test="amount != null" >
+        Amount,
+      </if>
+      <if test="transtatus != null" >
+        TranStatus,
+      </if>
+      <if test="oucode != null" >
+        OUCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shift != null" >
+        #{shift,jdbcType=VARCHAR},
+      </if>
+      <if test="oilno != null" >
+        #{oilno,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="oilname != null" >
+        #{oilname,jdbcType=VARCHAR},
+      </if>
+      <if test="liter != null" >
+        #{liter,jdbcType=DOUBLE},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_daily_opotCount" >
+    update oss_daily_opotCount
+    <set >
+      <if test="oilname != null" >
+        OilName = #{oilname,jdbcType=VARCHAR},
+      </if>
+      <if test="liter != null" >
+        Liter = #{liter,jdbcType=DOUBLE},
+      </if>
+      <if test="price != null" >
+        Price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="amount != null" >
+        Amount = #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="transtatus != null" >
+        TranStatus = #{transtatus,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null" >
+        OUCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Shift = #{shift,jdbcType=VARCHAR}
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+      and Type = #{type,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_daily_opotCount" >
+    update oss_daily_opotCount
+    set OilName = #{oilname,jdbcType=VARCHAR},
+      Liter = #{liter,jdbcType=DOUBLE},
+      Price = #{price,jdbcType=DOUBLE},
+      Amount = #{amount,jdbcType=DOUBLE},
+      TranStatus = #{transtatus,jdbcType=VARCHAR},
+      OUCode = #{oucode,jdbcType=VARCHAR}
+    where Shift = #{shift,jdbcType=VARCHAR}
+      and OilNo = #{oilno,jdbcType=VARCHAR}
+      and Type = #{type,jdbcType=VARCHAR}
+      and NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <select id="selectFyxx" parameterType="String" resultType="com.kld.gsm.center.domain.oss_daily_opotCount">
+    SELECT * FROM oss_daily_opotCount where Shift= #{shift,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,139 @@
+#set($layout="layout/emptylayout.vm")
+#set($menuTitle="班结损益报警")
+
+<div id="query" title="查询条件" collapsible="true" class="easyui-panel" icon="icon-search">
+    <table width="550px">
+        <tr>
+            <th width="100px">
+                选择油站：
+            </th>
+            <th width="150px">
+                <input id="cc" name="cc"  class="easyui-combobox textbox" type="text"  style="width:150px" data-options="prompt:'--请选择--'"></input>
+            </th>
+            <th width="150px">
+                <input id="aa" name="aa"  class="easyui-combobox textbox" type="text" style="width:150px" data-options="prompt:'--请选择--'"></input>
+            </th>
+            <th width="150px">
+                <input id="ss" name="ss"  class="easyui-combobox textbox" type="text" style="width:150px" data-options="prompt:'--请选择--'"></input>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                起止日期：
+            </th>
+            <th colspan="3" align="left">
+                <input id="dateStartinput" type="text" class="easyui-datebox" required="required"/> ——
+                <input id="dateEndinput" type="text"  class="easyui-datebox" required="required"/>
+            </th>
+            <th></th>
+        </tr>
+
+        <tr>
+            <th></th>
+            <th>
+                <a id="btnSelect" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="initData()">查询</a>
+                <a id="btnExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-undo'" onclick="ExportExl()">导出</a>
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </table>
+
+</div>
+
+<div id="result">
+    <table id="tt" class="easyui-datagrid" >
+
+    </table>
+</div>
+<script>
+
+    var cols=[[
+        {field:'ouname',title:'油站名称',width:100,align:'center'},
+        {field:'Shift',title:'班次',width:90,align:'center'},
+        {field:'OilCanNo',title:'油罐编号',width:80,align:'center'},
+        {field:'oilname',title:'油品',width:100,align:'center'},
+        {field:'StartOilHeight',title:'接班油高(mm)',width:120,align:'center'},
+        {field:'StartOilL',title:'接班油量(L）',width:100,align:'center'},
+        {field:'EndOilHeight',title:'交班油高(mm)',width:120,align:'center'},
+     /*   {field:'EndOilL',title:'测量交班油量',width:100,align:'center'},
+        {field:'AcutalEndOilL',title:'实际交班油量',width:100,align:'center'},*/
+        {field:'EndWaterHeight',title:'交班水高(mm)',width:120,align:'center'},
+        {field:'EndWaterL',title:'交班水量(L)',width:100,align:'center'},
+        {field:'EndTemperature',title:'交班温度',width:100,align:'center'},
+        {field:'OilDischarge',title:'卸油量(L)',width:80,align:'center'},
+        {field:'Sale',title:'付油量(L)',width:80,align:'center'},
+        {field:'Inventory',title:'交班帐存(L)',width:80,align:'center'},
+        {field:'Loss',title:'损溢(%)',width:70,align:'center'}
+    ]];
+
+
+    var  begin;
+    var end;
+    var oucode;
+    var paras;
+    $(function(){
+        Loadcas("cc","aa","ss");
+        var myDate = new Date();
+        var MyTime=new Date();
+        //var time=MyTime.getFullYear() + "-" + (MyTime.getMonth()) + "-" + MyTime.getDate();
+        $("#dateStartinput").datebox('setValue','<%=myDate.toLocaleDateString()%>');
+        $("#dateEndinput").datebox('setValue','<%=myDate.toLocaleDateString()%>');
+        var heigth=$(window).height()-160;
+        $("#result").height(heigth);
+        initData();
+
+    });
+
+    function Show(shift,successor,shiftoperator,succeedtime,shifttime){
+
+        window.open ('/web/alarm/getShiftLostInfo?shift='+shift+'&successor='+successor+'&shiftoperator='+shiftoperator+'&succeedtime='+succeedtime+'&shifttime='+shifttime,'newwindow','height=700,width=900,top=0,left=0')
+    }
+    function inittext(){
+        begin=$("#dateStartinput").datebox("getValue").replace(/-/g,"");
+        end=$("#dateEndinput").datebox("getValue").replace(/-/g,"");
+        var ss=$('#ss').combobox('getValue');
+        var aa=$('#aa').combobox('getValue');
+        var cc=$('#cc').combobox('getValue');
+        oucode="";
+        if(cc!="")
+        {
+            oucode=cc;
+        }
+        if(aa!="")
+        {
+            oucode=aa;
+        }
+        if(ss!="")
+        {
+            oucode=ss;
+        }
+
+        paras={ "start": begin, "end":end, "oucode":oucode};
+    }
+    function ExportExl() {
+        inittext();
+        var filename=encodeURI(encodeURI("班结损益报警"));
+        window.open("/web/alarm/excelShiftLost?start="+begin+"&end="+end+"&oucode="+oucode+"&FileName="+filename);
+    }
+    function initData() {
+
+        inittext();
+        BindDataGridAjax('tt','班结损益报警','/web/alarm/getShiftLostInfo',cols,paras,'true',10,[10,20,30]);
+
+    }
+    function formatDatebox(value) {
+        if (value == null || value == '') {
+            return '';
+        }
+        var dt;
+        if (value instanceof Date) {
+            dt = value;
+        } else {
+            dt = new Date(value);
+        }
+
+        return dt.format("yyyy-MM-dd hh:mm:ss"); //扩展的Date的format方法(上述插件实现)
+    }
+
+</script>
