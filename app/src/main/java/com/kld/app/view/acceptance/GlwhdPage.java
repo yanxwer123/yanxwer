@@ -1,5 +1,6 @@
 package com.kld.app.view.acceptance;
 
+import com.kld.app.service.AlarmOilInContrastService;
 import com.kld.app.service.IAcceptanceDeliveryService;
 import com.kld.app.service.IAcceptanceOdRegisterInfoService;
 import com.kld.app.service.IAcceptanceOdRegisterService;
@@ -9,10 +10,7 @@ import com.kld.app.socket.ob.Watcher;
 import com.kld.app.springcontext.Context;
 import com.kld.app.util.SysConfig;
 import com.kld.app.view.main.Main;
-import com.kld.gsm.ATG.domain.AcceptanceDeliveryBills;
-import com.kld.gsm.ATG.domain.AcceptanceNoBills;
-import com.kld.gsm.ATG.domain.AcceptanceOdRegister;
-import com.kld.gsm.ATG.domain.AcceptanceOdRegisterInfo;
+import com.kld.gsm.ATG.domain.*;
 import com.kld.gsm.Socket.Constants;
 import com.kld.gsm.Socket.protocol.GasMsg;
 import com.kld.gsm.Socket.protocol.ResultMsg;
@@ -22,14 +20,13 @@ import com.kld.gsm.util.JsonMapper;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 关联无货单
@@ -39,6 +36,7 @@ public class GlwhdPage extends JOptionPane implements WindowListener,Watcher {
 
     private   String OIL_TYPE_1 = "01";
     private static final Logger LOG = Logger.getLogger(GlwhdPage.class);
+    private AlarmOilInContrastService alarmOilInContrastService;
     private JDialog frame;
     private JTable table;
 
@@ -427,6 +425,7 @@ public class GlwhdPage extends JOptionPane implements WindowListener,Watcher {
                 LOG.error("计算损益失败"+e.getMessage());
             }
             iAcceptanceOdRegisterService.updateByPrimaryKey(odg);
+            addOilinContrat(odg);
             //endregion
 
             try {
@@ -437,6 +436,29 @@ public class GlwhdPage extends JOptionPane implements WindowListener,Watcher {
 
             frame.setVisible(false);
             frame.dispose();
+        }
+    }
+
+    /**
+     * @description 超损耗索赔 报警
+     * */
+    private void addOilinContrat(AcceptanceOdRegister odRegister){
+        if(odRegister.getIndemnityloss()>0){
+            if (alarmOilInContrastService==null){
+                alarmOilInContrastService=Context.getInstance().getBean(AlarmOilInContrastService.class);
+            }
+            AlarmOilInContrast alarmOilInContrast=new AlarmOilInContrast();
+            alarmOilInContrast.setOilno(odRegister.getOilno());
+            alarmOilInContrast.setDuringsales(odRegister.getDuringsales());
+            alarmOilInContrast.setDeliveryno(odRegister.getManualNo());
+            alarmOilInContrast.setLoss(odRegister.getDischargeLossV20());
+            alarmOilInContrast.setLossrate(odRegister.getDischargeRateV20()*100);
+            alarmOilInContrast.setPlanl(odRegister.getPlanl());
+            alarmOilInContrast.setRealrecieve(odRegister.getRealGetLV20());
+            alarmOilInContrast.setTranstatus("0");
+            alarmOilInContrast.setCreattime(new Date());
+            System.out.print(alarmOilInContrast.toString());
+            alarmOilInContrastService.insert(alarmOilInContrast);
         }
     }
 }
