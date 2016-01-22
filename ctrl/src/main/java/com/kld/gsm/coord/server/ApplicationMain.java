@@ -122,6 +122,14 @@ public class ApplicationMain {
         //region钩子，优雅的关闭
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             public void run() {
+                //液位仪清理
+                try {
+                    logger.info("调用清理液位仪方法...");
+                    ATGManager.clear();
+                }catch (Exception e){
+                    logger.error(e.getMessage());
+                    e.printStackTrace();
+                }
                 nettyServer.stop();
             }
         }));
