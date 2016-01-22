@@ -263,10 +263,29 @@ import java.util.List;
         Icon.setBounds(698, 20, 20, 20);
         titlePanel.add(Icon);
 
+        //最小化
+        JLabel minLabel = new JLabel("最小化");
+        minLabel.setFont(Constant.TITLE_CONTENT_FONT);
+        minLabel.setBounds(715, 24, 40, 12);
+        minLabel.setForeground(new Color(Integer.decode(Constant.FORE_COCLER_1)));
+        titlePanel.add(minLabel);
+        minLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                frame.setExtendedState(frame.ICONIFIED);
+            }
+        });
+        //图标
+        Icon = new JButton();
+        Icon.setBorderPainted(false);
+        Icon.setContentAreaFilled(false);
+        Icon.setIcon(nav_red);
+        Icon.setBounds(745, 20, 20, 20);
+        titlePanel.add(Icon);
         //退出z
         JLabel closeLabel = new JLabel("退出");
         closeLabel.setFont(Constant.TITLE_CONTENT_FONT);
-        closeLabel.setBounds(720, 24, 40, 12);
+        closeLabel.setBounds(760, 24, 40, 12);
         closeLabel.setForeground(new Color(Integer.decode(Constant.FORE_COCLER_1)));
         titlePanel.add(closeLabel);
         closeLabel.addMouseListener(new MouseAdapter() {
