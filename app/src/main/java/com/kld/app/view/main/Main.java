@@ -245,7 +245,7 @@ import java.util.List;
 
         //当前用户
 
-        JLabel user = new JLabel("当前用户：" + oprname);
+        JLabel user = new JLabel("用户：" + oprname);
          if (USERMAP != null && USERMAP.size() > 0) {
             user.setText(USERMAP.get("oprname").toString());
         }
@@ -254,19 +254,19 @@ import java.util.List;
         user.setForeground(new Color(Integer.decode(Constant.FORE_COCLER_1)));
         titlePanel.add(user);
 
-
+/*
         //图标
         Icon = new JButton();
         Icon.setBorderPainted(false);
         Icon.setContentAreaFilled(false);
         Icon.setIcon(nav_red);
         Icon.setBounds(698, 20, 20, 20);
-        titlePanel.add(Icon);
+        titlePanel.add(Icon);*/
 
         //最小化
         JLabel minLabel = new JLabel("最小化");
         minLabel.setFont(Constant.TITLE_CONTENT_FONT);
-        minLabel.setBounds(715, 24, 40, 12);
+        minLabel.setBounds(698, 24, 40, 12);
         minLabel.setForeground(new Color(Integer.decode(Constant.FORE_COCLER_1)));
         titlePanel.add(minLabel);
         minLabel.addMouseListener(new MouseAdapter() {
@@ -280,12 +280,12 @@ import java.util.List;
         Icon.setBorderPainted(false);
         Icon.setContentAreaFilled(false);
         Icon.setIcon(nav_red);
-        Icon.setBounds(745, 20, 20, 20);
+        Icon.setBounds(720, 20, 20, 20);
         titlePanel.add(Icon);
         //退出z
         JLabel closeLabel = new JLabel("退出");
         closeLabel.setFont(Constant.TITLE_CONTENT_FONT);
-        closeLabel.setBounds(760, 24, 40, 12);
+        closeLabel.setBounds(750, 24, 40, 12);
         closeLabel.setForeground(new Color(Integer.decode(Constant.FORE_COCLER_1)));
         titlePanel.add(closeLabel);
         closeLabel.addMouseListener(new MouseAdapter() {
