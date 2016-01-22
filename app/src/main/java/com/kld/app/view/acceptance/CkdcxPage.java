@@ -287,7 +287,8 @@ public class CkdcxPage  extends  JPanel{
                     }
                     try {
                         AcceptanceOdRegister odRegister = odRegisterService.selectByPrimaryKey(bill.getDeliveryno());
-                        if (odRegister!=null){
+                        if (odRegister!=null&& (bill.getType().equals("1")&&odRegister.getDeliveryno()!=null
+                                ||(!bill.getType().equals("1")&&odRegister.getDeliveryno()==null))){
                             billArray[i][13]="车进站";
                         }
                     }catch (Exception e){
