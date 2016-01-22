@@ -5,7 +5,7 @@ target/
 *.class
 *.war
 logs/
-
+*.iml
 *.classpath
 *.log
 *.log.*
