@@ -118,5 +118,7 @@
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpmime:4.3.4" level="project" />
     <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-impl:2.1.12" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.6" level="project" />
+    <orderEntry type="module" module-name="core" />
+    <orderEntry type="module" module-name="util" />
   </component>
 </module>

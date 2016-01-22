@@ -19,6 +19,7 @@ import com.kld.gsm.Socket.protocol.ResultMsg;
 import com.kld.gsm.Socket.uitls.ResultUtils;
 import com.kld.gsm.util.DateUtil;
 import com.kld.gsm.util.JsonMapper;
+import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -36,6 +37,8 @@ import java.util.Map;
 
 public class GlwhdPage extends JOptionPane implements WindowListener,Watcher {
 
+    private   String OIL_TYPE_1 = "01";
+    private static final Logger LOG = Logger.getLogger(GlwhdPage.class);
     private JDialog frame;
     private JTable table;
 
@@ -59,7 +62,7 @@ public class GlwhdPage extends JOptionPane implements WindowListener,Watcher {
     public CkdcxPage getCkdcxPage() {
         return ckdcxPage;
     }
-
+    private IAcceptanceOdRegisterService odRegisterService;
     public void setCkdcxPage(CkdcxPage ckdcxPage) {
         this.ckdcxPage = ckdcxPage;
     }
@@ -382,7 +385,7 @@ public class GlwhdPage extends JOptionPane implements WindowListener,Watcher {
 
             odg.setTranstatus("0");
             odg.setDeliveryno(billno);
-            iAcceptanceOdRegisterService.updateByPrimaryKey(odg);
+            //iAcceptanceOdRegisterService.updateByPrimaryKey(odg);
             iAcceptanceOdRegisterService.UpdateNobill(noBills);
             List<AcceptanceOdRegisterInfo> infos=iAcceptanceOdRegisterInfoService.selectbydeliveryno(odg.getManualNo());
             for (AcceptanceOdRegisterInfo item:infos){
@@ -393,6 +396,38 @@ public class GlwhdPage extends JOptionPane implements WindowListener,Watcher {
             bill.setIscomplete("1");
             bill.setRelevancedelveryno(odg.getManualNo());// 更新出库单无货单表
             iAcceptanceDeliveryService.updateByPrimaryKey(bill);
+
+
+            //region  计算损益
+            if(odRegisterService==null){
+                odRegisterService=Context.getInstance().getBean(IAcceptanceOdRegisterService.class);
+            }
+            //设置油品类型
+            try {
+                OIL_TYPE_1 = odRegisterService.selectOilType(bill.getOilno()).getOiltype().toString();
+            }catch (Exception e) {
+                LOG.error("获取油品类型：" + e.getMessage());
+            }
+
+            Map result = odRegisterService.getodreglossrate(bill.getPlanl(),bill.getDeliveryno());
+            System.out.print(result.toString());
+            try {
+                odg.setRealgetl(Double.parseDouble(result.get("Dischargel").toString()));
+                odg.setDuringsales(Double.parseDouble(result.get("DuringSales").toString()));
+                odg.setRealGetLV20(Double.parseDouble(result.get("V20").toString()));
+                odg.setDischargeloss(Double.parseDouble(result.get("loss").toString()));
+                odg.setDischargerate(Double.parseDouble(result.get("lossreate").toString()));
+                odg.setDischargeLossV20(Double.parseDouble(result.get("v20loss").toString()));
+                Double shsp = Double.parseDouble(result.get("shsp").toString());
+
+                if (shsp < 0) shsp = 0d;
+                odg.setIndemnityloss(shsp);
+                odg.setDischargeRateV20(Double.parseDouble(result.get("V20lossrate").toString()));
+            }catch (Exception e){
+                LOG.error("计算损益失败"+e.getMessage());
+            }
+            iAcceptanceOdRegisterService.updateByPrimaryKey(odg);
+            //endregion
 
             try {
                 ckdcxPage.reLoad();
