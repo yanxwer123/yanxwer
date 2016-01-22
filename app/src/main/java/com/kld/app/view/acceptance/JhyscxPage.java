@@ -207,6 +207,8 @@ public class JhyscxPage extends  JPanel implements Watcher {
         }
     }
 
+
+
     /**
      * 作废进货单验收
      * */
@@ -284,6 +286,26 @@ public class JhyscxPage extends  JPanel implements Watcher {
             }else{
 
             }
+        }
+    }
+    /**
+     * 打印进货单
+     */
+    public void printJhdys(){
+       // System.out.println("打印进货验收");
+        if(table==null||table.getRowCount()==0)return;
+        int selectRow= table.getSelectedRow();// 取得用户所选行的行数
+        TableModel tableModel = table.getModel();
+
+        if (selectRow<0){
+            JOptionPane.showMessageDialog(this, "请选择一条记录", "信息提示", JOptionPane.INFORMATION_MESSAGE);
+        }else  {
+            JhyscxPageDetailFrame jhck=new JhyscxPageDetailFrame();
+            //System.out.println("出库单号"+tableModel.getValueAt(selectRow,1).toString());
+            PrintUIComponent myFrame = new PrintUIComponent();
+            myFrame.init(tableModel.getValueAt(selectRow,1).toString());
+           // jhck.initOilCan(tableModel.getValueAt(selectRow,1).toString());
+           // jhck.getFrame().setVisible(true);
         }
     }
 

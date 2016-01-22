@@ -32,9 +32,7 @@ public class ApplicationRunSingle {
         FileChannel channel = null;
         FileLock lock = null;
         try {
-            File file = new File("/smc20/gsm/"+singleId+".lck");
-            logger.info("filepath=/smc20/gsm/"+singleId+".lck");
-            file.deleteOnExit();
+            File file = new File(singleId+".lck");
             file.createNewFile();
 
             raf = new RandomAccessFile(file,"rw");
@@ -47,6 +45,7 @@ public class ApplicationRunSingle {
                 logger.error("An instance of ctrl is running...");
                 throw new Error("An instance of ctrl is running...");
             }
+            file.deleteOnExit();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,20 +56,20 @@ public class ApplicationRunSingle {
      * @param args
      * @throws Exception
      */
-    /*public static void main(String[] args) throws Exception {
-        ApplicationRunSingle.makeSingle("ctrl"); // 保证程序只有一个实例在运行.
-
-        // 测试: 模拟一个程序正在运行5秒
-        System.out.println("Start");
-        System.out.println("Waiting 10 seconds.");
-
-        for (int i = 0; i < 10; ++i) {
-            Thread.sleep(1000);
-            System.out.println((i + 1) + "......");
-        }
-
-        System.out.println("End");
-    }*/
+//    public static void main(String[] args) throws Exception {
+//        ApplicationRunSingle.makeSingle("ctrl"); // 保证程序只有一个实例在运行.
+//
+//        // 测试: 模拟一个程序正在运行5秒
+//        System.out.println("Start");
+//        System.out.println("Waiting 10 seconds.");
+//
+//        for (int i = 0; i < 20; ++i) {
+//            Thread.sleep(2000);
+//            System.out.println((i + 1) + "......");
+//        }
+//
+//        System.out.println("End");
+//    }
 }
 
 

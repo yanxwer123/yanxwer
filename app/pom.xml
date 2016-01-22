@@ -165,7 +165,7 @@
                 <directory>src/main/resources</directory>
                 <targetPath>${project.build.directory}/app</targetPath>
             </resource>
-           <!-- <resource>
+          <!--  <resource>
                 <directory>src/main/resources</directory>
                 <targetPath>${project.build.directory}/classes</targetPath>
             </resource>-->

@@ -103,7 +103,7 @@ import java.util.List;
 
          CC = reLink();
         //endregion
-         //   new Main().frame.setVisible(true);
+         // new Main().frame.setVisible(true);
         AsynHeart.sendIdel();
     }
 
@@ -112,7 +112,7 @@ import java.util.List;
      * Create the application.
      */
     public Main() {
-      /*  //初始化主JFRAME
+      /* //初始化主JFRAME
         initialize();
         //初始化标题栏
         initTitlePanel();
