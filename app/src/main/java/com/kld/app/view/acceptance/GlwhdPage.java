@@ -17,6 +17,7 @@ import com.kld.gsm.Socket.protocol.ResultMsg;
 import com.kld.gsm.Socket.uitls.ResultUtils;
 import com.kld.gsm.util.DateUtil;
 import com.kld.gsm.util.JsonMapper;
+import com.kld.gsm.util.V20Utils;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
@@ -406,8 +407,10 @@ public class GlwhdPage extends JOptionPane implements WindowListener,Watcher {
             }catch (Exception e) {
                 LOG.error("获取油品类型：" + e.getMessage());
             }
-
-            Map result = odRegisterService.getodreglossrate(bill.getPlanl(),bill.getDeliveryno());
+            double yfss=bill.getPlanl()==null?0:bill.getPlanl();
+            double yfwd=bill.getDeliverytemp()==null?0:bill.getDeliverytemp();
+            yfss=getV20L(OIL_TYPE_1,yfwd,yfss);
+            Map result = odRegisterService.getodreglossrate(yfss,bill.getDeliveryno());
             System.out.print(result.toString());
             try {
                 odg.setRealgetl(Double.parseDouble(result.get("Dischargel").toString()));
@@ -439,6 +442,17 @@ public class GlwhdPage extends JOptionPane implements WindowListener,Watcher {
         }
     }
 
+    private double getV20L(String oilType,double vt, double V) {
+        V20Utils v20Utils=new V20Utils();
+        if (V==0.0){return 0.0;}
+        if (OIL_TYPE_1.equals("03")){
+            //柴油
+            return  v20Utils.getDieV20(vt, V);
+        }else {
+            //汽油
+            return  v20Utils.getGasV20(vt,V);
+        }
+    }
     /**
      * @description 超损耗索赔 报警
      * */
