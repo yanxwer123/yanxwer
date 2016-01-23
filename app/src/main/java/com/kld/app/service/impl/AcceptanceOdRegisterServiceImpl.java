@@ -143,7 +143,7 @@ public class AcceptanceOdRegisterServiceImpl implements IAcceptanceOdRegisterSer
         Map<String,Object> hm=new HashMap<String, Object>();
         hm.put("yfss",yfss);
         hm.put("billno",billno);
-        hm.put("syl",syl);
+        hm.put("syl",syl/100);
         return  dao.getOdregRate(hm);
     }
 
