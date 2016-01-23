@@ -19,10 +19,7 @@ import java.awt.print.*;
 import java.util.*;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 import javax.swing.table.TableModel;
 
 /**
@@ -41,7 +38,7 @@ import javax.swing.table.TableModel;
  *
  * @author Gaowen
  */
-public class PrintUIComponent extends JFrame {
+public class PrintUIComponent extends JDialog {
     public static final double MM_TO_PAPER_UNITS = 1 / 25.4 * 72;
     public static double widthA4 = 210 * MM_TO_PAPER_UNITS;
     public static double heightA4 = 297 * MM_TO_PAPER_UNITS;
@@ -82,7 +79,7 @@ public class PrintUIComponent extends JFrame {
     String indemnityloss;
     //回罐铅封号
     String backBankNo;
-    //到站时间
+    //到站时间 28 17
     String instationtime;
     //原发体积(V20)
     String planLV20;
@@ -93,18 +90,20 @@ public class PrintUIComponent extends JFrame {
     GridBagConstraints gridBagConstraints;
 
     public void init(String billno) {
+        this.setResizable(false);
+        this.setModal(true);
         this.billno = billno;
         getOdreg(billno);
         odRegisterInfos = getOdRegisterInfos(billno);
         panel = new MyPanel();
-        button = new JButton("Print");
-        if(sysmanageService==null) {
+        button = new JButton("打印验收单");
+        if (sysmanageService == null) {
             sysmanageService = Context.getInstance().getBean(SysmanageService.class);
         }
-        SysManageDepartment sysManageDepartment =         sysmanageService.getdeptinfo();
-        if(sysManageDepartment!=null){
+        SysManageDepartment sysManageDepartment = sysmanageService.getdeptinfo();
+        if (sysManageDepartment != null) {
             stationName = sysManageDepartment.getNodetag();
-        }else {
+        } else {
 
         }
         if (odRegister != null) {
@@ -117,7 +116,7 @@ public class PrintUIComponent extends JFrame {
             dischargeRateV20 = odRegister.getDischargeRateV20() == null ? "" : odRegister.getDischargeRateV20().toString();
             indemnityloss = odRegister.getIndemnityloss() == null ? "0" : odRegister.getIndemnityloss().toString();
             backBankNo = odRegister.getBackbankno() == null ? "" : odRegister.getBackbankno().toString();
-            instationtime = odRegister.getIndemnityloss() == null ? "" : odRegister.getInstationtime().toLocaleString();
+            instationtime = odRegister.getBegintime() == null ? "" : odRegister.getBegintime().toLocaleString();
 
         }
 
@@ -193,7 +192,7 @@ public class PrintUIComponent extends JFrame {
         }
         odRegister = registerService.selectByPrimaryKey(billno);
         String OIL_TYPE_1 = registerService.selectOilType(deliveryBill.getOilno()).getOiltype().toString();
-        planLV20 = getV20L(OIL_TYPE_1, deliveryBill.getPlanl()==null?0: deliveryBill.getPlanl(), deliveryBill.getDeliverytemp()==null?0:deliveryBill.getDeliverytemp()) + "";
+        planLV20 = getV20L(OIL_TYPE_1, deliveryBill.getPlanl() == null ? 0 : deliveryBill.getPlanl(), deliveryBill.getDeliverytemp() == null ? 0 : deliveryBill.getDeliverytemp()) + "";
     }
 
     private double getV20L(String oilType, double vt, double V) {
@@ -250,7 +249,7 @@ public class PrintUIComponent extends JFrame {
 
         private void paintlabels(Graphics2D g2) {
             paintLabel(g2, "地罐交接校对单", this.getWidth() / 2, this.getHeight() - 20);
-            paintLabel(g2, "站名:"+stationName, 71, this.getHeight() - 40);
+            paintLabel(g2, "站名:" + stationName, 71, this.getHeight() - 40);
 
             paintLabel(g2, "出库单号:" + billno, 280, this.getHeight() - 40);
             if (deliveryBill != null) {
@@ -298,7 +297,7 @@ public class PrintUIComponent extends JFrame {
                     AcceptanceOdRegisterInfo acceptanceOdRegisterInfo = odRegisterInfos.get(0);
                     paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 182);
                     paintLabel(g2, "卸前", 65, this.getHeight() - 182);
-                    paintLabel(g2, "", 130, this.getHeight() - 182);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginoilheight()==null?"":acceptanceOdRegisterInfo.getBeginoilheight().toString(), 130, this.getHeight() - 182);
                     paintLabel(g2, "", 200, this.getHeight() - 182);
                     paintLabel(g2, acceptanceOdRegisterInfo.getBegintemperature() == null ? "" : acceptanceOdRegisterInfo.getBegintemperature().toString(), 250, this.getHeight() - 182);
                     paintLabel(g2, acceptanceOdRegisterInfo.getBeginoill() == null ? "" : acceptanceOdRegisterInfo.getBeginoill().toString(), 300, this.getHeight() - 182);
@@ -309,9 +308,9 @@ public class PrintUIComponent extends JFrame {
 
                     paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 202);
                     paintLabel(g2, "卸后", 65, this.getHeight() - 202);
-                    paintLabel(g2, "", 130, this.getHeight() - 202);
+                    paintLabel(g2,  acceptanceOdRegisterInfo.getEndoilheight()==null?"":acceptanceOdRegisterInfo.getEndoilheight().toString(), 130, this.getHeight() - 202);
                     paintLabel(g2, "", 200, this.getHeight() - 202);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getEndtemperature() == null ? "" : acceptanceOdRegisterInfo.getBegintemperature().toString(), 250, this.getHeight() - 202);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getEndtemperature() == null ? "" : acceptanceOdRegisterInfo.getEndtemperature().toString(), 250, this.getHeight() - 202);
                     paintLabel(g2, acceptanceOdRegisterInfo.getEndoill() == null ? "" : acceptanceOdRegisterInfo.getEndoill().toString(), 300, this.getHeight() - 202);
                     paintLabel(g2, acceptanceOdRegisterInfo.getEndv20l() == null ? "" : acceptanceOdRegisterInfo.getEndv20l().toString(), 370, this.getHeight() - 202);
                     paintLabel(g2, acceptanceOdRegisterInfo.getEndtime() == null ? "" : acceptanceOdRegisterInfo.getEndtime().toLocaleString(), 458, this.getHeight() - 202);
@@ -323,22 +322,22 @@ public class PrintUIComponent extends JFrame {
                         AcceptanceOdRegisterInfo acceptanceOdRegisterInfo = odRegisterInfos.get(1);
 
                         paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 222);
-                        paintLabel(g2, "卸后", 65, this.getHeight() - 222);
-                        paintLabel(g2, "", 130, this.getHeight() - 222);
+                        paintLabel(g2, "卸前", 65, this.getHeight() - 222);
+                        paintLabel(g2,  acceptanceOdRegisterInfo.getBeginoilheight()==null?"":acceptanceOdRegisterInfo.getBeginoilheight().toString(), 130, this.getHeight() - 222);
                         paintLabel(g2, "", 200, this.getHeight() - 222);
-                        paintLabel(g2, acceptanceOdRegisterInfo.getEndtemperature() == null ? "" : acceptanceOdRegisterInfo.getBegintemperature().toString(), 250, this.getHeight() - 222);
-                        paintLabel(g2, acceptanceOdRegisterInfo.getEndoill() == null ? "" : acceptanceOdRegisterInfo.getEndoill().toString(), 300, this.getHeight() - 222);
-                        paintLabel(g2, acceptanceOdRegisterInfo.getEndv20l() == null ? "" : acceptanceOdRegisterInfo.getEndv20l().toString(), 370, this.getHeight() - 222);
-                        paintLabel(g2, acceptanceOdRegisterInfo.getEndtime() == null ? "" : acceptanceOdRegisterInfo.getEndtime().toLocaleString(), 458, this.getHeight() - 222);
+                        paintLabel(g2, acceptanceOdRegisterInfo.getBegintemperature() == null ? "" : acceptanceOdRegisterInfo.getBegintemperature().toString(), 250, this.getHeight() - 222);
+                        paintLabel(g2, acceptanceOdRegisterInfo.getBeginoill() == null ? "" : acceptanceOdRegisterInfo.getBeginoill().toString(), 300, this.getHeight() - 222);
+                        paintLabel(g2, acceptanceOdRegisterInfo.getBeginv20l() == null ? "" : acceptanceOdRegisterInfo.getBeginv20l().toString(), 370, this.getHeight() - 222);
+                        paintLabel(g2, acceptanceOdRegisterInfo.getBegintime() == null ? "" : acceptanceOdRegisterInfo.getBegintime().toLocaleString(), 458, this.getHeight() - 222);
                         paintLabel(g2, "", 550, this.getHeight() - 222);
                         paintLabel(g2, "", 610, this.getHeight() - 222);
 
 
                         paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 242);
                         paintLabel(g2, "卸后", 65, this.getHeight() - 242);
-                        paintLabel(g2, "", 130, this.getHeight() - 242);
+                        paintLabel(g2,  acceptanceOdRegisterInfo.getEndoilheight()==null?"":acceptanceOdRegisterInfo.getEndoilheight().toString(), 130, this.getHeight() - 242);
                         paintLabel(g2, "", 200, this.getHeight() - 242);
-                        paintLabel(g2, acceptanceOdRegisterInfo.getEndtemperature() == null ? "" : acceptanceOdRegisterInfo.getBegintemperature().toString(), 250, this.getHeight() - 242);
+                        paintLabel(g2, acceptanceOdRegisterInfo.getEndtemperature() == null ? "" : acceptanceOdRegisterInfo.getEndtemperature().toString(), 250, this.getHeight() - 242);
                         paintLabel(g2, acceptanceOdRegisterInfo.getEndoill() == null ? "" : acceptanceOdRegisterInfo.getEndoill().toString(), 300, this.getHeight() - 242);
                         paintLabel(g2, acceptanceOdRegisterInfo.getEndv20l() == null ? "" : acceptanceOdRegisterInfo.getEndv20l().toString(), 370, this.getHeight() - 242);
                         paintLabel(g2, acceptanceOdRegisterInfo.getEndtime() == null ? "" : acceptanceOdRegisterInfo.getEndtime().toLocaleString(), 458, this.getHeight() - 242);
@@ -396,7 +395,7 @@ public class PrintUIComponent extends JFrame {
             graphics.setColor(Color.black);
 
             Font oldFont = graphics.getFont();
-            Font labelFont = new Font("none", Font.PLAIN, 10);
+            Font labelFont = new Font("none", Font.PLAIN, 11);
             graphics.setFont(labelFont);
             Point2D ptSrc = new Point2D.Double(x - graphics.getFontMetrics().stringWidth(label) / 2, y);
             Point2D ptDst = new Point2D.Double();
