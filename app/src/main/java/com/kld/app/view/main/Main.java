@@ -103,7 +103,7 @@ import java.util.List;
 
          CC = reLink();
         //endregion
-         //   new Main().frame.setVisible(true);
+         // new Main().frame.setVisible(true);
         AsynHeart.sendIdel();
     }
 
@@ -112,7 +112,7 @@ import java.util.List;
      * Create the application.
      */
     public Main() {
-      /*  //初始化主JFRAME
+      /* //初始化主JFRAME
         initialize();
         //初始化标题栏
         initTitlePanel();
@@ -266,7 +266,7 @@ import java.util.List;
         //最小化
         JLabel minLabel = new JLabel("最小化");
         minLabel.setFont(Constant.TITLE_CONTENT_FONT);
-        minLabel.setBounds(698, 24, 40, 12);
+        minLabel.setBounds(695, 24, 40, 12);
         minLabel.setForeground(new Color(Integer.decode(Constant.FORE_COCLER_1)));
         titlePanel.add(minLabel);
         minLabel.addMouseListener(new MouseAdapter() {
@@ -280,7 +280,7 @@ import java.util.List;
         Icon.setBorderPainted(false);
         Icon.setContentAreaFilled(false);
         Icon.setIcon(nav_red);
-        Icon.setBounds(720, 20, 20, 20);
+        Icon.setBounds(730, 20, 20, 20);
         titlePanel.add(Icon);
         //退出z
         JLabel closeLabel = new JLabel("退出");

@@ -444,9 +444,11 @@ public class TankGunPumpCodeInformat implements Watcher {
                           //System.out.println("油罐"+no+"进来判断"+gunNum+"号枪状态");
                         if (GunStatus.equals("提枪")) {
                             logger.info("[更新油枪" + oilgun + "提枪状态]");
-                            String amount = ((Map) (resultMsg.getData().get(i))).get("amount").toString();//元
-                            String qty = ((Map) (resultMsg.getData().get(i))).get("qty").toString();//升
-                            String Price = ((Map) (resultMsg.getData().get(i))).get("Price").toString();//元/升
+                            DecimalFormat decimalFormat = new DecimalFormat("######0.00");
+
+                            String amount = ((Map) (resultMsg.getData().get(i))).get("amount") == null ? "0.0" :decimalFormat.format(((Map) (resultMsg.getData().get(i))).get("amount")).toString();//元
+                            String qty = ((Map) (resultMsg.getData().get(i))).get("qty") == null ? "0.0" :decimalFormat.format(((Map) (resultMsg.getData().get(i))).get("qty")).toString();//升
+                            String Price =  ((Map) (resultMsg.getData().get(i))).get("Price") == null ? "0.0" :decimalFormat.format(((Map) (resultMsg.getData().get(i))).get("Price")).toString();//元/升
                             logger.info("GasGun:" + gasMsg.getMessage());
                             //System.out.println("[更新油枪" + oilgun + "amout[" + amount + "]");
                             //System.out.println("[更新油枪" + oilgun + "qty[" + qty + "]");
@@ -461,10 +463,14 @@ public class TankGunPumpCodeInformat implements Watcher {
                         }else {
                             jPanelMap.get(oilgun).hold1.setIcon(Common.createImageIcon(this.getClass(), "green_8.png"));
                             Map map=(Map)resultMsg.getData().get(i);
+                            DecimalFormat decimalFormat = new DecimalFormat("######0.00");
+
                             if (map!=null&&map.get("amount") != null&&map.get("qty") != null&&map.get("Price") != null) {
-                                String amount = ((Map) (resultMsg.getData().get(i))).get("amount") == null ? "0.0" : ((Map) (resultMsg.getData().get(i))).get("amount").toString();//元
-                                String qty = ((Map) (resultMsg.getData().get(i))).get("qty") == null ? "0.0" : ((Map) (resultMsg.getData().get(i))).get("qty").toString();//升
-                                String Price = ((Map) (resultMsg.getData().get(i))).get("Price") == null ? "0.0" : ((Map) (resultMsg.getData().get(i))).get("Price").toString();//元/升
+                                String amount = ((Map) (resultMsg.getData().get(i))).get("amount") == null ? "0.0" : decimalFormat.format(((Map) (resultMsg.getData().get(i))).get("amount")).toString();//元
+                                String qty = ((Map) (resultMsg.getData().get(i))).get("qty") == null ? "0.0" : decimalFormat.format(((Map) (resultMsg.getData().get(i))).get("qty")).toString();//升
+                                String Price = ((Map) (resultMsg.getData().get(i))).get("Price") == null ? "0.0" : decimalFormat.format(((Map) (resultMsg.getData().get(i))).get("Price")).toString();//元/升
+
+                                logger.info("qty:"+qty);
                                 jPanelMap.get(oilgun).Label3.setText(qty);
                                 jPanelMap.get(oilgun).Label5.setText(amount);
                                 jPanelMap.get(oilgun).Label7.setText(Price);

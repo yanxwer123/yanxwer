@@ -173,7 +173,7 @@ public class GlwhdPage extends JOptionPane implements WindowListener,Watcher {
                 if (selectRow < 0) {
                 }else {
                     manualbillno=tableModel.getValueAt(selectRow,0).toString();
-                    if (bill.getPlanl()!=Double.parseDouble(tableModel.getValueAt(selectRow, 1).toString())){
+                    if (Math.abs(bill.getPlanl()-Double.parseDouble(tableModel.getValueAt(selectRow, 1).toString()))>1){
                         JOptionPane.showMessageDialog(null, "原发升数不同", "信息提示", JOptionPane.INFORMATION_MESSAGE);
                         return;
                     }

@@ -1334,6 +1334,12 @@ public class TablePanel extends JPanel implements Watcher {
         glLabel1.setForeground(new Color(Integer.decode(Constant.HOMEPAGE_COCLER)));
         pan2.add(glLabel1);
 
+        JLabel glLabel2 = new JLabel("打印");
+        glLabel2.setFont(Constant.BOTTOM_FONT);
+        glLabel2.setBounds(400, 40, 60, 12);
+        glLabel2.setForeground(new Color(Integer.decode(Constant.HOMEPAGE_COCLER)));
+        pan2.add(glLabel2);
+
         ckdcxbutton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -1445,6 +1451,45 @@ public class TablePanel extends JPanel implements Watcher {
                 }
             }
         });
+
+        //打印
+
+        glLabel2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Main.menuList.contains("jhys_jhyscx")) {
+                    Main.setStatus("打印出库单");
+                    if (psdxx != null) {
+                        psdxx.getFrame().dispose();
+                    }
+                    if (whdPage != null) {
+                        whdPage.getFrame().dispose();
+                    }
+                    if (whdys != null) {
+                        whdys.getFrame().dispose();
+                    }
+                    try {
+                        if (jhyscxPage == null) {
+                            centerPanel.removeAll();
+                            centerPanel.repaint();
+                            jhyscxPage = new JhyscxPage();
+                            jhyscxPage.setPanel(centerPanel);
+                        } else {
+                            jhyscxPage.printJhdys();
+                        }
+
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                        Toolkit.getDefaultToolkit().beep();
+                        JOptionPane.showMessageDialog(centerPanel, e1.getMessage(), "错误提示", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(centerPanel, "用户[" + Main.oprname + "]没有此权限!", "错误提示", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+
 
         //出库单查询-删除
         scLabel.addMouseListener(new MouseAdapter() {
