@@ -78,19 +78,19 @@
   </select>
 <select id="getOdregRate" resultType="Map" parameterType="Map">
   SELECT
-	sum(DischargeL) AS Dischargel,
-	SUM(DischargeL) AS V20,
-	SUM(DuringSales) AS DuringSales,
-	#{yfss,jdbcType=DOUBLE} - SUM(DischargeL) AS v20loss,
+	IFNULL(SUM(EndOilL),0)-IFNULL(SUM(BeginoilL),0)+IFNULL(SUM(DuringSales),0) AS Dischargel,
+	IFNULL(SUM(DischargeL),0) AS V20,
+	IFNULL(SUM(DuringSales),0) AS DuringSales,
+	#{yfss,jdbcType=DOUBLE} - IFNULL(SUM(DischargeL),0) AS v20loss,
 	(#{yfss,jdbcType=DOUBLE} - SUM(DischargeL)) / #{yfss,jdbcType=DOUBLE} AS V20lossrate,
-	#{yfss,jdbcType=DOUBLE} - (sum(EndOilL)-sum(BeginoilL)+sum(DuringSales))   AS loss,
-	(#{yfss,jdbcType=DOUBLE} - (sum(EndOilL)-sum(BeginoilL)+sum(DuringSales))) / #{yfss,jdbcType=DOUBLE} AS lossreate,
-	#{yfss,jdbcType=DOUBLE}-SUM(Dischargel)-(#{yfss,jdbcType=DOUBLE} * #{syl,jdbcType=DOUBLE}) AS shsp
+	#{yfss,jdbcType=DOUBLE} - (IFNULL(sum(EndOilL),0)-IFNULL(sum(BeginoilL),0)+IFNULL(sum(DuringSales),0))   AS loss,
+	(#{yfss,jdbcType=DOUBLE} - (IFNULL(sum(EndOilL),0)-IFNULL(sum(BeginoilL),0)+IFNULL(sum(DuringSales),0))) / #{yfss,jdbcType=DOUBLE} AS lossreate,
+	#{yfss,jdbcType=DOUBLE}-IFNULL(SUM(Dischargel),0)-(#{yfss,jdbcType=DOUBLE} * #{syl,jdbcType=DOUBLE}) AS shsp
 
 FROM
 	oss_acceptance_odRegisterInfo
 WHERE
-	ManualNo = #{billno,jdbcType=VARCHAR}
+	ManualNo = #{billno,jdbcType=VARCHAR} or DeliveryNo=#{billno,jdbcType=VARCHAR}
 </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from oss_acceptance_odRegister

@@ -698,7 +698,7 @@ public class JhyscxPageDetailFrame extends JOptionPane implements Watcher {
         table.setValueAt(info.getBeginoilheight() == null ? "" : info.getBeginoilheight().toString(), 1, 0);
         table.setValueAt(info.getBeginoill() == null ? "" : info.getBeginoill().toString(), 1, 1);
         table.setValueAt(info.getBeginv20l() == null ? "" : Double.parseDouble(df.format(info.getBeginv20l())), 1, 2);
-        table.setValueAt(info.getEndtemperature() == null ? "" : info.getEndtemperature().toString(), 1, 3);
+        table.setValueAt(info.getBegintemperature() == null ? "" : info.getBegintemperature().toString(), 1, 3);
         table.setValueAt(info.getEndoilheight() == null ? "" : info.getEndoilheight().toString(), 2, 0);
         table.setValueAt(info.getEndoill() == null ? "" : info.getEndoill().toString(), 2, 1);
         table.setValueAt(info.getEndv20l() == null ? "" : Double.parseDouble(df.format(info.getEndv20l())), 2, 2);
