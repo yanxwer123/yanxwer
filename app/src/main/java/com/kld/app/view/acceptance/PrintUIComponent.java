@@ -138,7 +138,7 @@ public class PrintUIComponent extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 PrinterJob printJob = PrinterJob.getPrinterJob();
                 PageFormat pf = printJob.defaultPage();
-                pf.setOrientation(PageFormat.LANDSCAPE);
+                pf.setOrientation(PageFormat.PORTRAIT);
                 Paper paper = pf.getPaper();
                 paper.setSize(widthA4, heightA4);
                 paper.setImageableArea(leftMargin, topMargin, widthA4 - 2 * leftMargin, heightA4 - 2 * topMargin);
