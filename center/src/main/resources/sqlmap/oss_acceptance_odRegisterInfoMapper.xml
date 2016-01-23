@@ -29,12 +29,14 @@
     <result column="IsBeforeStable" property="isbeforestable" jdbcType="INTEGER" />
     <result column="StableBeginTime" property="stablebegintime" jdbcType="TIMESTAMP" />
     <result column="StableEndTime" property="stableendtime" jdbcType="TIMESTAMP" />
+    <result column="BeginWaterHeight" property="beginwaterheight" jdbcType="DOUBLE" />
+    <result column="EndWaterHeight" property="endwaterheight" jdbcType="DOUBLE" />
   </resultMap>
   <sql id="Base_Column_List" >
     ManualNo, OilCan, NodeNo, OilNo, Shift, DeliveryNo, BeginTime, EndTime, DischargeL, 
     BeginOilHeight, BeginOilL, BeginV20L, BeginTemperature, EndOilHeight, EndOilL, EndV20L, 
     EndTemperature, CreateTime, IsDel, EnterType, DuringSales, TranStatus, OUCode, ForceCancelStable, 
-    IsBeforeStable,StableBeginTime,StableEndTime
+    IsBeforeStable,StableBeginTime,StableEndTime,BeginWaterHeight,EndWaterHeight
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_acceptance_odRegisterInfoKey" >
     select 'true' as QUERYID,
@@ -59,7 +61,7 @@
       EndV20L, EndTemperature, CreateTime, 
       IsDel, EnterType, DuringSales, 
       TranStatus, OUCode, ForceCancelStable, 
-      IsBeforeStable,StableBeginTime,StableEndTime)
+      IsBeforeStable,StableBeginTime,StableEndTime,BeginWaterHeight,EndWaterHeight)
     values (#{manualno,jdbcType=VARCHAR}, #{oilcan,jdbcType=INTEGER}, #{nodeno,jdbcType=VARCHAR}, 
       #{oilno,jdbcType=VARCHAR}, #{shift,jdbcType=VARCHAR}, #{deliveryno,jdbcType=VARCHAR}, 
       #{begintime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{dischargel,jdbcType=DOUBLE}, 
@@ -68,7 +70,8 @@
       #{endv20l,jdbcType=DOUBLE}, #{endtemperature,jdbcType=DOUBLE}, #{createtime,jdbcType=TIMESTAMP}, 
       #{isdel,jdbcType=INTEGER}, #{entertype,jdbcType=INTEGER}, #{duringsales,jdbcType=DOUBLE}, 
       #{transtatus,jdbcType=VARCHAR}, #{oucode,jdbcType=VARCHAR}, #{forcecancelstable,jdbcType=INTEGER}, 
-      #{isbeforestable,jdbcType=INTEGER},#{stablebegintime,jdbcType=TIMESTAMP},#{stableendtime,jdbcType=TIMESTAMP})
+      #{isbeforestable,jdbcType=INTEGER},#{stablebegintime,jdbcType=TIMESTAMP},#{stableendtime,jdbcType=TIMESTAMP},
+      #{beginwaterheight,jdbcType=DOUBLE},#{endwaterheight,jdbcType=DOUBLE})
   </insert>
   <insert id="merge" parameterType="com.kld.gsm.center.domain.oss_acceptance_odRegisterInfo" >
     replace into oss_acceptance_odRegisterInfo
@@ -154,6 +157,12 @@
       <if test="stableendtime != null" >
         StableEndTime,
       </if>
+      <if test="beginwaterheight != null" >
+        BeginWaterHeight,
+      </if>
+      <if test="endwaterheight != null" >
+        EndWaterHeight,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="manualno != null" >
@@ -236,6 +245,12 @@
       </if>
       <if test="stableendtime != null" >
         #{stableendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="beginwaterheight != null" >
+        beginwaterheight,
+      </if>
+      <if test="endwaterheight != null" >
+        endwaterheight,
       </if>
     </trim>
   </insert>
@@ -323,6 +338,12 @@
       <if test="stableendtime != null" >
         StableEndTime,
       </if>
+      <if test="beginwaterheight != null" >
+        BeginWaterHeight,
+      </if>
+      <if test="endwaterheight != null" >
+        EndWaterHeight,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="manualno != null" >
@@ -406,6 +427,12 @@
       <if test="stableendtime != null" >
         #{stableendtime,jdbcType=TIMESTAMP},
       </if>
+      <if test="beginwaterheight != null" >
+        #{beginwaterheight,jdbcType=DOUBLE},
+      </if>
+      <if test="endwaterheight != null" >
+        #{endwaterheight,jdbcType=DOUBLE},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_acceptance_odRegisterInfo" >
@@ -483,6 +510,12 @@
       <if test="stableendtime != null" >
         StableEndTime = #{stableendtime,jdbcType=TIMESTAMP},
       </if>
+      <if test="beginwaterheight != null" >
+        BeginWaterHeight = #{beginwaterheight,jdbcType=DOUBLE},
+      </if>
+      <if test="endwaterheight != null" >
+        EndWaterHeight = #{endwaterheight,jdbcType=DOUBLE},
+      </if>
     </set>
     where ManualNo = #{manualno,jdbcType=VARCHAR}
       and OilCan = #{oilcan,jdbcType=INTEGER}
@@ -513,7 +546,9 @@
       ForceCancelStable = #{forcecancelstable,jdbcType=INTEGER},
       IsBeforeStable = #{isbeforestable,jdbcType=INTEGER},
       StableBeginTime = #{stablebegintime,jdbcType=INTEGER},
-      StableEndTime = #{stableendtime,jdbcType=INTEGER}
+      StableEndTime = #{stableendtime,jdbcType=INTEGER},
+      BeginWaterHeight = #{beginwaterheight,jdbcType=DOUBLE},
+      EndWaterHeight = #{endwaterheight,jdbcType=DOUBLE}
     where ManualNo = #{manualno,jdbcType=VARCHAR}
       and OilCan = #{oilcan,jdbcType=INTEGER}
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
