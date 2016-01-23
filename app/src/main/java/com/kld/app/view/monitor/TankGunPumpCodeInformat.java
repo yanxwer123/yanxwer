@@ -446,18 +446,18 @@ public class TankGunPumpCodeInformat implements Watcher {
                             logger.info("[更新油枪" + oilgun + "提枪状态]");
                             DecimalFormat decimalFormat = new DecimalFormat("######0.00");
 
-                            String amount = ((Map) (resultMsg.getData().get(i))).get("amount").toString();//元
-                            String qty = ((Map) (resultMsg.getData().get(i))).get("qty").toString();//升
-                            String Price =  ((Map) (resultMsg.getData().get(i))).get("Price").toString();//元/升
+                            String amount = ((Map) (resultMsg.getData().get(i))).get("amount") == null ? "0.0" :((Map) (resultMsg.getData().get(i))).get("amount").toString();//元
+                            String qty = ((Map) (resultMsg.getData().get(i))).get("qty") == null ? "0.0" :((Map) (resultMsg.getData().get(i))).get("qty").toString();//升
+                            String Price =  ((Map) (resultMsg.getData().get(i))).get("Price") == null ? "0.0" :((Map) (resultMsg.getData().get(i))).get("Price").toString();//元/升
                             logger.info("GasGun:" + gasMsg.getMessage());
                             //System.out.println("[更新油枪" + oilgun + "amout[" + amount + "]");
                             //System.out.println("[更新油枪" + oilgun + "qty[" + qty + "]");
                             //System.out.println("[更新油枪" + oilgun + "Price[" + Price + "]");
 
 
-                            jPanelMap.get(oilgun).Label3.setText(decimalFormat.format(qty));
-                            jPanelMap.get(oilgun).Label5.setText(decimalFormat.format(amount));
-                            jPanelMap.get(oilgun).Label7.setText(decimalFormat.format(Price));
+                            jPanelMap.get(oilgun).Label3.setText(decimalFormat.format(Double.valueOf(qty)));
+                            jPanelMap.get(oilgun).Label5.setText(decimalFormat.format(Double.valueOf(amount)));
+                            jPanelMap.get(oilgun).Label7.setText(decimalFormat.format(Double.valueOf(Price)));
                             jPanelMap.get(oilgun).hold1.setIcon(Common.createImageIcon(this.getClass(), "gas-gun.png"));
 
                         }else {
@@ -469,10 +469,10 @@ public class TankGunPumpCodeInformat implements Watcher {
                                 String Price = ((Map) (resultMsg.getData().get(i))).get("Price") == null ? "0.0" : ((Map) (resultMsg.getData().get(i))).get("Price").toString();//元/升
                                 DecimalFormat decimalFormat = new DecimalFormat("######0.00");
 
-
-                                jPanelMap.get(oilgun).Label3.setText(decimalFormat.format(qty));
-                                jPanelMap.get(oilgun).Label5.setText(decimalFormat.format(amount));
-                                jPanelMap.get(oilgun).Label7.setText(decimalFormat.format(Price));
+                                logger.info("qty:"+qty);
+                                jPanelMap.get(oilgun).Label3.setText(decimalFormat.format(Double.valueOf(qty)));
+                                jPanelMap.get(oilgun).Label5.setText(decimalFormat.format(Double.valueOf(amount)));
+                                jPanelMap.get(oilgun).Label7.setText(decimalFormat.format(Double.valueOf(Price)));
                             }
                             //String pumpReadout = ((Map) (resultMsg.getData().get(i))).get("PumpReadout").toString();//泵码
                             //   doubPumpReadout = Double.parseDouble(pumpReadout);
