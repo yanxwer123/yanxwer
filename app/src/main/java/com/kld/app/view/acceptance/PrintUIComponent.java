@@ -138,7 +138,7 @@ public class PrintUIComponent extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 PrinterJob printJob = PrinterJob.getPrinterJob();
                 PageFormat pf = printJob.defaultPage();
-                pf.setOrientation(PageFormat.LANDSCAPE);
+                pf.setOrientation(PageFormat.PORTRAIT);
                 Paper paper = pf.getPaper();
                 paper.setSize(widthA4, heightA4);
                 paper.setImageableArea(leftMargin, topMargin, widthA4 - 2 * leftMargin, heightA4 - 2 * topMargin);
@@ -249,11 +249,11 @@ public class PrintUIComponent extends JDialog {
 
         private void paintlabels(Graphics2D g2) {
             paintLabel(g2, "地罐交接校对单", this.getWidth() / 2, this.getHeight() - 20);
-            paintLabel(g2, "站名:" + stationName, 71, this.getHeight() - 40);
+            paintLabel(g2, stationName == null ? "站名:" : "站名:" + stationName, 85, this.getHeight() - 40);
 
-            paintLabel(g2, "出库单号:" + billno, 280, this.getHeight() - 40);
+            paintLabel(g2, billno == null ? "出库单号:" : "出库单号:" + billno, 280, this.getHeight() - 40);
             if (deliveryBill != null) {
-                paintLabel(g2, "油品：" + Oilname, 420, this.getHeight() - 40);
+                paintLabel(g2, Oilname == null ? "油品：" : "油品：" + Oilname, 420, this.getHeight() - 40);
                 paintLabel(g2, "发出库:", 70, this.getHeight() - 62);
                 paintLabel(g2, "发油日期时间", 200, this.getHeight() - 62);
                 paintLabel(g2, "原发重量(Kg)", 330, this.getHeight() - 62);
@@ -279,9 +279,9 @@ public class PrintUIComponent extends JDialog {
                 paintLabel(g2, "油库实发油温", 610, this.getHeight() - 122);
             }
 
-            paintLabel(g2, "交易明细", 35, this.getHeight() - 142);
+            paintLabel(g2, "交易明细", 40, this.getHeight() - 142);
 
-            paintLabel(g2, "罐号", 25, this.getHeight() - 162);
+            paintLabel(g2, "罐号", 28, this.getHeight() - 162);
             paintLabel(g2, "数据类别", 65, this.getHeight() - 162);
             paintLabel(g2, "油水总高(mm)", 130, this.getHeight() - 162);
             paintLabel(g2, "水高(mm)", 200, this.getHeight() - 162);
@@ -297,7 +297,7 @@ public class PrintUIComponent extends JDialog {
                     AcceptanceOdRegisterInfo acceptanceOdRegisterInfo = odRegisterInfos.get(0);
                     paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 182);
                     paintLabel(g2, "卸前", 65, this.getHeight() - 182);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginoilheight()==null?"":acceptanceOdRegisterInfo.getBeginoilheight().toString(), 130, this.getHeight() - 182);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginoilheight() == null ? "" : acceptanceOdRegisterInfo.getBeginoilheight().toString(), 130, this.getHeight() - 182);
                     paintLabel(g2, "", 200, this.getHeight() - 182);
                     paintLabel(g2, acceptanceOdRegisterInfo.getBegintemperature() == null ? "" : acceptanceOdRegisterInfo.getBegintemperature().toString(), 250, this.getHeight() - 182);
                     paintLabel(g2, acceptanceOdRegisterInfo.getBeginoill() == null ? "" : acceptanceOdRegisterInfo.getBeginoill().toString(), 300, this.getHeight() - 182);
@@ -308,7 +308,7 @@ public class PrintUIComponent extends JDialog {
 
                     paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 202);
                     paintLabel(g2, "卸后", 65, this.getHeight() - 202);
-                    paintLabel(g2,  acceptanceOdRegisterInfo.getEndoilheight()==null?"":acceptanceOdRegisterInfo.getEndoilheight().toString(), 130, this.getHeight() - 202);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getEndoilheight() == null ? "" : acceptanceOdRegisterInfo.getEndoilheight().toString(), 130, this.getHeight() - 202);
                     paintLabel(g2, "", 200, this.getHeight() - 202);
                     paintLabel(g2, acceptanceOdRegisterInfo.getEndtemperature() == null ? "" : acceptanceOdRegisterInfo.getEndtemperature().toString(), 250, this.getHeight() - 202);
                     paintLabel(g2, acceptanceOdRegisterInfo.getEndoill() == null ? "" : acceptanceOdRegisterInfo.getEndoill().toString(), 300, this.getHeight() - 202);
@@ -323,7 +323,7 @@ public class PrintUIComponent extends JDialog {
 
                         paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 222);
                         paintLabel(g2, "卸前", 65, this.getHeight() - 222);
-                        paintLabel(g2,  acceptanceOdRegisterInfo.getBeginoilheight()==null?"":acceptanceOdRegisterInfo.getBeginoilheight().toString(), 130, this.getHeight() - 222);
+                        paintLabel(g2, acceptanceOdRegisterInfo.getBeginoilheight() == null ? "" : acceptanceOdRegisterInfo.getBeginoilheight().toString(), 130, this.getHeight() - 222);
                         paintLabel(g2, "", 200, this.getHeight() - 222);
                         paintLabel(g2, acceptanceOdRegisterInfo.getBegintemperature() == null ? "" : acceptanceOdRegisterInfo.getBegintemperature().toString(), 250, this.getHeight() - 222);
                         paintLabel(g2, acceptanceOdRegisterInfo.getBeginoill() == null ? "" : acceptanceOdRegisterInfo.getBeginoill().toString(), 300, this.getHeight() - 222);
@@ -335,7 +335,7 @@ public class PrintUIComponent extends JDialog {
 
                         paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 242);
                         paintLabel(g2, "卸后", 65, this.getHeight() - 242);
-                        paintLabel(g2,  acceptanceOdRegisterInfo.getEndoilheight()==null?"":acceptanceOdRegisterInfo.getEndoilheight().toString(), 130, this.getHeight() - 242);
+                        paintLabel(g2, acceptanceOdRegisterInfo.getEndoilheight() == null ? "" : acceptanceOdRegisterInfo.getEndoilheight().toString(), 130, this.getHeight() - 242);
                         paintLabel(g2, "", 200, this.getHeight() - 242);
                         paintLabel(g2, acceptanceOdRegisterInfo.getEndtemperature() == null ? "" : acceptanceOdRegisterInfo.getEndtemperature().toString(), 250, this.getHeight() - 242);
                         paintLabel(g2, acceptanceOdRegisterInfo.getEndoill() == null ? "" : acceptanceOdRegisterInfo.getEndoill().toString(), 300, this.getHeight() - 242);
@@ -349,7 +349,7 @@ public class PrintUIComponent extends JDialog {
             }
 
 
-            paintLabel(g2, "收油损耗情况", 45, this.getHeight() - 262);
+            paintLabel(g2, "收油损耗情况", 50, this.getHeight() - 262);
 
             paintLabel(g2, "实收体积(Vt)", 45, this.getHeight() - 282);
             paintLabel(g2, "实收体积(V20)", 115, this.getHeight() - 282);
@@ -380,10 +380,10 @@ public class PrintUIComponent extends JDialog {
 
             paintLabel(g2, "回空铅封号:", 345, this.getHeight() - 360);
             paintLabel(g2, backBankNo, 500, this.getHeight() - 360);
-            paintLabel(g2, "备注:如遇系统特殊情况请在该栏目填写", 100, this.getHeight() - 390);
+            paintLabel(g2, "备注:如遇系统特殊情况请在该栏目填写", 120, this.getHeight() - 393);
 
-            paintLabel(g2, "正损益表示损耗,负损益表示盈余。", 90, this.getHeight() - 433);
-            paintLabel(g2, "加油站卸油时油罐对应加油机停止对外销售,卸油完成后在液位仪提取油罐数据生成报表后方可对外销售", 240, this.getHeight() - 445);
+            paintLabel(g2, "正损益表示损耗,负损益表示盈余。", 110, this.getHeight() - 433);
+            paintLabel(g2, "加油站卸油时油罐对应加油机停止对外销售,卸油完成后在液位仪提取油罐数据生成报表后方可对外销售", 260, this.getHeight() - 445);
 
             // paintLabel(g2, "qweqweqwe", this.getWidth() / 2, this.getHeight() - 20);//画文字
 
@@ -395,7 +395,7 @@ public class PrintUIComponent extends JDialog {
             graphics.setColor(Color.black);
 
             Font oldFont = graphics.getFont();
-            Font labelFont = new Font("none", Font.PLAIN, 11);
+            Font labelFont = new Font("none", Font.PLAIN, 10);
             graphics.setFont(labelFont);
             Point2D ptSrc = new Point2D.Double(x - graphics.getFontMetrics().stringWidth(label) / 2, y);
             Point2D ptDst = new Point2D.Double();
@@ -410,28 +410,27 @@ public class PrintUIComponent extends JDialog {
             AffineTransform old = g2.getTransform();
             g2.transform(toUsualyCoordinate());
             Rectangle2D rect = new Rectangle2D.Double();
-            rect.setRect(10, 2, this.getWidth() - 4, this.getHeight() - 4);
+            rect.setRect(13, 25, this.getWidth() - 23, this.getHeight() - 50);
             g2.draw(rect);
             g2.setColor(Color.black);
-            g2.drawLine(this.getWidth() - 10, 2, this.getWidth() - 10, this.getHeight() - 2);
-            g2.drawLine(10, this.getHeight() - 26, this.getWidth() - 10, this.getHeight() - 26);
-            g2.drawLine(10, this.getHeight() - 46, this.getWidth() - 10, this.getHeight() - 46);
-            g2.drawLine(10, this.getHeight() - 66, this.getWidth() - 10, this.getHeight() - 66);
-            g2.drawLine(10, this.getHeight() - 86, this.getWidth() - 10, this.getHeight() - 86);
-            g2.drawLine(10, this.getHeight() - 106, this.getWidth() - 10, this.getHeight() - 106);
-            g2.drawLine(10, this.getHeight() - 126, this.getWidth() - 10, this.getHeight() - 126);
+//            g2.drawLine(13, this.getHeight() - 26, this.getWidth() - 10, this.getHeight() - 26);
+            g2.drawLine(13, this.getHeight() - 46, this.getWidth() - 10, this.getHeight() - 46);
+            g2.drawLine(13, this.getHeight() - 66, this.getWidth() - 10, this.getHeight() - 66);
+            g2.drawLine(13, this.getHeight() - 86, this.getWidth() - 10, this.getHeight() - 86);
+            g2.drawLine(13, this.getHeight() - 106, this.getWidth() - 10, this.getHeight() - 106);
+            g2.drawLine(13, this.getHeight() - 126, this.getWidth() - 10, this.getHeight() - 126);
 
             g2.drawLine(this.getWidth() / 5, this.getHeight() - 126, this.getWidth() / 5, this.getHeight() - 46);
             g2.drawLine(this.getWidth() / 5 * 2, this.getHeight() - 126, this.getWidth() / 5 * 2, this.getHeight() - 46);
             g2.drawLine(this.getWidth() / 5 * 3, this.getHeight() - 126, this.getWidth() / 5 * 3, this.getHeight() - 46);
             g2.drawLine(this.getWidth() / 5 * 4, this.getHeight() - 126, this.getWidth() / 5 * 4, this.getHeight() - 46);
             //交易明细
-            g2.drawLine(10, this.getHeight() - 146, this.getWidth() - 10, this.getHeight() - 146);
-            g2.drawLine(10, this.getHeight() - 166, this.getWidth() - 10, this.getHeight() - 166);
-            g2.drawLine(10, this.getHeight() - 186, this.getWidth() - 10, this.getHeight() - 186);
-            g2.drawLine(10, this.getHeight() - 206, this.getWidth() - 10, this.getHeight() - 206);
-            g2.drawLine(10, this.getHeight() - 226, this.getWidth() - 10, this.getHeight() - 226);
-            g2.drawLine(10, this.getHeight() - 246, this.getWidth() - 10, this.getHeight() - 246);
+            g2.drawLine(13, this.getHeight() - 146, this.getWidth() - 10, this.getHeight() - 146);
+            g2.drawLine(13, this.getHeight() - 166, this.getWidth() - 10, this.getHeight() - 166);
+            g2.drawLine(13, this.getHeight() - 186, this.getWidth() - 10, this.getHeight() - 186);
+            g2.drawLine(13, this.getHeight() - 206, this.getWidth() - 10, this.getHeight() - 206);
+            g2.drawLine(13, this.getHeight() - 226, this.getWidth() - 10, this.getHeight() - 226);
+            g2.drawLine(13, this.getHeight() - 246, this.getWidth() - 10, this.getHeight() - 246);
 
             g2.drawLine(40, this.getHeight() - 246, 40, this.getHeight() - 146);
             g2.drawLine(90, this.getHeight() - 246, 90, this.getHeight() - 146);
@@ -444,12 +443,12 @@ public class PrintUIComponent extends JDialog {
             g2.drawLine(600, this.getHeight() - 246, 600, this.getHeight() - 146);
 
             //收油损耗情况
-            g2.drawLine(10, this.getHeight() - 266, this.getWidth() - 10, this.getHeight() - 266);
-            g2.drawLine(10, this.getHeight() - 286, this.getWidth() - 10, this.getHeight() - 286);
-            g2.drawLine(10, this.getHeight() - 306, this.getWidth() - 10, this.getHeight() - 306);
-            g2.drawLine(10, this.getHeight() - 346, this.getWidth() - 10, this.getHeight() - 346);
-            g2.drawLine(10, this.getHeight() - 366, this.getWidth() - 10, this.getHeight() - 366);
-            g2.drawLine(10, this.getHeight() - 415, this.getWidth() - 10, this.getHeight() - 415);
+            g2.drawLine(13, this.getHeight() - 266, this.getWidth() - 10, this.getHeight() - 266);
+            g2.drawLine(13, this.getHeight() - 286, this.getWidth() - 10, this.getHeight() - 286);
+            g2.drawLine(13, this.getHeight() - 306, this.getWidth() - 10, this.getHeight() - 306);
+            g2.drawLine(13, this.getHeight() - 346, this.getWidth() - 10, this.getHeight() - 346);
+            g2.drawLine(13, this.getHeight() - 366, this.getWidth() - 10, this.getHeight() - 366);
+            g2.drawLine(13, this.getHeight() - 415, this.getWidth() - 10, this.getHeight() - 415);
 
             g2.drawLine(80, this.getHeight() - 366, 80, this.getHeight() - 266);
             g2.drawLine(220, this.getHeight() - 415, 220, this.getHeight() - 366);
