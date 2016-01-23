@@ -6,6 +6,8 @@ package com.kld.app.view.acceptance;
 import com.kld.app.service.*;
 import com.kld.app.springcontext.Context;
 import com.kld.gsm.ATG.domain.*;
+import com.kld.gsm.ATG.service.SysmanageService;
+import com.kld.gsm.util.V20Utils;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -51,14 +53,40 @@ public class PrintUIComponent extends JFrame {
     private IAcceptanceDeliveryService deliveryService;
     private IAcceptanceOdRegisterService registerService;
     private AlarmDailyLostService alarmDailyLostService;
+    private SysmanageService sysmanageService;
+    private AlarmOilInContrastService alarmOilInContrastService;
     private SysManageCanInfoService sysManageCanInfoService;
     //private IMonitorTimeInventoryService monitorTimeInventoryService;
     private List<SysManageOilGunInfo> oilGunList;
     private MonitorTimeInventoryService monitorTimeInventoryService;
-
+    String stationName;
     String billno;//出库单号
     private AcceptanceDeliveryBills deliveryBill; //出库单
     private String Oilname; //油品名称
+    //实收体积(Vt)
+    String realRecieve;
+    //实收体积(V20)
+    String realRecieveV20;
+    //进油期间付油体积
+    String duringSales;
+    //实收损益量(Vt)
+    String dischargeLoss;
+    //实收损益量(V20)
+    String dischargeLossV20;
+
+    //实收损益率(‰)
+    String dischargeRate;
+    //实收损益率20(‰)
+    String dischargeRateV20;
+    //超耗索赔量(V20)
+    String indemnityloss;
+    //回罐铅封号
+    String backBankNo;
+    //到站时间
+    String instationtime;
+    //原发体积(V20)
+    String planLV20;
+    private AlarmOilInContrast alarmOilInContrast;
 
     JButton button;
     MyPanel panel;
@@ -70,6 +98,30 @@ public class PrintUIComponent extends JFrame {
         odRegisterInfos = getOdRegisterInfos(billno);
         panel = new MyPanel();
         button = new JButton("Print");
+        if(sysmanageService==null) {
+            sysmanageService = Context.getInstance().getBean(SysmanageService.class);
+        }
+        SysManageDepartment sysManageDepartment =         sysmanageService.getdeptinfo();
+        if(sysManageDepartment!=null){
+            stationName = sysManageDepartment.getNodetag();
+        }else {
+
+        }
+        if (odRegister != null) {
+            realRecieve = odRegister.getRealgetl() == null ? "" : odRegister.getRealgetl().toString();
+            realRecieveV20 = odRegister.getRealGetLV20() == null ? "" : odRegister.getRealGetLV20().toString();
+            duringSales = odRegister.getDuringsales() == null ? "" : odRegister.getDuringsales().toString();
+            dischargeLoss = odRegister.getDischargeloss() == null ? "" : odRegister.getDischargeloss().toString();
+            dischargeLossV20 = odRegister.getDischargeRateV20() == null ? "" : odRegister.getDischargeRateV20().toString();
+            dischargeRate = odRegister.getDischargerate() == null ? "" : odRegister.getDischargerate().toString();
+            dischargeRateV20 = odRegister.getDischargeRateV20() == null ? "" : odRegister.getDischargeRateV20().toString();
+            indemnityloss = odRegister.getIndemnityloss() == null ? "0" : odRegister.getIndemnityloss().toString();
+            backBankNo = odRegister.getBackbankno() == null ? "" : odRegister.getBackbankno().toString();
+            instationtime = odRegister.getIndemnityloss() == null ? "" : odRegister.getInstationtime().toLocaleString();
+
+        }
+
+
         getContentPane().setLayout(new GridBagLayout());
         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         gridBagConstraints = new GridBagConstraints();
@@ -140,7 +192,22 @@ public class PrintUIComponent extends JFrame {
             registerService = Context.getInstance().getBean(IAcceptanceOdRegisterService.class);
         }
         odRegister = registerService.selectByPrimaryKey(billno);
+        String OIL_TYPE_1 = registerService.selectOilType(deliveryBill.getOilno()).getOiltype().toString();
+        planLV20 = getV20L(OIL_TYPE_1, deliveryBill.getPlanl()==null?0: deliveryBill.getPlanl(), deliveryBill.getDeliverytemp()==null?0:deliveryBill.getDeliverytemp()) + "";
+    }
 
+    private double getV20L(String oilType, double vt, double V) {
+        V20Utils v20Utils = new V20Utils();
+        if (V == 0.0) {
+            return 0.0;
+        }
+        if (oilType.equals("03")) {
+            //柴油
+            return v20Utils.getDieV20(vt, V);
+        } else {
+            //汽油
+            return v20Utils.getGasV20(vt, V);
+        }
     }
 
     /*
@@ -182,8 +249,8 @@ public class PrintUIComponent extends JFrame {
         }
 
         private void paintlabels(Graphics2D g2) {
-            paintLabel(g2, "1地罐交接校对单", this.getWidth() / 2, this.getHeight() - 20);
-            paintLabel(g2, "站名:株洲本部河西美的城加油站", 100, this.getHeight() - 40);
+            paintLabel(g2, "地罐交接校对单", this.getWidth() / 2, this.getHeight() - 20);
+            paintLabel(g2, "站名:"+stationName, 71, this.getHeight() - 40);
 
             paintLabel(g2, "出库单号:" + billno, 280, this.getHeight() - 40);
             if (deliveryBill != null) {
@@ -197,7 +264,7 @@ public class PrintUIComponent extends JFrame {
                 paintLabel(g2, deliveryBill.getDeliverytime() == null ? "" : deliveryBill.getDeliverytime().toLocaleString(), 200, this.getHeight() - 82);
                 paintLabel(g2, deliveryBill.getPlanton() == null ? "" : deliveryBill.getPlanton().toString(), 330, this.getHeight() - 82);
                 paintLabel(g2, deliveryBill.getPlanl() == null ? "" : deliveryBill.getPlanl().toString(), 480, this.getHeight() - 82);
-                paintLabel(g2, "", 610, this.getHeight() - 82);
+                paintLabel(g2, planLV20, 610, this.getHeight() - 82);
 
 
                 paintLabel(g2, "承运车号:", 70, this.getHeight() - 102);
@@ -206,14 +273,14 @@ public class PrintUIComponent extends JFrame {
                 paintLabel(g2, "原发温度(℃)", 480, this.getHeight() - 102);
                 paintLabel(g2, "使用温度", 610, this.getHeight() - 102);
                 paintLabel(g2, deliveryBill.getCarno() == null ? "" : deliveryBill.getCarno().toString(), 70, this.getHeight() - 122);
-                paintLabel(g2, deliveryBill.getArrivaltime() == null ? "" : deliveryBill.getArrivaltime().toLocaleString(), 200, this.getHeight() - 122);
+                paintLabel(g2, instationtime, 200, this.getHeight() - 122);
                 paintLabel(g2, deliveryBill.getDensity() == null ? "" : deliveryBill.getDensity().toString(), 330, this.getHeight() - 122);
 
                 paintLabel(g2, deliveryBill.getDeliverytime() == null ? "" : deliveryBill.getDeliverytime().toLocaleString(), 480, this.getHeight() - 122);
                 paintLabel(g2, "油库实发油温", 610, this.getHeight() - 122);
             }
 
-            paintLabel(g2, "交易明细", 40, this.getHeight() - 142);
+            paintLabel(g2, "交易明细", 35, this.getHeight() - 142);
 
             paintLabel(g2, "罐号", 25, this.getHeight() - 162);
             paintLabel(g2, "数据类别", 65, this.getHeight() - 162);
@@ -223,8 +290,8 @@ public class PrintUIComponent extends JFrame {
             paintLabel(g2, "存油量(Vt)", 300, this.getHeight() - 162);
             paintLabel(g2, "存油量(V20)", 370, this.getHeight() - 162);
             paintLabel(g2, "操作时间", 450, this.getHeight() - 162);
-            paintLabel(g2, "验收情况", 550, this.getHeight() - 162);
-            paintLabel(g2, "是否手录", 610, this.getHeight() - 162);
+            paintLabel(g2, "验收情况", 560, this.getHeight() - 162);
+            paintLabel(g2, "是否手录", 640, this.getHeight() - 162);
 
             if (odRegisterInfos.size() > 0) {
                 if (odRegisterInfos.get(0) != null) {
@@ -242,27 +309,27 @@ public class PrintUIComponent extends JFrame {
 
                     paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 202);
                     paintLabel(g2, "卸后", 65, this.getHeight() - 202);
-                    paintLabel(g2,  "" , 130, this.getHeight() - 202);
-                    paintLabel(g2,  "" , 200, this.getHeight() - 202);
-                    paintLabel(g2,  acceptanceOdRegisterInfo.getEndtemperature() == null ? "" : acceptanceOdRegisterInfo.getBegintemperature().toString(), 250, this.getHeight() - 202);
-                    paintLabel(g2,  acceptanceOdRegisterInfo.getEndoill() == null ? "" : acceptanceOdRegisterInfo.getEndoill().toString()                , 300, this.getHeight() - 202);
-                    paintLabel(g2,  acceptanceOdRegisterInfo.getEndv20l() == null ? "" : acceptanceOdRegisterInfo.getEndv20l().toString()                , 370, this.getHeight() - 202);
-                    paintLabel(g2,  acceptanceOdRegisterInfo.getEndtime() == null ? "" : acceptanceOdRegisterInfo.getEndtime().toLocaleString()          , 458, this.getHeight() - 202);
+                    paintLabel(g2, "", 130, this.getHeight() - 202);
+                    paintLabel(g2, "", 200, this.getHeight() - 202);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getEndtemperature() == null ? "" : acceptanceOdRegisterInfo.getBegintemperature().toString(), 250, this.getHeight() - 202);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getEndoill() == null ? "" : acceptanceOdRegisterInfo.getEndoill().toString(), 300, this.getHeight() - 202);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getEndv20l() == null ? "" : acceptanceOdRegisterInfo.getEndv20l().toString(), 370, this.getHeight() - 202);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getEndtime() == null ? "" : acceptanceOdRegisterInfo.getEndtime().toLocaleString(), 458, this.getHeight() - 202);
                     paintLabel(g2, "", 550, this.getHeight() - 202);
                     paintLabel(g2, "", 610, this.getHeight() - 202);
                 }
-                if (odRegisterInfos.size() >1){
+                if (odRegisterInfos.size() > 1) {
                     if (odRegisterInfos.get(1) != null) {
                         AcceptanceOdRegisterInfo acceptanceOdRegisterInfo = odRegisterInfos.get(1);
 
-                        paintLabel(g2,  acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 222);
+                        paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 222);
                         paintLabel(g2, "卸后", 65, this.getHeight() - 222);
                         paintLabel(g2, "", 130, this.getHeight() - 222);
                         paintLabel(g2, "", 200, this.getHeight() - 222);
-                        paintLabel(g2,  acceptanceOdRegisterInfo.getEndtemperature() == null ? "" : acceptanceOdRegisterInfo.getBegintemperature().toString(), 250, this.getHeight() - 222);
-                        paintLabel(g2,  acceptanceOdRegisterInfo.getEndoill() == null ? "" : acceptanceOdRegisterInfo.getEndoill().toString()                , 300, this.getHeight() - 222);
-                        paintLabel(g2,  acceptanceOdRegisterInfo.getEndv20l() == null ? "" : acceptanceOdRegisterInfo.getEndv20l().toString()                , 370, this.getHeight() - 222);
-                        paintLabel(g2,  acceptanceOdRegisterInfo.getEndtime() == null ? "" : acceptanceOdRegisterInfo.getEndtime().toLocaleString()          , 458, this.getHeight() - 222);
+                        paintLabel(g2, acceptanceOdRegisterInfo.getEndtemperature() == null ? "" : acceptanceOdRegisterInfo.getBegintemperature().toString(), 250, this.getHeight() - 222);
+                        paintLabel(g2, acceptanceOdRegisterInfo.getEndoill() == null ? "" : acceptanceOdRegisterInfo.getEndoill().toString(), 300, this.getHeight() - 222);
+                        paintLabel(g2, acceptanceOdRegisterInfo.getEndv20l() == null ? "" : acceptanceOdRegisterInfo.getEndv20l().toString(), 370, this.getHeight() - 222);
+                        paintLabel(g2, acceptanceOdRegisterInfo.getEndtime() == null ? "" : acceptanceOdRegisterInfo.getEndtime().toLocaleString(), 458, this.getHeight() - 222);
                         paintLabel(g2, "", 550, this.getHeight() - 222);
                         paintLabel(g2, "", 610, this.getHeight() - 222);
 
@@ -271,10 +338,10 @@ public class PrintUIComponent extends JFrame {
                         paintLabel(g2, "卸后", 65, this.getHeight() - 242);
                         paintLabel(g2, "", 130, this.getHeight() - 242);
                         paintLabel(g2, "", 200, this.getHeight() - 242);
-                        paintLabel(g2,  acceptanceOdRegisterInfo.getEndtemperature() == null ? "" : acceptanceOdRegisterInfo.getBegintemperature().toString(), 250, this.getHeight() - 242);
-                        paintLabel(g2,  acceptanceOdRegisterInfo.getEndoill() == null ? "" : acceptanceOdRegisterInfo.getEndoill().toString()                , 300, this.getHeight() - 242);
-                        paintLabel(g2,  acceptanceOdRegisterInfo.getEndv20l() == null ? "" : acceptanceOdRegisterInfo.getEndv20l().toString()                , 370, this.getHeight() - 242);
-                        paintLabel(g2,  acceptanceOdRegisterInfo.getEndtime() == null ? "" : acceptanceOdRegisterInfo.getEndtime().toLocaleString()          , 458, this.getHeight() - 242);
+                        paintLabel(g2, acceptanceOdRegisterInfo.getEndtemperature() == null ? "" : acceptanceOdRegisterInfo.getBegintemperature().toString(), 250, this.getHeight() - 242);
+                        paintLabel(g2, acceptanceOdRegisterInfo.getEndoill() == null ? "" : acceptanceOdRegisterInfo.getEndoill().toString(), 300, this.getHeight() - 242);
+                        paintLabel(g2, acceptanceOdRegisterInfo.getEndv20l() == null ? "" : acceptanceOdRegisterInfo.getEndv20l().toString(), 370, this.getHeight() - 242);
+                        paintLabel(g2, acceptanceOdRegisterInfo.getEndtime() == null ? "" : acceptanceOdRegisterInfo.getEndtime().toLocaleString(), 458, this.getHeight() - 242);
                         paintLabel(g2, "", 550, this.getHeight() - 242);
                         paintLabel(g2, "", 610, this.getHeight() - 242);
                     }
@@ -294,14 +361,14 @@ public class PrintUIComponent extends JFrame {
             paintLabel(g2, "实收损益率V20(％)", 520, this.getHeight() - 282);
             paintLabel(g2, "超耗索赔量(V20)", 620, this.getHeight() - 282);
 
-            paintLabel(g2, "99999.99", 45, this.getHeight() - 302);
-            paintLabel(g2, "99999.99", 115, this.getHeight() - 302);
-            paintLabel(g2, "99999.99", 185, this.getHeight() - 302);
-            paintLabel(g2, "99999.99", 260, this.getHeight() - 302);
-            paintLabel(g2, "99999.99", 345, this.getHeight() - 302);
-            paintLabel(g2, "99999.99", 430, this.getHeight() - 302);
-            paintLabel(g2, "99999.99", 520, this.getHeight() - 302);
-            paintLabel(g2, "99999.99", 620, this.getHeight() - 302);
+            paintLabel(g2, realRecieve, 45, this.getHeight() - 302);
+            paintLabel(g2, realRecieveV20, 115, this.getHeight() - 302);
+            paintLabel(g2, duringSales, 185, this.getHeight() - 302);
+            paintLabel(g2, dischargeLoss, 260, this.getHeight() - 302);
+            paintLabel(g2, dischargeLossV20, 345, this.getHeight() - 302);
+            paintLabel(g2, dischargeRate, 430, this.getHeight() - 302);
+            paintLabel(g2, dischargeRateV20, 520, this.getHeight() - 302);
+            paintLabel(g2, indemnityloss, 620, this.getHeight() - 302);
 
 
             paintLabel(g2, "卸油员签字:", 45, this.getHeight() - 330);
@@ -310,12 +377,14 @@ public class PrintUIComponent extends JFrame {
             paintLabel(g2, new Date().toLocaleString(), 620, this.getHeight() - 330);
 
             paintLabel(g2, "出库铅封号:", 45, this.getHeight() - 360);
-            paintLabel(g2, "123", 130, this.getHeight() - 360);
+            paintLabel(g2, "", 130, this.getHeight() - 360);
 
             paintLabel(g2, "回空铅封号:", 345, this.getHeight() - 360);
-            paintLabel(g2, "456", 500, this.getHeight() - 360);
+            paintLabel(g2, backBankNo, 500, this.getHeight() - 360);
             paintLabel(g2, "备注:如遇系统特殊情况请在该栏目填写", 100, this.getHeight() - 390);
 
+            paintLabel(g2, "正损益表示损耗,负损益表示盈余。", 90, this.getHeight() - 433);
+            paintLabel(g2, "加油站卸油时油罐对应加油机停止对外销售,卸油完成后在液位仪提取油罐数据生成报表后方可对外销售", 240, this.getHeight() - 445);
 
             // paintLabel(g2, "qweqweqwe", this.getWidth() / 2, this.getHeight() - 20);//画文字
 
@@ -373,7 +442,7 @@ public class PrintUIComponent extends JFrame {
             g2.drawLine(330, this.getHeight() - 246, 330, this.getHeight() - 146);
             g2.drawLine(405, this.getHeight() - 246, 405, this.getHeight() - 146);
             g2.drawLine(510, this.getHeight() - 246, 510, this.getHeight() - 146);
-            g2.drawLine(580, this.getHeight() - 246, 580, this.getHeight() - 146);
+            g2.drawLine(600, this.getHeight() - 246, 600, this.getHeight() - 146);
 
             //收油损耗情况
             g2.drawLine(10, this.getHeight() - 266, this.getWidth() - 10, this.getHeight() - 266);
