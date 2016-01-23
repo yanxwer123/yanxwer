@@ -997,6 +997,11 @@ public class JhysPage extends JOptionPane implements Watcher,WindowListener {
             yszgLabel.setBounds(180, 110, 100, 15);
             panel_1.add(yszgLabel);
 
+            final JLabel sgLabel=new JLabel("");
+            sgLabel.setVisible(false);
+            sgLabel.setBounds(180, 110, 100, 15);
+            panel_1.add(sgLabel);
+
             final JLabel bztjLabel=new JLabel("");
             bztjLabel.setVisible(false);
             bztjLabel.setBounds(180, 110, 100, 15);
@@ -1013,6 +1018,7 @@ public class JhysPage extends JOptionPane implements Watcher,WindowListener {
             canmap.put("bztj",bztjLabel);
             canmap.put("wpanel",panelw);
             canmap.put("oilpanel",panel_3);
+            canmap.put("sg",sgLabel);
 
             // 设置界面面油罐信息
 
@@ -1234,6 +1240,7 @@ public class JhysPage extends JOptionPane implements Watcher,WindowListener {
                     acceptanceOdRegisterInfo.setBegintime(null);
                     acceptanceOdRegisterInfo.setBeginv20l(null);
                     acceptanceOdRegisterInfo.setBeginoilheight(null);
+                    acceptanceOdRegisterInfo.setBeginwaterheight(null);
                     acceptanceOdRegisterInfo.setStablebegintime(null);
                     acceptanceOdRegisterInfo.setStableendtime(null);
                     acceptanceOdRegisterInfo.setBeginoill(null);
@@ -1242,6 +1249,7 @@ public class JhysPage extends JOptionPane implements Watcher,WindowListener {
                     acceptanceOdRegisterInfo.setCreatetime(null);
                     acceptanceOdRegisterInfo.setEndoill(null);
                     acceptanceOdRegisterInfo.setEndoilheight(null);
+                    acceptanceOdRegisterInfo.setEndwaterheight(null);
                     acceptanceOdRegisterInfo.setEndv20l(null);
                     acceptanceOdRegisterInfo.setEndtemperature(null);
                     acceptanceOdRegisterInfo.setForcecancelstable(1);
@@ -1279,6 +1287,7 @@ public class JhysPage extends JOptionPane implements Watcher,WindowListener {
                         // 获取油罐前尺数据
 
                         double heightTotal = yszgLabel.getText().trim().isEmpty() ? 0.0 : Double.parseDouble(yszgLabel.getText().trim());
+                        double watetHeight=sgLabel.getText().trim().isEmpty() ? 0.0 : Double.parseDouble(sgLabel.getText().trim());
                         double oilL = jytjLabel.getText().trim().isEmpty() ? 0.0 : Double.parseDouble(jytjLabel.getText().trim());
                         double stardardL = bztjLabel.getText().trim().isEmpty() ? 0.0 : Double.parseDouble(bztjLabel.getText().trim());
                         double temperature = pjwdLabel.getText().trim().isEmpty() ? 0.0 : Double.parseDouble(pjwdLabel.getText().trim());
@@ -1294,6 +1303,7 @@ public class JhysPage extends JOptionPane implements Watcher,WindowListener {
                         acceptanceOdRegisterInfo.setManualNo(tableModel.getValueAt(0, 0).toString());
                         acceptanceOdRegisterInfo.setOilcan(Integer.parseInt(ygbhLabel.getText().trim()));
                         acceptanceOdRegisterInfo.setBeginoilheight(heightTotal);
+                        acceptanceOdRegisterInfo.setBeginwaterheight(watetHeight);
                         acceptanceOdRegisterInfo.setOilno(cbill.getOilno());
                         acceptanceOdRegisterInfo.setBeginoill(oilL);
                         acceptanceOdRegisterInfo.setBeginv20l(getV20L(OIL_TYPE_1, temperature, oilL));
@@ -1342,6 +1352,7 @@ public class JhysPage extends JOptionPane implements Watcher,WindowListener {
 
                         double heightTotal = yszgLabel.getText().trim().isEmpty() ? 0.0 : Double.parseDouble(yszgLabel.getText().trim());
                         double oilL = jytjLabel.getText().trim().isEmpty() ? 0.0 : Double.parseDouble(jytjLabel.getText().trim());
+                        double watetHeight=sgLabel.getText().trim().isEmpty() ? 0.0 : Double.parseDouble(sgLabel.getText().trim());
                         double stardardL = bztjLabel.getText().trim().isEmpty() ? 0.0 : Double.parseDouble(bztjLabel.getText().trim());
                         double temperature = pjwdLabel.getText().trim().isEmpty() ? 0.0 : Double.parseDouble(pjwdLabel.getText().trim());
                         TableModel tableModel = qcsjTable.getModel();
@@ -1359,6 +1370,7 @@ public class JhysPage extends JOptionPane implements Watcher,WindowListener {
                         acceptanceOdRegisterInfo.setEndv20l(getV20L(OIL_TYPE_1, temperature, oilL));
                         acceptanceOdRegisterInfo.setEndtemperature(temperature);
                         acceptanceOdRegisterInfo.setEndtime(new Date());
+                        acceptanceOdRegisterInfo.setEndwaterheight(watetHeight);
                         try {
                            /* Map literMap = dailyTradeAccountService.GetSaleOilSumByCanNoAndDate(1, dateFormat.parse(beginTime.getText()), dateFormat.parse(endTime.getText()));
                             if (literMap == null) {
@@ -1699,6 +1711,7 @@ public class JhysPage extends JOptionPane implements Watcher,WindowListener {
                     JLabel bztj=(JLabel)map.get("bztj");
                     JPanel wpanel=(JPanel)map.get("wpanel");
                     JPanel oilpanel=(JPanel)map.get("oilpanel");
+                    JLabel sg=(JLabel)map.get("sg");
 
                     DecimalFormat    df   = new DecimalFormat("######0.00");
                    /* DecimalFormat decimalFormat = new DecimalFormat("######0.00");
@@ -1716,6 +1729,8 @@ public class JhysPage extends JOptionPane implements Watcher,WindowListener {
                     yszg.setText(String.valueOf(dyszg));
                     Double dbztj=Double.parseDouble(df.format(Double.parseDouble(candata.get(m).get("fOilStandCubage").toString())));
                     bztj.setText(String.valueOf(dbztj));
+                    Double dsg=Double.parseDouble(df.format(Double.parseDouble(candata.get(m).get("fWaterHeight").toString())));
+                    sg.setText(String.valueOf(dsg));
 
 
                     double gr=grmaps.get(candata.get(m).get("uOilCanNo").toString());
