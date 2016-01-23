@@ -539,28 +539,24 @@ public class ProtocolProcessor {
                     capacity.uOilCanNO = Integer.valueOf(map.get("oilNo").toString());
                     capacity.uCapacitySize = Integer.valueOf(map.get("operation").toString());
                     capacity.strVersion = map.get("strVersion").toString();
+                    //查询容积明细表
+                    SysManageCubageInfo info = new SysManageCubageInfo();
+                    info.setVersion(capacity.strVersion);
+                    info.setOilcan(capacity.uOilCanNO);
+                    SysCubageService sysCubageService = (SysCubageService) (Context.getInstance().getBean("sysCubageService"));
+                    sysManageCubageInfoList = sysCubageService.selectCubageInfo(info);
+
                     //todo 创建对象 →list
                     List<atg_capacitytable_data_in_t> capacitytableList = new ArrayList<atg_capacitytable_data_in_t>();
-                    List capacTabBList = (List) map.get("capacTabBMsgs");
-                    for (int s = 0; s < capacTabBList.size(); s++) {
+                    for (SysManageCubageInfo sysManageCubageInfo : sysManageCubageInfoList) {
                         atg_capacitytable_data_in_t capacitytable = new atg_capacitytable_data_in_t();
-                        Map capacTabBMap = (Map) capacTabBList.get(s);
-                        Set set = capacTabBMap.keySet();
-                        SysManageCubageInfo sysManageCubageInfo = new SysManageCubageInfo();
-                        for (Object key : set) {
-                            if (key.equals("height")) {
-                                capacitytable.uHigh = (int) Double.parseDouble(capacTabBMap.get("height").toString());
-                                sysManageCubageInfo.setHeight(Double.parseDouble(capacTabBMap.get("height").toString()));
-                            }
-                            if (key.equals("liter")) {
-                                capacitytable.fLiter = Double.parseDouble(capacTabBMap.get("liter").toString());
-                                sysManageCubageInfo.setLiter(Double.parseDouble(capacTabBMap.get("liter").toString()));
-                                capacitytableList.add(capacitytable);
-                            }
-                        }
-                        sysManageCubageInfoList.add(sysManageCubageInfo);
-                        capacity.pCapacityTableData = capacitytableList;
+                        capacitytable.uHigh = (int) Double.parseDouble(sysManageCubageInfo.getHeight().toString());
+                        sysManageCubageInfo.setHeight(sysManageCubageInfo.getHeight());
+                        capacitytable.fLiter = Double.parseDouble(sysManageCubageInfo.getLiter().toString());
+                        sysManageCubageInfo.setLiter(sysManageCubageInfo.getLiter());
+                        capacitytableList.add(capacitytable);
                     }
+                    capacity.pCapacityTableData = capacitytableList;
                     //写入缓存
                     EhCacheHelper.updateCubageInfo(sysManageCubageInfoList);
                     ResultMsg resultMsg = new ResultMsg();
