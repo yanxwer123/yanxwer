@@ -51,6 +51,10 @@ public class AcceptanceOdRegisterInfo extends AcceptanceOdRegisterInfoKey {
 
     private Integer isbeforestable;
 
+    private Double beginwaterheight;
+
+    private Double endwaterheight;
+
     public String getDeliveryno() {
         return deliveryno;
     }
@@ -243,4 +247,19 @@ public class AcceptanceOdRegisterInfo extends AcceptanceOdRegisterInfoKey {
         this.transtatus = transtatus == null ? null : transtatus.trim();
     }
 
+    public Double getBeginwaterheight() {
+        return beginwaterheight;
+    }
+
+    public void setBeginwaterheight(Double beginwaterheight) {
+        this.beginwaterheight = beginwaterheight;
+    }
+
+    public Double getEndwaterheight() {
+        return endwaterheight;
+    }
+
+    public void setEndwaterheight(Double endwaterheight) {
+        this.endwaterheight = endwaterheight;
+    }
 }
