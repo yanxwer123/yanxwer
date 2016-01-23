@@ -292,6 +292,9 @@ public class PrintUIComponent extends JDialog {
             paintLabel(g2, "验收情况", 560, this.getHeight() - 162);
             paintLabel(g2, "是否手录", 640, this.getHeight() - 162);
 
+            for(AcceptanceOdRegisterInfo adc:odRegisterInfos){
+                System.out.println(adc);
+            }
             if (odRegisterInfos.size() > 0) {
                 if (odRegisterInfos.get(0) != null) {
                     AcceptanceOdRegisterInfo acceptanceOdRegisterInfo = odRegisterInfos.get(0);
@@ -410,7 +413,7 @@ public class PrintUIComponent extends JDialog {
             AffineTransform old = g2.getTransform();
             g2.transform(toUsualyCoordinate());
             Rectangle2D rect = new Rectangle2D.Double();
-            rect.setRect(13, 25, this.getWidth() - 23, this.getHeight() - 50);
+            rect.setRect(13, this.getHeight() - 415, this.getWidth() - 23, this.getHeight() - 100);
             g2.draw(rect);
             g2.setColor(Color.black);
 //            g2.drawLine(13, this.getHeight() - 26, this.getWidth() - 10, this.getHeight() - 26);

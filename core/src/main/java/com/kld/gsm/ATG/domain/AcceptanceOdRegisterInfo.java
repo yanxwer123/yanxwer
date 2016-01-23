@@ -260,6 +260,38 @@ public class AcceptanceOdRegisterInfo extends AcceptanceOdRegisterInfoKey {
     }
 
     public void setEndwaterheight(Double endwaterheight) {
+
         this.endwaterheight = endwaterheight;
+    }
+
+    @Override
+    public String toString() {
+        return "AcceptanceOdRegisterInfo{" +
+                "oilno='" + oilno + '\'' +
+                ", shift='" + shift + '\'' +
+                ", deliveryno='" + deliveryno + '\'' +
+                ", begintime=" + begintime +
+                ", endtime=" + endtime +
+                ", dischargel=" + dischargel +
+                ", beginoilheight=" + beginoilheight +
+                ", beginoill=" + beginoill +
+                ", beginv20l=" + beginv20l +
+                ", begintemperature=" + begintemperature +
+                ", endoilheight=" + endoilheight +
+                ", endoill=" + endoill +
+                ", endv20l=" + endv20l +
+                ", endtemperature=" + endtemperature +
+                ", stablebegintime=" + stablebegintime +
+                ", stableendtime=" + stableendtime +
+                ", createtime=" + createtime +
+                ", isdel=" + isdel +
+                ", entertype=" + entertype +
+                ", duringsales=" + duringsales +
+                ", transtatus='" + transtatus + '\'' +
+                ", forcecancelstable=" + forcecancelstable +
+                ", isbeforestable=" + isbeforestable +
+                ", beginwaterheight=" + beginwaterheight +
+                ", endwaterheight=" + endwaterheight +
+                '}';
     }
 }
