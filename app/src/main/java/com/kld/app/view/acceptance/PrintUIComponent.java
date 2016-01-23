@@ -410,10 +410,10 @@ public class PrintUIComponent extends JDialog {
             AffineTransform old = g2.getTransform();
             g2.transform(toUsualyCoordinate());
             Rectangle2D rect = new Rectangle2D.Double();
-            rect.setRect(13, 6, this.getWidth() - 23, this.getHeight() - 10);
+            rect.setRect(13, 6, this.getWidth() - 23, this.getHeight() - 33);
             g2.draw(rect);
             g2.setColor(Color.black);
-            g2.drawLine(13, this.getHeight() - 26, this.getWidth() - 10, this.getHeight() - 26);
+//            g2.drawLine(13, this.getHeight() - 26, this.getWidth() - 10, this.getHeight() - 26);
             g2.drawLine(13, this.getHeight() - 46, this.getWidth() - 10, this.getHeight() - 46);
             g2.drawLine(13, this.getHeight() - 66, this.getWidth() - 10, this.getHeight() - 66);
             g2.drawLine(13, this.getHeight() - 86, this.getWidth() - 10, this.getHeight() - 86);
