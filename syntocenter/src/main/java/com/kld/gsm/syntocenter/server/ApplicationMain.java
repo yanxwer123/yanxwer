@@ -12,6 +12,7 @@ import com.kld.gsm.syntocenter.socket.ob.Watched;
 import com.kld.gsm.syntocenter.socket.ob.Watcher;
  import com.kld.gsm.syntocenter.springContext.springFactory;
 
+import com.kld.gsm.syntocenter.util.ApplicationRunSingle;
 import com.kld.gsm.syntocenter.util.action;
 import com.kld.gsm.util.DateUtil;
 import io.netty.channel.Channel;
@@ -47,7 +48,7 @@ public class ApplicationMain  implements Watcher {
     public static   action action = new action();
     private static final Logger LOG = Logger.getLogger("syntocenter");
     public static void main(String[] args) throws Exception{
-
+        ApplicationRunSingle.makeSingle("syntocenter");
         //region 随机生成上传时间
         String dstring= DateUtil.getDate();
         //System.out.println(dstring);
