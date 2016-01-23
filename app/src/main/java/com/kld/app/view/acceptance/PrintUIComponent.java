@@ -111,9 +111,9 @@ public class PrintUIComponent extends JDialog {
             realRecieveV20 = odRegister.getRealGetLV20() == null ? "" : odRegister.getRealGetLV20().toString();
             duringSales = odRegister.getDuringsales() == null ? "" : odRegister.getDuringsales().toString();
             dischargeLoss = odRegister.getDischargeloss() == null ? "" : odRegister.getDischargeloss().toString();
-            dischargeLossV20 = odRegister.getDischargeRateV20() == null ? "" : odRegister.getDischargeRateV20().toString();
-            dischargeRate = odRegister.getDischargerate() == null ? "" : odRegister.getDischargerate().toString();
-            dischargeRateV20 = odRegister.getDischargeRateV20() == null ? "" : odRegister.getDischargeRateV20().toString();
+            dischargeLossV20 = odRegister.getDischargeLossV20()== null ? "" : odRegister.getDischargeLossV20().toString();
+            dischargeRate = odRegister.getDischargerate() == null ? "" : (odRegister.getDischargerate()*1000)+"";
+            dischargeRateV20 = odRegister.getDischargeRateV20() == null ? "" : (odRegister.getDischargeRateV20()*1000)+"";
             indemnityloss = odRegister.getIndemnityloss() == null ? "0" : odRegister.getIndemnityloss().toString();
             backBankNo = odRegister.getBackbankno() == null ? "" : odRegister.getBackbankno().toString();
             instationtime = odRegister.getBegintime() == null ? "" : odRegister.getBegintime().toLocaleString();
@@ -192,7 +192,7 @@ public class PrintUIComponent extends JDialog {
         }
         odRegister = registerService.selectByPrimaryKey(billno);
         String OIL_TYPE_1 = registerService.selectOilType(deliveryBill.getOilno()).getOiltype().toString();
-        planLV20 = getV20L(OIL_TYPE_1, deliveryBill.getPlanl() == null ? 0 : deliveryBill.getPlanl(), deliveryBill.getDeliverytemp() == null ? 0 : deliveryBill.getDeliverytemp()) + "";
+        planLV20 = getV20L(OIL_TYPE_1,  deliveryBill.getDeliverytemp() == null ? 0 : deliveryBill.getDeliverytemp() ,deliveryBill.getPlanl() == null ? 0 : deliveryBill.getPlanl())+"";
     }
 
     private double getV20L(String oilType, double vt, double V) {
@@ -275,7 +275,7 @@ public class PrintUIComponent extends JDialog {
                 paintLabel(g2, instationtime, 200, this.getHeight() - 122);
                 paintLabel(g2, deliveryBill.getDensity() == null ? "" : deliveryBill.getDensity().toString(), 330, this.getHeight() - 122);
 
-                paintLabel(g2, deliveryBill.getDeliverytime() == null ? "" : deliveryBill.getDeliverytime().toLocaleString(), 480, this.getHeight() - 122);
+                paintLabel(g2, deliveryBill.getDeliverytemp() == null ? "" : deliveryBill.getDeliverytemp().toString(), 480, this.getHeight() - 122);
                 paintLabel(g2, "油库实发油温", 610, this.getHeight() - 122);
             }
 
@@ -292,12 +292,11 @@ public class PrintUIComponent extends JDialog {
             paintLabel(g2, "验收情况", 560, this.getHeight() - 162);
             paintLabel(g2, "是否手录", 640, this.getHeight() - 162);
 
-            for(AcceptanceOdRegisterInfo adc:odRegisterInfos){
-                System.out.println(adc);
-            }
+
             if (odRegisterInfos.size() > 0) {
                 if (odRegisterInfos.get(0) != null) {
                     AcceptanceOdRegisterInfo acceptanceOdRegisterInfo = odRegisterInfos.get(0);
+                    System.out.println("0:"+acceptanceOdRegisterInfo);
                     paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 182);
                     paintLabel(g2, "卸前", 65, this.getHeight() - 182);
                     paintLabel(g2, acceptanceOdRegisterInfo.getBeginoilheight() == null ? "" : acceptanceOdRegisterInfo.getBeginoilheight().toString(), 130, this.getHeight() - 182);
@@ -323,6 +322,7 @@ public class PrintUIComponent extends JDialog {
                 if (odRegisterInfos.size() > 1) {
                     if (odRegisterInfos.get(1) != null) {
                         AcceptanceOdRegisterInfo acceptanceOdRegisterInfo = odRegisterInfos.get(1);
+                        System.out.println("1:"+acceptanceOdRegisterInfo);
 
                         paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 222);
                         paintLabel(g2, "卸前", 65, this.getHeight() - 222);
@@ -359,8 +359,8 @@ public class PrintUIComponent extends JDialog {
             paintLabel(g2, "期间付油体积", 185, this.getHeight() - 282);
             paintLabel(g2, "实收损益量(Vt)", 260, this.getHeight() - 282);
             paintLabel(g2, "实收损益量(V20)", 345, this.getHeight() - 282);
-            paintLabel(g2, "实收损益率(％)", 430, this.getHeight() - 282);
-            paintLabel(g2, "实收损益率V20(％)", 520, this.getHeight() - 282);
+            paintLabel(g2, "实收损益率(‰)", 430, this.getHeight() - 282);
+            paintLabel(g2, "实收损益率V20(‰)", 520, this.getHeight() - 282);
             paintLabel(g2, "超耗索赔量(V20)", 620, this.getHeight() - 282);
 
             paintLabel(g2, realRecieve, 45, this.getHeight() - 302);

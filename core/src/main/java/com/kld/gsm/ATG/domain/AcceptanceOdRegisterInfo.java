@@ -260,7 +260,6 @@ public class AcceptanceOdRegisterInfo extends AcceptanceOdRegisterInfoKey {
     }
 
     public void setEndwaterheight(Double endwaterheight) {
-
         this.endwaterheight = endwaterheight;
     }
 
