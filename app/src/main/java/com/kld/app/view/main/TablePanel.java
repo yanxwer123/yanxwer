@@ -1856,12 +1856,12 @@ class GlLabel2MouseListener implements MouseListener, Watcher {
                     capacTabMsg.setOperation(1);//下发到液位仪
                     capacTabMsg.setStrVersion(sysManageCubage.getVersion());
                     ArrayList<CapacTabBMsg> sysManageCubageInfoArrayList = new ArrayList<CapacTabBMsg>();
-                    for (SysManageCubageInfo s : sysManageCubageInfoList) {
-                        CapacTabBMsg capacTabBMsg = new CapacTabBMsg();
-                        capacTabBMsg.setHeight(s.getHeight());
-                        capacTabBMsg.setLiter(s.getLiter());
-                        sysManageCubageInfoArrayList.add(capacTabBMsg);
-                    }
+//                    for (SysManageCubageInfo s : sysManageCubageInfoList) {
+//                        CapacTabBMsg capacTabBMsg = new CapacTabBMsg();
+//                        capacTabBMsg.setHeight(s.getHeight());
+//                        capacTabBMsg.setLiter(s.getLiter());
+//                        sysManageCubageInfoArrayList.add(capacTabBMsg);
+//                    }
                     capacTabMsg.setCapacTabBMsgs(sysManageCubageInfoArrayList);
                     ArrayList<CapacTabMsg> list = new ArrayList<CapacTabMsg>();
                     list.add(capacTabMsg);
