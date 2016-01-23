@@ -127,20 +127,7 @@ public class ApplicationMain  implements Watcher {
         return null;
     }
      //endregion
-    @Test
-    public void getP() {
-        Properties prop = new Properties();
-        InputStream in = Object.class.getResourceAsStream("classpath*:important.properties");
-        try {
-            prop.load(in);
-            String ctrlIp = prop.getProperty("ctrl.ip").trim();
-            String ctrlPort = prop.getProperty("ctrl.port").trim();
-            System.out.println("IP:" + ctrlIp);
-            System.out.println("IP:" + ctrlPort);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
       @Override
     public void update(GasMsg gasMsg) {
         //System.out.println("get message:"+gasMsg.getMessage());

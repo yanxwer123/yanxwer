@@ -88,9 +88,20 @@ public class synMonitorImpl implements synMonitor {
         //获取action地址
         action ac=new action();
         String path=ac.getUri("resource.services.TI.InsertInventory");
+        List<SysManageCubage> sysManageCubages=sysManageCubageDao.selectCubageInused();
+
+        Map<String,String> map= new HashMap<String,String>();
+        for (SysManageCubage item:sysManageCubages){
+            map.put(item.getOilcan().toString(),item.getVersion());
+        }
+
         //获取站级数据
         List<MonitorInventory> monitorInventories= monitorInventoryDao.selectByTrans("0");
         if (monitorInventories.isEmpty())return 1;
+        for (MonitorInventory item:monitorInventories){
+            if (!map.isEmpty()&&map.get(item.getOilcanno().toString())!=null)
+                item.setVersion(map.get(item.getOilcanno().toString()));
+        }
         Map<String,String> hm=new param().getparam();
         //发送站级数据
         httpClient client=new httpClient();

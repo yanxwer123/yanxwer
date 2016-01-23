@@ -541,21 +541,11 @@ public class AlarmController {
         Result result=new Result();
         try {
             if(tankoilgunLst!=null&&tankoilgunLst.size()>0) {
-                /*for (JTGC jtgc : tankoilgunLst) {
-                    for (HNMonitor_Oilgun oilgun : jtgc.getOilgunLst()) {
-                       *//* sysOrgUnit orgUnit = new sysOrgUnit();
-                        oilgun.setOucode(orgUnit.GetOuCodeByNodeNo(NodeNo));
-                        oilgun.setNodeno(NodeNo);
-                        dOilGunService.AddOilgun(oilgun);*//*
-                    }
-                    HNMonitor_Tankoil tankoil=jtgc.getTankoil();
-                    if(tankoil!=null){
-                       // dTrankOilService.AddTankoil(tankoil);
-                    }
-                    result.setResult(true);
-
-                }*/
+                 for (JTGC item:tankoilgunLst){
+                     item.getTankoil().setNodeno(NodeNo);
+                 }
                 List<oss_monitor_tankoil> tankoils=daily.addJTGC(tankoilgunLst,NodeNo);
+
                 //调用数据传输给湖南
                 boolean res=PassHn_JTGC(tankoilgunLst);
                 if (res){
