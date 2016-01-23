@@ -125,7 +125,7 @@
   <select id="selectCubageInused" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
-    FROM oss_sysmanage_cubage Limit 1
+    FROM oss_sysmanage_cubage where  InUsed=1
   </select>
   <select id="selectByTrans" resultType="com.kld.gsm.ATG.domain.SysManageCubage" parameterType="String" >
     select 'true' as QUERYID,
