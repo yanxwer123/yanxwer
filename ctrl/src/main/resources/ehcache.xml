@@ -112,8 +112,8 @@
     <cache name="ATGCache"
            maxElementsInMemory="300"
            eternal="false"
-           timeToIdleSeconds="3"
-           timeToLiveSeconds="3"
+           timeToIdleSeconds="0"
+           timeToLiveSeconds="0"
            overflowToDisk="false"
 
             />
