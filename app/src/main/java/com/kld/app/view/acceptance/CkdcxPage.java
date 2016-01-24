@@ -289,10 +289,10 @@ public class CkdcxPage  extends  JPanel{
                         odRegisterService = Context.getInstance().getBean(IAcceptanceOdRegisterService.class);
                     }
                     try {
-                        LOG.info("get type="+bill.getType());
+                        //LOG.info("get type="+bill.getType());
 
                         AcceptanceOdRegister odRegister = odRegisterService.selectByPrimaryKey(bill.getDeliveryno());
-                        LOG.info("odRegister.getDeliveryno()"+odRegister.getDeliveryno());
+                       // LOG.info("odRegister.getDeliveryno()"+odRegister.getDeliveryno());
                         if (odRegister!=null&& ((bill.getType().equals("1")&&odRegister.getDeliveryno()!=null)
                                 ||(!bill.getType().equals("1")&&odRegister.getDeliveryno()==null))){
                             billArray[i][13]="车进站";
