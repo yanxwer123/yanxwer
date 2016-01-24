@@ -119,7 +119,7 @@
             />
     <!--永久缓存，直到下次修改-->
     <cache name="CubageInfo"
-           maxElementsInMemory="5000"
+           maxElementsInMemory="30000"
            eternal="true"
     />
 </ehcache>
