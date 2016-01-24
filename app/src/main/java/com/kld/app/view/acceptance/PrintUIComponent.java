@@ -71,6 +71,7 @@ public class PrintUIComponent extends JDialog {
     String dischargeLoss;
     //实收损益量(V20)
     String dischargeLossV20;
+    DecimalFormat decimalFormat = new DecimalFormat("######0.00");
 
     //实收损益率(‰)
     String dischargeRate;
@@ -91,13 +92,14 @@ public class PrintUIComponent extends JDialog {
     GridBagConstraints gridBagConstraints;
 
     public void init(String billno) {
+        this.setTitle("验收单打印");
         this.setResizable(false);
         this.setModal(true);
         this.billno = billno;
         getOdreg(billno);
         odRegisterInfos = getOdRegisterInfos(billno);
         panel = new MyPanel();
-        button = new JButton("打印验收单");
+        button = new JButton("验收单打印");
         if (sysmanageService == null) {
             sysmanageService = Context.getInstance().getBean(SysmanageService.class);
         }
@@ -107,7 +109,6 @@ public class PrintUIComponent extends JDialog {
         } else {
 
         }
-         DecimalFormat decimalFormat = new DecimalFormat("######0.00");
         if (odRegister != null) {
             realRecieve = odRegister.getRealgetl() == null ? "" : odRegister.getRealgetl().toString();
             realRecieveV20 = odRegister.getRealGetLV20() == null ? "" : odRegister.getRealGetLV20().toString();
@@ -265,7 +266,7 @@ public class PrintUIComponent extends JDialog {
                 paintLabel(g2, deliveryBill.getFromdepotname(), 70, this.getHeight() - 82);
                 paintLabel(g2, deliveryBill.getDeliverytime() == null ? "" : deliveryBill.getDeliverytime().toLocaleString(), 200, this.getHeight() - 82);
                 paintLabel(g2, deliveryBill.getPlanton() == null ? "" : deliveryBill.getPlanton().toString(), 330, this.getHeight() - 82);
-                paintLabel(g2, deliveryBill.getPlanl() == null ? "" : deliveryBill.getPlanl().toString(), 480, this.getHeight() - 82);
+                paintLabel(g2, deliveryBill.getPlanl() == null ? "" : decimalFormat.format(deliveryBill.getPlanl()).toString(), 480, this.getHeight() - 82);
                 paintLabel(g2, planLV20, 610, this.getHeight() - 82);
 
 
@@ -379,7 +380,7 @@ public class PrintUIComponent extends JDialog {
             paintLabel(g2, "卸油员签字:", 45, this.getHeight() - 330);
             paintLabel(g2, "驾驶员签字:", 260, this.getHeight() - 330);
             paintLabel(g2, "时间日期:", 520, this.getHeight() - 330);
-            paintLabel(g2, new Date().toLocaleString(), 630, this.getHeight() - 330);
+            paintLabel(g2, new Date().toLocaleString(), 625, this.getHeight() - 330);
 
             paintLabel(g2, "出库铅封号:", 45, this.getHeight() - 360);
             paintLabel(g2, "", 130, this.getHeight() - 360);

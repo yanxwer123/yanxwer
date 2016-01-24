@@ -94,6 +94,13 @@ public class CheckSerivceImpl implements CheckSerivce {
     public List<Map<String, Object>> getLiter(String shift) {
         return dailyTradeAccountDao.getLiter(shift);
     }
+ //Map:oilno,liter
+    @Override
+    public List<Map<String, Object>> getLiterByAccountDate() {
+        return dailyTradeAccountDao.getLiterByAccountDate();
+    }
+
+
 
     @Override
     public String selectOilNo(String OilNo) {
