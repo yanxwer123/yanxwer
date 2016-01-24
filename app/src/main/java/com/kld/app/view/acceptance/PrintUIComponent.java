@@ -16,6 +16,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.print.*;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.List;
 
@@ -106,14 +107,16 @@ public class PrintUIComponent extends JDialog {
         } else {
 
         }
+         DecimalFormat decimalFormat = new DecimalFormat("######0.00");
         if (odRegister != null) {
             realRecieve = odRegister.getRealgetl() == null ? "" : odRegister.getRealgetl().toString();
             realRecieveV20 = odRegister.getRealGetLV20() == null ? "" : odRegister.getRealGetLV20().toString();
             duringSales = odRegister.getDuringsales() == null ? "" : odRegister.getDuringsales().toString();
             dischargeLoss = odRegister.getDischargeloss() == null ? "" : odRegister.getDischargeloss().toString();
             dischargeLossV20 = odRegister.getDischargeLossV20() == null ? "" : odRegister.getDischargeLossV20().toString();
-            dischargeRate = odRegister.getDischargerate() == null ? "" : (odRegister.getDischargerate() * 1000) + "";
-            dischargeRateV20 = odRegister.getDischargeRateV20() == null ? "" : (odRegister.getDischargeRateV20() * 1000) + "";
+
+            dischargeRate = odRegister.getDischargerate() == null ? "" : decimalFormat.format(odRegister.getDischargerate() * 1000) + "";
+            dischargeRateV20 = odRegister.getDischargeRateV20() == null ? "" : decimalFormat.format(odRegister.getDischargeRateV20() * 1000) + "";
             indemnityloss = odRegister.getIndemnityloss() == null ? "0" : odRegister.getIndemnityloss().toString();
             backBankNo = odRegister.getBackbankno() == null ? "" : odRegister.getBackbankno().toString();
             instationtime = odRegister.getBegintime() == null ? "" : odRegister.getBegintime().toLocaleString();
