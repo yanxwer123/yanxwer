@@ -274,7 +274,7 @@
     <select id="findOilNoAndShift"  resultType="java.lang.String">
         SELECT Shift FROM oss_daily_tankshift
         WHERE AccountDate IS NOT NULL
-        ORDER By AccountDate DESC
+        ORDER By AccountDate DESC,shift DESC
         limit 1
     </select>
     <!--
