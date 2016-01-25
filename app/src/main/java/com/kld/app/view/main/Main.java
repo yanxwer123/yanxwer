@@ -4,6 +4,7 @@ import com.kld.app.socket.client.TcpClient;
 import com.kld.app.socket.ob.ConcreteWatched;
 import com.kld.app.socket.ob.Watched;
 import com.kld.app.socket.ob.Watcher;
+import com.kld.app.util.ApplicationRunSingle;
 import com.kld.app.util.Common;
 import com.kld.app.util.Constant;
 import com.kld.app.view.acceptance.CkdcxPage;
@@ -78,6 +79,7 @@ import java.util.List;
      //操作菜单
      public static List menuList = new ArrayList();
      public static void main(String[] args) {
+        ApplicationRunSingle.makeSingle("app");
         Thread thread =  new Thread() {
             @Override
              public void run() {
