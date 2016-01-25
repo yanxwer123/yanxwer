@@ -81,11 +81,11 @@
 	IFNULL(SUM(EndOilL),0)-IFNULL(SUM(BeginoilL),0)+IFNULL(SUM(DuringSales),0) AS Dischargel,
 	IFNULL(SUM(DischargeL),0) AS V20,
 	IFNULL(SUM(DuringSales),0) AS DuringSales,
-	#{yfss,jdbcType=DOUBLE} - IFNULL(SUM(DischargeL),0) AS v20loss,
-	(#{yfss,jdbcType=DOUBLE} - SUM(DischargeL)) / #{yfss,jdbcType=DOUBLE} AS V20lossrate,
+	#{yfssv20,jdbcType=DOUBLE} - IFNULL(SUM(DischargeL),0) AS v20loss,
+	(#{yfssv20,jdbcType=DOUBLE} - SUM(DischargeL)) / #{yfssv20,jdbcType=DOUBLE} AS V20lossrate,
 	#{yfss,jdbcType=DOUBLE} - (IFNULL(sum(EndOilL),0)-IFNULL(sum(BeginoilL),0)+IFNULL(sum(DuringSales),0))   AS loss,
 	(#{yfss,jdbcType=DOUBLE} - (IFNULL(sum(EndOilL),0)-IFNULL(sum(BeginoilL),0)+IFNULL(sum(DuringSales),0))) / #{yfss,jdbcType=DOUBLE} AS lossreate,
-	#{yfss,jdbcType=DOUBLE}-IFNULL(SUM(Dischargel),0)-(#{yfss,jdbcType=DOUBLE} * #{syl,jdbcType=DOUBLE}) AS shsp
+	#{yfssv20,jdbcType=DOUBLE}-IFNULL(SUM(Dischargel),0)-(#{yfssv20,jdbcType=DOUBLE} * #{syl,jdbcType=DOUBLE}) AS shsp
 
 FROM
 	oss_acceptance_odRegisterInfo

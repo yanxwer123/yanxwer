@@ -1458,7 +1458,7 @@ public class TablePanel extends JPanel implements Watcher {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (Main.menuList.contains("jhys_jhyscx")) {
-                    Main.setStatus("打印出库单");
+                    Main.setStatus("验收单打印");
                     if (psdxx != null) {
                         psdxx.getFrame().dispose();
                     }
@@ -1549,6 +1549,7 @@ public class TablePanel extends JPanel implements Watcher {
                             Main.jhys = psdxx;
                         }
                         Main.ckdcxPage.jhys(psdxx);
+
 
                     } catch (Exception e1) {
                         e1.printStackTrace();

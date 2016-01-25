@@ -563,7 +563,7 @@
   </select>
 
    <select id="findDischargeL" parameterType="String" resultType="java.util.HashMap">
-    SELECT OilNo as oilno,SUM(DischargeL) as dischargel FROM oss_acceptance_odRegisterInfo
+    SELECT OilNo as oilno,SUM(IFNULL(DischargeL, 0)) as dischargel FROM oss_acceptance_odRegisterInfo
     WHERE  (Shift IS NULL OR Shift='' OR Shift &gt;#{shift,jdbcType=VARCHAR}) AND DischargeL IS NOT NULL
     GROUP BY OilNo
   </select>

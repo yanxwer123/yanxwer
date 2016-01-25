@@ -101,7 +101,7 @@ public class PdPage implements Watcher {
         System.out.println("dischargeMap：" + dischargeMap.toString());
         //获取付油量
         System.out.println("Shift：" + strShift);
-        List<Map<String,Object>> literList=checkSerivce.getLiter(strShift);
+        List<Map<String,Object>> literList=checkSerivce.getLiterByAccountDate();
         System.out.println("literList：" + literList.toString());
         for (int i = 0; i < literList.size(); i++) {
             addQuality(literMap, literList.get(i).get("oilno").toString(), Double.parseDouble(literList.get(i).get("liter").toString()));

@@ -32,7 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
-  public class Main extends JFrame implements Watcher {
+public class Main extends JFrame implements Watcher {
     public static Map USERMAP = new HashMap<String, String>();
     private static JFrame frame;
     private static Logger logger = org.slf4j.LoggerFactory.getLogger(Main.class);
@@ -62,15 +62,15 @@ import java.util.List;
     public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     public static SimpleDateFormat dateFm = new SimpleDateFormat("EEEE");
     //public static Channel CC = SocketContext.getInstance();
-    public static Channel CC ;
-      //油罐 - 实时标准体积库存
-    public  static Map oilCanRealTime = new HashMap();
+    public static Channel CC;
+    //油罐 - 实时标准体积库存
+    public static Map oilCanRealTime = new HashMap();
 
 
     public static Watched watch = ConcreteWatched.getInstance();
     public static String sign = "";
     public static String IP = Constant.IP;
-    public static int Port =  Constant.PORT;
+    public static int Port = Constant.PORT;
     static StartApp zc = new StartApp();
      //操作员号
      public static String oprno;
@@ -82,10 +82,10 @@ import java.util.List;
         ApplicationRunSingle.makeSingle("app");
         Thread thread =  new Thread() {
             @Override
-             public void run() {
-              zc.setVisible(true);
-             }
-         };
+            public void run() {
+                zc.setVisible(true);
+            }
+        };
         thread.start();
         try {
             //设置本属性将改变窗口边框样式定义
@@ -101,11 +101,11 @@ import java.util.List;
         sign = uuid.toString();
         System.out.println("IP-----[" + IP + "]");
         System.out.println("PORT:-----[" + Port + "]");
-         Main.watch.addWetcher("A", new Main());
+        Main.watch.addWetcher("A", new Main());
 
-         CC = reLink();
+        CC = reLink();
         //endregion
-         // new Main().frame.setVisible(true);
+        //   new Main().frame.setVisible(true);
         AsynHeart.sendIdel();
     }
 
@@ -114,7 +114,7 @@ import java.util.List;
      * Create the application.
      */
     public Main() {
-      /* //初始化主JFRAME
+     /*  //初始化主JFRAME
         initialize();
         //初始化标题栏
         initTitlePanel();
@@ -193,8 +193,7 @@ import java.util.List;
         //设置LOGO
         try {
             frame.setIconImage(Common.createImageIcon(this.getClass(), "icon.png").getImage());
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
@@ -249,7 +248,7 @@ import java.util.List;
         //当前用户
 
         JLabel user = new JLabel("用户：" + oprname);
-         if (USERMAP != null && USERMAP.size() > 0) {
+        if (USERMAP != null && USERMAP.size() > 0) {
             user.setText(USERMAP.get("oprname").toString());
         }
         user.setFont(Constant.TITLE_CONTENT_FONT);
@@ -301,8 +300,8 @@ import java.util.List;
 
     @Override
     public void update(GasMsg gasMsg) {
-        if(gasMsg.getPid().equals(Constants.PID_Code.A15_10000.toString())){
-            System.out.println("return Heart" );
+        if (gasMsg.getPid().equals(Constants.PID_Code.A15_10000.toString())) {
+            System.out.println("return Heart");
         }
 
         if (gasMsg.getPid().equals(Constants.PID_Code.A15_10001.toString())) {
@@ -375,7 +374,7 @@ import java.util.List;
 
     //region socket----
 
-     public synchronized static Channel reLink() {
+    public synchronized static Channel reLink() {
         int i = 1;
         boolean flag = true;
         while (flag) {
@@ -394,7 +393,7 @@ import java.util.List;
                 System.out.println("Main.Wait five seconds reLink......");
 
                 Thread.sleep(3000);
-                 System.out.println("Main.ReLink[" + i + "]....");
+                System.out.println("Main.ReLink[" + i + "]....");
                 //如果未成功连接，则20秒左右弹出一次提示
                 if (i == 8) {
                     JOptionPane.showMessageDialog(null, "与主调度未能成功建立连接,正在尝试重连...", "错误提示", JOptionPane.ERROR_MESSAGE);
@@ -440,23 +439,21 @@ import java.util.List;
     }
 
 
-      public static void setCenter(JFrame frame)
-      {
-          Dimension   screensize   =   Toolkit.getDefaultToolkit().getScreenSize();   //获得当前屏幕的大小
-          Dimension   framesize   =   frame.getSize();   //获得当前窗口的大小
-          int   x   =   (int)screensize.getWidth()/2   -   (int)framesize.getWidth()/2;   //计算要显示的窗口的左上角的坐标
-          int   y   =   (int)screensize.getHeight()/2   -   (int)framesize.getHeight()/2;
-          frame.setLocation(x,y);
-      }
+    public static void setCenter(JFrame frame) {
+        Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();   //获得当前屏幕的大小
+        Dimension framesize = frame.getSize();   //获得当前窗口的大小
+        int x = (int) screensize.getWidth() / 2 - (int) framesize.getWidth() / 2;   //计算要显示的窗口的左上角的坐标
+        int y = (int) screensize.getHeight() / 2 - (int) framesize.getHeight() / 2;
+        frame.setLocation(x, y);
+    }
 
-      public static void setCenter(JDialog frame)
-      {
-          Dimension   screensize   =   Toolkit.getDefaultToolkit().getScreenSize();   //获得当前屏幕的大小
-          Dimension   framesize   =   frame.getSize();   //获得当前窗口的大小
-          int   x   =   (int)screensize.getWidth()/2   -   (int)framesize.getWidth()/2;   //计算要显示的窗口的左上角的坐标
-          int   y   =   (int)screensize.getHeight()/2   -   (int)framesize.getHeight()/2;
-          frame.setLocation(x,y);
-      }
+    public static void setCenter(JDialog frame) {
+        Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();   //获得当前屏幕的大小
+        Dimension framesize = frame.getSize();   //获得当前窗口的大小
+        int x = (int) screensize.getWidth() / 2 - (int) framesize.getWidth() / 2;   //计算要显示的窗口的左上角的坐标
+        int y = (int) screensize.getHeight() / 2 - (int) framesize.getHeight() / 2;
+        frame.setLocation(x, y);
+    }
 
     public static void clearStatus() {
         statusLabel.setText("");

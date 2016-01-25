@@ -408,9 +408,10 @@ public class GlwhdPage extends JOptionPane implements WindowListener,Watcher {
                 LOG.error("获取油品类型：" + e.getMessage());
             }
             double yfss=bill.getPlanl()==null?0:bill.getPlanl();
+            double yfssv20=0.0;
             double yfwd=bill.getDeliverytemp()==null?0:bill.getDeliverytemp();
-            yfss=getV20L(OIL_TYPE_1,yfwd,yfss);
-            Map result = odRegisterService.getodreglossrate(yfss,bill.getDeliveryno());
+            yfssv20=getV20L(OIL_TYPE_1,yfwd,yfss);
+            Map result = odRegisterService.getodreglossrate(yfss,yfssv20,bill.getDeliveryno());
             System.out.print(result.toString());
             try {
                 odg.setRealgetl(Double.parseDouble(result.get("Dischargel").toString()));
