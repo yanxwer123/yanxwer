@@ -4,6 +4,7 @@ import com.kld.app.socket.client.TcpClient;
 import com.kld.app.socket.ob.ConcreteWatched;
 import com.kld.app.socket.ob.Watched;
 import com.kld.app.socket.ob.Watcher;
+import com.kld.app.util.ApplicationRunSingle;
 import com.kld.app.util.Common;
 import com.kld.app.util.Constant;
 import com.kld.app.view.acceptance.CkdcxPage;
@@ -71,15 +72,15 @@ public class Main extends JFrame implements Watcher {
     public static String IP = Constant.IP;
     public static int Port = Constant.PORT;
     static StartApp zc = new StartApp();
-    //操作员号
-    public static String oprno;
-    //操作员名
-    public static String oprname;
-    //操作菜单
-    public static List menuList = new ArrayList();
-
-    public static void main(String[] args) {
-        Thread thread = new Thread() {
+     //操作员号
+     public static String oprno;
+     //操作员名
+     public static String oprname;
+     //操作菜单
+     public static List menuList = new ArrayList();
+     public static void main(String[] args) {
+        ApplicationRunSingle.makeSingle("app");
+        Thread thread =  new Thread() {
             @Override
             public void run() {
                 zc.setVisible(true);

@@ -418,7 +418,7 @@ public class JhysPage extends JOptionPane implements Watcher,WindowListener {
                 double yfssv20=0.0;
                 if (tableModel.getValueAt(0, 4)!=null&&!tableModel.getValueAt(0, 4).toString().equals("")){
                     double yfwd=Double.parseDouble(tableModel.getValueAt(0, 4).toString());
-                    yfss=getV20L(OIL_TYPE_1,yfwd,yfss);
+                    yfssv20=getV20L(OIL_TYPE_1,yfwd,yfss);
                 }
                 if (yfssv20 > 0&&tableModel.getValueAt(0, 4)!=null&&!tableModel.getValueAt(0, 4).toString().equals("")) {
                     //获取一堆计算的东西
