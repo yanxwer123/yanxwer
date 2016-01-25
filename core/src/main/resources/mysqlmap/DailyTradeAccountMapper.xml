@@ -581,6 +581,13 @@
       FROM oss_daily_TradeAccount a join oss_sysmanage_OilGunInfo b on a.OilGun=b.OilGun
       WHERE TakeDate&gt;=#{begindate} AND TakeDate&lt;=#{enddate} AND oilcan=#{oilcan}
     </select>
+    <select id="getLiterByAccountDate" parameterType="String" resultType="java.util.HashMap">
+        SELECT OilNo AS oilno,SUM(IFNULL(Liter, 0)) AS liter FROM oss_daily_TradeAccount
+        WHERE  AccountDate IS NULL
+        GROUP BY OilNo
+    </select>
+
+
     <select id="getLiter" parameterType="String" resultType="java.util.HashMap">
      SELECT OilNo as oilno,SUM(Liter) as liter FROM oss_daily_TradeAccount
      WHERE  (Shift IS NULL OR Shift='' OR Shift &gt;#{shift,jdbcType=VARCHAR}) AND Liter IS NOT NULL

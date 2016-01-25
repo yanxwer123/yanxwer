@@ -30,6 +30,8 @@ public interface CheckSerivce {
 
     //已班结未日结的付油量
     List<Map<String,Object>> getLiter(String shift);
+    List<Map<String,Object>> getLiterByAccountDate();
+
 
     /**
      *
