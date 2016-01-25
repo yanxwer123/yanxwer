@@ -16,7 +16,6 @@ import com.kld.gsm.util.JsonMapper;
 import com.kld.gsm.util.SybaseUtils;
 import io.netty.channel.Channel;
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
-import org.junit.Test;
 import org.slf4j.Logger;
 
 import javax.swing.*;
@@ -25,8 +24,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
@@ -417,20 +414,7 @@ public class Main extends JFrame implements Watcher {
     }
 
     //endregion
-    @Test
-    public void getP() {
-        Properties prop = new Properties();
-        InputStream in = Object.class.getResourceAsStream("classpath*:important.properties");
-        try {
-            prop.load(in);
-            String ctrlIp = prop.getProperty("ctrl.ip").trim();
-            String ctrlPort = prop.getProperty("ctrl.port").trim();
-            //System.out.println("IP:" + ctrlIp);
-            //System.out.println("IP:" + ctrlPort);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     public static void setStatus(String name) {
         statusLabel.setText(statusString + name);
