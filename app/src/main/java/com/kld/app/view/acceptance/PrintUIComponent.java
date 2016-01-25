@@ -331,7 +331,7 @@ public class PrintUIComponent extends JDialog {
                         paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 222);
                         paintLabel(g2, "卸前", 65, this.getHeight() - 222);
                         paintLabel(g2, acceptanceOdRegisterInfo.getBeginoilheight() == null ? "" : acceptanceOdRegisterInfo.getBeginoilheight().toString(), 130, this.getHeight() - 222);
-                        paintLabel(g2, acceptanceOdRegisterInfo.getBeginoilheight() == null ? "" : acceptanceOdRegisterInfo.getBeginoilheight().toString(), 200, this.getHeight() - 222);
+                        paintLabel(g2, acceptanceOdRegisterInfo.getBeginwaterheight() == null ? "" : acceptanceOdRegisterInfo.getBeginwaterheight().toString(), 200, this.getHeight() - 222);
                         paintLabel(g2, acceptanceOdRegisterInfo.getBegintemperature() == null ? "" : acceptanceOdRegisterInfo.getBegintemperature().toString(), 250, this.getHeight() - 222);
                         paintLabel(g2, acceptanceOdRegisterInfo.getBeginoill() == null ? "" : acceptanceOdRegisterInfo.getBeginoill().toString(), 300, this.getHeight() - 222);
                         paintLabel(g2, acceptanceOdRegisterInfo.getBeginv20l() == null ? "" : acceptanceOdRegisterInfo.getBeginv20l().toString(), 370, this.getHeight() - 222);
@@ -361,10 +361,10 @@ public class PrintUIComponent extends JDialog {
             paintLabel(g2, "实收体积(Vt)", 45, this.getHeight() - 282);
             paintLabel(g2, "实收体积(V20)", 115, this.getHeight() - 282);
             paintLabel(g2, "期间付油体积", 185, this.getHeight() - 282);
-            paintLabel(g2, "实收损益量(Vt)", 260, this.getHeight() - 282);
-            paintLabel(g2, "实收损益量(V20)", 345, this.getHeight() - 282);
-            paintLabel(g2, "实收损益率(‰)", 430, this.getHeight() - 282);
-            paintLabel(g2, "实收损益率V20(‰)", 520, this.getHeight() - 282);
+            paintLabel(g2, "实收损溢量(Vt)", 260, this.getHeight() - 282);
+            paintLabel(g2, "实收损溢量(V20)", 345, this.getHeight() - 282);
+            paintLabel(g2, "实收损溢率(‰)", 430, this.getHeight() - 282);
+            paintLabel(g2, "实收损溢率V20(‰)", 520, this.getHeight() - 282);
             paintLabel(g2, "超耗索赔量(V20)", 620, this.getHeight() - 282);
 
             paintLabel(g2, realRecieve, 45, this.getHeight() - 302);
@@ -389,7 +389,7 @@ public class PrintUIComponent extends JDialog {
             paintLabel(g2, backBankNo, 500, this.getHeight() - 360);
             paintLabel(g2, "备注:如遇系统特殊情况请在该栏目填写", 120, this.getHeight() - 393);
 
-            paintLabel(g2, "正损益表示损耗,负损益表示盈余。", 110, this.getHeight() - 433);
+            paintLabel(g2, "正损溢表示损耗,负损溢表示盈余。", 110, this.getHeight() - 433);
             paintLabel(g2, "加油站卸油时油罐对应加油机停止对外销售,卸油完成后在液位仪提取油罐数据生成报表后方可对外销售", 260, this.getHeight() - 445);
 
             // paintLabel(g2, "qweqweqwe", this.getWidth() / 2, this.getHeight() - 20);//画文字
