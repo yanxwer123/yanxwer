@@ -20,6 +20,7 @@ import java.text.DecimalFormat;
 import java.util.*;
 import java.util.List;
 
+import javax.print.attribute.PrintRequestAttributeSet;
 import javax.swing.*;
 import javax.swing.table.TableModel;
 
@@ -94,7 +95,7 @@ public class PrintUIComponent extends JDialog {
     public void init(String billno) {
         this.setTitle("验收单打印");
         this.setResizable(false);
-        this.setModal(true);
+        this.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
         this.billno = billno;
         getOdreg(billno);
         odRegisterInfos = getOdRegisterInfos(billno);
@@ -137,30 +138,8 @@ public class PrintUIComponent extends JDialog {
         gridBagConstraints.gridy = 1;
         add(button, gridBagConstraints);
         setSize(700, 550);
-        button.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                PrinterJob printJob = PrinterJob.getPrinterJob();
-                PageFormat pf = printJob.defaultPage();
-                pf.setOrientation(PageFormat.PORTRAIT);
-                Paper paper = pf.getPaper();
-                paper.setSize(widthA4, heightA4);
-                paper.setImageableArea(leftMargin, topMargin, widthA4 - 2 * leftMargin, heightA4 - 2 * topMargin);
-                pf.setPaper(paper);
-                printJob.setCopies(1);
-                Book book = new Book();
-                book.append(panel, pf, 1);
-                printJob.setPageable(book);
-                if (printJob.printDialog()) {
-                    try {
-
-                        printJob.print();
-                    } catch (Exception PrinterExeption) {
-                        PrinterExeption.printStackTrace();
-                    }
-                }
-            }
-        });
+        printAction print = new printAction(this);
+        button.addActionListener(print);
         setVisible(true);
     }
 
@@ -486,6 +465,36 @@ public class PrintUIComponent extends JDialog {
 
         private int min(int a, int b) {
             return (a < b) ? a : b;
+        }
+    }
+}
+class printAction implements ActionListener {
+    private PrintUIComponent printUIComponent;
+
+    public printAction(PrintUIComponent printUIComponent) {
+        this.printUIComponent = printUIComponent;
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        PrinterJob printJob = PrinterJob.getPrinterJob();
+        PageFormat pf = printJob.defaultPage();
+        pf.setOrientation(PageFormat.PORTRAIT);
+        Paper paper = pf.getPaper();
+        paper.setSize(printUIComponent.widthA4, printUIComponent.heightA4);
+        paper.setImageableArea(printUIComponent.leftMargin, printUIComponent.topMargin,
+                printUIComponent.widthA4 - 2 * printUIComponent.leftMargin,
+                printUIComponent.heightA4 - 2 * printUIComponent.topMargin);
+        pf.setPaper(paper);
+        printJob.setCopies(1);
+        Book book = new Book();
+        book.append(printUIComponent.panel, pf, 1);
+        printJob.setPageable(book);
+        if (printJob.printDialog()) {
+            try {
+                printJob.print();
+            } catch (Exception PrinterExeption) {
+                PrinterExeption.printStackTrace();
+            }
         }
     }
 }
