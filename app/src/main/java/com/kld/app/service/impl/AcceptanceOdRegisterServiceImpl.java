@@ -137,11 +137,12 @@ public class AcceptanceOdRegisterServiceImpl implements IAcceptanceOdRegisterSer
      * @param billno
      */
     @Override
-    public Map getodreglossrate(Double yfss, String billno) {
+    public Map getodreglossrate(Double yfss, Double yfssv20,String billno) {
 
         Double syl=Double.parseDouble(sysManageDictDao.selectByCode("sylycsz").getValue());
         Map<String,Object> hm=new HashMap<String, Object>();
         hm.put("yfss",yfss);
+        hm.put("yfssv20",yfssv20);
         hm.put("billno",billno);
         hm.put("syl",syl/100);
         return  dao.getOdregRate(hm);

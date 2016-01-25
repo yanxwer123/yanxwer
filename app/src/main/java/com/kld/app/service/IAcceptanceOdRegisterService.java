@@ -53,7 +53,7 @@ public interface IAcceptanceOdRegisterService {
     /**
      * 完成卸油获取 实际收油，损失率等
      * */
-    Map getodreglossrate(Double yfss,String billno);
+    Map getodreglossrate(Double yfss,Double yfssv20,String billno);
 
 
     AcceptanceNoBills selectNobill(String bill);
