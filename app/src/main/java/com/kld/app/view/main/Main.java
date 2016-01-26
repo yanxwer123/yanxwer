@@ -76,7 +76,7 @@ public class Main extends JFrame implements Watcher {
      //操作菜单
      public static List menuList = new ArrayList();
      public static void main(String[] args) {
-        ApplicationRunSingle.makeSingle("app");
+        ApplicationRunSingle.makeSingle("/smc20/gsm/app");
         Thread thread =  new Thread() {
             @Override
             public void run() {
