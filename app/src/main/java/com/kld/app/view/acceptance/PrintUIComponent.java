@@ -95,7 +95,7 @@ public class PrintUIComponent extends JDialog {
     public void init(String billno) {
         this.setTitle("验收单打印");
         this.setResizable(false);
-        this.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+//        this.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
         this.billno = billno;
         getOdreg(billno);
         odRegisterInfos = getOdRegisterInfos(billno);
@@ -476,7 +476,7 @@ class printAction implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        printUIComponent.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+//        printUIComponent.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
         PrinterJob printJob = PrinterJob.getPrinterJob();
         PageFormat pf = printJob.defaultPage();
         pf.setOrientation(PageFormat.PORTRAIT);
@@ -497,6 +497,6 @@ class printAction implements ActionListener {
                 PrinterExeption.printStackTrace();
             }
         }
-        printUIComponent.setModalityType(Dialog.ModalityType.MODELESS);
+//        printUIComponent.setModalityType(Dialog.ModalityType.MODELESS);
     }
 }
