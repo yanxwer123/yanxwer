@@ -20,7 +20,7 @@ import java.text.DecimalFormat;
 import java.util.*;
 import java.util.List;
 
-import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.*;
 import javax.swing.*;
 import javax.swing.table.TableModel;
 
@@ -95,7 +95,7 @@ public class PrintUIComponent extends JDialog {
     public void init(String billno) {
         this.setTitle("验收单打印");
         this.setResizable(false);
-//        this.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+        this.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
         this.billno = billno;
         getOdreg(billno);
         odRegisterInfos = getOdRegisterInfos(billno);
@@ -381,7 +381,7 @@ public class PrintUIComponent extends JDialog {
             graphics.setColor(Color.black);
 
             Font oldFont = graphics.getFont();
-            Font labelFont = new Font("none", Font.PLAIN, 10);
+            Font labelFont = new Font("宋体", Font.PLAIN, 10);
             graphics.setFont(labelFont);
             Point2D ptSrc = new Point2D.Double(x - graphics.getFontMetrics().stringWidth(label) / 2, y);
             Point2D ptDst = new Point2D.Double();
@@ -489,9 +489,10 @@ class printAction implements ActionListener {
         Book book = new Book();
         book.append(printUIComponent.panel, pf, 1);
         printJob.setPageable(book);
-        if (printJob.printDialog()) {
+        if (true) {
             try {
                 printJob.print();
+
             } catch (Exception PrinterExeption) {
                 PrinterExeption.printStackTrace();
             }
