@@ -118,7 +118,7 @@ public class DailyPolling {
         }
         catch (Exception ex)
         {
-            LOG.info("timeInvo fail");
+            LOG.error("timeInvo fail"+ex.getMessage());
         }
     }
 
@@ -135,7 +135,7 @@ public class DailyPolling {
         }
         catch (Exception ex)
         {
-            LOG.info("zdtimeInvo fail");
+            LOG.error("zdtimeInvo fail"+ex.getMessage());
         }
     }
 
@@ -152,7 +152,7 @@ public class DailyPolling {
         }
         catch (Exception ex)
         {
-            LOG.info("tradInvo failed");
+            LOG.error("tradInvo failed" + ex.getMessage());
         }
     }
 
@@ -169,7 +169,7 @@ public class DailyPolling {
         }
         catch (Exception ex)
         {
-            LOG.info("InvoAlram failed!");
+            LOG.error("InvoAlram failed!" + ex.getMessage());
         }
 
     }
@@ -187,7 +187,7 @@ public class DailyPolling {
         }
         catch (Exception ex)
         {
-            LOG.info("EquipmentAlram failed");
+            LOG.info("EquipmentAlram failed"+ex.getMessage());
         }
 
     }
@@ -217,7 +217,7 @@ public class DailyPolling {
         }
         catch (Exception ex)
         {
-            LOG.error("SaleOutAlarm failed");
+            LOG.error("SaleOutAlarm failed"+ex.getMessage());
         }
 
     }
@@ -235,7 +235,7 @@ public class DailyPolling {
         }
         catch (Exception ex)
         {
-            LOG.info("GaT failed");
+            LOG.info("GaT failed"+ex.getMessage());
         }
 
     }
@@ -254,7 +254,7 @@ public class DailyPolling {
         }
         catch (Exception ex)
         {
-            LOG.info("OilInContrast failed");
+            LOG.info("OilInContrast failed"+ex.getMessage());
         }
 
     }
@@ -270,7 +270,7 @@ public class DailyPolling {
         }
         catch (Exception ex)
         {
-            LOG.info("shift failed");
+            LOG.error("shift failed" + ex.getMessage());
         }
 
     }
@@ -283,7 +283,7 @@ public class DailyPolling {
             syn.synDailyLost();
             LOG.info("DailyLoss end");
         }catch (Exception ex){
-            LOG.info("DailyLoss failed");
+            LOG.info("DailyLoss failed"+ex.getMessage());
         }
     }
 
@@ -296,7 +296,7 @@ public class DailyPolling {
            LOG.info("measureLeak end");
        }
        catch (Exception ex){
-           LOG.info("measureLeak failed");
+           LOG.info("measureLeak failed"+ex.getMessage());
        }
    }
 
@@ -314,7 +314,7 @@ public class DailyPolling {
         }
         catch (Exception ex)
         {
-            LOG.info("TradeAccount failed");
+            LOG.info("TradeAccount failed"+ex.getMessage());
         }
     }
 
@@ -330,7 +330,7 @@ public class DailyPolling {
             LOG.info("shiftData end");
         }
         catch (Exception ex){
-            LOG.info("shiftData failed");
+            LOG.error("shiftData failed"+ex.getMessage());
         }
     }
 
@@ -347,7 +347,7 @@ public class DailyPolling {
         }
         catch (Exception ex)
         {
-            LOG.info("DayBalance failed");
+            LOG.error("DayBalance failed"+ ex.getMessage());
         }
 
     }
@@ -364,7 +364,7 @@ public class DailyPolling {
         }
         catch (Exception ex)
         {
-            LOG.info("parT failed");
+            LOG.error("parT failed"+ ex.getMessage());
         }
     }
 
@@ -395,7 +395,7 @@ public class DailyPolling {
         }
         catch (Exception ex)
         {
-            LOG.info("tank failed");
+            LOG.error("tank failed" + ex.getMessage());
         }
     }
 
@@ -412,7 +412,7 @@ public class DailyPolling {
         }
         catch (Exception ex)
         {
-            LOG.info("gun failed");
+            LOG.error("gun failed" +ex.getMessage());
         }
     }
 
@@ -423,7 +423,7 @@ public class DailyPolling {
             syn.synoilmac();
             LOG.info("mac end ");
         }catch (Exception e){
-            LOG.info("mac failed");
+            LOG.error("mac failed"+e.getMessage());
         }
     }
 
@@ -434,7 +434,7 @@ public class DailyPolling {
             syn.synoiltype();
             LOG.info("oiltype end ");
         }catch (Exception e){
-            LOG.info("oiltype failed");
+            LOG.error("oiltype failed" +e.getMessage());
         }
     }
     /**
@@ -447,7 +447,7 @@ public class DailyPolling {
             sysmanageService.GetCubgeByNodeNo(ApplicationMain.Host, ApplicationMain.NodeNo);
             LOG.info("cuage end");
         }catch (Exception e){
-            LOG.info("cuage failed");
+            LOG.error("cuage failed"+e.getMessage());
         }
     }
 
@@ -464,7 +464,7 @@ public class DailyPolling {
         }
         catch (Exception ex)
         {
-            LOG.info("delivery failed");
+            LOG.error("delivery failed"+ex.getMessage());
         }
     }
 
@@ -479,7 +479,7 @@ public class DailyPolling {
             LOG.info("deliverybill end");
 
         }catch (Exception e){
-
+            LOG.error("deliverybill failed"+e.getMessage());
         }
     }
 
@@ -493,7 +493,7 @@ public class DailyPolling {
             dailyRunning.tankoilLost(ApplicationMain.Host);
             LOG.info("staticTankandGun end");
         }catch (Exception e){
-            LOG.info("staticTankandGun failed");
+            LOG.error("staticTankandGun failed"+e.getMessage());
         }
     }
 
@@ -507,7 +507,7 @@ public class DailyPolling {
             sysmanageService.GetAlarmPar(ApplicationMain.Host, ApplicationMain.NodeNo);
             LOG.info("iqalarm end");
         }catch (Exception e){
-            LOG.info("iqalarm failed");
+            LOG.error("iqalarm failed"+e.getMessage());
         }
     }
 
@@ -536,7 +536,7 @@ public class DailyPolling {
         }
         catch (Exception ex)
         {
-            LOG.info(ex.getMessage());
+            LOG.error("TankandGunRealStatus:"+ex.getMessage());
         }
     }
 
@@ -547,7 +547,7 @@ public class DailyPolling {
             sysManageDic.synDicFromCenter(ApplicationMain.Host);
             LOG.info("dict end");
         }catch (Exception e){
-            LOG.info("dict failed");
+            LOG.error("dict failed"+e.getMessage());
         }
     }
 
@@ -586,7 +586,7 @@ public class DailyPolling {
         }
         catch (Exception ex)
         {
-
+            LOG.error("ftp:"+ex.getMessage());
         }
     }
 
@@ -602,7 +602,7 @@ public class DailyPolling {
             ApplicationMain.NodeNo=department.getSinopecnodeno();
             LOG.info("get nodeno end");
         }catch (Exception e){
-            LOG.info("get nodeno failed");
+            LOG.error("get nodeno failed"+e.getMessage());
         }
         }
     }
@@ -617,7 +617,7 @@ public class DailyPolling {
         try{
             ApplicationMain.IsOpenrt=new action().getRTopen();
         }catch (Exception e){
-            LOG.error("get isopenrt 0",e);
+            LOG.error("get isopenrt 0"+e.getMessage());
         }
     }
     /**
@@ -638,7 +638,7 @@ public class DailyPolling {
                 LOG.info("load can and oilno mapping end");
             }
             catch (Exception e){
-                LOG.info("load can and oilno mapping fail");
+                LOG.error("load can and oilno mapping fail"+e.getMessage());
             }
             //endregion
         }
@@ -660,8 +660,8 @@ public class DailyPolling {
                     LOG.info("load can and version mapping end");
                 }
             }catch (Exception e){
-                LOG.info("load can and version failed");
-                LOG.info(e.getMessage());
+                LOG.error("load can and version failed");
+                LOG.error(e.getMessage());
             }
 
             //endregion

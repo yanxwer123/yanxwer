@@ -36,7 +36,7 @@ public class CanAndGunStatus implements Watcher {
 
     public void reg() {
         ApplicationMain.watch.addWetcher("A", this);
-        System.out.println("Reg Observer");
+        LOG.info("Reg Observer");
     }
 
     public void send() {
@@ -54,6 +54,7 @@ public class CanAndGunStatus implements Watcher {
 
         if (gasMsg.getPid().equals("A15_10002")) {
             //油枪状态
+            LOG.info("5秒同步枪状态 into");
             ResultMsg resultMsg = new JsonMapper().fromJson(gasMsg.getMessage(), ResultMsg.class);
             List<MacLogInfo> macLogInfos = resultMsg.getData();
             List<GunInfo> gunInfos = new ArrayList<GunInfo>();
@@ -84,13 +85,14 @@ public class CanAndGunStatus implements Watcher {
                 client.request(path, gunInfos, hm);
 
             } catch (Exception e) {
-                e.printStackTrace();
+                LOG.error("5秒同步枪状态："+e.getMessage());
             }
             LOG.info("GunRealStatus end");
         }
 
         if (gasMsg.getPid().equals("A15_10004")) {
             //实时库存
+            LOG.info("5秒同步罐状态 into");
             List<CanInfo> canInfos = new ArrayList<CanInfo>();
             ResultMsg resultMsg = new JsonMapper().fromJson(gasMsg.getMessage(), ResultMsg.class);
             List<Map<String, ?>> candata = resultMsg.getData();
@@ -133,8 +135,10 @@ public class CanAndGunStatus implements Watcher {
             httpClient client = new httpClient();
             try {
                 client.request(path, canInfos, hm);
+                canInfos.clear();
             } catch (Exception e) {
-                e.printStackTrace();
+                LOG.error("5秒同步罐状态：" + e.getMessage());
+                canInfos.clear();
             }
             LOG.info("TankRealStatus end");
         }
