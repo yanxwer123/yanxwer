@@ -476,6 +476,7 @@ class printAction implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
+        printUIComponent.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
         PrinterJob printJob = PrinterJob.getPrinterJob();
         PageFormat pf = printJob.defaultPage();
         pf.setOrientation(PageFormat.PORTRAIT);
@@ -496,5 +497,6 @@ class printAction implements ActionListener {
                 PrinterExeption.printStackTrace();
             }
         }
+        printUIComponent.setModalityType(Dialog.ModalityType.MODELESS);
     }
 }
