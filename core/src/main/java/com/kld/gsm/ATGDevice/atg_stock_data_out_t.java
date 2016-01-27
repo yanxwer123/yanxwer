@@ -47,8 +47,8 @@ public class atg_stock_data_out_t {
     }
     public String toString2() {
         return uOilCanNo +
-                "," + strDate + '\'' +
-                "," + strTime + '\'' +
+                "," + strDate +
+                "," + strTime +
                 "," + fOilCubage +
                 "," + fOilStandCubage +
                 "," + fEmptyCubage +
