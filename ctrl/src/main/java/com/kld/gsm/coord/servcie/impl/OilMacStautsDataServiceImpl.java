@@ -174,6 +174,7 @@ public class OilMacStautsDataServiceImpl implements IOilMacStautsDataService {
                         else
                         {
                             dSale=0.00;
+                            alarmGaTContrast.setIntervalsales(dSale);
                         }
                         //差异
                         DecimalFormat df=new DecimalFormat("########0.00");

@@ -440,7 +440,10 @@ WHERE
   <select id="selectByTrans" parameterType="String" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
-    FROM oss_acceptance_odRegister WHERE  TranStatus=#{0,jdbcType=VARCHAR}
+    FROM oss_acceptance_odRegister
+    WHERE BeginTime IS NOT NULL
+    AND EndTime IS NOT NULL
+    AND TranStatus=#{0,jdbcType=VARCHAR}
   </select>
   <select id="selectWHDByoil" parameterType="String" resultMap="BaseResultMap">
      SELECT
