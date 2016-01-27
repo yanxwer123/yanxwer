@@ -1860,7 +1860,7 @@ public class JhysPage extends JOptionPane implements Watcher,WindowListener {
         odregStatus.setDeliveryno(billno);
         acceptSevices.transodRegStatus(SysConfig.regmoteIp().toString(),odregStatus);}
         catch (Exception e){
-            System.out.println(e.getMessage());
+            LOG.error("通知卸油状态异常："+e.getMessage());
         }
     }
 

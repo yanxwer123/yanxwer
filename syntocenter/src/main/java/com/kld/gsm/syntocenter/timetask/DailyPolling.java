@@ -43,11 +43,11 @@ public class DailyPolling {
         if (ApplicationMain.NodeNo==null||"".equals(ApplicationMain.NodeNo)||ApplicationMain.canversion==null
                 ||ApplicationMain.canversion.size()==0
                 ||ApplicationMain.oilcanmap==null||ApplicationMain.oilcanmap.size()==0) return;
-        //时点库存
-        timeInvo();
+       //时点库存
+       timeInvo();
         //整点库存
         zdtimeInvo();
-        //库存报警
+       //库存报警
         InvoAlram();
         //设备报警
         EquipmentAlram();
@@ -196,7 +196,7 @@ public class DailyPolling {
         try{
             LOG.info("Reg begin");
             StationRegServices syn= springFactory.getInstance().getBean(StationRegServices.class);
-            syn.synsys(new action().getHost());
+            syn.synsys(ApplicationMain.Host);
             LOG.info("Reg end");
         }catch (Exception e){
             LOG.error(e.getMessage());
