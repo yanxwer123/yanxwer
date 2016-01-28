@@ -751,15 +751,30 @@ public class SysManageCotroller {
 
         //get cubge list
         List<oss_sysmanage_cubage> ossSysmanageCubages=systemManage.getcubgesByNodenoAndStatus(NodeNo,1);
+/*
+        List<oss_sysmanage_cubage> downlist=new ArrayList<oss_sysmanage_cubage>();
 
+      for (oss_sysmanage_cubage item:ossSysmanageCubages){
+            oss_sysmanage_cubage item2=new oss_sysmanage_cubage();
+            item2.setStatus(0);
+            item2.setNodeno(item.getNodeno());
+            item2.setOucode(item.getOucode());
+            item2.setTranstatus(item.getTranstatus());
+            item2.setHeight(item.getHeight());
+            item2.setLiter(item.getLiter());
+            item2.setUpdatetime(item.getUpdatetime());
+        }
+*/
         // for cubge list
         for (oss_sysmanage_cubage item:ossSysmanageCubages){
             //create main
+
             oss_sysmanageCubgeMain main=new oss_sysmanageCubgeMain();
             main.setCubage(item);
             main.setCubageInfos(systemManage.getcubgeInfosByNodenoAndVersionandcanno(item.getNodeno(),item.getVersion(),item.getOilcan()));
             mains.add(main);
         }
+
         return mains;
     }
 
@@ -773,6 +788,8 @@ public class SysManageCotroller {
          Result rs=new Result();
         try {
             systemManage.synMain(main,NodeNo);
+            sendoligun(main.getOilGunInfos());
+            sendtankinfo(main.getTankInfos());
             rs.setResult(true);
         }
         catch (Exception e){

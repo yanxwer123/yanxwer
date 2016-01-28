@@ -7,6 +7,7 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import org.apache.log4j.Logger;
 
 import javax.swing.*;
 
@@ -21,7 +22,7 @@ import javax.swing.*;
 @ChannelHandler.Sharable
 public class TcpClientHandler extends SimpleChannelInboundHandler {
     private ProtocolProcessor protocolProcessor;
-
+    private static final Logger LOG = Logger.getLogger("TcpClientHandler");
     public TcpClientHandler(ProtocolProcessor protocolProcessor) {
         this.protocolProcessor = protocolProcessor;
     }
@@ -37,7 +38,7 @@ public class TcpClientHandler extends SimpleChannelInboundHandler {
     //断开
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("disconnect");
+        LOG.info("disconnect");
         action action = new action();
         int i = 0;
         boolean flag = true;
@@ -51,10 +52,10 @@ public class TcpClientHandler extends SimpleChannelInboundHandler {
                     flag = false;
                     break;
                 }
-                System.out.println("Wait five seconds reLink......");
+                LOG.info("Wait five seconds reLink......");
 
                 Thread.sleep(5000);
-                System.out.println("ReLink[" + i + "]....");
+                LOG.info("ReLink[" + i + "]....");
                 if (i == 3) {
                     System.out.println("Stop");
                     //JOptionPane.showMessageDialog(null, "与主调度断开链接,尝试重连。", "错误提示", JOptionPane.ERROR_MESSAGE);
@@ -62,7 +63,7 @@ public class TcpClientHandler extends SimpleChannelInboundHandler {
                     // System.exit(0);
                 }
             } catch (InterruptedException e) {
-                System.out.println("重连出错.......");
+                LOG.error("重连出错.......");
                 // System.exit(0);
             }
             i++;
@@ -73,7 +74,7 @@ public class TcpClientHandler extends SimpleChannelInboundHandler {
     //用户事件触发 会话时间
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
-        System.out.println("强制断开");
+        LOG.info("强制断开");
         //关闭链路
         ctx.close();
 

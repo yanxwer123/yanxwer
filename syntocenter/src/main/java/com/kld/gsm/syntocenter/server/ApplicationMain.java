@@ -40,8 +40,10 @@ public class ApplicationMain  implements Watcher {
 
     public static Map<String,Integer> oilcanmap;
     public static Map<String,String> canversion;
-
-   public static Channel CC =null ;
+    public static String ctrladdr;
+    public static String gunaddr;
+    public static String canaddr;
+    public static Channel CC =null ;
     public static Watched watch = ConcreteWatched.getInstance();
     public static String sign = "";
     public static Watcher watcher  =new ApplicationMain();
@@ -49,6 +51,10 @@ public class ApplicationMain  implements Watcher {
     private static final Logger LOG = Logger.getLogger("syntocenter");
     public static void main(String[] args) throws Exception{
         ApplicationRunSingle.makeSingle("syntocenter");
+        action action = new action();
+        ctrladdr=action.getCtrladdr();
+        gunaddr=action.getUri("resource.services.TI.addQSSZT");
+        canaddr=action.getUri("resource.services.TI.addGSSZT");
         //region 随机生成上传时间
         String dstring= DateUtil.getDate();
         //System.out.println(dstring);
@@ -103,7 +109,7 @@ public class ApplicationMain  implements Watcher {
         boolean flag = true;
         while (flag) {
             try {
-                 CC = TcpClient.getInstance().getChannel(action.getCtrladdr(), Integer.valueOf(action.getctrlport()));
+                 CC = TcpClient.getInstance().getChannel(ctrladdr, Integer.valueOf(action.getctrlport()));
                  if (CC != null) {
                     System.out.println("reLink ok  ");
                     flag = false;
