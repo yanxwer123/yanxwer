@@ -167,7 +167,8 @@
   </update>
 
   <update id="updateEndTime" parameterType="com.kld.gsm.ATG.domain.AlarmInventory">
-    update oss_alarm_Inventory set EndTIme = #{endtime,jdbcType=TIMESTAMP} where
+    update oss_alarm_Inventory set EndTIme = #{endtime,jdbcType=TIMESTAMP}
+    ,TranStatus = 0 where
     AlarmType = #{alarmtype,jdbcType=INTEGER} AND OilCan=#{oilcan,jdbcType=INTEGER}
     AND EndTIme IS NULL
   </update>
