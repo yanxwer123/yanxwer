@@ -178,7 +178,7 @@ public class FileStockThread  extends Thread {
                 fileWriter.write(stock.toString2() + "\n");
             }
             fileWriter.flush();
-            stockList.clear();
+//            stockList.clear();
             //logger.info("file close FileStockThead...");
             //fileWriter.close();
             logger.info("end FileStock...,after five seconds again");
