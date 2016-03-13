@@ -71,6 +71,8 @@ public class SeeUIComponent extends JDialog  {
     String indemnityloss;
     //回罐铅封号
     String backBankNo;
+    //出库铅封号
+    String plumbunBankOperator;
     //到站时间 28 17
     String instationtime;
     //原发体积(V20)
@@ -79,7 +81,7 @@ public class SeeUIComponent extends JDialog  {
     String sjfyl;
     double wd;
     double md;
-    String sywd = "发布温度";
+    String sywd = "ERP温度";
     private AlarmOilInContrast alarmOilInContrast;
 
     JButton button;
@@ -107,7 +109,7 @@ public class SeeUIComponent extends JDialog  {
                 if (sysmanageRealgiveoil.getMd() != null) {
                     md = Double.valueOf(sysmanageRealgiveoil.getMd());
                 }
-                sywd = "油库实发温度";
+                sywd = "实发温度";
             }
         }
         getOdreg(billno);
@@ -187,6 +189,8 @@ public class SeeUIComponent extends JDialog  {
             registerService = Context.getInstance().getBean(IAcceptanceOdRegisterService.class);
         }
         odRegister = registerService.selectByPrimaryKey(billno);
+        plumbunBankOperator = odRegister.getPlumbunbankoperator() ==null?"":odRegister.getPlumbunbankoperator();
+
         String OIL_TYPE_1 = registerService.selectOilType(deliveryBill.getOilno()).getOiltype().toString();
         if(wd!=0.0&&sjfyl!=null) {
             planLV20 = getV20L(OIL_TYPE_1, wd, Double.valueOf(sjfyl))+"";
@@ -397,7 +401,7 @@ public class SeeUIComponent extends JDialog  {
             paintLabel(g2, new Date().toLocaleString(), 625, this.getHeight() - 330);
 
             paintLabel(g2, "出库铅封号:", 45, this.getHeight() - 360);
-            paintLabel(g2, "", 130, this.getHeight() - 360);
+            paintLabel(g2, plumbunBankOperator, 130, this.getHeight() - 360);
 
             paintLabel(g2, "回空铅封号:", 345, this.getHeight() - 360);
             paintLabel(g2, backBankNo, 500, this.getHeight() - 360);
