@@ -50,17 +50,20 @@ public class FileStockThread  extends Thread {
 
                 if(TimeTaskPar.get("sdkclxsj")<1)
                 {
-                    sleep(Integer.MAX_VALUE);
+                    sleep(5);
                 }
                 else {
                     sleep(iSleep * 1000);
                 }
 
-                Integer iRet=writeFileTime();
+               /* Integer iRet=writeFileTime();
                 if(iRet.equals(1))
                 {
                     logger.error("FileStockThread Write File Timeout");
-                }
+                }*/
+                logger.info("====================write file start:"+new Date().toString()+"=================");
+                writeFile();
+                logger.info("====================write file end:"+new Date().toString()+"=================");
             } catch (InterruptedException e) {
                 logger.error("sleep:" + e);
                 e.printStackTrace();
@@ -68,37 +71,7 @@ public class FileStockThread  extends Thread {
         }
     }
 
-    //region oldcode
-    /*public Integer writeFileTime(){
-        Integer iRet=new Integer("1");
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        FutureTask<Integer> future =
-                new FutureTask<Integer>(new Callable<Integer>() {//使用Callable接口作为构造参数
-                    public Integer call() {
-                        try
-                        {
-                            writeFile();
-                        }
-                        catch(Exception e) {
-                        }
-                        return 0;
-                    }});
-        executor.execute(future);
-        //在这里可以做别的任何事情
-        try {
-            iRet= future.get(25000, TimeUnit.MILLISECONDS); //取得结果，同时设置超时执行时间为5秒。同样可以用future.get()，不设置执行超时时间取得结果
-        } catch (InterruptedException e) {
-            future.cancel(true);
-        } catch (ExecutionException e) {
-            future.cancel(true);
-        } catch (TimeoutException e) {
-            future.cancel(true);
-        } finally {
-            executor.shutdown();
-        }
-        return 1;
-    }*/
-//endregion
+
 
     public Integer writeFileTime(){
         int bdStatus = 0;
