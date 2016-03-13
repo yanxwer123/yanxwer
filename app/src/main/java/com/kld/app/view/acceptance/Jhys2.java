@@ -292,7 +292,6 @@ public class Jhys2 extends JPanel {
                     } else {
                         acceptanceOdRegister.setDischargeRateV20(acceptanceOdRegister.getDischargeLossV20() / yfssv20);
                     }
-
                 }
                 if (!iswhd) {
                     acceptanceOdRegister.setDeliveryno(tableModel.getValueAt(0, 0).toString());
@@ -303,6 +302,9 @@ public class Jhys2 extends JPanel {
                 acceptanceOdRegister.setTranstatus("0");
                 acceptanceOdRegister.setIsdel(0);
                 acceptanceOdRegister.setEndtime(new Date());
+                acceptanceOdRegister.setBackbankno(btnhkqf.getText().trim());
+                acceptanceOdRegister.setPlumbunbankoperator(btnckqf.getText().trim());
+
 
                 acceptanceOdRegister.setOilno(tableModel.getValueAt(0, 1).toString());
                 odRegisterService.updateByPrimaryKeySelective(acceptanceOdRegister);

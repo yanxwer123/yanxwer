@@ -125,6 +125,7 @@ public class EhCacheHelper {
      * @param stocks
      */
     public static void updateCanStocks(List<atg_stock_data_out_t> stocks) {
+        logger.info("update stocks:"+stocks.toString());
         Cache myCache = cacheManager.getCache("ATGCache");
         Element el = new Element("allstock", stocks);
         myCache.put(el);

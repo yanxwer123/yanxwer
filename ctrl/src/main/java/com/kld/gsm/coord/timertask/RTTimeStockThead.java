@@ -51,7 +51,9 @@ public class RTTimeStockThead extends Thread{
         while(true){
             try
             {
+                logger.info("begin");
                 sleep(200);
+                logger.info("200ms wakeup");
                 boolean res=getstock();
                 logger.info("获取实时罐存end："+res+","+new Date().toString());
                 if (res){
@@ -59,6 +61,7 @@ public class RTTimeStockThead extends Thread{
                     try {
                         //间隔时间
                         sleep(TimeTaskPar.get("rtstockjg") * 1000);
+                        logger.info("wake up");
                     } catch (InterruptedException e) {
                         logger.error("实时罐存间隔Inter:" + e);
                     }catch (Exception e){
@@ -84,14 +87,17 @@ public class RTTimeStockThead extends Thread{
                 }
             }
         };
+        logger.info("new exec");
         final ExecutorService exec = Executors.newFixedThreadPool(1);
+        logger.info("end new exec");
         Future<Integer> future = exec.submit(call);
+        logger.info("submit call");
         try {
             // set  timeout to 10 seconds
             int iSleep=TimeTaskPar.get("rtstockcs");
             if(TimeTaskPar.get("rtstockcs")<1)
             {
-                iSleep=Integer.MAX_VALUE;
+                iSleep=7;
             }
             result = future.get(1000 * (iSleep-1), TimeUnit.MILLISECONDS);
             logger.info("获取实时罐存 value from call is :" + result);
