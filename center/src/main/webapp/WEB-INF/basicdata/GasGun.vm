@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>加油站信息管理</title>
+    <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
+    <script type="text/javascript" src="easyui/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+
+</head>
+<body>
+#*<table id="tt" class="easyui-datagrid" style="width:952px;height:250px"
+       url="datagrid24_getdata.php" toolbar="#tb"
+        rownumbers="true" pagination="true">
+    <thead>
+    <tr>
+        <th field="itemid" width="20%">Item ID</th>
+        <th field="productid" width="20%">Product ID</th>
+        <th field="listprice" width="20%" align="right">List Price</th>
+        <th field="unitcost" width="20%" align="right">Unit Cost</th>
+        <th field="attr1" width="10%">Attribute</th>
+        <th field="status" width="10%" align="center">Stauts</th>
+    </tr>
+    </thead>
+</table>*#
+#*
+
+    #if($gasGunManages)
+        #foreach($item in $gasGunManages)
+        <table id="tb" border="1" cellpadding="0" cellspacing="0">
+            <tr>
+                <th id> 油罐编号</th>
+                <th><span>$item.oilcan</span></th>
+            </tr>
+            <tr>
+                <th>油品名称</th>
+                <th><span>$!{item.oiltype} </span></th>
+            </tr>
+
+            <tr>
+                <th>油枪编号</th>
+                <th><span>$!{item.oilgunno} </span></th>
+            </tr>
+
+
+        </table>
+
+        #end
+    #end
+*#
+#*
+
+<table id="historydisplay"></table>
+*#
+
+<div id="result" class="easyui-panel"  >
+    <table id="tt" class="easyui-datagrid">
+    </table>
+</div>
+
+
+<script type="text/javascript">
+
+    var cols = [[
+        {field: 'oilcan', title: '油罐号', width: 33, align: 'center'},
+        {field: 'oiltype', title: '油品名称', width:33, align: 'center'},
+        {field: 'oilgunno', title: '油枪号', width: 33, align: 'center'}
+    ]];
+    var paras;
+    var id;
+    $(function () {
+        var heigth = $(window).height() - 130;
+        $("#result").height(heigth);
+        initData();
+    });
+    function inittext() {
+
+        #if($department.oucode)
+            id =$department.oucode;
+        #else
+            id =null;
+        #end
+        paras = {"id": id};
+
+    }
+    function initData() {
+        inittext();
+        BindDataGridAjax('tt', '油枪数据', '/web/basicdata/gasgun', cols, paras, 'true', 10, [10, 20, 30]);
+    }
+    /*
+     $(document).ready(function () {
+         $('#historydisplay').datagrid({
+             title: '油枪数据',
+             toolbar: '#search',    //设置工具栏
+             fitColumns:true,       //设置列宽度自适应屏幕
+              url: '/web/basicdata/gasgun?id=11',
+             pageSize:15,        //设置默认分页大小
+             pageList:[10,15,20,25,30,35,40,45,50],   //设置分页大小
+             columns: [[
+                 { field: 'oilcan', title: '油罐号', width: 80 ,align:'center'},
+                 { field: 'oiltype', title: '油品名称', width: 80, align: 'center' },
+                 { field: 'oilgunno', title: '油枪号', width: 80, align: 'center' },
+               ]],
+             pagination: true
+         });
+     });
+     $('#historydisplay').datagrid({
+         iconCls : 'icon-save'
+     });*/
+</script>
+</body>
+</html>

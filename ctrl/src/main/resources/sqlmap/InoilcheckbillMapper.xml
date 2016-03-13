@@ -10,11 +10,11 @@
           deinvolu,deinanalyse,shipdept,chiptrucno,vittaperson,driver,arrivetime,
           acceptflag,operatorcode,billstatus,transflag,oilcanno
         )
-        values(#{vouchno}, #{oilno}, #{goodsbillno}, #{origamount}, #{origstdliter},
-#{origlitramout}, #{pickupplace}, #{checamount}, #{checcnttemper}, #{checoiwahigh}, #{checairhigh},
- #{checwatehigh}, #{checlitramount}, #{checstdliter}, #{ deinvolu}, #{deinanalyse}, #{shipdept},
- #{chiptrucno}, #{vittaperson}, #{driver}, #{arrivetime}, #{acceptflag}, #{operatorcode}, #{billstatus},
-  #{transflag}, #{oilcanno}
+        values(#{vouchno,jdbcType=VARCHAR}, #{oilno,jdbcType=VARCHAR}, #{goodsbillno,jdbcType=VARCHAR}, #{origamount,jdbcType=DOUBLE}, #{origstdliter,jdbcType=DOUBLE},
+  #{origlitramout,jdbcType=DOUBLE}, #{pickupplace,jdbcType=VARCHAR}, #{checamount,jdbcType=DOUBLE}, #{checcnttemper,jdbcType=DOUBLE}, #{checoiwahigh,jdbcType=DOUBLE}, #{checairhigh,jdbcType=DOUBLE},
+  #{checwatehigh,jdbcType=DOUBLE}, #{checlitramount,jdbcType=DOUBLE}, #{checstdliter,jdbcType=DOUBLE}, #{ deinvolu,jdbcType=VARCHAR}, #{deinanalyse,jdbcType=VARCHAR}, #{shipdept,jdbcType=VARCHAR},
+  #{chiptrucno,jdbcType=VARCHAR}, #{vittaperson,jdbcType=VARCHAR}, #{driver,jdbcType=VARCHAR}, #{arrivetime,jdbcType=TIMESTAMP}, #{acceptflag,jdbcType=VARCHAR}, #{operatorcode,jdbcType=INTEGER}, #{billstatus,jdbcType=VARCHAR},
+  #{transflag,jdbcType=VARCHAR}, #{oilcanno,jdbcType=INTEGER}
         )
     </insert>
 

@@ -23,5 +23,5 @@ public interface oss_daily_tankshiftMapper {
     int updateByPrimaryKeySelective(oss_daily_tankshift record);
 
     int updateByPrimaryKey(oss_daily_tankshift record);
-    List<HashMap<String,Object>> selectByShift(String shift);
+    List<HashMap<String,Object>> selectByShift(HashMap<String,Object> map);
 }

@@ -1,5 +1,7 @@
-function addTab(title, url, enClose) {
+function addTab(title, url, enClose,height) {
     closable = enClose == undefined ? true : false;
+
+    var setheight=height;
     var a = arguments[0] ? arguments[0] : 1;
     var tt = $('#tt');
     if (!tt.hasClass("easyui-tabs")) {
@@ -10,13 +12,27 @@ function addTab(title, url, enClose) {
     }
     var _height = "auto";
     var _width = "auto";
+    var framehtght=400;
     var cc = tt.find("div[class='tabs-panels']");
     if (cc.length > 0) {
         _height = $(cc[0]).innerHeight();
+        framehtght=$(cc[0]).innerHeight();
+        //alert($(cc[0]).innerHeight());
         _height -= 6; //去掉border宽度
         _width = $(cc[0]).innerWidth();
     }
-    var content = '<iframe    scrolling="yes" frameborder="0"  src="' + url + '" style="width:' + _width + 'px;height:' + _height + 'px;"></iframe>';
+    if(height==undefined||height==""){
+        //nothing
+    }else{
+        _height=setheight;
+    }
+
+    framehtght -= 10;  //修正高度
+   // _height -= 115;  //修正高度
+
+    Log("height:"+setheight);
+    Log("_height:"+_height);
+    var content = '<iframe id="iframepage"   scrolling="yes" frameborder="0"  src="' + url + '" style="width:' + _width + 'px;height:' + framehtght + 'px;"></iframe>';
     tt.tabs('add', {
         title: title,
         // href:url,
@@ -24,6 +40,8 @@ function addTab(title, url, enClose) {
         closable: closable
     });
 }
+
+
 
 //#endregion
 //#region 关闭tab页

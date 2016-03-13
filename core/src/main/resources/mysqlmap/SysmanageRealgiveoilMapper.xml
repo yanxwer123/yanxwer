@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kld.gsm.ATG.dao.SysmanageRealgiveoilDao">
+  <resultMap id="BaseResultMap" type="com.kld.gsm.ATG.domain.SysmanageRealgiveoil">
+    <id column="ckdId" jdbcType="VARCHAR" property="ckdid" />
+    <result column="sjfyl" jdbcType="VARCHAR" property="sjfyl" />
+    <result column="wd" jdbcType="DOUBLE" property="wd" />
+    <result column="md" jdbcType="DOUBLE" property="md" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ckdId, sjfyl, wd, md
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_sysmanage_Realgiveoil
+    where ckdId = #{ckdid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from oss_sysmanage_Realgiveoil
+    where ckdId = #{ckdid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.ATG.domain.SysmanageRealgiveoil">
+    insert into oss_sysmanage_Realgiveoil (ckdId, sjfyl, wd, 
+      md)
+    values (#{ckdid,jdbcType=VARCHAR}, #{sjfyl,jdbcType=VARCHAR}, #{wd,jdbcType=REAL}, 
+      #{md,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.SysmanageRealgiveoil">
+    insert into oss_sysmanage_Realgiveoil
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ckdid != null">
+        ckdId,
+      </if>
+      <if test="sjfyl != null">
+        sjfyl,
+      </if>
+      <if test="wd != null">
+        wd,
+      </if>
+      <if test="md != null">
+        md,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ckdid != null">
+        #{ckdid,jdbcType=VARCHAR},
+      </if>
+      <if test="sjfyl != null">
+        #{sjfyl,jdbcType=VARCHAR},
+      </if>
+      <if test="wd != null">
+        #{wd,jdbcType=REAL},
+      </if>
+      <if test="md != null">
+        #{md,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.SysmanageRealgiveoil">
+    update oss_sysmanage_Realgiveoil
+    <set>
+      <if test="sjfyl != null">
+        sjfyl = #{sjfyl,jdbcType=VARCHAR},
+      </if>
+      <if test="wd != null">
+        wd = #{wd,jdbcType=REAL},
+      </if>
+      <if test="md != null">
+        md = #{md,jdbcType=REAL},
+      </if>
+    </set>
+    where ckdId = #{ckdid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.SysmanageRealgiveoil">
+    update oss_sysmanage_Realgiveoil
+    set sjfyl = #{sjfyl,jdbcType=VARCHAR},
+      wd = #{wd,jdbcType=REAL},
+      md = #{md,jdbcType=REAL}
+    where ckdId = #{ckdid,jdbcType=VARCHAR}
+  </update>
+ </mapper>

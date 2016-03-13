@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 
 public class MQVouch implements Runnable {
 
-   private static Logger logger= org.slf4j.LoggerFactory.getLogger(MQVouch.class);
+    private static Logger logger = org.slf4j.LoggerFactory.getLogger(MQVouch.class);
 
     @Override
     public void run() {
@@ -26,9 +26,9 @@ public class MQVouch implements Runnable {
                 int gunno = com.kld.gsm.util.ByteUtils.bytesToInt(msg, 4);
                 int ttc = com.kld.gsm.util.ByteUtils.bytesToInt(msg, 8);
                 String strmsg = com.kld.gsm.util.ByteUtils.getBytesString(msg, 12, 19);
-                if(StringUtils.isEmpty(strmsg)||strmsg.equals("")) {
+                if (StringUtils.isEmpty(strmsg) || strmsg.equals("")) {
                     logger.info("sysv MQVouch data is empty");
-                }else {
+                } else {
                     logger.info("begin  MQVouch  exec...");
                     logger.info("macno:" + macno);
                     logger.info("gunno:" + gunno);
@@ -40,10 +40,10 @@ public class MQVouch implements Runnable {
                 }
                 Thread.sleep(1);
             } catch (Exception e) {
-               String msg= ExceptionUtils.getMessage(e);
+                String msg = ExceptionUtils.getMessage(e);
                 //logger.info("----failue to watch sysv vouch data!-----"+msg);
-                logger.error("----failue to watch sysv vouch data!-----"+msg);
-               // e.printStackTrace();
+                logger.error("----failue to watch sysv vouch data!-----" + msg);
+                // e.printStackTrace();
             }
 
         }

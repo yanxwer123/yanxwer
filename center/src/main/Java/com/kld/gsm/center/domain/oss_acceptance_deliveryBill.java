@@ -11,6 +11,32 @@ public class oss_acceptance_deliveryBill {
 
     private String fromdepotname;
 
+    @Override
+    public String toString() {
+        return "oss_acceptance_deliveryBill{" +
+                "deliveryno='" + deliveryno + '\'' +
+                ", psdId='" + psdId + '\'' +
+                ", fromoildepot='" + fromoildepot + '\'' +
+                ", fromdepotname='" + fromdepotname + '\'' +
+                ", tostationname='" + tostationname + '\'' +
+                ", deliverytime=" + deliverytime +
+                ", oilno='" + oilno + '\'' +
+                ", tonodeno='" + tonodeno + '\'' +
+                ", deliverytemp=" + deliverytemp +
+                ", planl=" + planl +
+                ", planton=" + planton +
+                ", shipmenttime=" + shipmenttime +
+                ", carno='" + carno + '\'' +
+                ", outsealno='" + outsealno + '\'' +
+                ", arrivaltime=" + arrivaltime +
+                ", relevancedelveryno='" + relevancedelveryno + '\'' +
+                ", transtatus='" + transtatus + '\'' +
+                ", iscomplete='" + iscomplete + '\'' +
+                ", density=" + density +
+                ", oucode='" + oucode + '\'' +
+                '}';
+    }
+
     private String tostationname;
 
     private Date deliverytime;

@@ -3,6 +3,7 @@ package com.kld.app.socket.client.handler;
 import com.kld.app.socket.client.TcpClient;
 import com.kld.app.util.Constant;
 import com.kld.app.view.main.Main;
+import com.kld.gsm.Socket.uitls.ByteUtils;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -43,6 +44,8 @@ public class TcpClientHandler extends SimpleChannelInboundHandler {
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         log.info("disconnect");
         ctx.close();
+        ByteUtils.getInstance().packageMapper.remove(ctx);
+
         i = 0;
         flag = true;
         while (flag) {
@@ -92,6 +95,6 @@ public class TcpClientHandler extends SimpleChannelInboundHandler {
         log.info("强制断开");
         //关闭链路
         ctx.close();
-
+        ByteUtils.getInstance().packageMapper.remove(ctx);
     }
 }

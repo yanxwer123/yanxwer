@@ -5,6 +5,9 @@ import com.kld.gsm.center.domain.oss_monitor_Inventory;
 import com.kld.gsm.center.domain.oss_monitor_InventoryKey;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
+import java.util.List;
+
 @MysqlRepository
 public interface oss_monitor_InventoryMapper {
     int deleteByPrimaryKey(oss_monitor_InventoryKey key);
@@ -18,4 +21,13 @@ public interface oss_monitor_InventoryMapper {
     int updateByPrimaryKeySelective(oss_monitor_Inventory record);
 
     int updateByPrimaryKey(oss_monitor_Inventory record);
+
+
+    List<HashMap<String,Object>> getInventoryList(HashMap<String,Object> map);
+
+    List<HashMap<String,Object>> getInventoryAllList(HashMap<String,Object> map);
+
+
+
+
 }

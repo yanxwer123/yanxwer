@@ -30,25 +30,25 @@
     var cols=[[
         {field:'ouname',title:'品种',width:50,align:'center', rowspan:2
         },
-        {field:'DarlyankStock',title:'期初罐存（帐存）',width:50,align:'center', rowspan:2
+        {field:'DarlyankStock',title:'期初库存(L)',width:50,align:'center', rowspan:2
         },
-        {title:'期间进货',colspan:2},
+        {title:'期间进货(L)',colspan:2},
 
 
-        {field:'TodayOut',title:'期间付出',width:50,align:'center', rowspan:2
+        {field:'TodayOut',title:'期间付出(L)',width:50,align:'center', rowspan:2
         },
-        {field:'TodayEndStock',title:'期末库存',width:50,align:'center', rowspan:2
+        {field:'TodayEndStock',title:'期末库存(L)',width:50,align:'center', rowspan:2
         },
-        {field:'RealStock',title:'实测库存',width:100,align:'center', rowspan:2
+        {field:'RealStock',title:'实测库存(L)',width:100,align:'center', rowspan:2
         },
-        {field:'Cost',title:'损溢量',width:100,align:'center', rowspan:2
+        {field:'Cost',title:'损溢量(L)',width:100,align:'center', rowspan:2
         },
-        {field:'CostSent',title:'损溢率',width:100,align:'center', rowspan:2
+        {field:'CostSent',title:'损溢率(%)',width:100,align:'center', rowspan:2
         },
 
     ],[
         {field:'DeliveryNo',title:'出货单号',width:50,rowspan:1},
-        {field:'ReceiveL',title:'进货数量',width:50,rowspan:1,sortable:true}
+        {field:'ReceiveL',title:'进货数量(L)',width:50,rowspan:1,sortable:true}
     ]];
 
     function mngRol(){ alert('aa');}

@@ -2,15 +2,17 @@
     <p class="logobox01">
         <img src="../resources/img/logo-1.png">
     </p>
-    <p class="user-messages"><a href="/web/logout"><span style="border:none;color:#000;">退出</span></a><a href="javascript: void(0);" onclick="openEditPwd();"><span style="color: #000">修改密码</span></a><span>帮助文档</span>#*<span>用户中心</span>*#<span id="user">当前用户：$!rname</span>
+    <p class="user-messages"><a href="/web/logout"><span style="border:none;color:#000;">退出</span></a>
+        #*<a href="javascript: void(0);" onclick="openEditPwd();"><span style="color: #000">修改密码</span></a>*#
+        <span>帮助文档</span>#*<span>用户中心</span>*#<span id="user">当前用户:$session.getAttribute("realname")</span>
         <span id="txtTopDate">
-       #* <script>
+        <script>
             formatDateWithWeek();
-        </script>*#
+        </script>
     </span></p>
 </Div>
 
-<div id="dialEditPwd" class="easyui-dialog" style="padding:10px;"
+#*<div id="dialEditPwd" class="easyui-dialog" style="padding:10px;"
         data-options="closed:true,title:'修改密码',
         buttons:[{
 				text:'确认',
@@ -30,19 +32,19 @@
             </td></tr>
         </table>
     </form>
-</div>
+</div>*#
 
 <script>
     $(function() {
 
-        $.extend($.fn.validatebox.defaults.rules, {
+       /* $.extend($.fn.validatebox.defaults.rules, {
             equals: {
                 validator: function(value,param){
                     return value == $(param[0]).textbox('getValue');
                 },
-                message: '确认密码不一致.'
+                message: '两次密码输入不一致,请重新输入'
             }
-        });
+        });*/
 
         $("#txtTopDate").text(formatDateWithWeek());
     });
@@ -57,7 +59,7 @@
         return formatDateDefined(today,"yyyy-MM-dd");
     }
 
-    function openEditPwd(){
+   /* function openEditPwd(){
         $('#fmEditPwd').form('reset');
         $('#dialEditPwd').dialog('open').dialog('vcenter');
     }
@@ -66,12 +68,12 @@
         $('#fmEditPwd').form('submit',{
             url:'/admin/home/modifyPwd',
             onSubmit:function(){
-                /*var newpwd = $("#newpwd").val();
+                /!*var newpwd = $("#newpwd").val();
                 var regPwd = /^[\@A-Za-z0-9\!\#\$\%\^\&\*\.\~]{6,22}$/;
                 if(regPwd.test(newpwd)){
 
                     return false;
-                }*/
+                }*!/
                 return $(this).form('validate');
             },
             success: function(data){
@@ -84,5 +86,5 @@
                 }
             }
         });
-    }
+    }*/
 </script>

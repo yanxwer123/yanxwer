@@ -9,6 +9,8 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.DelimiterBasedFrameDecoder;
+import io.netty.handler.codec.Delimiters;
 import io.netty.handler.timeout.IdleStateHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +45,6 @@ public class NettyServer {
                     //pipeline.addFirst(new LoggingHandler(LogLevel.INFO));
                     //设置超时   读 10 秒   写 5秒    双向 0秒 <上行或下行>
                      pipeline.addLast("idlehandler", new IdleStateHandler( 8,8, 0));
-
                     //设置 协议逻辑处理器
                     pipeline.addLast("decoder", new MessageDecoder());
                     pipeline.addLast("encoder", new MessageEncoder());

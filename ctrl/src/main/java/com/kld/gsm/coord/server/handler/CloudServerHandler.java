@@ -1,5 +1,6 @@
 package com.kld.gsm.coord.server.handler;
 
+import com.kld.gsm.Socket.uitls.ByteUtils;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -39,26 +40,29 @@ public class CloudServerHandler extends ChannelInboundHandlerAdapter {
 
         ////System.out.println("收到客户端发送过来的消息"+msg.toString());
         protocolProcessor.handlerProtocol(ctx, msg);
-
     }
     //断开
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         log.info("【CloudServerHandler】Client disconnection!");
-        log.info("connect context hashcode :"+ctx.hashCode());
-        //System.out.println("主动退出");
+        //关闭链路
+        ctx.close();
+        //删除未处理的字节包
+        ByteUtils.getInstance().packageMapper.remove(ctx);
+        //删除会话
         protocolProcessor.lostConnection(ctx);
     }
     //用户事件触发 会话时间
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
-        //删除会话
         log.info("强制退出");
-        System.out.println("强制断开CTX"+ctx);
-
-        protocolProcessor.lostConnection(ctx);
         //关闭链路
         ctx.close();
+        //删除未处理的字节包
+        ByteUtils.getInstance().packageMapper.remove(ctx);
+        //删除会话
+        protocolProcessor.lostConnection(ctx);
+
 
     }
 }

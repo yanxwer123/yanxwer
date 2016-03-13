@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +49,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public String selectUserIdByRealname(String realname) {
+        return sys_userDao.selectUserIdByRealname(realname);
+    }
+
+    @Override
     public Sys_user selectUserMoreInfo(String username){return sys_userDao.selectUserMoreInfo(username);}
 
     @Override
@@ -59,6 +65,19 @@ public class UserServiceImpl implements UserService {
     public int insert(Sys_user user){
         return sys_userDao.insert(user);
     }
+
+    @Override
+    public int insertRow(HashMap map) {
+        return sys_userDao.insertRow(map);
+    }
+
+    @Override
+    public int updateRow(HashMap map) {
+        return sys_userDao.updateRow(map);
+    }
+
+    @Override
+    public int delRow(String username) {return sys_userDao.deleteByPrimaryKey(username);}
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED,rollbackFor = {Exception.class})
     @Override
@@ -85,6 +104,40 @@ public class UserServiceImpl implements UserService {
     public List<Sys_user> getSysUserListByRolecode(String rolecode){
         return sys_userDao.getSysUserListByRolecode(rolecode);
     }
+
+    @Override
+    public List<HashMap<String,Object>> getSysUserPageList(Integer pageNo, Integer pageSize, String id, String username, String realname) {
+        if (pageNo != null && pageSize != null) {
+            pageNo = pageNo < 1 ? 1 : pageNo;
+            int firstRow = (pageNo - 1) * pageSize;
+            HashMap hashMap = new HashMap();
+            hashMap.put("firstRow", firstRow);
+            hashMap.put("pageSize", pageSize);
+            hashMap.put("username", username);
+            hashMap.put("realname", realname);
+            System.out.println("判断之前的id为:" + id);
+            if(null!=id  &&!"".equals(id)) {
+                hashMap.put("oucode", id + "%");
+            }else {
+                hashMap.put("oucode","");
+            }
+            System.out.println("hashMap:" + hashMap.toString());
+            return sys_userDao.getSysUserPageList(hashMap);
+        }
+        return null;
+    }
+
+    @Override
+    public List<HashMap<String,Object>> getUserList(String id, String username, String realname) {
+        HashMap Map = new HashMap();
+        Map.put("username", username);
+        Map.put("realname", realname);
+        if(null!=id && !"".equals(id)) {
+            Map.put("oucode", id + "%");
+        } else {
+            Map.put("oucode", "");
+        }
+        return sys_userDao.getUserPageList(Map);    }
 
     @Override
     public List<Sys_user> getApprovalUserList() {

@@ -7,7 +7,11 @@ import com.kld.gsm.coord.servcie.ISaleOutAlarmService;
 import org.apache.avalon.framework.ExceptionUtil;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
+
 import javax.annotation.Resource;
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +35,9 @@ public class SaleOutAlarmPolling extends Thread {
 
     @Override
     public void run() {
+        RuntimeMXBean rt = ManagementFactory.getRuntimeMXBean();
+        String pid = rt.getName();
+        MDC.put("PID", pid);
         saleOutAlarmService = Context.getInstance().getBean(ISaleOutAlarmService.class);
         while(true) {
             try {

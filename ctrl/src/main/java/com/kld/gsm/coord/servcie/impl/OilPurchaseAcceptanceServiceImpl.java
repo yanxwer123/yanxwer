@@ -22,6 +22,7 @@ import com.kld.gsm.coord.servcie.OilPurchaseAcceptanceService;
 import com.kld.gsm.coord.server.handler.ConnectionSession;
 import com.kld.gsm.coord.server.handler.ProtocolProcessor;
 import com.kld.gsm.util.JsonMapper;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,7 +57,7 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
     BillInforDao billInforDao;
     @Autowired
     AcceptanceNoBillsDao acceptanceNoBillsDao;
-
+    private static Logger logger = org.slf4j.LoggerFactory.getLogger(OilPurchaseAcceptanceServiceImpl.class);
     @Override
     public int selectAndInsert(String DeliveryNo,int oprno,String id) {
             //油罐进油明细表(OILCANINDETAIL)数据 查询Mysql的卸油登记明细表
@@ -218,8 +219,14 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
         //inOilCheckBill.setDayflag("0");
 
             //插入到进油核对表(INOILCHECKBILL)
+        try {
             int insert_Inoilcheckbill = inoilcheckbillDao.insertInoilcheckbill(inOilCheckBill);
             //System.out.println("插入到进油核对表成功");
+        }catch (Exception e){
+            logger.error("插入到进油核对表失败："+e.getMessage());
+            logger.error(inOilCheckBill.toString2());
+            logger.error(selectAcceptanceOdRegister.toString());
+        }
 
 
     }

@@ -1,5 +1,6 @@
 package com.kld.gsm.syntocenter.timetask;
 
+import com.kld.gsm.ATG.domain.AcceptanceDeliveryBills;
 import com.kld.gsm.ATG.domain.SysManageCanInfo;
 import com.kld.gsm.ATG.domain.SysManageCubage;
 import com.kld.gsm.ATG.domain.SysManageDepartment;
@@ -11,6 +12,7 @@ import com.kld.gsm.syntocenter.springContext.springFactory;
 import com.kld.gsm.syntocenter.util.action;
 import com.kld.gsm.util.DateUtil;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -28,17 +30,43 @@ Created Date 2015/11/19
 public class DailyPolling {
     private static CanAndGunStatus canAndGunStatus;
 
-    private static final Logger LOG = Logger.getLogger("DailyPolling");
+    @Autowired
+    private synMonitor sys;
 
-    public void  run(){
-        LOG.info("run");
-    }
+    @Autowired
+    private AcceptSevices acceptSevices;
+
+    @Autowired
+    private SysmanageService sysmanageService;
+
+    @Autowired
+    private synSysManage synsysmanage;
+
+    @Autowired
+    private synAlarm synalarm;
+
+    @Autowired
+    private StationRegServices stationRegServices;
+
+    @Autowired
+    private synDailyRunning syndailyrunning;
+
+    @Autowired
+    private DailyRunning dailyRunning;
+
+    @Autowired
+    private SysManageDic sysManageDic;
+
+    @Autowired
+    private synMaclog sml;
+
+    private static final Logger LOG = Logger.getLogger("DailyPolling");
 
     public void ten(){
         LOG.info("ten start:" + DateUtil.getDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
         getnodeno();
         getcanversion();
-        gethost();
+        //gethost();
         getoilcanmap();
         if (ApplicationMain.NodeNo==null||"".equals(ApplicationMain.NodeNo)||ApplicationMain.canversion==null
                 ||ApplicationMain.canversion.size()==0
@@ -79,7 +107,7 @@ public class DailyPolling {
     public void thirty(){
         getnodeno();
         getcanversion();
-        gethost();
+        //gethost();
         getoilcanmap();
         if (ApplicationMain.NodeNo==null||"".equals(ApplicationMain.NodeNo)||ApplicationMain.canversion==null
                 ||ApplicationMain.canversion.size()==0||ApplicationMain.oilcanmap==null||ApplicationMain.oilcanmap.size()==0) return;
@@ -104,7 +132,24 @@ public class DailyPolling {
         Dict();
     }
 
-
+    /*
+    * 油库实发文档
+    * */
+    public void getYKSF(){
+        try{
+            LOG.info("yksf begin");
+            if (acceptSevices!=null){
+                acceptSevices=springFactory.getInstance().getBean(AcceptSevices.class);
+            }
+            List<AcceptanceDeliveryBills> bills= acceptSevices.getUncompletebills();
+            for (AcceptanceDeliveryBills item:bills){
+                acceptSevices.getsjfyl(ApplicationMain.Host,item.getDeliveryno());
+            }
+            LOG.info("yksf end");
+        }catch (Exception e){
+            LOG.error("yksf fail"+e.getMessage());
+        }
+    }
 
     /*
     * 时点库存
@@ -112,7 +157,9 @@ public class DailyPolling {
     public void timeInvo(){
         try {
             LOG.info("timeInvo begin");
-            synMonitor sys = springFactory.getInstance().getBean(synMonitor.class);
+            /*if (sys==null) {
+                sys = springFactory.getInstance().getBean(synMonitor.class);
+            }*/
             sys.synTimeInventory();
             LOG.info("timeInvo end");
         }
@@ -129,7 +176,10 @@ public class DailyPolling {
         try
         {
             LOG.info("zdtimeInvo begin");
-            synMonitor sys=springFactory.getInstance().getBean(synMonitor.class);
+           /* if (sys==null) {
+                sys = springFactory.getInstance().getBean(synMonitor.class);
+            }*/
+            sys=springFactory.getInstance().getBean(synMonitor.class);
             sys.synInventory();
             LOG.info("zdtimeInvo end");
         }
@@ -146,8 +196,8 @@ public class DailyPolling {
         //todo
         try{
             LOG.info("tradInvo begin");
-            synDailyRunning syn=springFactory.getInstance().getBean(synDailyRunning.class);
-            syn.TradeInventoryLost();
+            /*synDailyRunning syn=springFactory.getInstance().getBean(synDailyRunning.class);*/
+            syndailyrunning.TradeInventoryLost();
             LOG.info("tradInvo end");
         }
         catch (Exception ex)
@@ -163,8 +213,8 @@ public class DailyPolling {
         //todo
         try{
             LOG.info("InvoAlram begin");
-            synAlarm syn= springFactory.getInstance().getBean(synAlarm.class);
-            syn.synInventory();
+            /*synAlarm syn= springFactory.getInstance().getBean(synAlarm.class);*/
+            synalarm.synInventory();
             LOG.info("InvoAlram end");
         }
         catch (Exception ex)
@@ -181,8 +231,8 @@ public class DailyPolling {
         //todo
         try{
             LOG.info("EquipmentAlram begin");
-            synAlarm syn= springFactory.getInstance().getBean(synAlarm.class);
-            syn.synEquipment();
+            /*synAlarm syn= springFactory.getInstance().getBean(synAlarm.class);*/
+            synalarm.synEquipment();
             LOG.info("EquipmentAlram end");
         }
         catch (Exception ex)
@@ -195,8 +245,8 @@ public class DailyPolling {
     public void Reg(){
         try{
             LOG.info("Reg begin");
-            StationRegServices syn= springFactory.getInstance().getBean(StationRegServices.class);
-            syn.synsys(ApplicationMain.Host);
+            /*StationRegServices syn= springFactory.getInstance().getBean(StationRegServices.class);*/
+            stationRegServices.synsys(ApplicationMain.Host);
             LOG.info("Reg end");
         }catch (Exception e){
             LOG.error(e.getMessage());
@@ -211,8 +261,8 @@ public class DailyPolling {
         //todo
         try{
             LOG.info("SaleOutAlarm begin");
-            synAlarm syn= springFactory.getInstance().getBean(synAlarm.class);
-            syn.synSaleOut();
+            /*synAlarm syn= springFactory.getInstance().getBean(synAlarm.class);*/
+            synalarm.synSaleOut();
             LOG.info("SaleOutAlarm end");
         }
         catch (Exception ex)
@@ -229,8 +279,8 @@ public class DailyPolling {
         //todo
         try{
             LOG.info("GaT begin");
-            synAlarm syn= springFactory.getInstance().getBean(synAlarm.class);
-            syn.synGaTContrast();
+            /*synAlarm syn= springFactory.getInstance().getBean(synAlarm.class);*/
+            synalarm.synGaTContrast();
             LOG.info("GaT end");
         }
         catch (Exception ex)
@@ -248,8 +298,8 @@ public class DailyPolling {
         //todo
         try{
             LOG.info("OilInContrast begin");
-            synAlarm syn= springFactory.getInstance().getBean(synAlarm.class);
-            syn.synOilInContrast();
+            //synAlarm syn= springFactory.getInstance().getBean(synAlarm.class);
+            synalarm.synOilInContrast();
             LOG.info("OilInContrast end");
         }
         catch (Exception ex)
@@ -264,8 +314,8 @@ public class DailyPolling {
         //todo
         try{
             LOG.info("shift begin");
-            synAlarm syn= springFactory.getInstance().getBean(synAlarm.class);
-            syn.synShiftLost();
+            //synAlarm syn= springFactory.getInstance().getBean(synAlarm.class);
+            synalarm.synShiftLost();
             LOG.info("shift end");
         }
         catch (Exception ex)
@@ -279,8 +329,8 @@ public class DailyPolling {
     public void DailyLoss(){
         try {
             LOG.info("DailyLoss begin");
-            synAlarm syn = springFactory.getInstance().getBean(synAlarm.class);
-            syn.synDailyLost();
+            //synAlarm syn = springFactory.getInstance().getBean(synAlarm.class);
+            synalarm.synDailyLost();
             LOG.info("DailyLoss end");
         }catch (Exception ex){
             LOG.info("DailyLoss failed"+ex.getMessage());
@@ -291,8 +341,8 @@ public class DailyPolling {
    public void measureLeak(){
        try {
            LOG.info("measureLeak begin");
-           synAlarm syn = springFactory.getInstance().getBean(synAlarm.class);
-           syn.synMeasureLeak();
+           //synAlarm syn = springFactory.getInstance().getBean(synAlarm.class);
+           synalarm.synMeasureLeak();
            LOG.info("measureLeak end");
        }
        catch (Exception ex){
@@ -308,8 +358,8 @@ public class DailyPolling {
         try
         {
             LOG.info("TradeAccount begin");
-            synDailyRunning sd= springFactory.getInstance().getBean(synDailyRunning.class);
-            sd.synTradeAccountLost();
+            /*synDailyRunning sd= springFactory.getInstance().getBean(synDailyRunning.class);*/
+            syndailyrunning.synTradeAccountLost();
             LOG.info("TradeAccount end");
         }
         catch (Exception ex)
@@ -325,7 +375,7 @@ public class DailyPolling {
     public void shiftData(){
         try {
             LOG.info("shiftData begin");
-            DailyRunning dailyRunning = springFactory.getInstance().getBean(DailyRunning.class);
+            /*DailyRunning dailyRunning = springFactory.getInstance().getBean(DailyRunning.class);*/
             dailyRunning.AddClassKnotData(ApplicationMain.Host);
             LOG.info("shiftData end");
         }
@@ -341,7 +391,7 @@ public class DailyPolling {
     public void DayBalance(){
         try {
             LOG.info("DayBalance begin");
-            DailyRunning dailyRunning = springFactory.getInstance().getBean(DailyRunning.class);
+            /*DailyRunning dailyRunning = springFactory.getInstance().getBean(DailyRunning.class);*/
             dailyRunning.DailyBalanceLost(ApplicationMain.Host);
             LOG.info("DayBalance end");
         }
@@ -358,8 +408,8 @@ public class DailyPolling {
     public void synpatrel(){
         try {
             LOG.info("parT begin");
-            synSysManage synm= springFactory.getInstance().getBean(synSysManage.class);
-            synm.synpatrel();
+           /* synSysManage synm= springFactory.getInstance().getBean(synSysManage.class);*/
+            synsysmanage.synpatrel();
             LOG.info("parT end");
         }
         catch (Exception ex)
@@ -389,8 +439,8 @@ public class DailyPolling {
         try
         {
             LOG.info(" tank begin");
-            synSysManage syn=springFactory.getInstance().getBean(synSysManage.class);
-            syn.syntankinfo();
+            /*synSysManage syn=springFactory.getInstance().getBean(synSysManage.class);*/
+            synsysmanage.syntankinfo();
             LOG.info("tank end");
         }
         catch (Exception ex)
@@ -406,8 +456,8 @@ public class DailyPolling {
         try
         {
             LOG.info("gun begin");
-            synSysManage syn=springFactory.getInstance().getBean(synSysManage.class);
-            syn.synoilgun();
+            /*synSysManage syn=springFactory.getInstance().getBean(synSysManage.class);*/
+            synsysmanage.synoilgun();
             LOG.info("gun end");
         }
         catch (Exception ex)
@@ -419,8 +469,8 @@ public class DailyPolling {
     public void mac(){
         try{
             LOG.info("mac being");
-            synSysManage syn=springFactory.getInstance().getBean(synSysManage.class);
-            syn.synoilmac();
+           /* synSysManage syn=springFactory.getInstance().getBean(synSysManage.class);*/
+            synsysmanage.synoilmac();
             LOG.info("mac end ");
         }catch (Exception e){
             LOG.error("mac failed"+e.getMessage());
@@ -430,8 +480,8 @@ public class DailyPolling {
     public void  oiltype(){
         try{
             LOG.info("oiltype being");
-            synSysManage syn=springFactory.getInstance().getBean(synSysManage.class);
-            syn.synoiltype();
+            /*synSysManage syn=springFactory.getInstance().getBean(synSysManage.class);*/
+            synsysmanage.synoiltype();
             LOG.info("oiltype end ");
         }catch (Exception e){
             LOG.error("oiltype failed" +e.getMessage());
@@ -443,8 +493,8 @@ public class DailyPolling {
     public void cuage(){
         try{
             LOG.info("cuage begin");
-            SysmanageService sysmanageService=springFactory.getInstance().getBean(SysmanageService.class);
-            sysmanageService.GetCubgeByNodeNo(ApplicationMain.Host, ApplicationMain.NodeNo);
+           /* SysmanageService sysmanageService=springFactory.getInstance().getBean(SysmanageService.class);*/
+            sysmanageService.GetCubgeByNodeNobackInt(ApplicationMain.Host, ApplicationMain.NodeNo);
             LOG.info("cuage end");
         }catch (Exception e){
             LOG.error("cuage failed"+e.getMessage());
@@ -458,8 +508,8 @@ public class DailyPolling {
         try
         {
             LOG.info("delivery begin");
-            AcceptSevices syn=springFactory.getInstance().getBean(AcceptSevices.class);
-            syn.sendOdreg(ApplicationMain.Host, ApplicationMain.NodeNo);
+            /*AcceptSevices syn=springFactory.getInstance().getBean(AcceptSevices.class);*/
+            acceptSevices.sendOdreg(ApplicationMain.Host, ApplicationMain.NodeNo);
             LOG.info("delivery end");
         }
         catch (Exception ex)
@@ -474,8 +524,8 @@ public class DailyPolling {
     public void deliveybill(){
         try{
             LOG.info("deliverybill begin");
-            AcceptSevices syn=springFactory.getInstance().getBean(AcceptSevices.class);
-            syn.getbillsfromcenter(ApplicationMain.Host, ApplicationMain.NodeNo);
+            /*AcceptSevices syn=springFactory.getInstance().getBean(AcceptSevices.class);*/
+            acceptSevices.getbillsfromcenter(ApplicationMain.Host, ApplicationMain.NodeNo);
             LOG.info("deliverybill end");
 
         }catch (Exception e){
@@ -489,7 +539,7 @@ public class DailyPolling {
     public void staticTankandGun(){
         try{
             LOG.info("staticTankandGun begin");
-            DailyRunning dailyRunning=springFactory.getInstance().getBean(DailyRunning.class);
+            /*DailyRunning dailyRunning=springFactory.getInstance().getBean(DailyRunning.class);*/
             dailyRunning.tankoilLost(ApplicationMain.Host);
             LOG.info("staticTankandGun end");
         }catch (Exception e){
@@ -503,7 +553,7 @@ public class DailyPolling {
     public void iqalarm(){
         try{
             LOG.info("iqalarm begin");
-            SysmanageService sysmanageService=springFactory.getInstance().getBean(SysmanageService.class);
+            /*SysmanageService sysmanageService=springFactory.getInstance().getBean(SysmanageService.class);*/
             sysmanageService.GetAlarmPar(ApplicationMain.Host, ApplicationMain.NodeNo);
             LOG.info("iqalarm end");
         }catch (Exception e){
@@ -518,7 +568,7 @@ public class DailyPolling {
     public void transCanAndGunStatus(){
         getnodeno();
         getcanversion();
-        gethost();
+        //gethost();
         getoilcanmap();
         if (!ApplicationMain.IsOpenrt) return;
         if (ApplicationMain.NodeNo==null||"".equals(ApplicationMain.NodeNo)||ApplicationMain.canversion==null
@@ -543,7 +593,7 @@ public class DailyPolling {
     public void Dict(){
         try{
             LOG.info("dict begin");
-            SysManageDic sysManageDic=springFactory.getInstance().getBean(SysManageDic.class);
+            /*SysManageDic sysManageDic=springFactory.getInstance().getBean(SysManageDic.class);*/
             sysManageDic.synDicFromCenter(ApplicationMain.Host);
             LOG.info("dict end");
         }catch (Exception e){
@@ -575,13 +625,13 @@ public class DailyPolling {
                 ApplicationMain.UpLoadDate=new Date(date.getTime()+s);
             }
             if (new Date().getTime() > ApplicationMain.UpLoadDate.getTime()) {
-                synMaclog sml = springFactory.getInstance().getBean(synMaclog.class);
+                /*synMaclog sml = springFactory.getInstance().getBean(synMaclog.class);*/
                 sml.synMacLogAuto();
             }
             LOG.info("-------------FTP end-------------");
-            synSysManage sm=springFactory.getInstance().getBean(synSysManage.class);
+            /*synSysManage sm=springFactory.getInstance().getBean(synSysManage.class);*/
             LOG.info("list begin");
-            sm.synuplist();
+            synsysmanage.synuplist();
             LOG.info("list end");
         }
         catch (Exception ex)
@@ -596,7 +646,7 @@ public class DailyPolling {
     public void getnodeno(){
         if (ApplicationMain.NodeNo==null||"".equals(ApplicationMain.NodeNo)){
         try {
-            SysmanageService sysmanageService=springFactory.getInstance().getBean(SysmanageService.class);
+            /*SysmanageService sysmanageService=springFactory.getInstance().getBean(SysmanageService.class);*/
             LOG.info("get nodeno begin");
             SysManageDepartment department=sysmanageService.getdeptinfo();
             ApplicationMain.NodeNo=department.getSinopecnodeno();
@@ -614,11 +664,6 @@ public class DailyPolling {
         if (ApplicationMain.Host==null||"".equals(ApplicationMain.Host)){
             ApplicationMain.Host=new action().getHost();
         }
-        try{
-            ApplicationMain.IsOpenrt=new action().getRTopen();
-        }catch (Exception e){
-            LOG.error("get isopenrt 0"+e.getMessage());
-        }
     }
     /**
      * getoilcanmap
@@ -626,10 +671,10 @@ public class DailyPolling {
     public void getoilcanmap(){
         if (ApplicationMain.oilcanmap==null||ApplicationMain.oilcanmap.size()==0){
             //region load oilcan and oilno to map
-            synSysManage sys=springFactory.getInstance().getBean(synSysManage.class);
+            /*synSysManage sys=springFactory.getInstance().getBean(synSysManage.class);*/
             try{
                 LOG.info("load can and oilno mapping begin");
-                List<SysManageCanInfo> canInfos=sys.getCaninfos();
+                List<SysManageCanInfo> canInfos=synsysmanage.getCaninfos();
                 if (ApplicationMain.oilcanmap==null)ApplicationMain.oilcanmap=new HashMap<String,Integer>();
 
                 for (SysManageCanInfo item:canInfos){
@@ -650,7 +695,7 @@ public class DailyPolling {
     public void getcanversion(){
         if (ApplicationMain.canversion==null||ApplicationMain.canversion.size()==0){
             //region load can and version to map
-            SysmanageService sysmanageService=springFactory.getInstance().getBean(SysmanageService.class);
+           /* SysmanageService sysmanageService=springFactory.getInstance().getBean(SysmanageService.class);*/
             try{
                 LOG.info("load can and version mapping begin");
                 List<SysManageCubage> sysManageCubages=sysmanageService.selectCubageInused();
@@ -663,12 +708,7 @@ public class DailyPolling {
                 LOG.error("load can and version failed");
                 LOG.error(e.getMessage());
             }
-
             //endregion
         }
     }
-
-
-
-
 }

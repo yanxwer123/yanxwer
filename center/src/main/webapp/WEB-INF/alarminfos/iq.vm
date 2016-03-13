@@ -10,57 +10,29 @@
             <th colspan="3">
                 #parse("business/realstock.vm")
             </th>
+            <th width="100px" align="right"> 报警类型：</th>
+            <th width="150px" align="left">
+                <select id="selectGZLX" style=" width: 150px" data-options="prompt:'--请选择--'">
+
+                </select>
+            </th>
         </tr>
-        #*<tr>
-            <th width="8%">
-                选择油站：
-            </th>
-            <th width="20%">
-                <select id="u204_input" class="easyui-combobox">
-                    <option selected value="请选择">请选择</option>
-                    <option  value="AA石油分公司">AA石油分公司</option>
-                    <option value="BB石油分公司">BB石油分公司</option>
-                    <option value="CC石油分公司">CC石油分公司</option>
-                </select>
-            </th>
-            <th width="20%">
-                <select id="u205_input" class="easyui-combobox">
-                    <option selected value="请选择">请选择</option>
-                    <option value="A片区">A片区</option>
-                    <option  value="B片区">B片区</option>
-                    <option value="C片区">C片区</option>
-                </select>
-            </th>
-            <th width="20%">
-                <select id="u206_input" class="easyui-combobox">
-                    <option selected value="请选择">请选择</option>
-                    <option value="X加油站">X加油站</option>
-                    <option value="Y加油站">Y加油站</option>
-                    <option  value="Z加油站">Z加油站</option>
-                </select>
-            </th>*#
         </tr>
         <tr>
             <th>
                 起止日期：
             </th>
             <th colspan="2">
-                <input id="dateStartinput" type="text" class="easyui-datebox" required="required"/>--
-                <input id="dateEndinput" type="text"  class="easyui-datebox" required="required"/>
+                <input id="dateStartinput" type="text" class="easyui-datebox" required="required"  editable="false"/>--
+                <input id="dateEndinput" type="text"  class="easyui-datebox" required="required"  editable="false"/>
             </th>
             <th></th>
         </tr>
-        <th>预警类型：</th>
-        <th>
-            <select id="selectGZLX" style="width: 150px;">
-
-            </select>
-        </th>
         <tr>
             <th></th>
             <th>
-                <a id="btnSelect" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchDatabyParams();">查询</a>
-                <a id="btnExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="ExportExl();">导出</a>
+                <a id="btnSelect" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="initData();">查询</a>
+                <a id="btnExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-export'" onclick="ExportExl();">导出</a>
             </th>
             <th></th>
             <th></th>
@@ -70,17 +42,30 @@
 </div>
 
 <div id="result">
-    <table id="tt" class="easyui-datagrid" >
-
+    <table id="tt" fit="true" style="height: 500px;">
     </table>
 </div>
 <script>
 
+    function formatDatebox(value) {
+        if (value == null || value == '') {
+            return '';
+        }
+        var dt;
+        if (value instanceof Date) {
+            dt = value;
+        } else {
+            dt = new Date(value);
+        }
+
+        return dt.format("yyyy-MM-dd hh:mm:ss"); //扩展的Date的format方法(上述插件实现)
+    }
+
     var cols=[[
         {field:'OUName',title:'油站名称',width:100,align:'center'},
         {field:'OilCan',title:'油罐编号',width:100,align:'center'},
-        {field:'StartAlarmTime',title:'开始报警时间',width:100,align:'center'},
-        {field:'EndAlarmTime',title:'结束报警时间',width:100,align:'center'},
+        {field:'StartAlarmTime',title:'开始报警时间',width:100,align:'center',formatter: formatDatebox},
+        {field:'EndAlarmTime',title:'结束报警时间',width:100,align:'center',formatter: formatDatebox},
         {field:'Name',title:'故障类型',width:100,align:'center'},
         {field:'EquipCode',title:'设备代码',width:100,align:'center'},
       /*  {field:'MalfunctionCode',title:'故障信息代码',width:100},*/
@@ -103,8 +88,6 @@
         $("#dateEndinput").datebox('setValue','<%=myDate.toLocaleDateString()%>');
         var heigth=$(window).height()-160;
         $("#result").height(heigth);
-
-
 
         initCombox();
         initData();
@@ -140,35 +123,17 @@
         {
             oucode=ss;
         }
-        paras={'FailureType':failuretype,'StartAlarmTime':startTime,'EndAlarmTime':endTime,'oucode':oucode};
+        paras={'FailureType':failuretype,'begin':startTime,'end':endTime,'oucode':oucode};
 
     }
     function initData() {
         inittext();
-    /*    dataGridAjax('tt','','',paras,cols,undefined,undefined,function(data){
-            // alert('加载成功!');
-        });*/
-        //分页
-        BindDataGridAjax('tt','进油损耗报警','/web/alarminfo/selectIqPageList',cols,paras,'true',10,[10,20,30]);
-
-
+        BindDataGridAjax('tt','设备故障报警','/web/alarm/selectIqPageList',cols,paras,'true',10,[10,20,30]);
     }
-
-
-    function  searchDatabyParams() {
-        initData();
-    }
-    function pageData(list,total){
-        var obj=new Object();
-        obj.total=total;
-        obj.rows=list;
-        return obj;
-    }
-
     function ExportExl() {
         inittext();
         var filename=encodeURI(encodeURI("设备故障报警"));
-        window.open("/web/export/SBGZYJexportExcel?FailureType="+failuretype+"&StartAlarmTime="+startTime+"&EndAlarmTime="+endTime+"&FileName="+filename+"&oucode="+oucode);
+        window.open("/web/alarm/excelIQ?FailureType="+failuretype+"&begin="+startTime+"&end="+endTime+"&FileName="+filename+"&oucode="+oucode);
     }
 
     function initCombox() {

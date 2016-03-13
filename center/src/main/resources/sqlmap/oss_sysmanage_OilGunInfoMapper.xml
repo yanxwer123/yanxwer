@@ -234,4 +234,23 @@
     where OilGun = #{oilgun,jdbcType=INTEGER}
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
   </update>
+  <select id="findByNodeNo"  parameterType="java.lang.String"  resultType="com.kld.gsm.center.domain.oss_sysmanage_OilGunInfo" >
+    select *
+    from oss_sysmanage_OilGunInfo
+    where  OUCode = #{oucode}
+  </select>
+
+  <select id="findByNodeNoPage"  parameterType="java.util.Map"  resultType="com.kld.gsm.center.domain.oss_sysmanage_OilGunInfo" >
+    select *
+    from oss_sysmanage_OilGunInfo
+    where  OUCode = #{id,jdbcType=VARCHAR}
+    <if test="firstRow != null and  pageSize!= null">
+      <![CDATA[ LIMIT #{firstRow},#{pageSize}]]>
+    </if>
+  </select>
+  <select id="findoiltype"  resultType="java.lang.String" parameterType="hashmap" >
+    SELECT OilName FROM oss_sysmanage_oilType WHERE OilNo =
+    (SELECT OilNo FROM oss_sysmanage_TankInfo WHERE OilCan = #{oilcan}  and NodeNo=#{nodeno})
+  </select>
+
 </mapper>

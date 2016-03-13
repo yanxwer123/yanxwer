@@ -73,7 +73,7 @@ public class DeviceInfoServiceImpl implements IDeviceInfoService {
 
             //logger.info("getok:"+o.getOilcan());
             //插入主表
-            logger.info("atg_device_out_t:"+deviceOutT.toString());
+            logger.info("atg_device_out_t:" + deviceOutT.toString());
             DailyDeviceInfo dailyDeviceInfo = new DailyDeviceInfo();
             dailyDeviceInfo.setDevicemodel(deviceOutT.strDeviceModel);
             dailyDeviceInfo.setEquipcode(deviceOutT.strEquipCode);
@@ -94,8 +94,8 @@ public class DeviceInfoServiceImpl implements IDeviceInfoService {
                 DailyDeviceInfoDetailKey dailyDeviceInfoDetailKey = new DailyDeviceInfoDetailKey();
                 dailyDeviceInfoDetailKey.setProbeno(deviceDataOutT.strProbeNo);
                 dailyDeviceInfoDetailKey.setOilcanno(deviceDataOutT.uOilCanNo);
-                logger.info("dailyDeviceInfoDetailDao.deleteByPrimaryKey...:"+dailyDeviceInfoDetailKey);
-                dailyDeviceInfoDetailDao.deleteByPrimaryKey(dailyDeviceInfoDetailKey);
+                logger.info("dailyDeviceInfoDetailDao.deleteByPrimaryKey...:" + dailyDeviceInfoDetailKey);
+                dailyDeviceInfoDetailDao.deleteByOilCanNo(deviceDataOutT.uOilCanNo);
                 logger.info("dailyDeviceInfoDetailDao.insertSelective...:"+dailyDeviceInfoDetail);
                 dailyDeviceInfoDetailDao.insertSelective(dailyDeviceInfoDetail);
                 logger.info("end insert");

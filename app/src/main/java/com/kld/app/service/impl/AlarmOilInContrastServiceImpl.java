@@ -16,6 +16,7 @@ import com.kld.gsm.ATG.domain.AlarmOilInContrast;
 public class AlarmOilInContrastServiceImpl implements AlarmOilInContrastService{
 
 	@Resource
+	@SuppressWarnings("all")
 	private AlarmOilInContrastDao alarmOilInContrast;
 	public void setAlarmOilInContrast(AlarmOilInContrastDao alarmOilInContrast) {
 		this.alarmOilInContrast = alarmOilInContrast;

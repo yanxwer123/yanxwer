@@ -1,0 +1,110 @@
+#set($layout="layout/emptylayout.vm")
+#set($menuTitle="容积表分析")
+
+<div id="query" title="查询条件" collapsible="true" class="easyui-panel" icon="icon-search">
+    <table  width="65%">
+        <tr>
+            <th width="10%">
+                选择油站：
+            </th>
+            <th width="20%">
+                <input id="cc" name="cc"  class="easyui-combobox textbox" type="text"  style="width:150px" data-options="prompt:'--请选择--'"></input>
+            </th>
+            <th width="20%">
+                <input id="aa" name="aa"  class="easyui-combobox textbox" type="text" style="width:150px" data-options="prompt:'--请选择--'"></input>
+            </th>
+            <th width="20%">
+                <input id="ss" name="ss"  class="easyui-combobox textbox" type="text" style="width:150px" data-options="prompt:'--请选择--'"></input>
+            </th>
+        </tr>
+        <tr>
+            <th></th>
+            <th>
+                <a id="searchExchange" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" style="width: 60px" onclick="initData()">查询</a>
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </table>
+</div>
+<div id="result">
+    <table id="tt" class="easyui-datagrid">
+    </table>
+</div>
+<script type="text/javascript">
+    var cols=[
+        [
+            {field:'ouname',title:'建议更新容积表的油站',width:'20%',align:'center',colspan:5}],
+        [
+            {field:'ouname',title:'油站名称',width:'20%',align:'center'},
+            {field:'oilcan',title:'油罐编号',width:'20%',align:'center'},
+            {field:'version',title:'当前版本',width:'20%',align:'center'},
+            {field:'updatetime',title:'更新时间',width:'20%',align:'center',
+                formatter:function(value,row,index)
+                {
+                    var time=formatDatebox(row.updatetime);
+                    return time;
+                }
+            },
+            {field:'fxbg',title:'分析报告',width:'20%',align:'center',
+                formatter:function(value,row,index)
+                {
+                    var str="";
+                    str += "<a href='javascript:ck();' onclick='dr'>查看</a>";
+                    return str;
+                }
+            }
+        ]
+    ];
+    var oucode;
+    var paras;
+    function inittext(){
+        var ss=$('#ss').combobox('getValue');
+        var aa=$('#aa').combobox('getValue');
+        var cc=$('#cc').combobox('getValue');
+        oucode="";
+        if(cc!="")
+        {
+            oucode=cc;
+        }
+        if(aa!="")
+        {
+            oucode=aa;
+        }
+        if(ss!="")
+        {
+            oucode=ss;
+        }
+        paras={"oucode":1};
+    }
+
+    $(function(){
+        Loadcas("cc","aa","ss");
+        var heigth=$(window).height()-160;
+        $("#result").height(heigth);
+        initData();
+    });
+    function initData() {
+        inittext();
+        BindDataGridAjax('tt','分析结果','/web/cubage/getCubages',cols,paras,'true',10,[10,20,30]);
+        $("#gxsl").text("12");
+    }
+    function formatDatebox(value) {
+        if (value == null || value == '') {
+            return '';
+        }
+        var dt;
+        if (value instanceof Date) {
+            dt = value;
+        } else {
+            dt = new Date(value);
+        }
+
+        return dt.format("yyyy-MM-dd hh:mm:ss"); //扩展的Date的format方法(上述插件实现)
+    }
+    function cx(oucode,oilcanno){
+        window.location.href="/web/cubage/calculateCubageView";
+    }
+</script>

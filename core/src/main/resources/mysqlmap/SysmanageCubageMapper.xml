@@ -154,4 +154,10 @@
     where Version != #{version,jdbcType=VARCHAR}
     and OilCan = #{oilcan,jdbcType=INTEGER}
   </update>
+  <select id="getMaxVersion" resultType="com.kld.gsm.ATG.domain.SysManageCubage">
+    SELECT IFNULL(MAX(VERSION),0) as Version,caninfo.OilCan
+    FROM oss_sysmanage_CanInfo caninfo LEFT JOIN oss_sysmanage_cubage cubage
+    ON caninfo.OilCan=cubage.OilCan
+    GROUP BY OilCan
+  </select>
 </mapper>

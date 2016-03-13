@@ -2,9 +2,12 @@ package com.kld.gsm.coord.timertask;
 
 import com.kld.gsm.ATGDevice.ATGManager;
 import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.*;
@@ -21,18 +24,12 @@ public class CheckTimePolling extends Thread{
     Logger logger = Logger.getLogger(CheckTimePolling.class);
     @Override
     public void run() {
+        RuntimeMXBean rt = ManagementFactory.getRuntimeMXBean();
+        String pid = rt.getName();
+        MDC.put("PID", pid);
         while(true) {
-            try {
-                sleep(TimeTaskPar.get("ywydsjg")*1000);
-            } catch (InterruptedException e) {
-                logger.error("sleep:"+e);
-                e.printStackTrace();
-            }
             logger.error("come in to CheckTimePolling()液位仪对时...");
             try {
-                /*Date date = new Date();
-                SimpleDateFormat sd = new SimpleDateFormat("yyyyMMddHHmmss");
-                ATGManager.checkTime(sd.format(date));*/
                 Integer iRet=getCheckTime();
                 if(iRet.equals(1))
                 {
@@ -41,8 +38,14 @@ public class CheckTimePolling extends Thread{
             } catch (Exception e) {
                 logger.error("CheckTimeUtil s-->ATGManager.checkTime is error" + e);
                 e.printStackTrace();
+            }finally {
+                try {
+                    sleep(TimeTaskPar.get("ywydsjg") * 1000);
+                } catch (InterruptedException e) {
+                    logger.error("sleep:" + e);
+                    e.printStackTrace();
+                }
             }
-
         }
     }
 

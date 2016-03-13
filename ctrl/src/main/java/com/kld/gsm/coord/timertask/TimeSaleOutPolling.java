@@ -3,9 +3,12 @@ package com.kld.gsm.coord.timertask;
 import com.kld.gsm.ATG.dao.SysManageTimeSaleOutDao;
 import com.kld.gsm.coord.Context;
 import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -22,6 +25,9 @@ public class TimeSaleOutPolling extends Thread {
     boolean flag = true;
     @Override
     public void run(){
+        RuntimeMXBean rt = ManagementFactory.getRuntimeMXBean();
+        String pid = rt.getName();
+        MDC.put("PID", pid);
         SysManageTimeSaleOutDao sysManageTimeSaleOutDao = Context.getInstance().getBean(SysManageTimeSaleOutDao.class);
         while(true) {
             //首次进入判断，首次进入直接睡到第二天凌晨，以后都是凌晨运行

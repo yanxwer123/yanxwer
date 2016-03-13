@@ -176,23 +176,31 @@
   </update>
   <select id="selectGatInfo" resultType="hashmap" parameterType="hashmap">
     <![CDATA[
-SELECT * from oss_alarm_GaTContrast where LEFT(Shift,8)>=#{begin,jdbcType=VARCHAR} and LEFT(Shift,8)<=#{end,jdbcType=VARCHAR}
+SELECT * from oss_alarm_GaTContrast where FristMeasureTime>=#{begin,jdbcType=VARCHAR} and FristMeasureTime<=#{end,jdbcType=VARCHAR}
     ]]>
     <if test="oucode != null and  oucode!= ''">
       <![CDATA[ and OUCode LIKE #{oucode,jdbcType=VARCHAR} ]]>
     </if>
-    ORDER BY Shift DESC
+    ORDER BY FristMeasureTime DESC
     <if test="firstRow != null and  pageSize!= null">
       <![CDATA[ LIMIT #{firstRow},#{pageSize}]]>
     </if>
   </select>
   <select id="selectGatAllInfo" resultType="hashmap" parameterType="hashmap">
     <![CDATA[
-SELECT * from oss_alarm_GaTContrast where LEFT(Shift,8)>=#{begin,jdbcType=VARCHAR} and LEFT(Shift,8)<=#{end,jdbcType=VARCHAR}
+SELECT * from oss_alarm_GaTContrast where FristMeasureTime>=#{begin,jdbcType=VARCHAR} and FristMeasureTime<=#{end,jdbcType=VARCHAR}
     ]]>
     <if test="oucode != null and  oucode!= ''">
       <![CDATA[ and OUCode LIKE #{oucode,jdbcType=VARCHAR} ]]>
     </if>
-    ORDER BY Shift DESC
+    ORDER BY FristMeasureTime DESC
+  </select>
+  <select id="selectCountAllInfo" resultType="java.lang.Integer" parameterType="hashmap">
+    <![CDATA[
+      SELECT count(*) from oss_alarm_GaTContrast where FristMeasureTime>=#{begin,jdbcType=VARCHAR} and FristMeasureTime<=#{end,jdbcType=VARCHAR}
+    ]]>
+    <if test="oucode != null and  oucode!= ''">
+      <![CDATA[ and OUCode LIKE #{oucode,jdbcType=VARCHAR} ]]>
+    </if>
   </select>
 </mapper>

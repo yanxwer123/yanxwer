@@ -2,6 +2,7 @@ package com.kld.gsm.center.service;
 
 import com.kld.gsm.center.domain.oss_alarm_Equipment;
 
+import javax.servlet.ServletOutputStream;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,4 +18,5 @@ public interface AlarmEquipmentService {
     List<HashMap<String,Object>> selectiq(HashMap hashmap);
 
     List<HashMap<String, Object>> selectEqbywhere(String start,String end,String oucode);
+    void ExcelIQ(List<HashMap<String, Object>> list, String[] titles, ServletOutputStream outputStream);
 }

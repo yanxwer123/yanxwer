@@ -1,0 +1,583 @@
+#set($layout="layout/emptylayout.vm")
+#set($menuTitle="油站")
+<style xmlns="http://www.w3.org/1999/html">
+    *{ margin:0; padding:0;} li{ list-style:none;}
+    .mianbox{ overflow:hidden; background:#fed; min-width:820px;}.row{ padding:10px 10px 0 10px;  overflow:hidden;}
+
+    .selectArea {
+        height: 30px;
+        background-color: #f6f6f6;
+        vertical-align: middle;
+        line-height: 30px;
+        padding-left: 20px;
+        color: #838181;
+        font-size:14px;
+        font-weight:bold;
+    }
+    .selectArea a {
+        text-decoration: none;
+        color: black ;
+        margin:0px 5px;
+    }
+    .selectArea a:hover {
+        padding-left:1px;
+    }
+    .selectlink {
+        background-color: #f6f6f6;
+        border: 1px solid #ccc;
+        padding: 0px;
+    }
+</style>
+
+<div style="height: 2000px;">
+<div id="dhmunu" class="selectArea">
+
+</div>
+<div class="easyui-panel" style="padding: 5px; ">
+    <a href="/web/desktop/station?pcode=$!pcode" class="easyui-linkbutton" plain="true" iconcls="icon-redo">油站总览</a>
+    <a href="/web/desktop/station?pcode=$!pcode&vpage=gqss"  class="easyui-linkbutton" plain="true" iconcls="icon-redo">罐枪实时监控</a>
+    <a href="/web/desktop/station?pcode=$!pcode&vpage=zdkc" class="easyui-linkbutton" plain="true" iconcls="icon-redo">油站整点库存</a>
+    <a href="/web/desktop/station?pcode=$!pcode&vpage=rph" class="easyui-linkbutton" plain="true" iconcls="icon-redo">油站日平衡</a>
+    <a href="/web/desktop/station?pcode=$!pcode&vpage=yzbb" class="easyui-linkbutton" plain="true" iconcls="icon-redo">油站班报</a>
+    <a href="#" class="easyui-linkbutton selectlink" plain="true" iconcls="icon-redo">报警信息</a>
+</div>
+
+<div id="query" title="查询条件" collapsible="true" class="easyui-panel search panel-body panel-body-noheader" style="border:0px;padding: 10px; width: 100%;" icon="icon-search">
+    <table width="100%">
+
+        <tr>
+            <th> 起止时间：</th>
+            <th  align="left">
+                <input id="dateStartinput" type="text" class="easyui-datebox" required="required" editable="false"/>至
+                <input id="dateEndinput" type="text" class="easyui-datebox" required="required" editable="false"/>
+            </th>
+        </tr>
+        <tr>
+            <th></th>
+            <th align="left">
+                <a id="btnSelect" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="initDataAll();">查询</a>
+            </th>
+        </tr>
+    </table>
+</div>
+<div  style="width: 100%;height: 352px;">
+    <table id="tt" fit="true" style="height: 500px;">
+    </table>
+</div>
+
+<div  style="width: 100%;height: 352px; margin-top: 10px;">
+    <table id="ttshebei" fit="true" style="height: 500px;">
+    </table>
+</div>
+
+
+    <div  style="width: 100%;height: 352px; margin-top: 10px;">
+        <table id="ttbjsy" fit="true" style="height: 500px;">
+        </table>
+    </div>
+    <div  style="width: 100%;height: 352px; margin-top: 10px;">
+        <table id="ttrjsy" fit="true" style="height: 500px;">
+        </table>
+    </div>
+    <div  style="width: 100%;height: 352px; margin-top: 10px;">
+        <table id="ttjysy" fit="true" style="height: 500px;">
+        </table>
+    </div>
+    <div  style="width: 100%;height: 352px; margin-top: 10px;">
+        <table id="ttjingtai" fit="true" style="height: 500px;">
+        </table>
+    </div>
+    <div  style="width: 100%;height: 352px; margin-top: 10px;">
+        <table id="ttdongtai" fit="true" style="height: 500px;">
+        </table>
+    </div>
+    <div  style="width: 100%;height: 352px; margin-top: 10px;">
+        <table id="tttuoxiao" fit="true" style="height: 500px;">
+        </table>
+    </div>
+
+
+
+
+
+    <div id="dlg" class="easyui-dialog" style="width: 430px; height: 340px; padding: 10px 20px;"
+         closed="true" buttons="#dlg-buttons">
+        <form id="fm" method="post">
+            <table width="390px" height: 100%; cellpadding="0" cellspacing="0">
+                <tr>
+                    <td width="130px;" align="right" height="23">油罐编号:&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left"><label id="OilCanNo"></label> </td>
+                </tr>
+                <tr>
+                    <td width="130px;" align="right" height="23">泄漏状态:&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left"><label id="RevealStatus"></label> </td>
+                </tr>
+                <tr>
+                    <td width="130px;" align="right" height="23">泄漏速率(L/H):&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left"><label id="RevealRate"></label> </td>
+                </tr>
+                <tr>
+                    <td width="130px;" align="right" height="23">起始日期:&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left"><label id="StartDate"></label> </td>
+                </tr>
+                <tr>
+                    <td width="130px;" align="right" height="23">起始时间:&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left"><label id="StartTime"></label> </td>
+                </tr>
+                <tr>
+                    <td width="130px;" align="right" height="23">起始5点温度(℃):&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left"><label id="StartOilTemp"></label> </td>
+                </tr>
+                <tr>
+                    <td width="130px;" align="right" height="23">结束日期:&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left"><label id="EndDate"></label> </td>
+                </tr>
+                <tr>
+                    <td width="130px;" align="right" height="23">结束时间:&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left"><label id="EndTime"></label> </td>
+                </tr>
+                <tr>
+                    <td width="130px;" align="right" height="23">结束油水总高(mm):&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left"><label id="EndOilHeight"></label> </td>
+                </tr>
+                <tr>
+                    <td width="130px;" align="right" height="23">结束水高(mm):&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left"><label id="EndWaterHeight"></label> </td>
+                </tr>
+                <tr>
+                    <td width="130px;" align="right" height="23">结束5点温度(℃):&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left"><label id="EndOilTemp"></label> </td>
+                </tr>
+                <tr>
+                    <td width="100px;" align="right"></td><td align="right">
+                    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#dlg').dialog('close')"
+                       iconcls="icon-cancel">取消</a>
+                </td>
+                </tr>
+
+            </table>
+        </form>
+    </div>
+
+
+</div>
+
+<script type="text/javascript">
+
+
+    // 对Date的扩展，将 Date 转化为指定格式的String
+    // 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
+    // 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
+    // 例子：
+    // (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
+    // (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18
+    Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
+
+
+    function formatDatebox(value) {
+        if (value == null || value == '') {
+            return '';
+        }
+        var dt;
+        if (value instanceof Date) {
+            dt = value;
+        } else {
+            dt = new Date(value);
+        }
+        return dt.format("yyyy-MM-dd hh:mm:ss"); //扩展的Date的format方法(上述插件实现)
+    }
+
+    //构造导航信息
+    function getMenu()
+    {
+        var oucode="$!pcode";
+
+        //绑定设备预警
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/getMenu?oucode="+oucode,
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+
+                var strmunu="<a href='/web/desktop/desktop' target='_self'>监控首页</a>";
+                // <a href="/web/desktop/desktop" target="_self">监控首页</a>  > <a href="#" target="_self">分公司</a> > <a href="#" target="_self">片区</a> > 加油站
+                if(msg.data.sheng!=""&&typeof(msg.data.sheng) != "undefined")
+                {
+                    strmunu+="> <a href='/web/desktop/city?pcode="+oucode.substring(0,6)+"' target='_self'>"+msg.data.sheng+"</a>";
+                }
+                if(msg.data.qu!=""&&typeof(msg.data.qu) != "undefined")
+                {
+                    strmunu+="> <a href='/web/desktop/county?pcode="+oucode.substring(0,9)+"' target='_self'>"+msg.data.qu+"</a>";
+                }
+                if(msg.data.zhan!=""&&typeof(msg.data.zhan) != "undefined")
+                {
+                    strmunu+="> "+msg.data.zhan+"</a>";
+                }
+
+                $("#dhmunu").html(strmunu);
+
+
+
+            }
+        });
+
+
+    }
+
+
+
+
+    $(function(){
+
+        getMenu();
+
+        var myDate = new Date();
+        var MyTime=new Date();
+        //var time=MyTime.getFullYear() + "-" + (MyTime.getMonth()) + "-" + MyTime.getDate();
+        $("#dateStartinput").datebox('setValue','<%=myDate.toLocaleDateString()%>');
+        $("#dateEndinput").datebox('setValue','<%=myDate.toLocaleDateString()%>');
+       // var heigth=$(window).height()-160;
+        $("#result").height(500);
+
+        initDataAll();
+    });
+
+    function initDataAll(){
+
+        initData();  //油罐异常
+        initDataShebei(); //设备异常
+        initDatabjsy();  //班结损溢报警
+        initDatarjsy();  //日结损溢预警
+        initDatajysy(); //进油损溢报警
+        initDatajingtai(); //静态液位异常
+        initDatadongtai(); //动态液位异常
+        initDatatuoxiao();  //油站脱销报警
+
+    }
+
+    //油罐异常
+    function initData() {
+
+        var  alarmtype;
+        var begin;
+        var  end;
+        var oucode;
+        var paras;
+        var cols=[[
+            {field:'OUName',title:'油站名称',width:100,align:'center'},
+            {field:'OilCan',title:'油罐编号',width:100,align:'center'},
+            //{field:'OilName',title:'油品类型',width:100,align:'center'},
+            {field:'NAME',title:'预警类型',width:100,align:'center'},
+            {field:'StartTime',title:'开始报警时间',width:100,align:'center',formatter: formatDatebox},
+            {field:'EndTIme',title:'解除报警时间',width:100,align:'center',formatter: formatDatebox}
+        ]];
+
+        alarmtype="";
+
+        begin=$('#dateStartinput').datebox('getValue');
+        end=$('#dateEndinput').datebox('getValue');
+        oucode="$!pcode";
+        paras={"alarmtype":alarmtype,"begin":begin,"end":end,"oucode":oucode};
+        BindDataGridAjax('tt','油罐异常报警','/web/alarm/getalarmInventoryInfo',cols,paras,'true',10,[10,20,30]);
+    }
+
+    //设备异常
+    function initDataShebei()
+    {
+        var cols=[[
+            {field:'OUName',title:'油站名称',width:100,align:'center'},
+            {field:'OilCan',title:'油罐编号',width:100,align:'center'},
+            {field:'StartAlarmTime',title:'开始报警时间',width:100,align:'center',formatter: formatDatebox},
+            {field:'EndAlarmTime',title:'结束报警时间',width:100,align:'center',formatter: formatDatebox},
+            {field:'Name',title:'故障类型',width:100,align:'center'},
+            {field:'EquipCode',title:'设备代码',width:100,align:'center'},
+            /*  {field:'MalfunctionCode',title:'故障信息代码',width:100},*/
+            {field:'EquipBrand',title:'设备品牌',width:100,align:'center'},
+            {field:'ProbeModel',title:'探棒型号',width:100,align:'center'},
+            {field:'Remark',title:'备注',width:100,align:'center'}
+        ]];
+
+        var failuretype="";
+        var startTime=$('#dateStartinput').datebox('getValue');
+        var endTime=$('#dateEndinput').datebox('getValue');
+
+        var end = new Date();
+        var date = end.getDate();
+        date = date + 1;
+        end.setDate(date);
+        var over=end.toLocaleDateString();
+        endTime=over;
+
+        var oucode="$!pcode";
+        paras={'FailureType':failuretype,'begin':startTime,'end':endTime,'oucode':oucode};
+
+        BindDataGridAjax('ttshebei','设备故障报警','/web/alarm/selectIqPageList',cols,paras,'true',10,[10,20,30]);
+
+    }
+
+    //班结损溢报警
+    function initDatabjsy()
+    {
+        //ttbjsy
+        var cols=[[
+            {field:'OUName',title:'油站名称',width:100,align:'center'},
+            {field:'Shift',title:'班次',width:90,align:'center'},
+            {field:'ShiftTime',title:'交接班时间',width:140,align:'center',formatter: formatDatebox},
+            {field:'OilCanNo',title:'油罐编号',width:80,align:'center'},
+            {field:'OilName',title:'油品',width:100,align:'center'},
+            {field:'StartOilHeight',title:'接班油高(mm)',width:120,align:'center'},
+            {field:'StartOilL',title:'接班油量(L）',width:100,align:'center'},
+            {field:'EndOilHeight',title:'交班油高(mm)',width:120,align:'center'},
+            {field:'EndOilL',title:'交班油量(L)',width:100,align:'center'},
+            /*{field:'AcutalEndOilL',title:'实际交班油量',width:100,align:'center'},
+            {field:'EndWaterHeight',title:'交班水高(mm)',width:120,align:'center'},
+            {field:'EndWaterL',title:'交班水量(L)',width:100,align:'center'},
+            {field:'EndTemperature',title:'交班温度(℃)',width:100,align:'center'},*/
+            {field:'OilDischarge',title:'卸油量(L)',width:80,align:'center'},
+            {field:'Sale',title:'付油量(L)',width:80,align:'center'},
+            /*{field:'Inventory',title:'交班帐存(L)',width:80,align:'center'},*/
+            {field:'Loss',title:'损溢量(L)',width:70,align:'center'},
+            {field:'ProfitLossRatio',title:'损溢率(%)',width:70,align:'center'}
+        ]];
+
+        var  begin;
+        var end;
+        var oucode;
+        var paras;
+
+        begin=$("#dateStartinput").datebox("getValue").replace(/-/g,"");
+        end=$("#dateEndinput").datebox("getValue").replace(/-/g,"");
+
+        oucode="$!pcode";
+
+        paras={ "start": begin, "end":end, "oucode":oucode};
+
+
+        BindDataGridAjax('ttbjsy','班结损溢报警','/web/alarm/getShiftLostInfo',cols,paras,'true',10,[10,20,30]);
+
+    }
+
+    //日结损溢预警
+    function initDatarjsy()
+    {
+        var cols=[[
+            {field:'OUName',title:'油站名称',width:70,align:'center'
+            },
+            {field:'OilName',title:'油品类型',width:70,align:'center'
+            },
+
+            {field:'AccountDate',title:'日期',width:100,formatter: formatDatebox,align:'center'
+            },
+
+            {field:'DarlyankStock',title:'期初库存(L)',width:70,align:'center'
+            },
+            {field:'DeliveryNo',title:'出货单号',width:70,align:'center'},
+            {field:'ReceiveL',title:'进货数量(L)',width:70,align:'center'},
+            {field:'TodayOut',title:'期间付出(L)',width:70,align:'center'
+            },
+            {field:'TodayEndStock',title:'期末库存(L)',width:70,align:'center'
+            },
+            {field:'RealStock',title:'实测库存(L)',width:70,align:'center'
+            },
+            {field:'Cost',title:'损溢量(L)',width:70,align:'center'
+            },
+            {field:'CostSent',title:'损溢率(%)',width:70,align:'center'
+            }
+
+        ]];
+
+        var  begin;
+        var end;
+        var oucode;
+
+        var paras;
+
+        var startTime=$("#dateStartinput").datebox("getValue");
+        var endTime=$("#dateEndinput").datebox("getValue");
+        begin=startTime;
+        end=endTime;
+
+        oucode="$!pcode";
+        paras={ "begin": begin, "end":end, "oucode":oucode};
+        BindDataGridAjax('ttrjsy','日结损溢预警','/web/alarm/getDailyLostList',cols,paras,'true',10,[10,20,30]);
+
+
+    }
+
+    //进油损溢报警
+    function initDatajysy()
+    {
+
+        var cols=[[
+            {field:'OUName',title:'油站名称',width:100,align:'center'},
+            {field:'OilName',title:'油品名称',width:100,align:'center'},
+            {field:'CreatTime',title:'进货验收日期',width:100,formatter: formatDatebox,align:'center'},
+            {field:'DeliveryNo',title:'出库单号',width:100,align:'center'},
+            {field:'PlanL',title:'原发升数(L)',width:100,align:'center',align:'center'},
+            {field:'RealRecieve',title:'实收升数(L)',width:100,align:'center'},
+            {field:'Loss',title:'损耗量(L)',width:100,align:'center'},
+            {field:'LossRate',title:'损耗率(%)',width:100,align:'center'}
+        ]]
+        var  start;
+        var end;
+        var oucode;
+        var paras;
+
+        start=$("#dateStartinput").datebox("getValue").replace(/-/g,"");
+        end=$("#dateEndinput").datebox("getValue").replace(/-/g,"");
+        oucode="$!pcode";
+        paras={ "start": start, "end":end, "oucode":oucode};
+
+        BindDataGridAjax('ttjysy','进油损溢报警','/web/alarm/getOilInInfo',cols,paras,'true',10,[10,20,30]);
+
+    }
+
+
+    function RemoteChk(oilno,status,revealRate,sDate,st,endDate,endOilHeight,endWaterHeight,et) {
+        $("#dlg").dialog("open").dialog('setTitle', '详情');
+        $("#fm").form("clear");
+        $("#OilCanNo").html(oilno);
+        $("#RevealStatus").html(decodeURI(status));
+        $("#RevealRate").html(revealRate);
+        $("#StartOilTemp").html(st);
+        $("#EndOilTemp").html(et);
+        $("#EndOilHeight").html(endOilHeight);
+        $("#EndWaterHeight").html(endWaterHeight);
+        var arr= new Array();
+        arr=sDate.split(" ");;
+        $("#StartDate").html(arr[0]);
+        $("#StartTime").html(arr[1]);
+        var arrEnd=new Array();
+        arrEnd=endDate.split(" ");
+        $("#EndDate").html(arrEnd[0]);
+        $("#EndTime").html(arrEnd[1]);
+    }
+    //静态液位异常
+    function initDatajingtai()
+    {
+
+        var cols=[[
+            {field:'OUName',title:'油站名称',width:100,align:'center'},
+            {field:'OilCanNo',title:'油罐编号',width:100,align:'center'},
+            {field:'StartDate',title:'开始时间',width:100,formatter: formatDatebox,align:'center'},
+            {field:'EndDate',title:'结束时间',width:100,formatter: formatDatebox,align:'center'},
+//        {field:'Status',title:'泄漏状态',width:100,align:'center'},
+//        {field:'RevealRate',title:'泄漏速率',width:100,align:'center'},
+            {field:'action',title:'详情',width:100,
+                formatter:function(value,row,index)
+                {
+                    var successor;
+
+                    if(row.OilCanNo!=undefined)
+                    {
+                        /*   var succeedtime=formatDatebox(row.succeedtime);
+                           var shifttime=formatDatebox(row.shifttime)*/
+                        var str = '';
+                        var st=row.StartOilTemp1+";"+row.StartOilTemp2+";"+row.StartOilTemp3+";"+row.StartOilTemp4+";"+row.StartOilTemp5;
+                        var et=row.EndOilTemp1+";"+row.EndOilTemp2+";"+row.EndOilTemp3+";"+row.EndOilTemp4+";"+row.EndOilTemp5;
+                        var startDate=formatDatebox(row.StartDate);
+                        var endDate=formatDatebox(row.EndDate);
+                        //oilno,status,revealRate,sDate,st,endOilHeight,endWaterHeight,et
+                        str += "<a href='javascript:void(0);'  onclick='RemoteChk("+row.OilCanNo+",\""+encodeURI(row.Status)+"\","+row.RevealRate+",\""+startDate+"\",\""+st+"\",\""+endDate+"\","+row.EndOilHeight+","+row.EndWaterHeight+",\""+et+"\")'>详情</a>";
+                        return str;
+                    }
+
+                },align:'center'
+            }
+        ]];
+        var  start;
+        var end;
+        var oucode;
+        var paras;
+
+        start=$("#dateStartinput").datebox("getValue");
+        end=$("#dateEndinput").datebox("getValue");
+
+        oucode="$!pcode";
+
+        paras={ "start": start, "end":end, "oucode":oucode};
+        BindDataGridAjax('ttjingtai','静态液位异常','/web/alarm/getMeasureInfo',cols,paras,'true',10,[10,20,30]);
+    }
+
+    var paras;
+    //动态液位异常
+    function initDatadongtai()
+    {
+        var cols=[[
+            {field:'ouname',title:'油站名称',width:100,align:'center'},
+            {field:'OilCan',title:'油罐编号',width:100,align:'center'},
+            {field:'FristMeasureTime',title:'第一次检测时间',width:110,formatter: formatDatebox,align:'center'},
+            {field:'FristMeasureStore',title:'第一次检测库存(L)',width:100,align:'center'},
+            {field:'SecodeMeasureTime',title:'第二次检测时间',width:110,formatter: formatDatebox,align:'center'},
+            {field:'SecodeMeasureStore',title:'第二次检测库存(L)',width:100,align:'center'},
+            {field:'IntervalSales',title:'两次检测时间内销售量(L)',width:120,align:'center'},
+            {field:'IntervalTime',title:'间隔时间(分:秒)',width:100,align:'center'},
+            {field:'Difference',title:'差异(L)',width:100,align:'center'}
+            /* {field:'result',title:'状态',width:100}*/
+        ]];
+        var  current;//油品编号
+        var pagesize; //配送建议
+        var begin;
+        var end;
+        var oucode;
+        var result;
+
+
+        var startTime=$("#dateStartinput").datebox("getValue").replace(/-/g,"");
+
+        var endTime=$("#dateEndinput").datebox("getValue").replace(/-/g,"");
+
+        page=null;rows=null; begin=startTime;end=endTime;
+
+        oucode="$!pcode";
+        result="";
+        paras={ "begin": startTime,"end": endTime,"oucode": oucode,"result": result};
+
+        BindDataGridAjax('ttdongtai','动态液位异常','/web/alarm/getGatInfo',cols,paras,'true',10,[10,20,30]);
+
+
+    }
+
+    //油站脱销报警
+    function initDatatuoxiao()
+    {
+        var cols=[[
+            {field:'OUName',title:'油站名称',width:100,align:'center'},
+            {field:'OilName',title:'油品类型',width:100,align:'center'},
+            {field:'StartAlarmTime',title:'开始报警时间',width:100,formatter: formatDatebox,align:'center'},
+            {field:'EndAlarmTime',title:'结束报警时间',width:100,formatter: formatDatebox,align:'center'},
+            {field:'NowVolume',title:'当前体积(L)',width:100,align:'center'},
+            {field:'CanSaleVolume',title:'可销售体积(L)',width:100,align:'center'},
+            //{field:'DayAverageSales',title:'日常销售量(L)',width:100},
+            {field:'HourAverageSales',title:'平均每小时销售量(L)',width:100,align:'center'},
+            {field:'PredictHours',title:'预计销售时间(h)',width:100,align:'center'}
+            //{field:'YJSSTS',title:'预计销售天数',width:100},
+            //{field:'PSYJ',title:'配送建议',width:100}
+        ]];
+        var  oilno;//油品编号
+        var psjy; //配送建议
+        var startTime;
+        var  endTime;
+        var paras;
+
+        var startTime=$("#dateStartinput").datebox("getValue").replace(/-/g,"");
+
+        var endTime=$("#dateEndinput").datebox("getValue").replace(/-/g,"");
+
+        page=null;rows=null; begin=startTime;end=endTime;
+
+       var oucode="$!pcode";
+
+        paras={ "begin": startTime,"end": endTime,"oucode": oucode};
+
+        BindDataGridAjax('tttuoxiao','油站脱销报警','/web/alarm/getSaleOut',cols,paras,'true',10,[10,20,30]);
+
+    }
+
+
+
+
+</script>

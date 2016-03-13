@@ -83,4 +83,39 @@
       </if>
     </trim>
   </insert>
+  <select id="getSysRolePageList" parameterType="hashmap" resultType="hashmap">
+    select * from Sys_role
+    where 1=1
+    <if test="name != null and name != ''">
+      AND name= #{name}
+    </if>
+    ORDER BY rolecode ASC
+
+    <if test="firstRow != null and  pageSize!= null">
+      <![CDATA[ LIMIT #{firstRow},#{pageSize}]]>
+    </if>
+  </select>
+  <select id="getSysRoleList" parameterType="hashmap" resultType="hashmap">
+    select * from Sys_role
+    where 1=1
+    <if test="name != null and name != ''">
+      AND name= #{name}
+    </if>
+  </select>
+  <select id="selectAll"  resultType="com.kld.gsm.center.domain.Sys_role">
+    select * from Sys_role
+  </select>
+  <insert id="insertRow" parameterType="hashmap" >
+    insert into Sys_role (rolecode, name, creator,state, createtime)
+    values (#{rolecode}, #{name},#{creator}, #{state},#{createtime})
+  </insert>
+  <update id="updateRow" parameterType="hashmap" >
+    UPDATE  Sys_role set name=#{name},creator=#{creator},state=#{state},createtime=#{createtime}
+    where rolecode=#{rolecode}
+  </update>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from Sys_role
+    where rolecode = #{rolecode}
+  </delete>
+
 </mapper>

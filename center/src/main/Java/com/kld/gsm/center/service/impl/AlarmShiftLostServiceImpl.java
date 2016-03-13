@@ -3,6 +3,7 @@ package com.kld.gsm.center.service.impl;
 import com.kld.gsm.center.domain.oss_alarm_ShiftLost;
 import com.kld.gsm.center.service.AlarmShiftLostService;
 import com.kld.gsm.center.util.ExportUtil;
+import com.kld.gsm.center.util.FormatUtil;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,8 +45,14 @@ public class AlarmShiftLostServiceImpl implements AlarmShiftLostService {
     }
 
     @Override
-    public List<HashMap<String, Object>> querypage(Integer intPage, Integer intPageSize, String oucode, String start, String end) {
+    public List<HashMap<String, Object>> querypage(Integer page, Integer rows, String oucode, String start, String end) {
         HashMap map=new HashMap();
+        if (page != null && rows != null) {
+            page = page < 1 ? 1 : page;
+            int firstRow = (page - 1) * rows;
+            map.put("firstRow", firstRow);
+            map.put("pageSize", rows);
+        }
         map.put("start",start);
         map.put("end",end);
         if(oucode!=null && oucode!="") {
@@ -55,8 +62,6 @@ public class AlarmShiftLostServiceImpl implements AlarmShiftLostService {
         {
             map.put("oucode", oucode);
         }
-        map.put("firstRow",intPage);
-        map.put("intPageSize",intPageSize);
         return ossAlarmShiftLostMapper.querypage(map);
     }
 
@@ -93,76 +98,65 @@ public class AlarmShiftLostServiceImpl implements AlarmShiftLostService {
             cell.setCellValue(titles[i]);
             //System.out.println(titles[i]);
         }
+
         // 构建表体数据
         if (list != null && list.size() > 0) {
             for (int j = 0; j < list.size(); j++)
             {
                 XSSFRow bodyRow = sheet.createRow(j + 1);
-                for (HashMap<String, Object> item:list) {
+                HashMap<String, Object> item=list.get(j);
                     cell = bodyRow.createCell(0);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("ouname").toString());
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("OUName")));
 
                     cell = bodyRow.createCell(1);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("OilCanNo").toString());
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("Shift")));
 
                     cell = bodyRow.createCell(2);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("oilname").toString());
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("ShiftTime")));
 
                     cell = bodyRow.createCell(3);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("StartOilHeight").toString());
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("OilCanNo")));
 
                     cell = bodyRow.createCell(4);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("StartOilL").toString());
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("OilName")));
 
                     cell = bodyRow.createCell(5);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("EndOilHeight").toString());
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("StartOilHeight")));
 
                     cell = bodyRow.createCell(6);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("EndOilL").toString());
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("StartOilL")));
 
                     cell = bodyRow.createCell(7);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("AcutalEndOilL").toString());
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("EndOilHeight")));
 
                     cell = bodyRow.createCell(8);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("EndWaterHeight").toString());
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("EndOilL")));
+
 
                     cell = bodyRow.createCell(9);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("EndWaterL").toString());
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("OilDischarge")));
 
                     cell = bodyRow.createCell(10);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("EndTemperature").toString());
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("Sale")));
 
                     cell = bodyRow.createCell(11);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("OilDischarge").toString());
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("Loss")));
 
                     cell = bodyRow.createCell(12);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("Sale").toString());
-
-                    cell = bodyRow.createCell(13);
-                    cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("Inventory").toString());
-
-                    cell = bodyRow.createCell(14);
-                    cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("Loss").toString());
-
-                    cell = bodyRow.createCell(15);
-                    cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("cnstate").toString());
-                }
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("ProfitLossRatio")));
             }
         }
         try

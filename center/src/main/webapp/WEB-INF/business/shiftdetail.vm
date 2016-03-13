@@ -1,6 +1,34 @@
 #set($layout="layout/emptylayout.vm")
 #set($menuTitle="班报详情")
-班次：<label id="shift"></label> ；接班人：<label id="successor"></label>；接班时间：<label id="succeedtime"></label>交班人：<label id="shiftoperator"></label>；交班时间：<label id="shifttime"></label>
+
+<table  width="900">
+    <tr>
+        <th width="100px">
+            班次：
+        </th>
+        <th width="100px">
+            <label id="shift"></label>
+        </th>
+        <th width="100px">
+            接班人：
+        </th>
+        <th width="100px">
+            <label id="successor"></label>
+        </th>
+        <th width="100px">
+            交班人：
+        </th>
+        <th width="100px">
+            <label id="shiftoperator"></label>
+        </th>
+        <th width="100px">
+            交接班时间：
+        </th>
+        <th width="200px">
+            <label id="shifttime"></label>
+        </th>
+        </tr>
+    </table>
 
 <div class="easyui-panel" style="height: 200px">
     <table id="tt" class="easyui-datagrid" style=" height: 200px;">
@@ -37,7 +65,7 @@
     }
     var cols=[[
         {field:'oilgun',title:'枪号',width:100},
-        {field:'topump',title:'接班时泵码',width:100},
+        {field:'topump',title:'接班泵码',width:100},
         {field:'hopump',title:'当前泵码',width:100},
         {field:'pumpnum',title:'走字数',width:100}
     ]];
@@ -58,13 +86,14 @@ var paras;
     var paras1; var paras2;
     function inittext(){
         var shift=GetQueryString("shift");
-        paras={ "shift": shift};
+        var oucode=GetQueryString("oucode");
+        paras={ "shift": shift,"oucode":oucode};
 
     }
 
     function initData() {
         inittext();
-        BindDataGridAjax('tt','泵码信息','/web/alarm/getPumpList',cols,paras,'true',10,[10,20,30]);
+        BindDataGridAjax('tt','泵码信息','/web/business/getPumpList',cols,paras,'true',10,[10,20,30]);
         //dataGridAjax('tt','/web/alarm/getPumpList','',paras,cols,undefined,undefined,function(data){
 
         //});
@@ -72,33 +101,35 @@ var paras;
     $('#tt').datagrid({pagination:false,//分页控件
      });
 
-    var cols1=[[
-        {field:'oilname',title:'油品',width:100},
-        {field:'total',title:'合计',width:100},
-        {field:'money',title:'现金',width:100},
-        {field:'yp',title:'油票',width:100},
-        {field:'jz',title:'记账',width:100},
-        {field:'yhk',title:'银行卡',width:100},
-        {field:'other1',title:'其他1',width:100},
-        {field:'other2',title:'其他2',width:100},
-        {field:'ic',title:'IC卡',width:100},
-        {field:'icjf',title:'IC卡积分',width:100},
-        {field:'yswt',title:'已售未提',width:100},
-        {field:'ytws',title:'已提未售',width:100},
-        {field:'dcdf',title:'代存代付',width:100},
-        {field:'ypdg',title:'邮票代替',width:100},
-        {field:'zyy',title:'自用油',width:100},
-        {field:'fjz',title:'非机走',width:100},
-    ]];
-    function inittext1(){
-
-        var shift=GetQueryString("shift");
-        paras1={ "shift": shift};
+    function formatDigit(value) {
+        if (value == null || value == '') {
+            return '';
+        }
+        return value.toFixed(2);
     }
 
+    var cols1=[[
+        {field:'oilname',title:'油品',width:100},
+        {field:'total',title:'合计',width:100,formatter:formatDigit},
+        {field:'money',title:'现金',width:100,formatter:formatDigit},
+        {field:'ic',title:'IC卡',width:100,formatter:formatDigit},
+        {field:'icjf',title:'IC卡积分',width:100,formatter:formatDigit},
+        {field:'yhk',title:'银行卡',width:100,formatter:formatDigit},
+        {field:'yp',title:'油票',width:100,formatter:formatDigit},
+        {field:'jz',title:'记账',width:100,formatter:formatDigit},
+        {field:'yswt',title:'已售未提',width:100,formatter:formatDigit},
+        {field:'ytws',title:'已提未售',width:100,formatter:formatDigit},
+        {field:'dcdf',title:'代存代付',width:100,formatter:formatDigit},
+        {field:'ypdg',title:'邮票代替',width:100,formatter:formatDigit},
+        {field:'zyy',title:'自用油',width:100,formatter:formatDigit},
+        {field:'fjz',title:'非机走',width:100,formatter:formatDigit},
+        {field:'other1',title:'其他1',width:100,formatter:formatDigit},
+        {field:'other2',title:'其他2',width:100,formatter:formatDigit},
+    ]];
+
     function initData1() {
-        inittext1();
-        dataGridAjax('fyxx','/web/alarm/getOpot','',paras1,cols1,undefined,undefined,function(data){
+        inittext();
+        dataGridAjax('fyxx','/web/business/getOpot','',paras,cols1,undefined,undefined,function(data){
 
         });
 
@@ -107,29 +138,23 @@ var paras;
     });
     var cols2=[[
         {field:'OilCan',title:'油罐编号',width:100},
-        {field:'OilName',title:'油品',width:100},
+        {field:'OilName',title:'油品类型',width:100},
+        {field:'ToOilHigh',title:'接班油高(L)',width:100},
         {field:'ToOilL',title:'接班油量(L)',width:100},
         {field:'HoOilHigh',title:'交班油高(mm)',width:100},
-        {field:'HoOilL',title:'交班升数',width:100},
-        {field:'HeightWater',title:'交班水高（mm）',width:100},
-        {field:'WaterL',title:'其交班水量（L）',width:100},
-        {field:'SaleL',title:'付油量',width:100},
-        {field:'InOilL',title:'卸油量',width:100},
-        {field:'kc',title:'库存',width:100},
-        {field:'sh',title:'损耗',width:100}
+        {field:'HoOilL',title:'交班油量(L)',width:100},
+        {field:'SaleL',title:'付油量(L)',width:100},
+        {field:'InOilL',title:'卸油量(L)',width:100},
+        {field:'kc',title:'损耗量(L)',width:100},
+        {field:'sh',title:'损耗率(%)',width:100}
     ]];
-    function inittext2(){
-        var shift=GetQueryString("shift");
-        paras2={ "shift": shift};
-
-    }
 
     function initData2() {
-        inittext2();
+        inittext();
       /*  dataGridAjax('ygxx','/web/alarm/getTankShift','',paras2,cols2,undefined,undefined,function(data){
 
         });*/
-        BindDataGridAjax('ygxx','油罐信息','/web/alarm/getTankShift',cols2,paras,'true',10,[10,20,30]);
+        BindDataGridAjax('ygxx','油罐信息','/web/business/getTankShift',cols2,paras,'true',10,[10,20,30]);
     }
     $('#ygxx').datagrid({pagination:false,//分页控件
     });

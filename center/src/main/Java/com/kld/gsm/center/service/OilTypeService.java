@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface OilTypeService {
     List<HashMap<String,String>> selectOilType();
+    String selectByoilNo(HashMap map);
 }

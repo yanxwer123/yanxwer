@@ -1,0 +1,48 @@
+#set($layout="layout/emptylayout.vm")
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>加油站系统管理</title>
+    <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
+    <script type="text/javascript" src="easyui/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+</head>
+<body class="easyui-layout">
+
+<div id="cc" class="easyui-layout" style="width:1170px;height:470px;">
+    <div id="td" data-options="region:'west',title:'湖南省',split:true" style="padding:10px;width:200px;"></div>
+    <div id ="station"  data-options="region:'center',title:'$!department.nodename'">
+        <div class="easyui-tabs" style="width:960px;height:470px">
+            <div title="用户管理">
+                #parse("sysmanage/user.vm")
+            </div>
+            <div title="角色管理"">
+                #parse("sysmanage/role.vm")
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var toUrl;
+    var param;
+    $('#td').tree({
+        url: "/web/sysmanage/findallstation",
+        loadFilter: function (data) {
+            if (data != null) {
+                return data;
+            }
+        },
+        onClick: function (node) {
+            var toUrl = '/web/sysmanage/sysmanage';
+            //调用方法 如
+            window.location.href = toUrl + "?id=" + node.attributes;
+        }
+    });
+</script>
+</body>
+</html>

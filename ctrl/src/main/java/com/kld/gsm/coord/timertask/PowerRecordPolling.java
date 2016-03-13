@@ -7,10 +7,13 @@ import com.kld.gsm.ATGDevice.atg_powerrecord_in_t;
 import com.kld.gsm.coord.Context;
 import com.kld.gsm.coord.servcie.DailyPowerService;
 import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,6 +36,9 @@ public class PowerRecordPolling extends Thread {
     String init_date = "";
     @Override
     public void run() {
+        RuntimeMXBean rt = ManagementFactory.getRuntimeMXBean();
+        String pid = rt.getName();
+        MDC.put("PID", pid);
         while(true) {
             try {
                 sleep(TimeTaskPar.get("ywykgjlsjjg")*1000);
@@ -130,9 +136,8 @@ public class PowerRecordPolling extends Thread {
             future.cancel(true);
         } catch (TimeoutException e) {
             future.cancel(true);
-        } finally {
-            executor.shutdown();
         }
+        executor.shutdownNow();
         return 1;
     }
 }

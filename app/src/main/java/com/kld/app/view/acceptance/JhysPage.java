@@ -18,7 +18,6 @@ import com.kld.gsm.Socket.uitls.ResultUtils;
 import com.kld.gsm.util.DateUtil;
 import com.kld.gsm.util.JsonMapper;
 import com.kld.gsm.util.V20Utils;
-import io.netty.channel.Channel;
 import org.apache.log4j.Logger;
 import org.jdesktop.swingx.JXDatePicker;
 
@@ -680,7 +679,7 @@ public class JhysPage extends JOptionPane implements Watcher,WindowListener {
             lbll.setBounds(90, 110, 85, 15);
             panel_1.add(lbll);
     
-            // 油枪
+
     
             // 前尺数据
             JPanel qcsjTablePanel = new JPanel();
@@ -1073,8 +1072,8 @@ public class JhysPage extends JOptionPane implements Watcher,WindowListener {
                 beginTime.setText(DateUtil.getDate(oldinfo.getBegintime() == null ? null : oldinfo.getBegintime(), "yyyy-MM-dd HH:mm:ss"));
                 endTime.setText(DateUtil.getDate(oldinfo.getEndtime() == null ? null : oldinfo.getEndtime(), "yyyy-MM-dd HH:mm:ss"));
 
-                bcxyssField.setText(oldinfo.getDischargel() == null ? "" : oldinfo.getDischargel().toString());
-                fyssField.setText(oldinfo.getDuringsales()== null ? "" : oldinfo.getDuringsales().toString());
+                bcxyssField.setText(oldinfo.getDischargel() == null ? "" : new DecimalFormat("0").format(oldinfo.getDischargel()).toString());
+                fyssField.setText(oldinfo.getDuringsales()== null ? "" : new DecimalFormat("0").format(oldinfo.getDuringsales()).toString());
                 cb1.setSelected(true);
                 cb2.setSelected(true);
                 cb1.setEnabled(false);
@@ -1294,8 +1293,8 @@ public class JhysPage extends JOptionPane implements Watcher,WindowListener {
                         double temperature = pjwdLabel.getText().trim().isEmpty() ? 0.0 : Double.parseDouble(pjwdLabel.getText().trim());
                         TableModel tableModel1 = qcsjTable.getModel();
                         tableModel1.setValueAt(heightTotal, 1, 0);
-                        tableModel1.setValueAt(oilL, 1, 1);
-                        tableModel1.setValueAt(getV20L(OIL_TYPE_1, temperature, oilL),1, 2);
+                        tableModel1.setValueAt(new DecimalFormat("0").format(oilL), 1, 1);
+                        tableModel1.setValueAt(new DecimalFormat("0").format(getV20L(OIL_TYPE_1, temperature, oilL)),1, 2);
                         tableModel1.setValueAt(temperature, 1, 3);
                         qcsjTable.updateUI();
 
@@ -1358,8 +1357,8 @@ public class JhysPage extends JOptionPane implements Watcher,WindowListener {
                         double temperature = pjwdLabel.getText().trim().isEmpty() ? 0.0 : Double.parseDouble(pjwdLabel.getText().trim());
                         TableModel tableModel = qcsjTable.getModel();
                         tableModel.setValueAt(heightTotal, 2, 0);
-                        tableModel.setValueAt(oilL, 2, 1);
-                        tableModel.setValueAt(getV20L(OIL_TYPE_1, temperature, oilL), 2, 2);
+                        tableModel.setValueAt(new DecimalFormat("0").format(oilL), 2, 1);
+                        tableModel.setValueAt(new DecimalFormat("0").format(getV20L(OIL_TYPE_1, temperature, oilL)), 2, 2);
                         tableModel.setValueAt(temperature, 2, 3);
                         qcsjTable.updateUI();
 
@@ -1718,13 +1717,13 @@ public class JhysPage extends JOptionPane implements Watcher,WindowListener {
                    /* DecimalFormat decimalFormat = new DecimalFormat("######0.00");
                     System.out.println(" DecimalFormat --[oill]"+ Double.parseDouble(decimalFormat.format(oill)));
                     return oill == null ? 0.00 : Double.parseDouble(decimalFormat.format(oill));*/
-                    Double dstj=Double.parseDouble(df.format(Double.parseDouble(candata.get(m).get("fWaterBulk").toString())));
+                    Double dstj=Double.parseDouble(df.format(Double.parseDouble(new DecimalFormat("0").format(candata.get(m).get("fWaterBulk")).toString())));
                     stj.setText(String.valueOf(dstj));
                     Double dpjwd=Double.parseDouble(df.format(Double.parseDouble(candata.get(m).get("fOilTemp").toString())));
                     pjwd.setText(String.valueOf(dpjwd));
-                    Double djytj=Double.parseDouble(df.format(Double.parseDouble(candata.get(m).get("fOilCubage").toString())));
+                    Double djytj=Double.parseDouble(df.format(Double.parseDouble(new DecimalFormat("0").format(candata.get(m).get("fOilCubage")).toString())));
                     jytj.setText(String.valueOf(djytj));
-                    Double dktj=Double.parseDouble(df.format(Double.parseDouble(candata.get(m).get("fEmptyCubage").toString())));
+                    Double dktj=Double.parseDouble(df.format(Double.parseDouble(new DecimalFormat("0").format(candata.get(m).get("fEmptyCubage")).toString())));
                     ktj.setText(String.valueOf(dktj));
                     Double dyszg=Double.parseDouble(df.format(Double.parseDouble(candata.get(m).get("fTotalHeight").toString())));
                     yszg.setText(String.valueOf(dyszg));
@@ -1812,12 +1811,12 @@ public class JhysPage extends JOptionPane implements Watcher,WindowListener {
         }
         list[0][2]=alarmDailyLostService.selectOilNo(bill.getOilno());
         // endregion
-        list[0][3]=bill.getPlanl();
+        list[0][3]=new DecimalFormat("0").format(bill.getPlanl());
         list[0][4]=bill.getDeliverytemp();
-        list[0][5]=bill.getPlanton();
+        list[0][5]=new DecimalFormat("0.000").format(bill.getPlanton());
 
         //罐车交接原发升数
-        yfssField.setText(bill.getPlanl() == null ? "" : bill.getPlanl().toString());
+        yfssField.setText(bill.getPlanl() == null ? "" : new DecimalFormat("0").format(bill.getPlanl()).toString());
 
         System.out.println(list);
 

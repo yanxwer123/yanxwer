@@ -15,6 +15,6 @@ public interface DDailyBalanceService {
     List<HashMap<String,Object>> selectbalancebywhere(String start,String end,String oucode);
     List<oss_daily_DailyBalance> selectbalance(String start,String end,String oucode);
 
-    List<HashMap<String,Object>>  querypage(Integer intPage, Integer intPageSize,String oucode,String starttime,String endtime);
+    List<HashMap<String,Object>>  querypage(Integer page, Integer rows, String start, String end,String oucode);
     public void ExportBalance(List<HashMap<String,Object>> list,String [] titles,ServletOutputStream outputStream);
 }

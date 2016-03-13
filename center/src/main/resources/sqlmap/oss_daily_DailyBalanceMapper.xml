@@ -197,16 +197,43 @@
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
   </update>
   <select id="selectbalancebywhere" resultType="hashmap" parameterType="hashmap">
-    <![CDATA[SELECT * FROM oss_daily_DailyBalance WHERE AccountDate>=#{start,jdbcType=TIMESTAMP} And AccountDate<#{end,jdbcType=TIMESTAMP}
-    and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    <![CDATA[
+      SELECT a.*,b.OUName,c.OilName from
+    oss_daily_DailyBalance a
+    inner join oss_sys_OrgUnit b on a.OUCode=b.OUCode
+    left outer JOIN oss_sysmanage_oiltype c on a.OilNo=c.OilNo
+      WHERE AccountDate>=#{start,jdbcType=TIMESTAMP} And AccountDate<#{end,jdbcType=TIMESTAMP}
+    ]]>
+    <if test="oucode != null and oucode != '' ">
+      <![CDATA[  and a.OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    </if>
+    ORDER BY AccountDate DESC
   </select>
   <select id="selectbalance" resultType="com.kld.gsm.center.domain.oss_daily_DailyBalance" parameterType="hashmap">
-    <![CDATA[SELECT * FROM oss_daily_DailyBalance WHERE AccountDate>=#{start,jdbcType=TIMESTAMP} And AccountDate<#{end,jdbcType=TIMESTAMP}
-    and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    <![CDATA[
+      SELECT a.*,b.OUName,c.OilName from
+    oss_daily_DailyBalance a
+    inner join oss_sys_OrgUnit b on a.OUCode=b.OUCode
+    left outer JOIN oss_sysmanage_oiltype c on a.OilNo=c.OilNo
+      WHERE AccountDate>=#{start,jdbcType=TIMESTAMP} And AccountDate<#{end,jdbcType=TIMESTAMP}
+    ]]>
+    <if test="oucode != null and oucode != '' ">
+      <![CDATA[  and a.OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    </if>
+    ORDER BY AccountDate DESC
   </select>
   <select id="querypage" resultType="hashmap" parameterType="hashmap">
-    <![CDATA[SELECT * FROM oss_daily_DailyBalance WHERE AccountDate>=#{start,jdbcType=TIMESTAMP} And AccountDate<#{end,jdbcType=TIMESTAMP}
-    and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    <![CDATA[
+      SELECT a.*,b.OUName,c.OilName from
+    oss_daily_DailyBalance a
+    inner join oss_sys_OrgUnit b on a.OUCode=b.OUCode
+    left outer JOIN oss_sysmanage_oiltype c on a.OilNo=c.OilNo
+      WHERE AccountDate>=#{start,jdbcType=TIMESTAMP} And AccountDate<#{end,jdbcType=TIMESTAMP}
+    ]]>
+    <if test="oucode != null and oucode != '' ">
+      <![CDATA[  and a.OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    </if>
+    ORDER BY AccountDate DESC
     <if test="firstRow != null and  pageSize!= null">
       <![CDATA[ LIMIT #{firstRow},#{pageSize}]]>
     </if>

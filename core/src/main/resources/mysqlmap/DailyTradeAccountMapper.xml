@@ -593,8 +593,24 @@
      WHERE  (Shift IS NULL OR Shift='' OR Shift &gt;#{shift,jdbcType=VARCHAR}) AND Liter IS NOT NULL
      GROUP BY OilNo
   </select>
+    <select id="findByOilGun" parameterType="java.util.HashMap" resultType="java.lang.String">
+        <![CDATA[SELECT SUM(Liter) FROM oss_daily_TradeAccount
+          WHERE OilGun = #{oilgun}
+          AND TakeDate>=#{begintime}
+          AND TakeDate<=#{endtime}]]>
 
-  <update id="updateByShift" parameterType="java.util.Map">
+    </select>
+    <select id="findByOilNo" parameterType="java.util.HashMap" resultType="java.lang.String">
+        <![CDATA[SELECT SUM(Liter) FROM oss_daily_TradeAccount
+          WHERE OilNo = #{oilno}
+          AND TakeDate>=#{begintime}
+          AND TakeDate<=#{endtime}]]>
+
+    </select>
+
+
+
+    <update id="updateByShift" parameterType="java.util.Map">
     <![CDATA[ UPDATE oss_daily_TradeAccount set AccountDate = #{accountdate}
       WHERE Shift>=#{minshift} AND Shift <=#{maxshift} ]]>
   </update>

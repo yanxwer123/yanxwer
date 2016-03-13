@@ -25,6 +25,12 @@ public class WebDictInfoController {
     @ResponseBody
     public List<HashMap<String,String>>  selectYJLX()
     {
-        return  sysDictService.selectYJLX();
+        List<HashMap<String,String>> dictType=sysDictService.selectYJLX();
+        //增加全部
+        HashMap<String,String> hashMap=new HashMap();
+        hashMap.put("Name","<全部>");
+        hashMap.put("Value","");
+        dictType.add(0,hashMap);
+        return dictType;
     }
 }

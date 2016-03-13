@@ -1,28 +1,26 @@
 package com.kld.app.view.alarm;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import com.kld.app.service.AlarmGaTContrastService;
+import com.kld.app.service.SysManageCanInfoService;
+import com.kld.app.springcontext.Context;
+import com.kld.app.util.Constant;
+import com.kld.app.view.acceptance.MyTable;
+import com.kld.gsm.ATG.domain.AlarmGaTContrast;
+import com.kld.gsm.ATG.domain.SysManageCanInfo;
+import org.jdesktop.swingx.JXDatePicker;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
-
-import com.kld.app.service.SysManageCanInfoService;
-import com.kld.app.view.acceptance.MyTable;
-import com.kld.gsm.ATG.domain.SysManageCanInfo;
-import org.jdesktop.swingx.JXDatePicker;
-
-import com.kld.app.service.AlarmGaTContrastService;
-import com.kld.app.springcontext.Context;
-import com.kld.app.util.Constant;
-import com.kld.gsm.ATG.domain.AlarmGaTContrast;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.List;
 
 /**
  *@author 徐超 E-mail:oscarxcc@163.com
@@ -159,18 +157,19 @@ public class GunsTankComparation {
 //				data[0] = tableHeads;
 		for (int i = 0; i < list.size(); i++) {
 			AlarmGaTContrast info = list.get(i);
+			DecimalFormat df=new DecimalFormat("0");
 			data[i][0] = info.getOilcan();
 			data[i][1] = dateFormat.format(info.getFristmeasuretime());
-			data[i][2] = info.getFristmeasurestore();
+			data[i][2] = df.format(info.getFristmeasurestore());
 			data[i][3] = dateFormat.format(info.getSecodemeasuretime());
-			data[i][4] = info.getSecodemeasurestore();
-			data[i][5] = info.getIntervalsales();
+			data[i][4] = df.format(info.getSecodemeasurestore());
+			data[i][5] = df.format(info.getIntervalsales());
 
 			long iTime=Math.round(Double.parseDouble(info.getIntervaltime()));
 			String sMin=(iTime/60)+"分"+(iTime%60)+"秒";
 
 			data[i][6] = sMin;//转成分秒格式。库表不对IntervalTime
-			data[i][7] = info.getDifference();
+			data[i][7] = df.format(info.getDifference());
 		}
 		//probePartable =
 				getTable(tableHeads,data);

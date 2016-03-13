@@ -25,10 +25,24 @@
     from Sys_func
     where funccode = #{funccode,jdbcType=VARCHAR}
   </select>
+  <select id="selectBycode" resultType="com.kld.gsm.center.domain.Sys_func" parameterType="java.lang.String" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from Sys_func
+    where parentcode = #{parentcode}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from Sys_func
     where funccode = #{funccode,jdbcType=VARCHAR}
   </delete>
+  <insert id="insertRow" parameterType="hashmap" >
+    insert into Sys_func (funccode, parentcode, name, targeturl)
+    values (#{funccode}, #{parentcode},#{name}, #{targeturl})
+  </insert>
+  <update id="updateRow" parameterType="hashmap" >
+    UPDATE  Sys_func set parentcode=#{parentcode},targeturl=#{targeturl},name=#{name}
+    where funccode=#{funccode}
+  </update>
   <insert id="insert" parameterType="com.kld.gsm.center.domain.Sys_func" >
     insert into Sys_func (funccode, parentcode, name, 
       description, picurl, targeturl, 
@@ -174,7 +188,20 @@
       moditime = #{moditime,jdbcType=TIMESTAMP}
     where funccode = #{funccode,jdbcType=VARCHAR}
   </update>
+  <select id="selectAll" resultType="com.kld.gsm.center.domain.Sys_func">
+    select * from sys_func
+  </select>
   <select id="getFuncList" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select * from sys_func
+  </select>
+  <select id="getCatalogList" parameterType="hashmap" resultType="hashmap">
+    select * from sys_func
+    where 1=1
+    <if test="firstRow != null and  pageSize!= null">
+      <![CDATA[ LIMIT #{firstRow},#{pageSize}]]>
+    </if>
+  </select>
+  <select id="getCatalogAllList" resultType="hashmap">
     select * from sys_func
   </select>
 </mapper>

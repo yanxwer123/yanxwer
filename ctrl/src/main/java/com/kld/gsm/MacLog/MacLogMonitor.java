@@ -2,9 +2,12 @@ package com.kld.gsm.MacLog;
 
 import com.kld.gsm.util.DateUtil;
 import org.apache.commons.io.input.Tailer;
+import org.apache.log4j.MDC;
 import org.slf4j.Logger;
 
 import java.io.File;
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -36,6 +39,9 @@ public class MacLogMonitor  extends  Thread {
     }
 
     public void run() {
+        RuntimeMXBean rt = ManagementFactory.getRuntimeMXBean();
+        String pid = rt.getName();
+        MDC.put("PID", pid);
         while (true) {
             monitor();
             try {

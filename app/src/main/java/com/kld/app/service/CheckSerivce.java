@@ -2,6 +2,7 @@ package com.kld.app.service;
 
 import com.kld.gsm.ATG.domain.DailyTankShift;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,11 +33,20 @@ public interface CheckSerivce {
     List<Map<String,Object>> getLiter(String shift);
     List<Map<String,Object>> getLiterByAccountDate();
 
-
     /**
      *
      * @param OilNo 油品编号
      * @return 油品名称
      */
     String selectOilNo(String OilNo);
+
+    String findByOilcan(String shift,String oilcan);
+
+    /**
+     *
+     * @param shift 班次
+     * @param oilno 油品
+     * @return  期初 (多油罐有相同油品，汇总油品期初)
+     */
+    String findToOilLByOilNo(String shift,String oilno);
 }

@@ -10,6 +10,7 @@ import com.kld.app.socket.ob.Watcher;
 import com.kld.app.springcontext.Context;
 import com.kld.app.util.SysConfig;
 import com.kld.app.view.main.Main;
+import com.kld.gsm.ATG.dao.SysManageDictDao;
 import com.kld.gsm.ATG.domain.*;
 import com.kld.gsm.Socket.Constants;
 import com.kld.gsm.Socket.protocol.GasMsg;
@@ -19,6 +20,7 @@ import com.kld.gsm.util.DateUtil;
 import com.kld.gsm.util.JsonMapper;
 import com.kld.gsm.util.V20Utils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.*;
 import javax.swing.Timer;
@@ -35,6 +37,8 @@ import java.util.List;
 
 public class GlwhdPage extends JOptionPane implements WindowListener,Watcher {
 
+    @Autowired
+    private SysManageDictDao sysManageDictDao;
     private   String OIL_TYPE_1 = "01";
     private static final Logger LOG = Logger.getLogger(GlwhdPage.class);
     private AlarmOilInContrastService alarmOilInContrastService;
@@ -125,8 +129,6 @@ public class GlwhdPage extends JOptionPane implements WindowListener,Watcher {
         psdLabel.setBounds(0, 0, 682, 25);
         frame.getContentPane().add(psdLabel);
 
-
-
         final JButton confirmBtn = new JButton("确定");
         confirmBtn.setBounds(579, 297, 93, 23);
         frame.getContentPane().add(confirmBtn);
@@ -135,7 +137,6 @@ public class GlwhdPage extends JOptionPane implements WindowListener,Watcher {
                 frame.dispose();
             }
         });
-
         //region 调用ctrl超时定时器
         final Timer timer=new Timer(1000,null);
         timer.addActionListener(new ActionListener() {
@@ -174,10 +175,10 @@ public class GlwhdPage extends JOptionPane implements WindowListener,Watcher {
                 if (selectRow < 0) {
                 }else {
                     manualbillno=tableModel.getValueAt(selectRow,0).toString();
-                    if (Math.abs(bill.getPlanl()-Double.parseDouble(tableModel.getValueAt(selectRow, 1).toString()))>1){
+                  /*  if (Math.abs(bill.getPlanl()-Double.parseDouble(tableModel.getValueAt(selectRow, 1).toString()))>1){
                         JOptionPane.showMessageDialog(null, "原发升数不同", "信息提示", JOptionPane.INFORMATION_MESSAGE);
                         return;
-                    }
+                    }*/
                     confirmBtn.setEnabled(false);
                     //region  通知主调度
                     try {
@@ -396,43 +397,59 @@ public class GlwhdPage extends JOptionPane implements WindowListener,Watcher {
             bill.setRelevancedelveryno(odg.getManualNo());// 更新出库单无货单表
             iAcceptanceDeliveryService.updateByPrimaryKey(bill);
 
+            double yfss = bill.getPlanl() == null ? 0 : bill.getPlanl();
+            double yfssv20 = 0.0;
+            double yfwd = bill.getDeliverytemp() == null ? 0 : bill.getDeliverytemp();
+            yfssv20 = getV20L(OIL_TYPE_1, yfwd, yfss);
 
-            //region  计算损益
-            if(odRegisterService==null){
-                odRegisterService=Context.getInstance().getBean(IAcceptanceOdRegisterService.class);
-            }
-            //设置油品类型
-            try {
-                OIL_TYPE_1 = odRegisterService.selectOilType(bill.getOilno()).getOiltype().toString();
-            }catch (Exception e) {
-                LOG.error("获取油品类型：" + e.getMessage());
-            }
-            double yfss=bill.getPlanl()==null?0:bill.getPlanl();
-            double yfssv20=0.0;
-            double yfwd=bill.getDeliverytemp()==null?0:bill.getDeliverytemp();
-            yfssv20=getV20L(OIL_TYPE_1,yfwd,yfss);
-            Map result = odRegisterService.getodreglossrate(yfss,yfssv20,bill.getDeliveryno());
-            System.out.print(result.toString());
-            try {
-                odg.setRealgetl(Double.parseDouble(result.get("Dischargel").toString()));
-                odg.setDuringsales(Double.parseDouble(result.get("DuringSales").toString()));
-                odg.setRealGetLV20(Double.parseDouble(result.get("V20").toString()));
-                odg.setDischargeloss(Double.parseDouble(result.get("loss").toString()));
-                odg.setDischargerate(Double.parseDouble(result.get("lossreate").toString()));
-                odg.setDischargeLossV20(Double.parseDouble(result.get("v20loss").toString()));
-                Double shsp = Double.parseDouble(result.get("shsp").toString());
+            if (odg.getServicelevel() != null && odg.getServicelevel() == 1) {
+                if(sysManageDictDao==null){
+                    sysManageDictDao=Context.getInstance().getBean(SysManageDictDao.class);
+                }
+                Double syl = Double.parseDouble(sysManageDictDao.selectByCode("sylycsz").getValue());
+                Double shsp = (yfssv20 - odg.getRealGetLV20()) - (yfssv20 * syl);
+                if (shsp > 0) {
+                    odg.setIndemnityloss(shsp);
+                }
+                odg.setDischargeloss(yfss - odg.getRealgetl());
+                odg.setDischargerate(odg.getDischargeloss() / yfss);
+                odg.setDischargeLossV20(yfssv20 - odg.getRealGetLV20());
+                odg.setDischargeRateV20(odg.getDischargeLossV20() / yfssv20);
 
-                if (shsp < 0) shsp = 0d;
-                odg.setIndemnityloss(shsp);
-                odg.setDischargeRateV20(Double.parseDouble(result.get("V20lossrate").toString()));
-            }catch (Exception e){
-                LOG.error("计算损益失败"+e.getMessage());
-            }
-            iAcceptanceOdRegisterService.updateByPrimaryKey(odg);
-            addOilinContrat(odg);
-            //endregion
+            }else {
+                //region  计算损益
+                if (odRegisterService == null) {
+                    odRegisterService = Context.getInstance().getBean(IAcceptanceOdRegisterService.class);
+                }
+                //设置油品类型
+                try {
+                    OIL_TYPE_1 = odRegisterService.selectOilType(bill.getOilno()).getOiltype().toString();
+                } catch (Exception e) {
+                    LOG.error("获取油品类型：" + e.getMessage());
+                }
 
+                Map result = odRegisterService.getodreglossrate(yfss, yfssv20, bill.getDeliveryno());
+                System.out.print(result.toString());
+                try {
+                    odg.setRealgetl(Double.parseDouble(result.get("Dischargel").toString()));
+                    odg.setDuringsales(Double.parseDouble(result.get("DuringSales").toString()));
+                    odg.setRealGetLV20(Double.parseDouble(result.get("V20").toString()));
+                    odg.setDischargeloss(Double.parseDouble(result.get("loss").toString()));
+                    odg.setDischargerate(Double.parseDouble(result.get("lossreate").toString()));
+                    odg.setDischargeLossV20(Double.parseDouble(result.get("v20loss").toString()));
+                    Double shsp = Double.parseDouble(result.get("shsp").toString());
+
+                    if (shsp < 0) shsp = 0d;
+                    odg.setIndemnityloss(shsp);
+                    odg.setDischargeRateV20(Double.parseDouble(result.get("V20lossrate").toString()));
+                } catch (Exception e) {
+                    LOG.error("计算损益失败" + e.getMessage());
+                }
+                //endregion
+            }
             try {
+                iAcceptanceOdRegisterService.updateByPrimaryKey(odg);
+                addOilinContrat(odg);
                 ckdcxPage.reLoad();
             } catch (Exception e1) {
                 e1.printStackTrace();

@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface DStationShiftInfoService {
     int AddStationShiftInfo(List<oss_daily_StationShiftInfo> oss_daily_stationShiftInfos);
-    List<HashMap<String,Object>> getShiftList(HashMap<String,Object> map);
+    List<HashMap<String, Object>> getShiftList(String begin, String end, String oucode);
     List<HashMap<String,Object>> selectPageShiftInfo(Integer page, Integer rows,String begin,String end,String oucode);
     public void YZBB(List<HashMap<String,Object>> list,String [] titles,ServletOutputStream outputStream);
 }

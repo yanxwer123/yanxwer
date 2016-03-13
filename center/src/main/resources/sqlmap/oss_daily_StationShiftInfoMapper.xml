@@ -22,12 +22,26 @@
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
   </select>
   <select id="selectShiftInfo" resultType="hashmap" parameterType="hashmap" >
-    <![CDATA[ select * from oss_daily_StationShiftInfo where LEFT(Shift,8)>=#{begin,jdbcType=VARCHAR} AND LEFT(Shift,8)<=#{end,jdbcType=VARCHAR}
-    and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    <![CDATA[
+    SELECT a.*,b.OUName from
+    oss_daily_StationShiftInfo a
+    inner join oss_sys_OrgUnit b on a.OUCode=b.OUCode
+    where ShiftTime>=#{begin,jdbcType=VARCHAR} AND ShiftTime<=#{end,jdbcType=VARCHAR}
+    ]]>
+    <if test="oucode != null and oucode != '' ">
+      <![CDATA[  and a.OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    </if>
   </select>
   <select id="selectPageShiftInfo" resultType="hashmap" parameterType="hashmap" >
-    <![CDATA[ select * from oss_daily_StationShiftInfo where LEFT(Shift,8)>=#{begin,jdbcType=VARCHAR} AND LEFT(Shift,8)<=#{end,jdbcType=VARCHAR}
-    and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    <![CDATA[
+    SELECT a.*,b.OUName from
+    oss_daily_StationShiftInfo a
+    inner join oss_sys_OrgUnit b on a.OUCode=b.OUCode
+    where ShiftTime>=#{begin,jdbcType=VARCHAR} AND ShiftTime<=#{end,jdbcType=VARCHAR}
+    ]]>
+    <if test="oucode != null and oucode != '' ">
+      <![CDATA[  and a.OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    </if>
     <if test="firstRow != null and  pageSize!= null">
       <![CDATA[ LIMIT #{firstRow},#{pageSize}]]>
     </if>

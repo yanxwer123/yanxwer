@@ -556,4 +556,20 @@
   <delete id="deleteByDeliveryNo" parameterType="String">
      DELETE FROM oss_acceptance_odRegisterInfo WHERE DeliveryNo=#{0,jdbcType=VARCHAR}
   </delete>
+  <select id="selectAcceptanceServicePage" parameterType="hashmap" resultType="hashmap">
+    select *
+    from oss_acceptance_odRegisterInfo
+    where ManualNo = #{manualno,jdbcType=VARCHAR}
+    <if test="firstRow != null and  pageSize!= null">
+      <![CDATA[ LIMIT #{firstRow},#{pageSize}]]>
+    </if>
+  </select>
+
+  <select id="selectAllAcceptanceServicePage" parameterType="String" resultType="hashmap">
+    select * from oss_acceptance_odRegisterInfo  where ManualNo = #{deliveryno,jdbcType=VARCHAR}
+  </select>
+
+
+
+
 </mapper>

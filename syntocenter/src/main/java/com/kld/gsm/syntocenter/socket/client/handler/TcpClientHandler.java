@@ -1,5 +1,6 @@
 package com.kld.gsm.syntocenter.socket.client.handler;
 
+import com.kld.gsm.Socket.uitls.ByteUtils;
 import com.kld.gsm.syntocenter.server.ApplicationMain;
 import com.kld.gsm.syntocenter.socket.client.TcpClient;
 import com.kld.gsm.syntocenter.util.action;
@@ -38,16 +39,19 @@ public class TcpClientHandler extends SimpleChannelInboundHandler {
     //断开
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        ctx.close();
+        ByteUtils.getInstance().packageMapper.remove(ctx);
+
         LOG.info("disconnect");
-        action action = new action();
+        //action action = new action();
         int i = 0;
         boolean flag = true;
         while (flag) {
             try {
-                Channel channel = TcpClient.getInstance().getChannel(action.getCtrladdr(), Integer.valueOf(action.getctrlport()));
+                Channel channel = TcpClient.getInstance().getChannel(ApplicationMain.ctrladdr, Integer.valueOf(ApplicationMain.ctrlport));
 
                 if (channel != null) {
-                    System.out.println("reLink ok  ");
+                    LOG.info("reLink ok  ");
                     ApplicationMain.CC = channel;
                     flag = false;
                     break;
@@ -56,12 +60,12 @@ public class TcpClientHandler extends SimpleChannelInboundHandler {
 
                 Thread.sleep(5000);
                 LOG.info("ReLink[" + i + "]....");
-                if (i == 3) {
+                /*if (i == 3) {
                     System.out.println("Stop");
                     //JOptionPane.showMessageDialog(null, "与主调度断开链接,尝试重连。", "错误提示", JOptionPane.ERROR_MESSAGE);
                     i = 0;
                     // System.exit(0);
-                }
+                }*/
             } catch (InterruptedException e) {
                 LOG.error("重连出错.......");
                 // System.exit(0);
@@ -77,6 +81,6 @@ public class TcpClientHandler extends SimpleChannelInboundHandler {
         LOG.info("强制断开");
         //关闭链路
         ctx.close();
-
+        ByteUtils.getInstance().packageMapper.remove(ctx);
     }
 }

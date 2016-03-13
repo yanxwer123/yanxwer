@@ -1,4 +1,4 @@
-#set($layout="layout/emptylayout.vm")
+#set($layout="layout/loginlayout.vm")
 <!doctype html>
 <html>
 <head>
@@ -21,13 +21,13 @@
                 <input type="password" placeholder="密码" id="j_password"  name="j_password" class="input-text">
                 <input type="text"   placeholder="验证码" id="j_checkcode" name="j_checkcode" class="input-text" style="width:  60%">
                 <img id="vimg"  title="点击更换" onclick="changeCode(this);" style="width: 90px; height:44px;" src="/web/generateVerifyCode">
-                <input type="submit" value="登  录" class="input-btn">
+                <input type="submit" value="登  录"  class="input-btn">
                 <p class="input-check"><input type="checkbox">记住密码？</p>
         </div>
 
     </div>
 </div>
-<p class="login-copy">中国石化版权所有 © Copyright Sinopec 2015.</p>
+<p class="login-copy">中国石化版权所有 © Copyright Sinopec 2016.</p>
 </body>
 
 #if($!msg)
@@ -40,6 +40,7 @@
     function changeCode(e){
         document.getElementById("vimg").setAttribute("src","/web/generateVerifyCode?a="+Math.random());
     }
+
 </script>
 
 </html>

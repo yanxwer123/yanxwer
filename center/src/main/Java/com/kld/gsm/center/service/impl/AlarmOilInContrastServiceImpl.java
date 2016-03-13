@@ -88,31 +88,38 @@ public class AlarmOilInContrastServiceImpl implements AlarmOilInContrastService 
             {
                 XSSFRow bodyRow = sheet.createRow(j + 1);
                 //List<oss_daily_StationShiftInfo> goods = list.get(j);
-                for (HashMap<String, Object> item:list) {
+                HashMap<String, Object> item=list.get(j);
                     cell = bodyRow.createCell(0);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("ouname").toString());
+                    cell.setCellValue(item.get("OUName").toString());
 
                     cell = bodyRow.createCell(1);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("DeliveryNo").toString());
+                    cell.setCellValue(item.get("OilName").toString());
 
                     cell = bodyRow.createCell(2);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("PlanL").toString());
+                    cell.setCellValue(item.get("CreatTime").toString());
 
                     cell = bodyRow.createCell(3);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("RealRecieve").toString());
+                    cell.setCellValue(item.get("DeliveryNo").toString());
 
                     cell = bodyRow.createCell(4);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("Loss").toString());
+                    cell.setCellValue(item.get("PlanL").toString());
 
                     cell = bodyRow.createCell(5);
                     cell.setCellStyle(bodyStyle);
+                    cell.setCellValue(item.get("RealRecieve").toString());
+
+                    cell = bodyRow.createCell(6);
+                    cell.setCellStyle(bodyStyle);
+                    cell.setCellValue(item.get("Loss").toString());
+
+                    cell = bodyRow.createCell(7);
+                    cell.setCellStyle(bodyStyle);
                     cell.setCellValue(item.get("LossRate").toString());
-                }
             }
         }
         try

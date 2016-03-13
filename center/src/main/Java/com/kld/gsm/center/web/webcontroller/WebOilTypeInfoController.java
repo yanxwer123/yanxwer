@@ -31,7 +31,7 @@ public class WebOilTypeInfoController {
     public List<HashMap<String,String>> selectOilType(){
        List<HashMap<String,String>> ossSysmanageOilTypes=oilTypeService.selectOilType();
         HashMap<String,String> hashMap=new HashMap();
-        hashMap.put("OilName","请选择");
+        hashMap.put("OilName","<全部>");
         hashMap.put("OilNo","");
         ossSysmanageOilTypes.add(0,hashMap);
         return ossSysmanageOilTypes;
@@ -42,7 +42,12 @@ public class WebOilTypeInfoController {
     @ResponseBody
     public List<HashMap<String,String>> SeletOilAlarmType()
     {
-        List<HashMap<String,String>> oilAlaryType=sysDictService.selectByParentId("45");
-        return oilAlaryType;
+        List<HashMap<String,String>> oilAlarmType=sysDictService.selectByParentId("45");
+        //增加全部
+        HashMap<String,String> hashMap=new HashMap();
+        hashMap.put("name","<全部>");
+        hashMap.put("value","");
+        oilAlarmType.add(0,hashMap);
+        return oilAlarmType;
     }
 }

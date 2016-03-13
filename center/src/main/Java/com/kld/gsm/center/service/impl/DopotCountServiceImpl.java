@@ -29,9 +29,14 @@ public class DopotCountServiceImpl implements DopotCountService {
         return 1;
     }
     @Override
-    public ResultMsg selectByShift(String shift) {
+    public ResultMsg selectByShift(String shift,String oucode) {
         ResultMsg result=new ResultMsg();
-        List<oss_daily_opotCount> exchangeList=ossDailyOpotCountMapper.selectFyxx(shift);
+
+        HashMap hashMap = new HashMap();
+        hashMap.put("shift", shift);
+        hashMap.put("oucode", oucode);
+
+        List<oss_daily_opotCount> exchangeList=ossDailyOpotCountMapper.selectFyxx(hashMap);
         List<FMResult> list=getDataInfo(exchangeList);
         result.setResult(true);
         result.setData(list);

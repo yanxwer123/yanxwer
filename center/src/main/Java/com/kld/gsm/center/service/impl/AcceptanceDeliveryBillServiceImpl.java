@@ -1,9 +1,7 @@
 package com.kld.gsm.center.service.impl;
 
 import com.kld.gsm.center.dao.oss_acceptance_deliveryBillMapper;
-import com.kld.gsm.center.dao.oss_alarm_DailyLostMapper;
 import com.kld.gsm.center.domain.oss_acceptance_deliveryBill;
-import com.kld.gsm.center.domain.oss_alarm_DailyLost;
 import com.kld.gsm.center.service.AcceptanceDeliveryBillService;
 import com.kld.gsm.center.util.ExportUtil;
 import org.apache.log4j.Logger;
@@ -14,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
@@ -46,7 +43,7 @@ public class AcceptanceDeliveryBillServiceImpl implements AcceptanceDeliveryBill
      */
     @Override
     public oss_acceptance_deliveryBill selectBybillno(String billno) {
-       return ossAcceDeliveryBillMapper.selectByPrimaryKey(billno);
+        return ossAcceDeliveryBillMapper.selectByPrimaryKey(billno);
     }
 
     @Override
@@ -118,14 +115,14 @@ public class AcceptanceDeliveryBillServiceImpl implements AcceptanceDeliveryBill
     public List<HashMap<String, Object>> selectAllDeliveryBillPage(String oucode, String deliveryno, String psdId, String startTime, String endTime, String yslx, String startTime1, String endTime1, String yjssts) {
 
         HashMap hashMap = new HashMap();
-        hashMap.put("pageSize", psdId);
-        hashMap.put("pageSize", deliveryno);
-        hashMap.put("pageSize", startTime);
-        hashMap.put("pageSize", endTime);
-        hashMap.put("pageSize", yslx);
-        hashMap.put("pageSize", startTime1);
-        hashMap.put("pageSize", endTime1);
-        hashMap.put("pageSize", yjssts);
+        hashMap.put("psdId", psdId);
+        hashMap.put("ManualNo", deliveryno);
+        hashMap.put("startTime", startTime);
+        hashMap.put("endTime", endTime);
+        hashMap.put("yslx", yslx);
+        hashMap.put("startTime1", startTime1);
+        hashMap.put("endTime1", endTime1);
+        hashMap.put("yjssts", yjssts);
         if(oucode!=null && oucode!="") {
             hashMap.put("oucode", oucode + "%");
         }

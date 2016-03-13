@@ -1,27 +1,22 @@
 package com.kld.app.view.alarm;
 
-import java.awt.Color;
-import java.awt.Dimension;
+import com.kld.app.service.AlarmOilInContrastService;
+import com.kld.app.springcontext.Context;
+import com.kld.app.util.Constant;
+import com.kld.app.view.acceptance.MyTable;
+import com.kld.gsm.ATG.domain.AlarmOilInContrast;
+import org.jdesktop.swingx.JXDatePicker;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
-import javax.swing.*;
-import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
-
-import com.kld.app.view.acceptance.MyTable;
-import org.jdesktop.swingx.JXDatePicker;
-
-import com.kld.app.service.AlarmOilInContrastService;
-import com.kld.app.springcontext.Context;
-import com.kld.app.util.Constant;
-import com.kld.gsm.ATG.domain.AlarmOilInContrast;
+import java.util.List;
 
 /**
  *@author 徐超 E-mail:oscarxcc@163.com
@@ -130,11 +125,12 @@ public class OutofOilAlarm {
 //				data[0] = tableHeads;
 		for (int i = 0; i < list.size(); i++) {
 			AlarmOilInContrast info = list.get(i);
+			DecimalFormat df1=new DecimalFormat("0");
 			data[i][0] = info.getDeliveryno();
-			data[i][1] = info.getPlanl();
-			data[i][2] = info.getRealrecieve();
+			data[i][1] = df1.format(info.getPlanl());
+			data[i][2] = df1.format(info.getRealrecieve());
 			DecimalFormat df=new DecimalFormat("###########0.00");
-			data[i][3] = df.format(info.getLoss());
+			data[i][3] = df1.format(info.getLoss());
 			data[i][4] = df.format(info.getLossrate()) +"%";
 		}
 		//probePartable =

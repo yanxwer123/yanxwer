@@ -89,6 +89,11 @@ public class AcceptanceServiceImpl implements AcceptanceService {
     }
 
     @Override
+    public oss_acceptance_odRegister selectById(String ManualNo) {
+        return ossAcceptanceOdRegisterMapper.selectById(ManualNo);
+    }
+
+    @Override
     public List<HashMap<String, Object>> selectYYS(String oiltype,String start,String end, String oucode) {
         HashMap map=new HashMap();
         map.put("oiltype", oiltype);
@@ -102,5 +107,24 @@ public class AcceptanceServiceImpl implements AcceptanceService {
             map.put("oucode", oucode);
         }
         return ossAcceptanceOdRegisterMapper.selectYYS(map);
+    }
+
+    @Override
+    public List<HashMap<String, Object>> selectAcceptanceServicePage(Integer pageNo, Integer pageSize, String deliveryno) {
+        if (pageNo != null && pageSize != null) {
+            pageNo = pageNo < 1 ? 1 : pageNo;
+            int firstRow = (pageNo - 1) * pageSize;
+            HashMap hashMap = new HashMap();
+            hashMap.put("firstRow", firstRow);
+            hashMap.put("pageSize", pageSize);
+            hashMap.put("manualno", deliveryno);
+            return ossAcceptanceOdRegisterInfoMapper.selectAcceptanceServicePage(hashMap);
+        }
+        return null;
+    }
+
+    @Override
+    public List<HashMap<String, Object>> selectAllAcceptanceServicePage(String deliveryno) {
+        return ossAcceptanceOdRegisterInfoMapper.selectAllAcceptanceServicePage(deliveryno);
     }
 }

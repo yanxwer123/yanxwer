@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kld.gsm.center.dao.oss_daily_pumpDigitShiftMapper;
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -30,9 +31,12 @@ public class DPumpDigitShiftServiceImpl implements DPumpDigitShiftService {
     }
 
     @Override
-    public ResultMsg selectByShift(String shift) {
+    public ResultMsg selectByShift(String shift,String oucode) {
         ResultMsg result=new ResultMsg();
-        List<oss_daily_pumpDigitShift> exchangeList=ossDailyPumpDigitShiftMapper.selectByShift(shift);
+        HashMap hashMap = new HashMap();
+        hashMap.put("shift", shift);
+        hashMap.put("oucode", oucode);
+        List<oss_daily_pumpDigitShift> exchangeList=ossDailyPumpDigitShiftMapper.selectByShift(hashMap);
         result.setResult(true);
         result.setData(exchangeList);
         result.setRows(exchangeList);

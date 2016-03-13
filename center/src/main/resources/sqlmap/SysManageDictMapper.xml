@@ -16,7 +16,7 @@
     <result column="Version" property="version" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    DictID, ParentID, Sort, Name, Code, IsDel, Value, Createtime, Creator, IsAppCache, 
+    DictID, ParentID, Sort, Name, Code, IsDel, Value, Createtime, Creator, IsAppCache,
     BsnsID, Version
   </sql>
   <select id="selectByPrimaryKey" resultType="com.kld.gsm.center.domain.SysManageDict" parameterType="java.lang.Integer" >
@@ -47,14 +47,14 @@
     where DictID = #{dictid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.kld.gsm.center.domain.SysManageDict" >
-    insert into oss_sysmanage_Dict (DictID, ParentID, Sort, 
-      Name, Code, IsDel, 
-      Value, Createtime, Creator, 
+    insert into oss_sysmanage_Dict (DictID, ParentID, Sort,
+      Name, Code, IsDel,
+      Value, Createtime, Creator,
       IsAppCache, BsnsID, Version
       )
-    values (#{dictid,jdbcType=INTEGER}, #{parentid,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, 
-      #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{isdel,jdbcType=INTEGER}, 
-      #{value,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, 
+    values (#{dictid,jdbcType=INTEGER}, #{parentid,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER},
+      #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{isdel,jdbcType=INTEGER},
+      #{value,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR},
       #{isappcache,jdbcType=INTEGER}, #{bsnsid,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}
       )
   </insert>
@@ -208,9 +208,46 @@
     <include refid="Base_Column_List" />
     from oss_sysmanage_Dict where ParentID=39
   </select>
+  <insert id="insertRow" parameterType="hashmap" >
+    insert into oss_sysmanage_Dict (DictID, ParentID, Name, Value,Code)
+    values (#{dictID}, #{parentID},#{name}, #{value},#{code})
+  </insert>
+  <update id="updateRow" parameterType="hashmap" >
+    UPDATE  oss_sysmanage_Dict set ParentID=#{parentID},Name=#{name},Value=#{value},Code=#{code}
+    where DictID=#{dictID}
+  </update>
   <select id="selectbyVersion" parameterType="Integer" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
     FROM oss_sysmanage_Dict WHERE Version>#{version,jdbcType=INTEGER}
+  </select>
+  <select id="getDictList" parameterType="hashmap" resultType="hashmap">
+    SELECT * FROM oss_sysmanage_Dict  where 1=1
+    <if test="dictID !=null and dictID!=''">
+     and DictID=#{dictID}
+    </if>
+    <if test="parentID !=null and parentID!=''">
+      and ParentID=#{parentID}
+    </if>
+    <if test="name !=null and name!=''">
+      and Name=#{name}
+    </if>
+    ORDER BY DictID ASC
+    <if test="firstRow != null and  pageSize!= null">
+      <![CDATA[ LIMIT #{firstRow},#{pageSize}]]>
+    </if>
+
+  </select>
+  <select id="getDictAllList" parameterType="hashmap" resultType="hashmap">
+    SELECT *  FROM oss_sysmanage_Dict  where 1=1
+    <if test="dictID !=null and dictID!=''">
+    and DictID=#{dictID}
+    </if>
+    <if test="parentID !=null and parentID!=''">
+      and ParentID=#{parentID}
+    </if>
+    <if test="name !=null and name!=''">
+      and Name=#{name}
+    </if>
   </select>
 </mapper>

@@ -322,8 +322,9 @@
       and b.IsComplete=#{yjssts}
     </if>
     <if test="oucode != null and oucode != '' ">
-      and OUCode LIKE #{oucode,jdbcType=VARCHAR}
+      and a.OUCode LIKE #{oucode,jdbcType=VARCHAR}
     </if>
+    order by  DeliveryTime desc
     <if test="firstRow != null and  pageSize!= null">
       <![CDATA[ LIMIT #{firstRow},#{pageSize}]]>
     </if>
@@ -347,7 +348,7 @@
      and  b.IsComplete=#{yjssts}
     </if>
     <if test="oucode != null and oucode != '' ">
-      and OUCode LIKE #{oucode,jdbcType=VARCHAR}
+      and a.OUCode LIKE #{oucode,jdbcType=VARCHAR}
     </if>
   </select>
 

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_monitor_Summary_historyMapper" >
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_monitor_Summary_history" >
+    <id column="NodeNo" property="nodeno" jdbcType="VARCHAR" />
+    <id column="CreateDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="OuCode" property="oucode" jdbcType="VARCHAR" />
+    <result column="QYSales" property="qysales" jdbcType="DOUBLE" />
+    <result column="CYSales" property="cysales" jdbcType="DOUBLE" />
+    <result column="QYStore" property="qystore" jdbcType="DOUBLE" />
+    <result column="CYStore" property="cystore" jdbcType="DOUBLE" />
+    <result column="QYOilin" property="qyoilin" jdbcType="DOUBLE" />
+    <result column="CYOilin" property="cyoilin" jdbcType="DOUBLE" />
+    <result column="TJCount" property="tjcount" jdbcType="INTEGER" />
+    <result column="YwyRate" property="ywyrate" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    NodeNo, CreateDate, OuCode, QYSales, CYSales, QYStore, CYStore, QYOilin, CYOilin, 
+    TJCount, YwyRate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_monitor_Summary_historyKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from oss_monitor_Summary_history
+    where NodeNo = #{nodeno,jdbcType=VARCHAR}
+      and CreateDate = #{createdate,jdbcType=TIMESTAMP}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_monitor_Summary_historyKey" >
+    delete from oss_monitor_Summary_history
+    where NodeNo = #{nodeno,jdbcType=VARCHAR}
+      and CreateDate = #{createdate,jdbcType=TIMESTAMP}
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_monitor_Summary_history" >
+    insert into oss_monitor_Summary_history (NodeNo, CreateDate, OuCode, 
+      QYSales, CYSales, QYStore, 
+      CYStore, QYOilin, CYOilin, 
+      TJCount, YwyRate)
+    values (#{nodeno,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, #{oucode,jdbcType=VARCHAR}, 
+      #{qysales,jdbcType=DOUBLE}, #{cysales,jdbcType=DOUBLE}, #{qystore,jdbcType=DOUBLE}, 
+      #{cystore,jdbcType=DOUBLE}, #{qyoilin,jdbcType=DOUBLE}, #{cyoilin,jdbcType=DOUBLE}, 
+      #{tjcount,jdbcType=INTEGER}, #{ywyrate,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertlist" parameterType="java.util.List" >
+    insert into oss_monitor_Summary_history (NodeNo, CreateDate, OuCode,
+    QYSales, CYSales, QYStore,
+    CYStore, QYOilin, CYOilin,
+    TJCount, YwyRate)
+    values
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{item.nodeno}, #{item.createdate}, #{item.oucode},
+      #{item.qysales}, #{item.cysales}, #{item.qystore},
+      #{item.cystore}, #{item.qyoilin}, #{item.cyoilin},
+      #{item.tjcount}, #{item.ywyrate})
+    </foreach>
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_monitor_Summary_history" >
+    insert into oss_monitor_Summary_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="nodeno != null" >
+        NodeNo,
+      </if>
+      <if test="createdate != null" >
+        CreateDate,
+      </if>
+      <if test="oucode != null" >
+        OuCode,
+      </if>
+      <if test="qysales != null" >
+        QYSales,
+      </if>
+      <if test="cysales != null" >
+        CYSales,
+      </if>
+      <if test="qystore != null" >
+        QYStore,
+      </if>
+      <if test="cystore != null" >
+        CYStore,
+      </if>
+      <if test="qyoilin != null" >
+        QYOilin,
+      </if>
+      <if test="cyoilin != null" >
+        CYOilin,
+      </if>
+      <if test="tjcount != null" >
+        TJCount,
+      </if>
+      <if test="ywyrate != null" >
+        YwyRate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="nodeno != null" >
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oucode != null" >
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="qysales != null" >
+        #{qysales,jdbcType=DOUBLE},
+      </if>
+      <if test="cysales != null" >
+        #{cysales,jdbcType=DOUBLE},
+      </if>
+      <if test="qystore != null" >
+        #{qystore,jdbcType=DOUBLE},
+      </if>
+      <if test="cystore != null" >
+        #{cystore,jdbcType=DOUBLE},
+      </if>
+      <if test="qyoilin != null" >
+        #{qyoilin,jdbcType=DOUBLE},
+      </if>
+      <if test="cyoilin != null" >
+        #{cyoilin,jdbcType=DOUBLE},
+      </if>
+      <if test="tjcount != null" >
+        #{tjcount,jdbcType=INTEGER},
+      </if>
+      <if test="ywyrate != null" >
+        #{ywyrate,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_monitor_Summary_history" >
+    update oss_monitor_Summary_history
+    <set >
+      <if test="oucode != null" >
+        OuCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="qysales != null" >
+        QYSales = #{qysales,jdbcType=DOUBLE},
+      </if>
+      <if test="cysales != null" >
+        CYSales = #{cysales,jdbcType=DOUBLE},
+      </if>
+      <if test="qystore != null" >
+        QYStore = #{qystore,jdbcType=DOUBLE},
+      </if>
+      <if test="cystore != null" >
+        CYStore = #{cystore,jdbcType=DOUBLE},
+      </if>
+      <if test="qyoilin != null" >
+        QYOilin = #{qyoilin,jdbcType=DOUBLE},
+      </if>
+      <if test="cyoilin != null" >
+        CYOilin = #{cyoilin,jdbcType=DOUBLE},
+      </if>
+      <if test="tjcount != null" >
+        TJCount = #{tjcount,jdbcType=INTEGER},
+      </if>
+      <if test="ywyrate != null" >
+        YwyRate = #{ywyrate,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where NodeNo = #{nodeno,jdbcType=VARCHAR}
+      and CreateDate = #{createdate,jdbcType=TIMESTAMP}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_monitor_Summary_history" >
+    update oss_monitor_Summary_history
+    set OuCode = #{oucode,jdbcType=VARCHAR},
+      QYSales = #{qysales,jdbcType=DOUBLE},
+      CYSales = #{cysales,jdbcType=DOUBLE},
+      QYStore = #{qystore,jdbcType=DOUBLE},
+      CYStore = #{cystore,jdbcType=DOUBLE},
+      QYOilin = #{qyoilin,jdbcType=DOUBLE},
+      CYOilin = #{cyoilin,jdbcType=DOUBLE},
+      TJCount = #{tjcount,jdbcType=INTEGER},
+      YwyRate = #{ywyrate,jdbcType=DOUBLE}
+    where NodeNo = #{nodeno,jdbcType=VARCHAR}
+      and CreateDate = #{createdate,jdbcType=TIMESTAMP}
+  </update>
+</mapper>

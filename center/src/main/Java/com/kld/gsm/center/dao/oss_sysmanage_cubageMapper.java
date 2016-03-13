@@ -2,6 +2,7 @@ package com.kld.gsm.center.dao;
 
 import com.kld.gsm.center.common.MysqlRepository;
 import com.kld.gsm.center.domain.oss_sysmanage_cubage;
+import com.kld.gsm.center.domain.oss_sysmanage_cubageInfo;
 import com.kld.gsm.center.domain.oss_sysmanage_cubageKey;
 import org.springframework.stereotype.Repository;
 
@@ -35,4 +36,7 @@ public interface oss_sysmanage_cubageMapper {
     List<Map<String,Object>> getCubageInfos(Map<String,Object> map);
 
     int useCubageSave(Map<String,Object> map);
+
+    List<oss_sysmanage_cubage> getUntranCubages(Map<String,Object> map);
+
 }

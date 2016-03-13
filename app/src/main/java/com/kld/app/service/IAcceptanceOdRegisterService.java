@@ -29,7 +29,7 @@ public interface IAcceptanceOdRegisterService {
     List<AcceptanceOdRegister>  selectWHDByoilno(String oilno);
 
 
-    List<HashMap<String,?>> selectjhysbynoanddate(String no,Date st,Date et);
+    List<HashMap<String,?>> selectjhysbynoanddate(String no,Date st,Date et,String oilcan,String symbol,String dischargeRate);
 
     /**
      * @param billno 手工单号

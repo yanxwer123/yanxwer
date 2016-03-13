@@ -32,7 +32,7 @@
 	background:url('icons/reload.png') no-repeat center center;
 }
 .icon-search{
-	/*background:url('icons/search.png') no-repeat center center;*/
+	background:url('icons/search.png') no-repeat center center;
 }
 .icon-print{
 	background:url('icons/print.png') no-repeat center center;
@@ -67,7 +67,15 @@
 .icon-more{
 	background:url('icons/more.png') no-repeat center center;
 }
-
+.icon-export{
+	background:url('icons/export.png') no-repeat center center;
+}
+.icon-his{
+	background:url('icons/his.png') no-repeat center center;
+}
+.icon-pd{
+	background:url('icons/pd.png') no-repeat center center;
+}
 
 .icon-mini-add{
 	background:url('icons/mini_add.png') no-repeat center center;
@@ -78,7 +86,6 @@
 .icon-mini-refresh{
 	background:url('icons/mini_refresh.png') no-repeat center center;
 }
-
 .icon-large-picture{
 	background:url('icons/large_picture.png') no-repeat center center;
 }

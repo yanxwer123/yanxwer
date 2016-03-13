@@ -48,7 +48,7 @@
         [{field:'ouname',title:'',width:'20%',colspan:5,align:'right'},{field:'ouname',title:'<a href=javascript:xz();>模板下载</a>',width:'20%',align:'right'}],
         [{field:'ouname',title:'建议更新容积表的油站数量：<span id=\'gxsl\'/>个',width:'20%',colspan:6,align:'right'}],
         [
-            {field:'ouname',title:'油站名称',width:'20%',align:'center'},
+            {field:'oucode',title:'油站编号',width:'20%',align:'center'},
             {field:'oilcan',title:'油罐编号',width:'15%',align:'center'},
             {field:'version',title:'当前版本',width:'15%',align:'center'},
             {field:'updatetime',title:'更新时间',width:'20%',align:'center',
@@ -84,19 +84,10 @@
         var aa=$('#aa').combobox('getValue');
         var cc=$('#cc').combobox('getValue');
         oucode="";
-        if(cc!="")
-        {
-            oucode=cc;
-        }
-        if(aa!="")
-        {
-            oucode=aa;
-        }
-        if(ss!="")
-        {
-            oucode=ss;
-        }
-        paras={"sfgx":sfgx,"oucode":1};
+        if(cc!="") {oucode=cc;}
+        if(aa!="") {oucode=aa;}
+        if(ss!="") {oucode=ss;}
+        paras={"sfgx":sfgx,"oucode":oucode};
     }
 
     $(function(){
@@ -108,7 +99,7 @@
     function initData() {
         inittext();
         BindDataGridAjax('tt','查询结果','/web/cubage/getCubages',cols,paras,'true',10,[10,20,30]);
-        $("#gxsl").text("12");
+        //$("#gxsl").text("12");
     }
     function formatDatebox(value) {
         if (value == null || value == '') {

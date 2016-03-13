@@ -49,4 +49,13 @@ public interface AcceptanceOdRegisterInfoDao {
 
     List<AcceptanceOdRegisterInfo> selectbycanno(Map map);
 
+
+    //  根据油罐-开始时间-结束时间查询卸油量
+    String findByOilCan(HashMap map);
+
+     //  根据油品-开始时间-结束时间查询卸油量
+    String findByOilNo(HashMap map);
+
+    List<AcceptanceOdRegisterInfo>selectAllUncompleteinfo();
+
 }

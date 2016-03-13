@@ -7,8 +7,7 @@ import com.kld.app.socket.ob.Watcher;
 import com.kld.app.util.ApplicationRunSingle;
 import com.kld.app.util.Common;
 import com.kld.app.util.Constant;
-import com.kld.app.view.acceptance.CkdcxPage;
-import com.kld.app.view.acceptance.JhysPage;
+import com.kld.app.view.acceptance.*;
 import com.kld.app.view.alarm.OilExcep;
 import com.kld.gsm.ATG.domain.CurUser;
 import com.kld.gsm.Socket.Constants;
@@ -52,9 +51,15 @@ public class Main extends JFrame implements Watcher {
 
     public static JLabel statusLabel = new JLabel();
 
-    public static String statusString = "        ";
+    public static String statusString = "";
 
     public static JhysPage jhys;
+
+    public static JhysNewPage jhysNewPage;
+
+    public static HashMap<String,Jhys2> jhys2Map;
+
+    public static long wysj;
 
     public static OilExcep oilExcep;
 
@@ -62,15 +67,15 @@ public class Main extends JFrame implements Watcher {
     public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     public static SimpleDateFormat dateFm = new SimpleDateFormat("EEEE");
     //public static Channel CC = SocketContext.getInstance();
-    public static Channel CC;
-    //油罐 - 实时标准体积库存
-    public static Map oilCanRealTime = new HashMap();
+    public static Channel CC ;
+      //油罐 - 实时标准体积库存
+    public  static Map oilCanRealTime = new HashMap();
 
 
     public static Watched watch = ConcreteWatched.getInstance();
     public static String sign = "";
     public static String IP = Constant.IP;
-    public static int Port = Constant.PORT;
+    public static int Port =  Constant.PORT;
     static StartApp zc = new StartApp();
      //操作员号
      public static String oprno;
@@ -78,14 +83,15 @@ public class Main extends JFrame implements Watcher {
      public static String oprname;
      //操作菜单
      public static List menuList = new ArrayList();
+    public static Thread thread;
      public static void main(String[] args) {
         ApplicationRunSingle.makeSingle("/smc20/gsm/app");
         Thread thread =  new Thread() {
             @Override
-            public void run() {
-                zc.setVisible(true);
-            }
-        };
+             public void run() {
+              zc.setVisible(true);
+             }
+         };
         thread.start();
         try {
             //设置本属性将改变窗口边框样式定义
@@ -101,11 +107,9 @@ public class Main extends JFrame implements Watcher {
         sign = uuid.toString();
         System.out.println("IP-----[" + IP + "]");
         System.out.println("PORT:-----[" + Port + "]");
-        Main.watch.addWetcher("A", new Main());
-
-        CC = reLink();
-        //endregion
-        //   new Main().frame.setVisible(true);
+         Main.watch.addWetcher("A", new Main());
+         CC = reLink();
+        //endregion//new Main().frame.setVisible(true);
         AsynHeart.sendIdel();
     }
 
@@ -114,7 +118,7 @@ public class Main extends JFrame implements Watcher {
      * Create the application.
      */
     public Main() {
-     /*  //初始化主JFRAME
+      /*//初始化主JFRAME
         initialize();
         //初始化标题栏
         initTitlePanel();
@@ -284,6 +288,7 @@ public class Main extends JFrame implements Watcher {
         Icon.setIcon(nav_red);
         Icon.setBounds(730, 20, 20, 20);
         titlePanel.add(Icon);
+
         //退出z
         JLabel closeLabel = new JLabel("退出");
         closeLabel.setFont(Constant.TITLE_CONTENT_FONT);
@@ -300,8 +305,8 @@ public class Main extends JFrame implements Watcher {
 
     @Override
     public void update(GasMsg gasMsg) {
-        if (gasMsg.getPid().equals(Constants.PID_Code.A15_10000.toString())) {
-            System.out.println("return Heart");
+        if(gasMsg.getPid().equals(Constants.PID_Code.A15_10000.toString())){
+            System.out.println("return Heart" );
         }
 
         if (gasMsg.getPid().equals(Constants.PID_Code.A15_10001.toString())) {
@@ -374,7 +379,7 @@ public class Main extends JFrame implements Watcher {
 
     //region socket----
 
-    public synchronized static Channel reLink() {
+     public  static Channel reLink() {
         int i = 1;
         boolean flag = true;
         while (flag) {
@@ -393,7 +398,7 @@ public class Main extends JFrame implements Watcher {
                 System.out.println("Main.Wait five seconds reLink......");
 
                 Thread.sleep(3000);
-                System.out.println("Main.ReLink[" + i + "]....");
+                 System.out.println("Main.ReLink[" + i + "]....");
                 //如果未成功连接，则20秒左右弹出一次提示
                 if (i == 8) {
                     JOptionPane.showMessageDialog(null, "与主调度未能成功建立连接,正在尝试重连...", "错误提示", JOptionPane.ERROR_MESSAGE);
@@ -418,20 +423,7 @@ public class Main extends JFrame implements Watcher {
     }
 
     //endregion
-    @Test
-    public void getP() {
-        Properties prop = new Properties();
-        InputStream in = Object.class.getResourceAsStream("classpath*:important.properties");
-        try {
-            prop.load(in);
-            String ctrlIp = prop.getProperty("ctrl.ip").trim();
-            String ctrlPort = prop.getProperty("ctrl.port").trim();
-            //System.out.println("IP:" + ctrlIp);
-            //System.out.println("IP:" + ctrlPort);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     public static void setStatus(String name) {
         statusLabel.setText(statusString + name);

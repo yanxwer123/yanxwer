@@ -23,4 +23,7 @@ public interface oss_sys_OrgUnitMapper {
     oss_sys_OrgUnit selectByOUCode(String oucode);
     List<oss_sys_OrgUnit> selectByPOUCode(String parentoucode);
     List<HashMap<String,Object>> selectOUInfo(HashMap map);
+
+    String selectMaxOucodeByParentOucode(String oucode);
+    
 }

@@ -21,12 +21,12 @@ import java.util.List;
  * @Description:
  */
 public class ATGDeviceSwing extends JFrame {
-    JTextField leixingt = new JTextField("0");
-    JTextField ipt = new JTextField("192.168.0.222");
-    JTextField portt = new JTextField("9734");
+    JTextField leixingt = new JTextField("1");
+    JTextField ipt = new JTextField("192.168.0.128");
+    JTextField portt = new JTextField("4001");
     JTextField rizhilujingt = new JTextField("/smc20/gsm/");
     JTextField chuankout = new JTextField("/dev/ttyS0");
-    JTextField xinghao = new JTextField("OP_SS5B");
+    JTextField xinghao = new JTextField("FA_VPI");
     static String DeviceModel = "";
     static String ProbeNo="";
     public static JTextArea jTextArea = new JTextArea(20,50);
@@ -321,8 +321,8 @@ class J5Action implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         //油罐报警采集
         List<atg_alarm_data_in_t> alarmData = new ArrayList<atg_alarm_data_in_t>();
-        String guanhao = canshuPanel.jinyouxinxicaijiguanhao.getText();
-        String sj = canshuPanel.jinyouxinxicaijishijian.getText();
+        String guanhao = canshuPanel.ygbjguanhao.getText();
+        String sj = canshuPanel.ygbjshijian.getText();
         String[] guanhaos = null;
         if(guanhao.indexOf(",")!=-1){
             guanhaos = guanhao.split(",");
@@ -770,9 +770,9 @@ class J17Action implements ActionListener {
         //3.6.2.1	探棒校正参数设置 done 联调成功 第二轮成功 a.uOilTy=5;//应该是String 类型  需要修改~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         ArrayList<atg_correction_data_in_t> inputData = new ArrayList<atg_correction_data_in_t>();
         atg_correction_data_in_t a = new atg_correction_data_in_t();
-        a.strDeviceModel=ATGDeviceSwing.DeviceModel;
-        a.strProbeNo=ATGDeviceSwing.ProbeNo;
-        a.uOilTy="5";//应该是String 类型  需要修改~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        a.strDeviceModel=TbjzcsszPanel.strDeviceModelText.getText();
+        a.strProbeNo=TbjzcsszPanel.strProbeNoText.getText();
+        a.uOilTy=TbjzcsszPanel.strOilTypeText.getText();//应该是String 类型  需要修改~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         a.fOilCorrection    =Double.parseDouble(TbjzcsszPanel.fOilCorrectionText.getText());
         a.fWaterCorrection  =Double.parseDouble(TbjzcsszPanel.fWaterCorrectionText.getText());
         a.fProbeOffset      =Double.parseDouble(TbjzcsszPanel.fProbeOffsetText.getText());
@@ -795,6 +795,7 @@ class J17Action implements ActionListener {
         inputData.add(a);
         int ret1 = amg.setCorrection(inputData);
         jTextArea.setText("java setCorrection return ret:" + ret1 + "\r\n");
+        jTextArea.append("a.fInitDesnsity==="+a.fInitDesnsity);
     }
 }
 class J18Action implements ActionListener {

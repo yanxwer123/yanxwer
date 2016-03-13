@@ -3,9 +3,6 @@ package com.kld.gsm.center.domain.hn;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
 /*
 Created BY niyang
 Created Date 2015/11/21

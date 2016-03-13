@@ -15,6 +15,7 @@ import com.kld.gsm.syntocenter.socket.ob.Watcher;
 import com.kld.gsm.syntocenter.util.ApplicationRunSingle;
 import com.kld.gsm.syntocenter.util.action;
 import com.kld.gsm.util.DateUtil;
+import com.sun.corba.se.impl.orbutil.HexOutputStream;
 import io.netty.channel.Channel;
 import org.apache.log4j.Logger;
 import org.junit.Test;
@@ -41,6 +42,7 @@ public class ApplicationMain  implements Watcher {
     public static Map<String,Integer> oilcanmap;
     public static Map<String,String> canversion;
     public static String ctrladdr;
+    public static String ctrlport;
     public static String gunaddr;
     public static String canaddr;
     public static Channel CC =null ;
@@ -51,10 +53,19 @@ public class ApplicationMain  implements Watcher {
     private static final Logger LOG = Logger.getLogger("syntocenter");
     public static void main(String[] args) throws Exception{
         ApplicationRunSingle.makeSingle("syntocenter");
-        action action = new action();
-        ctrladdr=action.getCtrladdr();
-        gunaddr=action.getUri("resource.services.TI.addQSSZT");
-        canaddr=action.getUri("resource.services.TI.addGSSZT");
+        action ac = new action();
+        ctrladdr=ac.getCtrladdr();
+        ctrlport=ac.getctrlport();
+        gunaddr=ac.getUri("resource.services.TI.addQSSZT");
+        canaddr=ac.getUri("resource.services.TI.addGSSZT");
+        Host= ac.getHost();
+
+        try {
+            IsOpenrt = ac.getRTopen();
+        } catch (Exception e) {
+            LOG.error("get isopenrt 0" + e.getMessage());
+        }
+
         //region 随机生成上传时间
         String dstring= DateUtil.getDate();
         //System.out.println(dstring);
@@ -102,8 +113,8 @@ public class ApplicationMain  implements Watcher {
 
 
     }
-    public synchronized static Channel reLink() {
-         action action = new action();
+    public  static Channel reLink() {
+        // action action = new action();
 
          int i = 0;
         boolean flag = true;

@@ -174,10 +174,10 @@
       and OilGun = #{oilgun,jdbcType=INTEGER}
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
   </update>
-  <select id="selectByShift" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByShift" resultMap="BaseResultMap" parameterType="hashmap" >
     select 'true' as QUERYID,
     <include refid="Base_Column_List" />
     from oss_daily_pumpDigitShift
-    where Shift = #{shift,jdbcType=VARCHAR}
+    where Shift = #{shift,jdbcType=VARCHAR} and OUCode=#{oucode,jdbcType=VARCHAR}
   </select>
 </mapper>
