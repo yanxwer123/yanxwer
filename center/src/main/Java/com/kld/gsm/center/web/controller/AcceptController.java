@@ -315,6 +315,7 @@ catch (Exception e){
                 info1.setDuringsales(info.getDuringsales());
                 info1.setForcecancelstable(info.getForcecancelstable());
                 info1.setOilcan(info.getOilcan());
+                info1.setBeginwaterheight(info.getBeginwaterheight());
                 registerInfos.add(info1);
             }
             //endregion
