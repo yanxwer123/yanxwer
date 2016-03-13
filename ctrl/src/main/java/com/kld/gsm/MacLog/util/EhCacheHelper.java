@@ -70,7 +70,7 @@ public class EhCacheHelper {
         Element element = new Element(info.GunNum, info);
         logger.info("add new cache item GunNum:"+info.GunNum+"info:"+info.toString()+"\n");
         myCache.put(element);
-        info=null;
+        //info=null;
     }
     //仅更新泵码数
     public static void updteCache(byte GunNum,Double PumpReadout) {
