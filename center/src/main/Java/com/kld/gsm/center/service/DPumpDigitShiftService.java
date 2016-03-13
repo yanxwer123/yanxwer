@@ -12,5 +12,5 @@ import java.util.List;
  */
 public interface DPumpDigitShiftService {
     int AddPumpDigitShift(List<oss_daily_pumpDigitShift> oss_daily_pumpDigitShifts);
-    ResultMsg selectByShift(String shift);
+    ResultMsg selectByShift(String shift,String oucode);
 }

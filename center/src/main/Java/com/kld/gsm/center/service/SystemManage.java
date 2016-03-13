@@ -84,4 +84,15 @@ public interface SystemManage {
     List<oss_sysmanage_department> selectbyid(List<StationStatus> stationStatuses);
 
     //String getOucode(oss_sysmanage_department department);
+
+    /**
+    * @description 根据nodeno，罐号，容积表version，查询容积表主记录
+    * */
+    oss_sysmanage_cubage selectCubage(String nodeno,String oilcan,String version);
+
+    /**
+     * 更新容积表
+     * */
+    int updateCubage(oss_sysmanage_cubage record);
+
 }

@@ -23,6 +23,8 @@ public class ImageFilter implements Filter {
         }else {
             String sessionyanz = (String) request.getSession(true).getAttribute("rand");
             if (verifycode.toLowerCase().equals(sessionyanz.toLowerCase())) {
+
+                request.getRequestDispatcher("/web/registerCheck").forward(request, response);
                 chain.doFilter(request, response);
             } else {
                 request.getRequestDispatcher("/web/login?msg=验证码有误").forward(request, response);

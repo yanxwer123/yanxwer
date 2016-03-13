@@ -273,10 +273,10 @@
                 <directory>src/main/resource</directory>
                 <targetPath>${project.build.directory}/syntocenter</targetPath>
             </resource>
-            <resource>
+            <!--<resource>
                 <directory>src/main/resource</directory>
                 <targetPath>${project.build.directory}/classes/</targetPath>
-            </resource>
+            </resource>-->
             <resource>
                 <directory>../core/src/main/resources</directory>
                 <targetPath>${project.build.directory}/syntocenter</targetPath>

@@ -1,0 +1,198 @@
+#set($layout="layout/emptylayout.vm")
+#set($menuTitle="字典管理")
+<div id="query"   title="查询条件" collapsible="true" class="easyui-panel search panel-body panel-body-noheader" style="border:0px;padding: 10px; width: 100%;" icon="icon-search">
+    <table  width="700px">
+        <tr>
+            <th width="150px">字典编码：</th>
+            <th width="50px"><input id="dictID" type="text" value=""></th>
+            <th width="150px">父级编码：</th>
+            <th width="50px"><input id="parentID" type="text" value=""></th>
+            <th width="100px">名称：</th>
+            <th width="50px"><input id="name" type="text" value=""></th>
+            <th>
+                <a id="searchExchange" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" style="width: 60px" onclick="initData()">查询</a>
+            </th>
+        </tr>
+    </table>
+</div>
+<div id="toolbar">
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" onclick="addDict()" plain="true">新增</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-edit" onclick="editDict()" plain="true">修改</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove" onclick="dellDict()" plain="true">删除</a>
+</div>
+<div id="result" class="easyui-panel"  >
+    <table id="tt" class="easyui-datagrid">
+    </table>
+</div>
+<div id="windict" class="easyui-window" title="新增" closed="true" style="width:460px;height:200px;"
+     data-options="modal:true">
+
+    <form id="loginForm" action="/web/sysmanage/addDict" method="post" style="padding:5px 5px 5px 5px;">
+        <table>
+            <tr>
+                <td style="padding-top:10px">字典编码</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="adddictID" name="dictID" data-options="required:true,precision:2" /></td>
+                <td style="padding-top:10px">父级编码</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="addparentID" name="parentID" data-options="required:true,precision:2"/></td>
+            </tr>
+            <tr>
+                <td style="padding-top:10px">名称</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="addName" name="name" data-options="required:true,precision:2"/></td>
+                <td style="padding-top:10px">Value值</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="addValue" name="value" data-options="precision:2"/></td>
+            </tr>
+            <tr>
+                <td style="padding-top:10px">code值</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="addCode" name="code" data-options="precision:2" /></td>
+            </tr>
+        </table>
+        <div style="padding:5px;text-align:center;">
+            <a  class="easyui-linkbutton" onclick="submitForm()">添加</a>
+        </div>
+    </form>
+
+
+</div>
+
+<div id="xiudict" class="easyui-window" title="修改" closed="true" style="width:460px;height:200px;"
+     data-options="modal:true">
+
+    <form id="logineditForm" action="/web/sysmanage/editDict" method="post" style="padding:5px 5px 5px 5px;">
+        <table>
+            <tr>
+                <td style="padding-top:10px">字典编码</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="editdictID" name="dictID" data-options="required:true,precision:2" /></td>
+                <td style="padding-top:10px">父级编码</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="editparentID" name="parentID" data-options="required:true,precision:2"/></td>
+            </tr>
+            <tr>
+                <td style="padding-top:10px">名称</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="editName" name="name" data-options="required:true,precision:2"/></td>
+                <td style="padding-top:10px">Value值</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="editValue" name="value" data-options="precision:2"/></td>
+            </tr>
+            <tr>
+                <td style="padding-top:10px">code值</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="editCode" name="code" data-options="precision:2" /></td>
+            </tr>
+        </table>
+        <div style="padding:5px;text-align:center;">
+            <a  class="easyui-linkbutton" onclick="saveForm()">保存</a>
+        </div>
+    </form>
+
+
+</div>
+
+
+<script>
+    var cols=[[
+        {field:'DictID',title:'字典编码',width:5,align:'center'},
+        {field:'ParentID',title:'父级编码',width:5,align:'center'},
+        {field:'Name',title:'名称',width:5,align:'center'},
+        {field:'Value',title:'Value值',width:5,align:'center'},
+        {field:'Code',title:'code值',width:5,align:'center'}
+    ]]
+    var dictID;
+    var parentID;
+    var name;
+    var paras;
+    $(function(){
+        var heigth=$(window).height()-130;
+        $("#result").height(heigth);
+        initData();
+    });
+    function initData(){
+        initText();
+        BindDataGridAjax('tt','字典管理','/web/sysmanage/getDictList',cols,paras,'true',10,[10,20,30]);
+    }
+    function initText(){
+        dictID=$("#dictID").val();//字典编码
+        parentID=$("#parentID").val();//父级编码
+        name=$("#name").val();//名称
+        paras = {"dictID": dictID,"parentID":parentID,"name":name};
+    }
+    function addDict () {
+        $('#windict').window('open');
+    }
+    function editDict() {
+        var row = $('#tt').datagrid('getSelected');
+        if (row) {
+            $('#xiudict').window('open');
+            $("#editdictID").textbox("setValue",row.DictID);
+//            $('#editfunccode').textbox({disabled:true});
+            $("#editparentID").textbox("setValue",row.ParentID);
+            $("#editName").textbox("setValue",row.Name);
+            $("#editValue").textbox("setValue",row.Value);
+            $("#editCode").textbox("setValue",row.Code);
+        } else {
+            $.messager.alert("提示", "请选择要修改的行！", "info");
+        }
+    }
+    function submitForm() {
+        $(loginForm).form('submit', {
+            url : '/web/sysmanage/addDict',
+            dataType : 'text',
+            success : function(result) {
+                if (result>0) {
+                    $.messager.alert("提示", "恭喜您，信息添加成功！", "info");
+                    $("#editdictID").textbox("setValue","");
+                    $("#editparentID").textbox("setValue","");
+                    $("#editName").textbox("setValue","");
+                    $("#editValue").textbox("setValue","");
+                    $("#editCode").textbox("setValue","");
+                    $('#windict').window('close');
+                    $('#tt').datagrid("reload",{ });
+                } else {
+                    $.messager.alert("提示", "添加失败，请重新操作！", "info");
+                }
+            }
+        });
+    }
+
+    function saveForm() {
+        $(logineditForm).form('submit', {
+            url : '/web/sysmanage/editDict',
+            dataType : 'text',
+            success : function(result) {
+                if (result>0) {
+                    $.messager.alert("提示", "恭喜您，信息修改成功！", "info");
+                    $('#xiudict').window('close');
+                    $('#tt').datagrid("reload",{ });
+                } else {
+                    $.messager.alert("提示", "修改失败，请重新操作！", "info");
+                }
+            }
+        });
+    }
+    function dellDict() {
+        var delrow = $('#tt').datagrid('getSelected');
+        if (delrow == null) {
+            $.messager.alert("提示", "请选择要删除的行！", "info");
+            return;
+        } else {
+            $.messager.confirm('提示', '是否删除选中数据?', function (r) {
+                if (!r) {
+                    return;
+                }
+                var delDictID=delrow.DictID;
+                //提交
+                $.ajax({
+                    type: "POST",
+                    url: "/web/sysmanage/delDict?delDictID="+delDictID,
+                    data: delDictID,
+                    success: function (result) {
+                        if (result > 0) {
+                            $('#tt').datagrid('clearSelections');
+                            $.messager.alert("提示", "恭喜您，信息删除成功！", "info");
+                            $('#tt').datagrid('reload');
+                        } else {
+                            $.messager.alert("提示", "删除失败，请重新操作！", "info");
+                            return;
+                        }
+                    }
+                });
+            });
+        }
+    }
+</script>

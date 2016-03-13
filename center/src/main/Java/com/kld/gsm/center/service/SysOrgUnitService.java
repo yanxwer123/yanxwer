@@ -1,6 +1,7 @@
 package com.kld.gsm.center.service;
 
 import com.kld.gsm.center.domain.oss_sys_OrgUnit;
+import com.kld.gsm.center.domain.oss_sysmanage_department;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,4 +19,5 @@ public interface SysOrgUnitService {
     oss_sys_OrgUnit selectByOUCode(String oucode);
     List<oss_sys_OrgUnit> selectByPOUCode(String parentoucode);
     List<HashMap<String,Object>> selectOUInfo(String oucode);
+    String addOrgUnit(oss_sysmanage_department department);
 }

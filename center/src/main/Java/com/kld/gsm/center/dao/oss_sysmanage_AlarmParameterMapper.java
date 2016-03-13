@@ -5,6 +5,7 @@ import com.kld.gsm.center.domain.oss_sysmanage_AlarmParameter;
 import com.kld.gsm.center.domain.oss_sysmanage_AlarmParameterKey;
 
 import java.util.List;
+import java.util.Map;
 
 @MysqlRepository
 public interface oss_sysmanage_AlarmParameterMapper {
@@ -23,4 +24,7 @@ public interface oss_sysmanage_AlarmParameterMapper {
     int merge(oss_sysmanage_AlarmParameter record);
 
     List<oss_sysmanage_AlarmParameter> selectByNodeNo(String nodeno);
+
+    List<oss_sysmanage_AlarmParameter> findByOUCode(String oucode);
+    List<oss_sysmanage_AlarmParameter> findByOUCodePage(Map map);
 }

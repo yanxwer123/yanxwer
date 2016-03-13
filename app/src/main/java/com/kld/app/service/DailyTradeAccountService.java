@@ -37,4 +37,10 @@ public interface DailyTradeAccountService {
 
     ArrayList<String> findLikeShift(HashMap shiftmap);
 
+    //  根据油罐-开始时间-结束时间查询付油量
+    String findByOilGun(String oilgun, Date begintime, Date endtime);
+
+    //  根据油品-开始时间-结束时间查询付油量
+    String findByOilNo(String oilno, Date begintime, Date endtime);
+
 }

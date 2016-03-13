@@ -149,7 +149,7 @@
       and Type = #{type,jdbcType=VARCHAR}
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
   </update>
-  <select id="selectFyxx" parameterType="String" resultType="com.kld.gsm.center.domain.oss_daily_opotCount">
-    SELECT * FROM oss_daily_opotCount where Shift= #{shift,jdbcType=VARCHAR}
+  <select id="selectFyxx" parameterType="hashMap" resultType="com.kld.gsm.center.domain.oss_daily_opotCount">
+    SELECT * FROM oss_daily_opotCount where Shift= #{shift,jdbcType=VARCHAR} and OUCode= #{oucode,jdbcType=VARCHAR}
   </select>
 </mapper>

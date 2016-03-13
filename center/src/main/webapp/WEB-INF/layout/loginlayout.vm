@@ -1,0 +1,10 @@
+<!doctype html  >
+<head>
+    #parse("common/head.vm")
+
+</head>
+<body class="easyui-layout" style="display:block;height:100%;width:100%;">
+    $screen_content
+</body>
+</html>
+

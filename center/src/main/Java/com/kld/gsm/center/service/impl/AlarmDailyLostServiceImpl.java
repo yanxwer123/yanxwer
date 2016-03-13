@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.kld.gsm.center.util.ExportUtil;
+import com.kld.gsm.center.util.FormatUtil;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -89,41 +90,48 @@ public class AlarmDailyLostServiceImpl implements AlarmDailyLostService {
             for (int j = 0; j < list.size(); j++)
             {
                 XSSFRow bodyRow = sheet.createRow(j + 1);
-                for (HashMap<String, Object> item:list) {
+                HashMap<String, Object> item=list.get(j);
                     cell = bodyRow.createCell(0);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("ouname").toString());
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("OUName").toString()));
 
                     cell = bodyRow.createCell(1);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("DarlyankStock").toString());
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("OilName")));
 
                     cell = bodyRow.createCell(2);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("DeliveryNo").toString());
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("AccountDate")));
 
                     cell = bodyRow.createCell(3);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("ReceiveL").toString());
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("DarlyankStock")));
 
                     cell = bodyRow.createCell(4);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("TodayOut").toString());
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("DeliveryNo")));
 
                     cell = bodyRow.createCell(5);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("TodayEndStock").toString());
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("ReceiveL")));
 
                     cell = bodyRow.createCell(6);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("RealStock").toString());
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("TodayOut")));
+
                     cell = bodyRow.createCell(7);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("Cost").toString());
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("TodayEndStock")));
+
                     cell = bodyRow.createCell(8);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("CostSent").toString());
-                }
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("RealStock")));
+                    cell = bodyRow.createCell(9);
+                    cell.setCellStyle(bodyStyle);
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("Cost")));
+                    cell = bodyRow.createCell(10);
+                    cell.setCellStyle(bodyStyle);
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("CostSent")));
             }
         }
         try

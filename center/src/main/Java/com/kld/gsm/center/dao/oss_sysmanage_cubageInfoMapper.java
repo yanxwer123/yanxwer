@@ -1,6 +1,7 @@
 package com.kld.gsm.center.dao;
 
 import com.kld.gsm.center.common.MysqlRepository;
+import com.kld.gsm.center.domain.oss_sysmanage_cubage;
 import com.kld.gsm.center.domain.oss_sysmanage_cubageInfo;
 import com.kld.gsm.center.domain.oss_sysmanage_cubageInfoKey;
 import org.springframework.stereotype.Repository;
@@ -25,5 +26,6 @@ public interface oss_sysmanage_cubageInfoMapper {
 
     List<oss_sysmanage_cubageInfo> selectByNodenoAndVersionandcanno(String nodeno,String version,String canno);
 
+    List<oss_sysmanage_cubageInfo> getUntranCubageInfos(oss_sysmanage_cubage cubage);
 
 }

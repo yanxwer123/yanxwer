@@ -509,12 +509,12 @@ public class JhyscxPageDetailFrame extends JOptionPane implements Watcher {
             dischargeL = new JLabel();
             dischargeL.setBounds(364, 134, 108, 21);
             panel_1.add(dischargeL);
-            dischargeL.setText(list.get(i).getDischargel() == null ? "" : list.get(i).getDischargel().toString());
+            dischargeL.setText(list.get(i).getDischargel() == null ? "" : new DecimalFormat("0").format(list.get(i).getDischargel()).toString());
 
             fyss = new JLabel();
             fyss.setBounds(364, 158, 108, 21);
             panel_1.add(fyss);
-            fyss.setText(list.get(i).getDuringsales() == null ? "" : list.get(i).getDuringsales().toString());
+            fyss.setText(list.get(i).getDuringsales() == null ? "" : new DecimalFormat("0").format(list.get(i).getDuringsales()).toString());
             //endregion
 
             //region 罐图形绘制
@@ -606,9 +606,9 @@ public class JhyscxPageDetailFrame extends JOptionPane implements Watcher {
         String ss = alarmDailyLostService.selectOilNo(deliveryBill.getOilno());
         model.setValueAt(ss, 0, 1);
         // endregion
-        model.setValueAt(deliveryBill.getPlanl(), 0, 2);
+        model.setValueAt(new DecimalFormat("0").format(deliveryBill.getPlanl()), 0, 2);
         model.setValueAt(deliveryBill.getDeliverytemp(), 0, 3);
-        model.setValueAt(deliveryBill.getPlanton(), 0, 4);
+        model.setValueAt(new DecimalFormat("0.000").format(deliveryBill.getPlanton()), 0, 4);
 
         if (registerService == null) {
             registerService = Context.getInstance().getBean(IAcceptanceOdRegisterService.class);
@@ -643,8 +643,8 @@ public class JhyscxPageDetailFrame extends JOptionPane implements Watcher {
         AcceptanceOdRegister odRegister = registerService.selectByPrimaryKey(deliveryNo);
 
         if (odRegister != null) {
-            planl.setText(odRegister.getPlanl() == null ? "" : odRegister.getPlanl().toString());
-            realReceiveL.setText(odRegister.getRealreceivel() == null ? "" : odRegister.getRealreceivel().toString());
+            planl.setText(odRegister.getPlanl() == null ? "" : new DecimalFormat("0").format(odRegister.getPlanl()).toString());
+            realReceiveL.setText(odRegister.getRealreceivel() == null ? "" : new DecimalFormat("0").format(odRegister.getRealreceivel()).toString());
             heightEmpey.setText(odRegister.getHeightempey() == null ? "" : odRegister.getHeightempey().toString());
             canTruckTemp.setText(odRegister.getCantrucktemp() == null ? "" : odRegister.getCantrucktemp().toString());
             heightTotal.setText(odRegister.getHeighttotal() == null ? "" : odRegister.getHeighttotal().toString());
@@ -694,14 +694,15 @@ public class JhyscxPageDetailFrame extends JOptionPane implements Watcher {
     private void SetTable(JTable table, AcceptanceOdRegisterInfo info) {
 
         DecimalFormat df = new DecimalFormat("######0.00");
+        DecimalFormat df1 = new DecimalFormat("0");
 
         table.setValueAt(info.getBeginoilheight() == null ? "" : info.getBeginoilheight().toString(), 1, 0);
-        table.setValueAt(info.getBeginoill() == null ? "" : info.getBeginoill().toString(), 1, 1);
-        table.setValueAt(info.getBeginv20l() == null ? "" : Double.parseDouble(df.format(info.getBeginv20l())), 1, 2);
+        table.setValueAt(info.getBeginoill() == null ? "" : df1.format(info.getBeginoill()).toString(), 1, 1);
+        table.setValueAt(info.getBeginv20l() == null ? "" : df1.format(info.getBeginv20l()), 1, 2);
         table.setValueAt(info.getBegintemperature() == null ? "" : info.getBegintemperature().toString(), 1, 3);
         table.setValueAt(info.getEndoilheight() == null ? "" : info.getEndoilheight().toString(), 2, 0);
-        table.setValueAt(info.getEndoill() == null ? "" : info.getEndoill().toString(), 2, 1);
-        table.setValueAt(info.getEndv20l() == null ? "" : Double.parseDouble(df.format(info.getEndv20l())), 2, 2);
+        table.setValueAt(info.getEndoill() == null ? "" : df1.format(info.getEndoill()).toString(), 2, 1);
+        table.setValueAt(info.getEndv20l() == null ? "" : df1.format(info.getEndv20l()), 2, 2);
         table.setValueAt(info.getEndtemperature() == null ? "" : info.getEndtemperature().toString(), 2, 3);
 
     }
@@ -742,17 +743,17 @@ public class JhyscxPageDetailFrame extends JOptionPane implements Watcher {
                 JPanel wpanel = (JPanel) map.get("wpanel");
                 JPanel oilpanel = (JPanel) map.get("oilpanel");
 
-                DecimalFormat df = new DecimalFormat("######0.00");
+                DecimalFormat df = new DecimalFormat("0");
 
                 ygbh.setText(String.valueOf(candata.get(m).get("uOilCanNo")));
-                Double dstj = Double.parseDouble(df.format(Double.parseDouble(candata.get(m).get("fWaterBulk").toString())));
-                stj.setText(String.valueOf(dstj));
+//                Double dstj = df.format(Double.parseDouble(candata.get(m).get("fWaterBulk").toString()));
+                stj.setText(String.valueOf(df.format(candata.get(m).get("fWaterBulk").toString())));
                 Double dpjwd = Double.parseDouble(df.format(Double.parseDouble(candata.get(m).get("fOilTemp").toString())));
                 pjwd.setText(String.valueOf(dpjwd));
-                Double djytj = Double.parseDouble(df.format(Double.parseDouble(candata.get(m).get("fOilCubage").toString())));
-                jytj.setText(String.valueOf(djytj));
-                Double dktj = Double.parseDouble(df.format(Double.parseDouble(candata.get(m).get("fEmptyCubage").toString())));
-                ktj.setText(String.valueOf(dktj));
+//                Double djytj = Double.parseDouble(df.format(Double.parseDouble(candata.get(m).get("fOilCubage").toString())));
+                jytj.setText(String.valueOf(df.format(candata.get(m).get("fOilCubage"))));
+//                Double dktj = Double.parseDouble(df.format(candata.get(m).get("fEmptyCubage")).toString());
+                ktj.setText(String.valueOf(df.format(candata.get(m).get("fEmptyCubage"))));
                 //oil.setText(String.valueOf());
 
 

@@ -1,7 +1,9 @@
 package com.kld.gsm.center.service.impl;
 
+import com.kld.gsm.center.dao.oss_sysmanage_cubageInfoMapper;
 import com.kld.gsm.center.dao.oss_sysmanage_cubageMapper;
 import com.kld.gsm.center.domain.oss_sysmanage_cubage;
+import com.kld.gsm.center.domain.oss_sysmanage_cubageInfo;
 import com.kld.gsm.center.service.ISysmanageCubageService;
 import com.kld.gsm.center.util.ExportUtil;
 import org.apache.poi.xssf.usermodel.*;
@@ -27,6 +29,8 @@ public class SysmanageCubageServiceImpl implements ISysmanageCubageService {
 
     @Resource
     private oss_sysmanage_cubageMapper cubageMapper;
+    @Resource
+    private oss_sysmanage_cubageInfoMapper cubageInfoMapper;
     @Override
     public List<oss_sysmanage_cubage> getCubages(Map<String, Object> map) {
         return cubageMapper.getCubages(map);
@@ -45,6 +49,16 @@ public class SysmanageCubageServiceImpl implements ISysmanageCubageService {
     @Override
     public List<Map<String, Object>> getCubageInfos(Map<String, Object> map) {
         return cubageMapper.getCubageInfos(map);
+    }
+
+    @Override
+    public List<oss_sysmanage_cubage> getUntranCubages(Map<String, Object> map) {
+        return cubageMapper.getUntranCubages(map);
+    }
+
+    @Override
+    public List<oss_sysmanage_cubageInfo> getUntranCubageInfos(oss_sysmanage_cubage cubage) {
+        return cubageInfoMapper.getUntranCubageInfos(cubage);
     }
 
     /**

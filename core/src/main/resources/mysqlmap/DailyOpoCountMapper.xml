@@ -173,4 +173,9 @@
     set AccountDate = #{accountdate}
     WHERE Shift>=#{minshift} AND Shift <=#{maxshift}]]>
   </update>
+
+  <select id="findByShift" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT DISTINCT TakeDate FROM oss_daily_opoCount WHERE Shift = #{shift,jdbcType=VARCHAR}
+  </select>
+
 </mapper>

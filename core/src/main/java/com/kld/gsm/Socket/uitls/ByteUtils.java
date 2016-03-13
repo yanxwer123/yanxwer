@@ -37,7 +37,7 @@ public class ByteUtils {
 
 
     //key  链路    value  链路的半包对象
-    private Map<ChannelHandlerContext, ByteSession> packageMapper = new HashMap<ChannelHandlerContext, ByteSession>();
+    public Map<ChannelHandlerContext, ByteSession> packageMapper = new HashMap<ChannelHandlerContext, ByteSession>();
 
     public String byteBufferToString(ChannelHandlerContext ctx, ByteBuf byteBuf) throws UnsupportedEncodingException {
 

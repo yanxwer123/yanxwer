@@ -1,10 +1,10 @@
-<!doctype html>
-<html>
+<!doctype html  >
+<html style="overflow:visible; height: auto;">
 <head>
     #parse("common/head.vm")
 
 </head>
-<body class="easyui-layout" style="display:block;height:100%;width:100%;">
+<body class="easyui-layout" style="display:block;height:100%;width:100%; overflow:visible;">
     $screen_content
 </body>
 </html>

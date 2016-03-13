@@ -5,6 +5,7 @@ import com.kld.gsm.center.domain.oss_daily_pumpDigitShift;
 import com.kld.gsm.center.domain.oss_daily_pumpDigitShiftKey;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 @MysqlRepository
@@ -20,5 +21,5 @@ public interface oss_daily_pumpDigitShiftMapper {
     int updateByPrimaryKeySelective(oss_daily_pumpDigitShift record);
 
     int updateByPrimaryKey(oss_daily_pumpDigitShift record);
-    List<oss_daily_pumpDigitShift> selectByShift(String shift);
+    List<oss_daily_pumpDigitShift> selectByShift(HashMap<String,Object> map);
 }

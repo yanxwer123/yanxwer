@@ -165,7 +165,11 @@
                 <directory>src/main/resources</directory>
                 <targetPath>${project.build.directory}/app</targetPath>
             </resource>
+<<<<<<< HEAD
             <resource>
+=======
+           <!-- <resource>
+>>>>>>> b66e6d3d3ef669eb400544b771af88a71aa59781
                 <directory>src/main/resources</directory>
                 <targetPath>${project.build.directory}/classes</targetPath>
             </resource>

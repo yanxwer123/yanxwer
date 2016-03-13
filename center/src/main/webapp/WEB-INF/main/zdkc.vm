@@ -1,0 +1,315 @@
+#set($layout="layout/emptylayout.vm")
+#set($menuTitle="油站")
+<style xmlns="http://www.w3.org/1999/html">
+    *{ margin:0; padding:0;} li{ list-style:none;}
+    .mianbox{ overflow:hidden; background:#fed; min-width:820px;}.row{ padding:10px 10px 0 10px;  overflow:hidden;}
+
+    .selectArea {
+        height: 30px;
+        background-color: #f6f6f6;
+        vertical-align: middle;
+        line-height: 30px;
+        padding-left: 20px;
+        color: #838181;
+        font-size:14px;
+        font-weight:bold;
+    }
+    .selectArea a {
+        text-decoration: none;
+        color: black ;
+        margin:0px 5px;
+    }
+    .selectArea a:hover {
+        padding-left:1px;
+    }
+    .selectlink {
+        background-color: #f6f6f6;
+        border: 1px solid #ccc;
+        padding: 0px;
+    }
+</style>
+
+<div id="dhmunu" class="selectArea">
+
+</div>
+<div class="easyui-panel" style="padding: 5px; ">
+    <a href="/web/desktop/station?pcode=$!pcode" class="easyui-linkbutton" plain="true" iconcls="icon-redo">油站总览</a>
+    <a href="/web/desktop/station?pcode=$!pcode&vpage=gqss"  class="easyui-linkbutton" plain="true" iconcls="icon-redo">罐枪实时监控</a>
+    <a href="#" class="easyui-linkbutton selectlink" plain="true" iconcls="icon-redo">油站整点库存</a>
+    <a href="/web/desktop/station?pcode=$!pcode&vpage=rph" class="easyui-linkbutton" plain="true" iconcls="icon-redo">油站日平衡</a>
+    <a href="/web/desktop/station?pcode=$!pcode&vpage=yzbb" class="easyui-linkbutton" plain="true" iconcls="icon-redo">油站班报</a>
+    <a href="/web/desktop/station?pcode=$!pcode&vpage=bjxx" class="easyui-linkbutton" plain="true" iconcls="icon-redo">报警信息</a>
+</div>
+
+<div id="query" title="查询条件" collapsible="true" class="easyui-panel search panel-body panel-body-noheader" style="border:0px;padding: 10px; width: 100%;" icon="icon-search">
+    <table  width="550px">
+        <tr>
+            <th>
+                起止日期：
+            </th>
+            <th colspan="3" align="left">
+                <input id="dateStartinput" type="text" class="easyui-datebox" required="required" editable="false"/> ——
+                <input id="dateEndinput" type="text"  class="easyui-datebox" required="required" editable="false"/>
+            </th>
+
+        </tr>
+
+        <tr>
+            <th></th>
+            <th align="left">
+                <a id="searchExchange" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" style="width: 60px" onclick="initData()">查询</a>
+                <a id="btnExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-export'" style="width: 60px;" onclick="ExportExl()">导出</a>
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </table>
+</div>
+<div id="chartline" style="margin: 10px 0px;height: 320px; display:block;">
+</div>
+<div  style="width: 100%;height: 352px;">
+    <table id="tt" fit="true" style="height: 500px;">
+    </table>
+</div>
+
+<script src="/resources/js/build/dist/echarts-all.js"></script>
+<script type="text/javascript">
+
+
+    // 对Date的扩展，将 Date 转化为指定格式的String
+    // 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
+    // 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
+    // 例子：
+    // (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
+    // (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18
+    Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
+
+
+    function formatDatebox(value) {
+        if (value == null || value == '') {
+            return '';
+        }
+        var dt;
+        if (value instanceof Date) {
+            dt = value;
+        } else {
+            dt = new Date(value);
+        }
+        return dt.format("yyyy-MM-dd hh:mm:ss"); //扩展的Date的format方法(上述插件实现)
+    }
+
+    function formatvaluebox(value) {
+        if (value == null || value == '') {
+            return '';
+        }
+//        var dt;
+//        if (value instanceof Date) {
+//            dt = value;
+//        } else {
+//            dt = new Date(value);
+//        }
+//
+//        var num=2.4445;
+        var number=value.toFixed(2);//格式化,保留两位小数
+
+        return number;
+    }
+
+
+    $(function()
+    {
+        getMenu();
+        var myDate = new Date();
+        var MyTime=new Date();
+        var time=MyTime.getFullYear() + "-" + (MyTime.getMonth()) + "-" + MyTime.getDate();
+
+        $("#dateStartinput").datebox('setValue','<%=myDate.toLocaleDateString()%>');
+        $("#dateEndinput").datebox('setValue','<%=myDate.toLocaleDateString()%>');
+        var heigth=$(window).height()-160;
+        $("#result").height(heigth);
+
+        initData();
+
+        loadChart();
+
+    })
+
+    //构造导航信息
+    function getMenu()
+    {
+        var oucode="$!pcode";
+
+        //绑定设备预警
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/getMenu?oucode="+oucode,
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+
+                var strmunu="<a href='/web/desktop/desktop' target='_self'>监控首页</a>";
+                // <a href="/web/desktop/desktop" target="_self">监控首页</a>  > <a href="#" target="_self">分公司</a> > <a href="#" target="_self">片区</a> > 加油站
+                if(msg.data.sheng!=""&&typeof(msg.data.sheng) != "undefined")
+                {
+                    strmunu+="> <a href='/web/desktop/city?pcode="+oucode.substring(0,6)+"' target='_self'>"+msg.data.sheng+"</a>";
+                }
+                if(msg.data.qu!=""&&typeof(msg.data.qu) != "undefined")
+                {
+                    strmunu+="> <a href='/web/desktop/county?pcode="+oucode.substring(0,9)+"' target='_self'>"+msg.data.qu+"</a>";
+                }
+                if(msg.data.zhan!=""&&typeof(msg.data.zhan) != "undefined")
+                {
+                    strmunu+="> "+msg.data.zhan+"</a>";
+                }
+
+                $("#dhmunu").html(strmunu);
+
+
+
+            }
+        });
+
+
+    }
+
+
+    var cols=[[
+        {field:'OilCanNo',title:'油罐编号',width:100,align:'center'},
+        {field:'OilName',title:'油品',width:100,align:'center'},
+        {field:'alltime',title:'时间',width:100,align:'center'},
+        {field:'StandCubage',title:'标准体积（L）',width:100,formatter: formatvaluebox,align:'center'},
+        {field:'TotalHeight',title:'油水总高（mm）',width:100,formatter: formatvaluebox,align:'center'},
+        {field:'OilCubage',title:'净油体积（L）',width:100,formatter: formatvaluebox,align:'center'},
+        {field:'WaterHeight',title:'水高（mm）',width:100,align:'center'},
+        {field:'WaterBulk',title:'水量',width:100,align:'center'},
+        {field:'Temp',title:'平均温度（℃）',width:100,formatter: formatvaluebox,align:'center'},
+        {field:'EmptyCubage',title:'空体积（L）',width:100,formatter: formatvaluebox,align:'center'}
+
+    ]];
+
+
+    var  begin;
+    var end;
+    var oucode;
+    var paras;
+
+    function inittext(){
+        begin=$("#dateStartinput").datebox("getValue").replace(/-/g,"");
+        end=$("#dateEndinput").datebox("getValue").replace(/-/g,"");
+
+        oucode="$!pcode";
+
+        paras={ "begin": begin, "end":end, "oucode":oucode};
+    }
+    function initData() {
+
+
+        inittext();
+        BindDataGridAjax('tt','整点库存列表','/web/desktop/getInventoryList',cols,paras,'true',10,[10,20,30]);
+
+        loadChart();
+
+    }
+    function ExportExl() {
+
+        begin=$("#dateStartinput").datebox("getValue").replace(/-/g,"");
+        end=$("#dateEndinput").datebox("getValue").replace(/-/g,"");
+
+        oucode="$!pcode";
+
+        var filename=encodeURI(encodeURI("整点库存列表"));
+        window.open("/web/desktop/downloadzdkc?begin="+begin+"&end="+end+"&oucode="+oucode+"&FileName="+filename);
+
+    }
+
+    //加载曲线图
+    function loadChart()
+    {
+
+       $("#chartline").hide();
+
+        //"begin": begin, "end":end, "oucode":oucode
+        //加载数据
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/getInventoryAllList?begin="+begin+"&end="+end+"&oucode="+oucode,
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+
+                if(msg.total>0)
+                {
+                    $("#chartline").show();
+                    //呈现报表
+                    var  myChart = echarts.init(document.getElementById('chartline'));
+
+                    var optionline = {
+                        title: {
+                            // text: '净油体积',
+                            // subtext: '净油体积'
+                        },
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            data: ['净油体积']
+                        },
+                        toolbox: {
+                            show: false
+                        },
+                        //calculable: true,
+                        xAxis: [
+                            {
+                                type: 'category',
+                                boundaryGap: false,
+                                //data: ['2016-01-24 10:59:44', '2016-01-24 10:59:44', '2016-01-24 10:59:44', '2016-01-24 10:59:44', '2016-01-24 10:59:44']
+                                data:msg.data.xlist
+                            }
+                        ],
+                        yAxis: [
+                            {
+                                type: 'value'
+                            }
+                        ],
+                        series: [
+                            {
+                                name: '净油体积',
+                                type: 'line',
+                                //data: [11, 11, 15, 13, 12]
+                                data: msg.data.ylist
+                            }
+                        ]
+                    };
+
+                    myChart.setOption(optionline);
+
+                }
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+    }
+
+
+</script>

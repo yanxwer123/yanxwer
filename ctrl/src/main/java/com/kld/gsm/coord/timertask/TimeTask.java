@@ -15,6 +15,34 @@ import java.util.Calendar;
  * @Description:
  */
 public class TimeTask {
+    //液位仪对时
+    static CheckTimePolling checkTimePolling;
+    //交易流水
+//    static DailyTradeAccountPolling dailyTradeAccountPolling;
+    //实时库存
+    static RTTimeStockThead rtTimeStockThead;
+    //设备故障信息
+    static EquipmentPolling equipmentPolling;
+    //油罐报警
+    static OilCanAlarmPolling oilCanAlarmPolling;
+    //枪出罐出对比
+    static OilMacStautsDataPolling oilMacStautsDataPolling;
+    //液位仪开关记录
+    static PowerRecordPolling powerRecordPolling;
+    //脱销预警
+    static SaleOutAlarmPolling saleOutAlarmPolling;
+    //时点库存
+    static StockThead stockThead;
+    //平均时点销量表
+    static TimeSaleOutPolling timeSaleOutPolling;
+    //整点库存
+    static TimeStockThread timeStockThread;
+    //文件库存
+    static FileStockThread fileStockThread;
+
+    /**
+     * 开始线程
+     */
     public static void start(){
         Logger logger = Logger.getLogger(TimeTask.class);
         try {
@@ -65,49 +93,79 @@ public class TimeTask {
             logger.error("实时库存超时:" + TimeTaskPar.get("rtstockcs"));
             logger.error("~~~~~~~~~~~~~~~~~~end~~~~~~~~~~~~");
             //液位仪对时
-            CheckTimePolling checkTimePolling = new CheckTimePolling();
+            checkTimePolling = new CheckTimePolling();
             checkTimePolling.start();
             //交易流水
-            DailyTradeAccountPolling dailyTradeAccountPolling = new DailyTradeAccountPolling();
-            dailyTradeAccountPolling.start();
+//            dailyTradeAccountPolling = new DailyTradeAccountPolling();
+//            dailyTradeAccountPolling.start();
             //实时库存
-            RTTimeStockThead rtTimeStockThead=new RTTimeStockThead();
+            rtTimeStockThead=new RTTimeStockThead();
             rtTimeStockThead.start();
             //设备基础信息
 //            DeviceInfoPolling deviceInfoPolling = new DeviceInfoPolling();
 //            deviceInfoPolling.start();
             //设备故障信息
-            EquipmentPolling equipmentPolling = new EquipmentPolling();
+            equipmentPolling = new EquipmentPolling();
             equipmentPolling.start();
             //获取液位仪容积表（暂时不启动）
 //        GetIquidCubagePolling getIquidCubagePolling = new GetIquidCubagePolling();
 //        getIquidCubagePolling.start();
             //油罐报警
-            OilCanAlarmPolling oilCanAlarmPolling = new OilCanAlarmPolling();
+            oilCanAlarmPolling = new OilCanAlarmPolling();
             oilCanAlarmPolling.start();
             //枪出罐出对比
-            OilMacStautsDataPolling oilMacStautsDataPolling = new OilMacStautsDataPolling();
+            oilMacStautsDataPolling = new OilMacStautsDataPolling();
             oilMacStautsDataPolling.start();
             //液位仪开关记录
-            PowerRecordPolling powerRecordPolling = new PowerRecordPolling();
+            powerRecordPolling = new PowerRecordPolling();
             powerRecordPolling.start();
             //脱销预警
-            SaleOutAlarmPolling saleOutAlarmPolling = new SaleOutAlarmPolling();
+            saleOutAlarmPolling = new SaleOutAlarmPolling();
             saleOutAlarmPolling.start();
             //时点库存
-            StockThead stockThead = new StockThead();
+            stockThead = new StockThead();
             stockThead.start();
             //平均时点销量表
-            TimeSaleOutPolling timeSaleOutPolling = new TimeSaleOutPolling();
+            timeSaleOutPolling = new TimeSaleOutPolling();
             timeSaleOutPolling.start();
             //整点库存
-            TimeStockThread timeStockThread = new TimeStockThread();
+            timeStockThread = new TimeStockThread();
             timeStockThread.start();
             //文件库存
-            FileStockThread fileStockThread=new FileStockThread();
+            fileStockThread=new FileStockThread();
             fileStockThread.start();
         }catch(Exception e){
             logger.error(e);
         }
+    }
+
+    /**
+     * 结束线程
+     */
+    public static void stop(){
+        //液位仪对时
+        checkTimePolling.stop();
+        //交易流水
+//        dailyTradeAccountPolling.stop();
+        //实时库存
+        rtTimeStockThead.stop();
+        //设备故障信息
+        equipmentPolling.stop();
+        //油罐报警
+        oilCanAlarmPolling.stop();
+        //枪出罐出对比
+        oilMacStautsDataPolling.stop();
+        //液位仪开关记录
+        powerRecordPolling.stop();
+        //脱销预警
+        saleOutAlarmPolling.stop();
+        //时点库存
+        stockThead.stop();
+        //平均时点销量表
+        timeSaleOutPolling.stop();
+        //整点库存
+        timeStockThread.stop();
+        //文件库存
+        fileStockThread.stop();
     }
 }

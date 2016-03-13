@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -105,5 +106,22 @@ public class CheckSerivceImpl implements CheckSerivce {
     @Override
     public String selectOilNo(String OilNo) {
         return sysManageOilTypeDao.selectOilNo(OilNo);
+    }
+
+    @Override
+    public String findByOilcan(String shift,String oilcan) {
+        HashMap hm = new HashMap();
+        hm.put("shift", shift);
+        hm.put("oilcan", oilcan);
+        return dailyTankShiftDao.findByOilcan(hm);
+    }
+
+    @Override
+    public String findToOilLByOilNo(String shift, String oilno) {
+        System.out.println("findToOilLByOilNo:[shift:"+shift+"] [oilno:"+oilno+"]");
+        HashMap hm = new HashMap();
+        hm.put("shift", shift);
+        hm.put("oilno", oilno);
+        return dailyTankShiftDao.findToOilLByOilNo(hm);
     }
 }

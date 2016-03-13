@@ -47,15 +47,22 @@
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
   </select>
   <select id="selectmeasurebywhere" resultType="hashmap" parameterType="hashmap">
-    <![CDATA[SELECT * FROM oss_alarm_measureLeak WHERE
+    <![CDATA[
+       SELECT a.*,b.OUName from
+    oss_alarm_measureLeak a
+    inner join oss_sys_OrgUnit b on a.OUCode=b.OUCode
+      WHERE
      StartDate>=#{start,jdbcType=TIMESTAMP} And StartDate<#{end,jdbcType=TIMESTAMP}
    ]]>
     <if test="oucode != null and  oucode!= ''">
-      <![CDATA[  and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+      <![CDATA[  and a.OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
     </if>
   </select>
   <select id="querypage" resultType="hashmap" parameterType="hashmap">
-    <![CDATA[SELECT * FROM oss_alarm_measureLeak WHERE StartDate>=#{start,jdbcType=TIMESTAMP} And StartDate<#{end,jdbcType=TIMESTAMP}
+    <![CDATA[SELECT a.*,b.OUName from
+    oss_alarm_measureLeak a
+    inner join oss_sys_OrgUnit b on a.OUCode=b.OUCode
+     WHERE StartDate>=#{start,jdbcType=TIMESTAMP} And StartDate<#{end,jdbcType=TIMESTAMP}
    ]]>
     <if test="oucode != null and  oucode!= ''">
       <![CDATA[  and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>

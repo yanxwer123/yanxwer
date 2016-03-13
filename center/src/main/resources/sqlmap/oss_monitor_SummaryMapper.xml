@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kld.gsm.center.dao.oss_monitor_SummaryMapper">
+  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_monitor_Summary">
+    <id column="NodeNo" jdbcType="VARCHAR" property="nodeno" />
+    <result column="OuCode" jdbcType="VARCHAR" property="oucode" />
+    <result column="QYSales" jdbcType="DOUBLE" property="qysales" />
+    <result column="CYSales" jdbcType="DOUBLE" property="cysales" />
+    <result column="QYStore" jdbcType="DOUBLE" property="qystore" />
+    <result column="CYStore" jdbcType="DOUBLE" property="cystore" />
+    <result column="QYOilin" jdbcType="DOUBLE" property="qyoilin" />
+    <result column="CYOilin" jdbcType="DOUBLE" property="cyoilin" />
+    <result column="TJCount" jdbcType="INTEGER" property="tjcount" />
+    <result column="YwyRate" jdbcType="DOUBLE" property="ywyrate" />
+    <result column="CreateDate" jdbcType="TIMESTAMP" property="createdate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    NodeNo, OuCode, QYSales, CYSales, QYStore, CYStore, QYOilin, CYOilin, TJCount, YwyRate, 
+    CreateDate
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from oss_monitor_Summary
+    where NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectSummary" parameterType="hashmap" resultType="hashmap">
+    select CreateDate,FORMAT((sum(QYSales)/10000),2) QYSales,FORMAT((sum(CYSales)/10000),2) CYSales,FORMAT((sum(QYStore)/10000),2) QYStore,
+    FORMAT((sum(CYStore)/10000),2) CYStore,FORMAT((sum(QYOilin)/10000),2) QYOilin,FORMAT((sum(CYOilin)/10000),2) CYOilin,
+    sum(TJCount) TJCount,
+    (sum(YwyRate)/(select count(ouid) FROM oss_sys_OrgUnit as org where  org.OUType=3
+    <if test="oucode != null">
+      <![CDATA[    and org.OUCode  LIKE #{oucode,jdbcType=VARCHAR}]]>
+    </if>
+    )) YwyRate
+    from oss_monitor_Summary
+    <if test="oucode != null">
+      <![CDATA[   where OuCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    </if>
+  </select>
+
+  <select id="selectSummarybyParent" parameterType="hashmap" resultType="hashmap">
+    SELECT ouname,oucode,
+    (select FORMAT((sum(QYSales)/10000),2)   FROM oss_monitor_Summary where oucode like (CONCAT(org.oucode, '', '%')) ) as QYSales,
+    (select FORMAT((sum(CYSales)/10000),2)   FROM oss_monitor_Summary where oucode like (CONCAT(org.oucode, '', '%')) ) as CYSales,
+    (select FORMAT((sum(QYStore)/10000),2)   FROM oss_monitor_Summary where oucode like (CONCAT(org.oucode, '', '%')) ) as QYStore,
+    (select FORMAT((sum(CYStore)/10000),2)   FROM oss_monitor_Summary where oucode like (CONCAT(org.oucode, '', '%')) ) as CYStore,
+    (select FORMAT((sum(QYOilin)/10000),2)   FROM oss_monitor_Summary where oucode like (CONCAT(org.oucode, '', '%')) ) as QYOilin,
+    (select FORMAT((sum(CYOilin)/10000),2)   FROM oss_monitor_Summary where oucode like (CONCAT(org.oucode, '', '%')) ) as CYOilin,
+    (select (sum(TJCount))   FROM oss_monitor_Summary where oucode like (CONCAT(org.oucode, '', '%')) ) as TJCount,
+    (select (sum(YwyRate)/count(NodeNo))   FROM oss_monitor_Summary where oucode like (CONCAT(org.oucode, '', '%')) ) as YwyRate
+    FROM oss_sys_OrgUnit  as  org
+    <if test="Pcode != null">
+      where org.ParentOUCode=#{Pcode,jdbcType=VARCHAR}
+    </if>
+    ORDER BY org.oucode DESC
+    <if test="firstRow != null and  pageSize!= null">
+       LIMIT #{firstRow},#{pageSize}
+    </if>
+  </select>
+
+
+  <select id="selectSummaryCountbyParent" parameterType="hashmap" resultType="hashmap">
+    SELECT ouname,oucode   FROM oss_sys_OrgUnit  as  org
+    <if test="Pcode != null">
+      where org.ParentOUCode=#{Pcode,jdbcType=VARCHAR}
+    </if>
+    ORDER BY org.oucode DESC
+  </select>
+
+
+  <select id="selectSummaryServer" parameterType="hashmap" resultType="hashmap">
+  select *,
+    (SELECT sum(Liter) as allLiter FROM oss_daily_TradeAccount where oucode=mytable.oucode and OilNo in (SELECT OilNo FROM oss_sysmanage_oilType where OilType=01) and Shift>mytable.maxShift) as QYSales ,
+    (SELECT sum(Liter) as allLiter FROM oss_daily_TradeAccount where oucode=mytable.oucode and OilNo in (SELECT OilNo FROM oss_sysmanage_oilType where OilType=03) and Shift>mytable.maxShift) as CYSales ,
+    (SELECT sum(DischargeL) as allDischargeL FROM oss_acceptance_odRegisterInfo where oucode=mytable.oucode and OilNo in (SELECT OilNo FROM oss_sysmanage_oilType where OilType=01) and Shift>mytable.maxShift) as QYStore ,
+    (SELECT sum(DischargeL) as allDischargeL FROM oss_acceptance_odRegisterInfo where oucode=mytable.oucode and OilNo in (SELECT OilNo FROM oss_sysmanage_oilType where OilType=03) and Shift>mytable.maxShift) as CYStore,
+    (SELECT count(MacNo) as allTJCount FROM oss_daily_TradeAccount where oucode=mytable.oucode  and Shift>mytable.maxShift) as TJCount,
+    (SELECT count(id) FROM oss_sysmanage_iquidInstrument where oucode=mytable.oucode ) as Ywycount
+    from  (
+    SELECT oucode ,ouname,UniversalCode,
+    (SELECT Shift FROM oss_daily_tankshift where oucode=org.oucode and AccountDate is not null order by Shift desc limit 1) as maxShift
+    FROM oss_sys_OrgUnit as org where  org.oucode in (SELECT distinct oucode
+ FROM gsmcenter.oss_daily_TradeAccount as mytable where Shift is not null)) as mytable
+union
+  select *,
+    (SELECT sum(Liter) as allLiter FROM oss_daily_TradeAccount where oucode=mytable.oucode and OilNo in (SELECT OilNo FROM oss_sysmanage_oilType where OilType=01) and Shift is  null) as QYSales ,
+    (SELECT sum(Liter) as allLiter FROM oss_daily_TradeAccount where oucode=mytable.oucode and OilNo in (SELECT OilNo FROM oss_sysmanage_oilType where OilType=03) and Shift is  null) as CYSales ,
+    (SELECT sum(DischargeL) as allDischargeL FROM oss_acceptance_odRegisterInfo where oucode=mytable.oucode and OilNo in (SELECT OilNo FROM oss_sysmanage_oilType where OilType=01) and Shift is  null) as QYStore ,
+    (SELECT sum(DischargeL) as allDischargeL FROM oss_acceptance_odRegisterInfo where oucode=mytable.oucode and OilNo in (SELECT OilNo FROM oss_sysmanage_oilType where OilType=03) and Shift is  null) as CYStore,
+    (SELECT count(MacNo) as allTJCount FROM oss_daily_TradeAccount where oucode=mytable.oucode  and Shift is  null) as TJCount,
+    (SELECT count(id) FROM oss_sysmanage_iquidInstrument where oucode=mytable.oucode ) as Ywycount
+    from  (
+    SELECT oucode ,ouname,UniversalCode,'' as maxShift
+    FROM oss_sys_OrgUnit as org where  org.oucode in (SELECT distinct oucode
+ FROM gsmcenter.oss_daily_TradeAccount as mytable where Shift is  null)) as mytable;
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from oss_monitor_Summary
+    where NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteAll" parameterType="java.lang.String">
+    truncate table oss_monitor_Summary
+  </delete>
+  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_monitor_Summary">
+    insert into oss_monitor_Summary (NodeNo, OuCode, QYSales, 
+      CYSales, QYStore, CYStore, 
+      QYOilin, CYOilin, TJCount, 
+      YwyRate, CreateDate)
+    values (#{nodeno,jdbcType=VARCHAR}, #{oucode,jdbcType=VARCHAR}, #{qysales,jdbcType=DOUBLE}, 
+      #{cysales,jdbcType=DOUBLE}, #{qystore,jdbcType=DOUBLE}, #{cystore,jdbcType=DOUBLE}, 
+      #{qyoilin,jdbcType=DOUBLE}, #{cyoilin,jdbcType=DOUBLE}, #{tjcount,jdbcType=INTEGER}, 
+      #{ywyrate,jdbcType=DOUBLE}, #{createdate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertlist" parameterType="java.util.List">
+    insert into oss_monitor_Summary (NodeNo, OuCode, QYSales,
+    CYSales, QYStore, CYStore,
+    QYOilin, CYOilin, TJCount,
+    YwyRate, CreateDate)
+    values
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{item.nodeno}, #{item.oucode}, #{item.qysales},
+      #{item.cysales}, #{item.qystore}, #{item.cystore},
+      #{item.qyoilin}, #{item.cyoilin}, #{item.tjcount},
+      #{item.ywyrate}, #{item.createdate})
+    </foreach>
+  </insert>
+  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_monitor_Summary">
+    insert into oss_monitor_Summary
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="nodeno != null">
+        NodeNo,
+      </if>
+      <if test="oucode != null">
+        OuCode,
+      </if>
+      <if test="qysales != null">
+        QYSales,
+      </if>
+      <if test="cysales != null">
+        CYSales,
+      </if>
+      <if test="qystore != null">
+        QYStore,
+      </if>
+      <if test="cystore != null">
+        CYStore,
+      </if>
+      <if test="qyoilin != null">
+        QYOilin,
+      </if>
+      <if test="cyoilin != null">
+        CYOilin,
+      </if>
+      <if test="tjcount != null">
+        TJCount,
+      </if>
+      <if test="ywyrate != null">
+        YwyRate,
+      </if>
+      <if test="createdate != null">
+        CreateDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="nodeno != null">
+        #{nodeno,jdbcType=VARCHAR},
+      </if>
+      <if test="oucode != null">
+        #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="qysales != null">
+        #{qysales,jdbcType=DOUBLE},
+      </if>
+      <if test="cysales != null">
+        #{cysales,jdbcType=DOUBLE},
+      </if>
+      <if test="qystore != null">
+        #{qystore,jdbcType=DOUBLE},
+      </if>
+      <if test="cystore != null">
+        #{cystore,jdbcType=DOUBLE},
+      </if>
+      <if test="qyoilin != null">
+        #{qyoilin,jdbcType=DOUBLE},
+      </if>
+      <if test="cyoilin != null">
+        #{cyoilin,jdbcType=DOUBLE},
+      </if>
+      <if test="tjcount != null">
+        #{tjcount,jdbcType=INTEGER},
+      </if>
+      <if test="ywyrate != null">
+        #{ywyrate,jdbcType=DOUBLE},
+      </if>
+      <if test="createdate != null">
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_monitor_Summary">
+    update oss_monitor_Summary
+    <set>
+      <if test="oucode != null">
+        OuCode = #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="qysales != null">
+        QYSales = #{qysales,jdbcType=DOUBLE},
+      </if>
+      <if test="cysales != null">
+        CYSales = #{cysales,jdbcType=DOUBLE},
+      </if>
+      <if test="qystore != null">
+        QYStore = #{qystore,jdbcType=DOUBLE},
+      </if>
+      <if test="cystore != null">
+        CYStore = #{cystore,jdbcType=DOUBLE},
+      </if>
+      <if test="qyoilin != null">
+        QYOilin = #{qyoilin,jdbcType=DOUBLE},
+      </if>
+      <if test="cyoilin != null">
+        CYOilin = #{cyoilin,jdbcType=DOUBLE},
+      </if>
+      <if test="tjcount != null">
+        TJCount = #{tjcount,jdbcType=INTEGER},
+      </if>
+      <if test="ywyrate != null">
+        YwyRate = #{ywyrate,jdbcType=DOUBLE},
+      </if>
+      <if test="createdate != null">
+        CreateDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_monitor_Summary">
+    update oss_monitor_Summary
+    set OuCode = #{oucode,jdbcType=VARCHAR},
+      QYSales = #{qysales,jdbcType=DOUBLE},
+      CYSales = #{cysales,jdbcType=DOUBLE},
+      QYStore = #{qystore,jdbcType=DOUBLE},
+      CYStore = #{cystore,jdbcType=DOUBLE},
+      QYOilin = #{qyoilin,jdbcType=DOUBLE},
+      CYOilin = #{cyoilin,jdbcType=DOUBLE},
+      TJCount = #{tjcount,jdbcType=INTEGER},
+      YwyRate = #{ywyrate,jdbcType=DOUBLE},
+      CreateDate = #{createdate,jdbcType=TIMESTAMP}
+    where NodeNo = #{nodeno,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

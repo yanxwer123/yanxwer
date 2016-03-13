@@ -46,6 +46,13 @@
     <result column="CreateTime" property="CreateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
     <result column="CarNo" property="CarNo" javaType="java.lang.String" jdbcType="VARCHAR"/>
     <result column="OutSealNo" property="OutSealNo" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result column="Dischargerate" property="Dischargerate" javaType="java.lang.Double" jdbcType="DOUBLE"/>
+    <result column="OilCan" property="OilCan" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+    <result column="ArrivalTime" property="ArrivalTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    <result column="EnterType" property="EnterType" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+    <result column="BeginTime" property="BeginTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    <result column="EndTime" property="EndTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    <result column="ServiceLevel" property="ServiceLevel" javaType="java.lang.Integer" jdbcType="INTEGER"/>
   </resultMap>
 
   <resultMap id="byShift"  type="java.util.HashMap" >
@@ -440,7 +447,10 @@ WHERE
   <select id="selectByTrans" parameterType="String" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
-    FROM oss_acceptance_odRegister WHERE  TranStatus=#{0,jdbcType=VARCHAR}
+    FROM oss_acceptance_odRegister
+    WHERE BeginTime IS NOT NULL
+    AND EndTime IS NOT NULL
+    AND TranStatus=#{0,jdbcType=VARCHAR} AND DeliveryNo IS NOT NULL
   </select>
   <select id="selectWHDByoil" parameterType="String" resultMap="BaseResultMap">
      SELECT
@@ -451,13 +461,33 @@ WHERE
     and ManualNo IN(SELECT DeliveryNo FROM oss_acceptance_nobills where IsComplete=1 )
   </select>
   <select id="selectjhysbynoanddate" resultMap="ProResultMap" parameterType="hashmap">
-    select
-        *
-    from View_GetOdReg where
-    <![CDATA[CreateTime >= #{begin, jdbcType=TIMESTAMP}]]>
-    <![CDATA[and CreateTime <= #{end, jdbcType=TIMESTAMP}]]>
+
+    SELECT DISTINCT reg.*,info.OilCan,info.EnterType
+    FROM View_GetOdReg reg left join oss_acceptance_odRegisterInfo info
+    ON reg.DeliveryNo=info.DeliveryNo
+    WHERE
+    <![CDATA[reg.CreateTime >= #{begin, jdbcType=TIMESTAMP}]]>
+    <![CDATA[and reg.CreateTime <= #{end, jdbcType=TIMESTAMP}]]>
     <if test="deliveryNo != null and deliveryNo != ''">
-      and DeliveryNo = #{deliveryNo}
+      and reg.DeliveryNo = #{deliveryNo}
+    </if>
+    <if test="oilcan != null and oilcan != ''">
+      and info.OilCan = #{oilcan, jdbcType=INTEGER}
+    </if>
+    <if test="symbol != null and symbol != '' and symbol == '大于'">
+      <![CDATA[and reg.DischargeRate > #{dischargeRate, jdbcType=DOUBLE}]]>
+    </if>
+    <if test="symbol != null and symbol != '' and symbol == '大于等于'">
+      <![CDATA[and reg.DischargeRate >= #{dischargeRate, jdbcType=DOUBLE}]]>
+    </if>
+    <if test="symbol != null and symbol != '' and symbol == '等于'">
+      <![CDATA[and reg.DischargeRate = #{dischargeRate, jdbcType=DOUBLE}]]>
+    </if>
+    <if test="symbol != null and symbol != '' and symbol == '小于'">
+      <![CDATA[and reg.DischargeRate < #{dischargeRate, jdbcType=DOUBLE}]]>
+    </if>
+    <if test="symbol != null and symbol != '' and symbol == '小于等于'">
+      <![CDATA[and reg.DischargeRate <= #{dischargeRate, jdbcType=DOUBLE}]]>
     </if>
     order by createtime desc
   </select>

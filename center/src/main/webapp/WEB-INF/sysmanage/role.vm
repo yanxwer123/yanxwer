@@ -1,0 +1,356 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>角色管理</title>
+    <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
+    <script type="text/javascript" src="easyui/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+</head>
+<body>
+<div id="query"  data-options="region:'center',title:'湖南省',split:true" title="" collapsible="true" class="easyui-panel search panel-body panel-body-noheader" style="border:0px;padding: 10px; width: 100%;" icon="icon-search">
+</div>
+<div id="toolbar">
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" onclick="addrole()" plain="true">新增</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-edit" onclick="editrole()" plain="true">修改</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove" onclick="dellrole()" plain="true">删除</a>
+</div>
+<div id="result" class="easyui-panel"  >
+    <table id="tt" class="easyui-datagrid">
+    </table>
+</div>
+<div id="winRole" class="easyui-window" title="新增" closed="true" style="width:430px;height:200px;"
+     data-options="modal:true">
+
+    <form id="RoleloginForm" action="/web/sysmanage/addRole" method="post" style="padding:5px 5px 5px 5px;">
+        <table>
+            <tr>
+                <td style="padding-top:10px">角色编号</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="roleAddrolecode" name="rolecode" data-options="required:true,precision:2" /></td>
+                <td style="padding-top:10px">角色名称</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="roleAddname" name="name" data-options="required:true,precision:2" /></td>
+                </tr>
+            <tr>
+                <td style="padding-top:10px">创建者</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="roleAddcreator" name="creator" data-options="required:true,precision:2" value="$session.getAttribute("realname")" /></td>
+                <td style="padding-top:10px">创建时间</td>
+                <td style="padding-top:10px"><input class="easyui-datetimebox"  id="roleAddcreatetime"
+                                                    name="createtime" data-options="required:true,precision:2"</td>
+            </tr>
+            <tr>
+                <td style="padding-top:10px">状态</td>
+                <td style="padding-top:10px">
+                    <select id="roleAddstate" name="state" class="easyui-comboBox"  data-options="required:true,precision:2"name=”dept” style="width:136px;">
+                        <option value="0">生效</option>
+                        <option value="1">无效</option>
+                    </select></td>
+            </tr>
+        </table>
+        <div style="padding:5px;text-align:center;">
+            <a  class="easyui-linkbutton" onclick="submitFormRole()">添加</a>
+        </div>
+    </form>
+
+</div>
+<div id="xiuRole" class="easyui-window" title="修改" closed="true" style="width:430px;height:200px;"
+     data-options="modal:true">
+    <form id="RoleEditloginForm" action="/web/sysmanage/editRole" method="post" style="padding:5px 5px 5px 5px;">
+            <table>
+            <tr>
+                <td style="padding-top:10px">用户编号</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="roleEditrolecode" name="rolecode" data-options="required:true,precision:2" /></td>
+                <td style="padding-top:10px">角色名称</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="roleEditname" name="name" data-options="required:true,precision:2" /></td>
+             </tr>
+            <tr>
+
+                <td style="padding-top:10px">创建者</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="roleEditcreator" name="creator" data-options="required:true,precision:2" /></td>
+
+                <td style="padding-top:10px">创建时间</td>
+                <td style="padding-top:10px"><input class="easyui-datetimebox"  id="roleEditcreatetime" name="createtime" data-options="required:true,precision:2"</td>
+            </tr>
+            <tr>
+                <td style="padding-top:10px">状态</td>
+                <td style="padding-top:10px">
+                    <input id="roleEditstate" name="state" class="easyui-combobox"  data-options="
+                        valueField: 'id',editable:false,
+                        textField: 'text',
+                        data: [{
+                                    id: '0',
+                                    text: '有效'
+                                },{
+                                    id: '1',
+                                    text: '无效'
+                                }]"  style="width:136px;" />
+                    </td>
+            </tr>
+        </table>
+        <div style="padding:5px;text-align:center;">
+            <a  class="easyui-linkbutton" onclick="SaveForm()">保存</a>
+        </div>
+    </form>
+</div>
+<div id="RoleCatalog" class="easyui-window" title="角色权限" closed="true"  style="width:400px;height:300px;" data-options="checkbox:true,modal:true">
+    <div style="padding:0px;text-align:left;">
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-save" onclick="saveRoleCatalog()" plain="true">保存</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-redo" onclick="removeRoleCatalog()" plain="true">撤销更改</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-no" onclick="closeRoleCatalog()" plain="true">关闭</a>
+    </div>
+    <div id="roleCatalog" data-options="region:'north',title:'角色权限',split:true" style="padding:5px;width:100px;height:100px;"></div>
+</div>
+
+<script type="text/javascript">
+
+    var cols=[[
+        {field:'rolecode',title:'角色编号',width:50,align:'center'},
+        {field:'name',title:'角色名称',width:50,align:'center'},
+        {field:'creator',title:'创建者',width:50,align:'center'},
+        {field:'state',title:'状态',width:50,align:'center'},
+        {field: 'createtime', title: '创建时间', width: 55, align: 'center',formatter:function(value,row,index){
+            var time=formatDatebox(row.createtime);
+            return time;
+        }},
+        {field:'action',title:'角色权限',width:100,align:'center',formatter:function(value,row,index){
+            var str = '';
+            str += "<a href='javascript:void(0);'  onclick='ShowRole("+row.rolecode+")'>查看或修改</a>";
+            return str;
+        }},
+    ]];
+    var name;//角色名称
+    var paras;
+    var id;//对应组织机构 oucode
+    var roleid ;
+
+    $(function(){
+        var heigth = $(window).height() - 130;
+        $("#result").height(heigth);
+        initData();
+
+    });
+
+    function ShowRole (rolecode) {
+        $('#RoleCatalog').window('open');
+        next (rolecode);
+
+    }
+
+    function next (rolecode) {
+        roleid  =rolecode;
+        $('#roleCatalog').tree({
+            url: "/web/sysmanage/findallRoleCatalog",
+            checkbox:true,
+            loadFilter: function (data) {
+                if (data != null) {
+                    return data;
+                }
+            },
+            onLoadSuccess:function(node, data){
+                load(rolecode);
+            }
+        });
+
+    }
+    //初始化权限，加载角色已经拥有的权限
+    function load(rolecode){
+        $.ajax({
+            type: "POST",
+            url: "/web/sysmanage/selectRC?rolecode="+rolecode,
+            data: rolecode,
+            success: function (result) {
+                if(result!=""){//避免没有任何权限还去遍历浪费时间
+                    var roots= $('#roleCatalog').tree("getChildren");
+
+                    for(var i= 0; i<roots.length;i++){
+                        for(var j=0; j<result.length;j++){
+                            if(roots[i].id==result[j]){
+                                var nodeq = $('#roleCatalog').tree('find', result[j]);
+                                $('#roleCatalog').tree('check', nodeq.target);
+                            }
+                        }
+
+                    }
+                }
+            }
+        });
+
+    }
+
+    function inittext() {
+        //name=$("#name").val();//用户名
+        name="";
+        #if($department.oucode)
+            id =$department.oucode;
+        #else
+            id ="null";
+        #end
+        paras = {"id": id,"name":name};
+
+    }
+
+    function initData() {
+        inittext();
+        BindDataGridAjax('tt', '角色管理','/web/sysmanage/roleList', cols, paras, 'true', 10, [10, 20, 30]);
+    }
+    //打开新增角色框
+    function addrole() {
+        $('#winRole').window('open');
+        var curr_time = new Date();
+        var strDate = curr_time.getFullYear()+"-";
+        strDate += curr_time.getMonth()+1+"-";
+        strDate += curr_time.getDate()+"-";
+        strDate += curr_time.getHours()+":";
+        strDate += curr_time.getMinutes()+":";
+        strDate += curr_time.getSeconds();
+        $("#roleAddcreatetime").datetimebox("setValue", strDate);
+    }
+    //打开编辑角色框
+    function editrole() {
+        var row = $('#tt').datagrid('getSelected');
+        if (row) {
+            $('#xiuRole').window('open');
+            $("#roleEditrolecode").textbox("setValue",row.rolecode);
+//            $('#roleEditrolecode').textbox({disabled:true});
+            $("#roleEditcreator").textbox("setValue",row.creator);
+            $("#roleEditname").textbox("setValue",row.name);
+            $("#roleEditstate").combobox('setValue', row.state);
+            var roletimes=formatDatebox(row.createtime)
+            $("#roleEditcreatetime").datetimebox("setValue",roletimes);
+        } else {
+            $.messager.alert("提示", "请选择要修改的行！", "info");
+        }
+    }
+    //删除角色
+    function dellrole() {
+        var delrow = $('#tt').datagrid('getSelected');
+        if (delrow == null) {
+            $.messager.alert("提示", "请选择要删除的行！", "info");
+            return;
+        } else {
+            $.messager.confirm('提示', '是否删除选中数据', function (r) {
+                if (!r) {
+                    return;
+                }
+                var delrolecode=delrow.rolecode;
+                //查询是否有用户已经分配了此角色，若有，不允许删除
+                //提交
+                $.ajax({
+                    type: "POST",
+                    url: "/web/sysmanage/selectURByrole?delrolecode="+delrolecode,
+                    data: delrolecode,
+                    success: function (result) {
+                        if (result.length > 0) {
+                            $.messager.alert("提示", "对不起，已经有用户拥有此角色，不允许删除", "info");
+                            return;
+                        } else {
+                            //提交
+                            $.ajax({
+                                type: "POST",
+                                url: "/web/sysmanage/delrole?rolecode="+delrolecode,
+                                data: delrolecode,
+                                success: function (result) {
+                                    if (result > 0) {
+                                        $('#tt').datagrid('clearSelections');
+                                        $.messager.alert("提示", "恭喜您，角色删除成功！", "info");
+                                        $('#tt').datagrid('reload');
+                                    } else {
+                                        $.messager.alert("提示", "角色删除失败，请重新操作！", "info");
+                                        return;
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+
+            });
+        }
+    }
+    //保存新增的角色
+    function submitFormRole() {
+
+        $(RoleloginForm).form('submit', {
+                url : '/web/sysmanage/addRole',
+                dataType : 'text',
+                success : function(result) {
+                if (result>0) {
+                    $.messager.alert("提示", "恭喜您，角色添加成功！", "info");
+                    $("#roleAddname").textbox("setValue","");
+                    $("#roleAddstate").textbox("setValue","");
+                    $("#roleAddcreatetime").datetimebox("setValue","");
+                    $('#winRole').window('close');
+                    $('#tt').datagrid("reload",{ });
+                } else {
+                    $.messager.alert("提示", "角色添加失败，请重新操作！", "info");
+                }
+            }
+        });
+    }
+    //保存修改的角色
+    function SaveForm() {
+        $(RoleEditloginForm).form('submit', {
+            url : '/web/sysmanage/editRole',
+            dataType : 'text',
+            success : function(result) {
+                if (result>0) {
+                    $.messager.alert("提示", "恭喜您，角色修改成功！", "info");
+                    $('#xiuRole').window('close');
+                    $('#tt').datagrid("reload",{ });
+                } else {
+                    $.messager.alert("提示", "角色修改失败，请重新操作！", "info");
+                }
+            }
+        });
+    }
+    //保存角色-权限对应关系 TODO
+    function saveRoleCatalog(){
+      //查询出选择的节点
+        var nodes = $('#roleCatalog').tree('getChecked');	// 获取已选择节点
+         var mycars="";
+        for(var i=0; i<nodes.length; i++){
+              mycars += nodes[i].id+",";
+        }
+        //提交
+        $.ajax({
+            type: "POST",
+            url: "/web/sysmanage/saveRC",
+            //traditional：true;
+            data:{mycars:mycars,roleid:roleid},
+
+            success: function (result) {
+                if (result > 0) {
+                    $.messager.alert("提示", "恭喜您，权限设置成功！", "info");
+                    load();
+                } else {
+                    $.messager.alert("提示", "权限设置失败，请重新操作！", "info");
+                    load();
+                    return;
+                }
+            }
+        });
+    }
+    //撤销更改，还原角色-权限对应关系
+    function removeRoleCatalog(){
+        //重新加载树
+        $('#roleCatalog').tree('reload');
+    }
+    //关闭角色-权限设置
+    function closeRoleCatalog(){
+        $('#RoleCatalog').window('close');
+    }
+    function formatDatebox(value) {
+        if (value == null || value == '') {
+            return '';
+        }
+        var dt;
+        if (value instanceof Date) {
+            dt = value;
+        } else {
+            dt = new Date(value);
+        }
+        return dt.format("yyyy-MM-dd hh:mm:ss"); //扩展的Date的format方法(上述插件实现)
+    }
+</script>
+</body>
+</html>

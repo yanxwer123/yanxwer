@@ -9,8 +9,11 @@ import com.kld.gsm.ATGDevice.atg_stock_data_out_t;
 import com.kld.gsm.ATGDevice.atg_timestock_data_in_t;
 import com.kld.gsm.coord.Context;
 import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.io.*;
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.*;
@@ -33,6 +36,14 @@ public class FileStockThread  extends Thread {
     SysManageCanInfoDao sysManageCanInfodao;
     @Override
     public void run() {
+        RuntimeMXBean rt = ManagementFactory.getRuntimeMXBean();
+        String pid = rt.getName();
+        MDC.put("PID", pid);
+        //初始化罐号
+        if (canList.size() == 0) {
+            logger.info("进入文件库存初始化罐号");
+            initTimeStockParameters();
+        }
         while (true) {
             try {
                 int iSleep=TimeTaskPar.get("sdkclxsj");
@@ -92,6 +103,7 @@ public class FileStockThread  extends Thread {
     public Integer writeFileTime(){
         int bdStatus = 0;
         final ExecutorService exec = Executors.newFixedThreadPool(1);
+
         Callable<Integer> call = new Callable<Integer>() {
             public Integer call() throws Exception {
               try {
@@ -103,28 +115,29 @@ public class FileStockThread  extends Thread {
               }
             }
         };
+        Future<Integer> future = exec.submit(call);
         try {
-            Future<Integer> future = exec.submit(call);
             // set  timeout to 10 seconds
             int iSleep=TimeTaskPar.get("sdkclxsj");
             if(TimeTaskPar.get("sdkclxsj")<1)
             {
                 iSleep=Integer.MAX_VALUE;
             }
-
             Integer obj = future.get(1000 * (iSleep-1), TimeUnit.MILLISECONDS);
             bdStatus = obj;
             logger.info("writeFileTime value from call is :" + obj);
         } catch (TimeoutException ex) {
             logger.error("===============writeFileTime task time out===============");
             bdStatus = 1;
+            future.cancel(true);
+
         } catch (Exception e) {
             System.out.println("failed to handle.");
             bdStatus = 1;
+            future.cancel(true);
         }
         // close thread pool
-        exec.shutdown();
-
+        exec.shutdownNow();
         return bdStatus;
     }
     public void writeFile()
@@ -190,8 +203,9 @@ public class FileStockThread  extends Thread {
             for (atg_stock_data_out_t stock : stockList) {//循环取得实时库存数据
                 logger.info(stock.toString2());
                 fileWriter.write(stock.toString2() + "\n");
-                fileWriter.flush();
             }
+            fileWriter.flush();
+            stockList.clear();
             //logger.info("file close FileStockThead...");
             //fileWriter.close();
             logger.info("end FileStock...,after five seconds again");

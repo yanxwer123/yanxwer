@@ -359,10 +359,10 @@
       and OilCan = #{oilcan,jdbcType=INTEGER}
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
   </update>
-  <select id="selectByShift" resultType="hashmap" parameterType="java.lang.String" >
+  <select id="selectByShift" resultType="hashmap" parameterType="hashmap" >
     select 'true' as QUERYID,
     <include refid="Base_Column_List" />
     from oss_daily_tankshift
-    where Shift = #{shift,jdbcType=VARCHAR}
+    where Shift = #{shift,jdbcType=VARCHAR} and OUCode=#{oucode,jdbcType=VARCHAR}
   </select>
 </mapper>

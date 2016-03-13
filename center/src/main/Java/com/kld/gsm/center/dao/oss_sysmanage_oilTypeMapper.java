@@ -28,6 +28,7 @@ public interface oss_sysmanage_oilTypeMapper {
     List<oss_sysmanage_oilType> selectinuse();
 
     String selectByoilCanNo(HashMap map);
+
     String selectByoilNo(HashMap map);
 
 }

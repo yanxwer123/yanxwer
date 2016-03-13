@@ -298,4 +298,7 @@
       and OUCode LIKE #{oucode,jdbcType=VARCHAR}
     </if>
   </select>
+  <select id="selectMaxOucodeByParentOucode" parameterType="String" resultType="String">
+    SELECT MAX(OUCode) from oss_sys_OrgUnit  WHERE ParentOUCode=#{0,jdbcType=VARCHAR}
+  </select>
 </mapper>

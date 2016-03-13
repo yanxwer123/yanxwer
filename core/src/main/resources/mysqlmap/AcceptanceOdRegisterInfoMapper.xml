@@ -561,16 +561,27 @@
     SELECT <include refid="Base_Column_List"/>
     FROM  oss_acceptance_odRegisterInfo where  ManualNo= #{manualno}  ORDER BY EndTime DESC LIMIT 1
   </select>
-
-   <select id="findDischargeL" parameterType="String" resultType="java.util.HashMap">
+  <select id="findDischargeL" parameterType="String" resultType="java.util.HashMap">
     SELECT OilNo as oilno,SUM(IFNULL(DischargeL, 0)) as dischargel FROM oss_acceptance_odRegisterInfo
     WHERE  (Shift IS NULL OR Shift='' OR Shift &gt;#{shift,jdbcType=VARCHAR}) AND DischargeL IS NOT NULL
     GROUP BY OilNo
   </select>
-
-
+  <select id="findByOilCan" parameterType="hashmap" resultType="java.lang.String">
+    <![CDATA[SELECT SUM(DischargeL) FROM oss_acceptance_odRegisterInfo
+    WHERE oilCan =#{oilcan} AND CreateTime>=#{begintime}
+    AND  CreateTime<=#{endtime} ]]>
+  </select>
+  <select id="findByOilNo" parameterType="hashmap" resultType="java.lang.String">
+    <![CDATA[SELECT SUM(DischargeL) FROM oss_acceptance_odRegisterInfo
+    WHERE OilNo =#{oilno} AND CreateTime>=#{begintime}
+    AND  CreateTime<=#{endtime} ]]>
+  </select>
   <select id="selectbycanno" parameterType="hashmap" resultMap="BaseResultMap">
     SELECT <include refid="Base_Column_List"/>
     FROM  oss_acceptance_odRegisterInfo where  OilCan=#{canno,jdbcType=INTEGER} AND BeginTime >=#{sttime,jdbcType=TIMESTAMP}AND EndTime>=#{ettime,jdbcType=TIMESTAMP}
+  </select>
+  <select id="selectAllUncompleteinfo" resultMap="BaseResultMap">
+    SELECT info.* FROM (SELECT * FROM oss_acceptance_odRegister WHERE BeginTime IS NOT NULL AND endtime IS NULL )a
+    INNER JOIN oss_acceptance_odRegisterInfo info ON a.ManualNO=info.ManualNo
   </select>
  </mapper>

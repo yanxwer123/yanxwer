@@ -3,8 +3,6 @@ package com.kld.gsm.ATG.dao;
 
 import com.kld.gsm.ATG.common.Repository.MySqlRepository;
 import com.kld.gsm.ATG.domain.AcceptanceDeliveryBills;
-import com.kld.gsm.ATG.domain.MonitorOilgun;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

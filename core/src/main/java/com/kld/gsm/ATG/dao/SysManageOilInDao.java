@@ -1,9 +1,10 @@
 package com.kld.gsm.ATG.dao;
 
 
+import com.kld.gsm.ATG.common.Repository.MySqlRepository;
 import com.kld.gsm.ATG.domain.SysManageOilIn;
 import com.kld.gsm.ATG.domain.SysManageOilInKey;
-
+@MySqlRepository
 public interface SysManageOilInDao {
     int deleteByPrimaryKey(SysManageOilInKey key);
 

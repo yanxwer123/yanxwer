@@ -25,4 +25,5 @@ public interface oss_alarm_GaTContrastMapper {
 
     List<HashMap<String,Object>> selectGatInfo(HashMap<String,Object> map);
     List<HashMap<String,Object>> selectGatAllInfo(HashMap<String,Object> map);
+    int selectCountAllInfo(HashMap<String,Object> map);
 }

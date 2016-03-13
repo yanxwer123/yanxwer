@@ -4,7 +4,6 @@ package com.kld.app.view.monitor;
 import com.kld.app.service.MonitorTimeInventoryService;
 import com.kld.app.springcontext.Context;
 import com.kld.app.view.acceptance.MyTable;
-import com.kld.app.view.acceptance.MyTableModel;
 import com.kld.gsm.ATG.domain.MonitorTimeInventory;
 import com.kld.gsm.ATG.domain.SysManageCanInfo;
 import org.jdesktop.swingx.JXDatePicker;
@@ -18,7 +17,6 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -176,14 +174,14 @@ public class SdkcPage extends JPanel {
             data[i][1] = inventory.getOilno();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             data[i][2] = formatter.format(inventory.getStoretime());
-			DecimalFormat decimalFormat = new DecimalFormat("######0.00");
-			data[i][3] = decimalFormat.format(inventory.getStandardl());
+			DecimalFormat df = new DecimalFormat("0");
+			data[i][3] = df.format(inventory.getStandardl());
             data[i][4] = inventory.getHeighttotal();
-            data[i][5] = inventory.getOill();
+            data[i][5] = df.format(inventory.getOill());
             data[i][6] = inventory.getHeightwater();
-            data[i][7] = inventory.getWaterl();
+            data[i][7] = df.format(inventory.getWaterl());
             data[i][8] = inventory.getTemperature();
-            data[i][9] = inventory.getVolumeempty();
+            data[i][9] = df.format(inventory.getVolumeempty());
         }
        /* if (list.size() > 0) {
            *//* JTable maintable = getTable(names, data);

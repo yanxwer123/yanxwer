@@ -1,9 +1,11 @@
 package com.kld.gsm.center.web.webcontroller;
 
 import com.kld.gsm.center.domain.ResultMsg;
+import com.kld.gsm.center.domain.oss_sys_OrgUnit;
 import com.kld.gsm.center.service.*;
 import com.mangofactory.swagger.annotations.ApiIgnore;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,8 +13,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,13 +46,61 @@ public class WebDeskTopController extends WebBaseController{
     public ModelAndView test(){
         return new ModelAndView("main/test");
     }
+
+
+
+
+
+    @RequestMapping("/city")
+    public String city(ModelMap modelMap,String pcode){
+
+        modelMap.addAttribute("pcode", pcode);
+        return "main/city";
+       // return new ModelAndView("main/city");
+    }
+
+
+    @RequestMapping("/county")
+    public String county(ModelMap modelMap,String pcode){
+
+        modelMap.addAttribute("pcode", pcode);
+        return "main/county";
+        // return new ModelAndView("main/city");
+    }
+
+
+
+    @RequestMapping("/station")
+    public String station(ModelMap modelMap,String pcode, String vpage){
+
+        modelMap.addAttribute("pcode", pcode);
+
+        if (vpage!=null && vpage!=null) {
+            //加载罐枪实时监控信息
+            if(vpage.equals("gqss"))
+            {
+                modelMap.addAttribute("gqss", monitorSummaryService.GetGqss(pcode));
+            }
+            return "main/"+vpage;
+        }
+        else
+        {
+            return "main/station";
+        }
+
+        // return new ModelAndView("main/city");
+    }
+
+
+
+
     //region 按照油站获取脱销预警的报警次数 xhz 2015-12-27
     @Resource
     private AlarmSaleOutService alarmSaleOutService;
     @RequestMapping("/selectAlarmSaleOutCount")
     @ResponseBody
-    public ResultMsg selectAlarmSaleOutCount(HttpServletRequest request,String StartAlarmTime, String EndAlarmTime,String oucode){
-        List<HashMap<String, Object>> list = alarmSaleOutService.queryJYCountPrepayPageList(null, StartAlarmTime, EndAlarmTime, null, null, oucode);//传进去的page要进行处
+    public ResultMsg selectAlarmSaleOutCount(HttpServletRequest request,String begin, String end,String oucode){
+        /*List<HashMap<String, Object>> list = alarmSaleOutService.queryJYCountPrepayPageList(null, StartAlarmTime, EndAlarmTime, null, null, oucode);//传进去的page要进行处
         ResultMsg result = new ResultMsg();
         if(list!=null){
             result.setTotal(list.size());
@@ -54,9 +109,339 @@ public class WebDeskTopController extends WebBaseController{
         {
             result.setTotal(0);
         }
+        return result;*/
+        // return null;
+
+        HashMap hashMap = new HashMap();
+        hashMap.put("start",begin);
+        hashMap.put("end", end);
+        if (oucode!=null && oucode!=null) {
+            hashMap.put("oucode", oucode + "%");
+        }
+        else
+        {
+            hashMap.put("oucode", oucode);
+        }
+        ResultMsg resultJson=new ResultMsg();
+        List<HashMap<String, Object>> SaleOutlist=alarmSaleOutService.selectSaleOut(hashMap);
+        ResultMsg result=new ResultMsg();
+        if (SaleOutlist!=null) {
+            result.setTotal(SaleOutlist.size());
+        }
+        else
+        {
+            result.setTotal(0);
+        }
         return result;
+
     }
     //endregion
+
+
+
+
+    //region //库存、销量、进货量、提枪次数、液位仪使用率
+    @Resource
+    private MonitorSummaryService monitorSummaryService;
+    @RequestMapping("/selectMonitor_Summary")
+    @ResponseBody
+    public ResultMsg selectMonitor_Summary(HttpServletRequest request,String oucode){
+
+        HashMap hashMap = new HashMap();
+        if (oucode!=null && oucode!=null) {
+            hashMap.put("oucode", oucode + "%");
+        }
+        else
+        {
+            hashMap.put("oucode", oucode);
+        }
+//        List<HashMap<String, Object>> SaleOutlist=alarmSaleOutService.selectSaleOut(hashMap);
+        List<HashMap<String, Object>> mylist= monitorSummaryService.selectSummary(hashMap);
+        ResultMsg result=new ResultMsg();
+        result.setRows(mylist);
+
+        return result;
+
+    }
+    //endregion
+
+
+
+    //region //得到整点库存列表
+  //  private MonitorSummaryService monitorSummaryService;
+    @RequestMapping("/getInventoryList")
+    @ResponseBody
+    public ResultMsg getInventoryList(HttpServletRequest request,@RequestParam(value = "page", required = false) Integer page,@RequestParam(value = "rows",required = false) Integer rows,String begin,String end,String oucode){
+
+        ResultMsg result=new ResultMsg();
+
+        if (page != null && rows != null) {
+            page = page < 1 ? 1 : page;
+            int firstRow = (page - 1) * rows;
+            HashMap hashMap = new HashMap();
+            hashMap.put("firstRow", firstRow);
+            hashMap.put("pageSize", rows);
+            hashMap.put("begin",begin);
+            hashMap.put("end", end);
+
+            if (oucode!=null && oucode!=null) {
+                hashMap.put("oucode", oucode + "%");
+            }
+            else
+            {
+                hashMap.put("oucode", oucode);
+            }
+
+            List<HashMap<String, Object>> mylist= monitorSummaryService.getInventoryList(hashMap);
+
+            result.setRows(mylist);
+            result.setTotal(monitorSummaryService.getInventoryAllList(hashMap).size());
+
+           // return result;
+        }
+
+        return result;
+
+    }
+    //endregion
+
+
+
+    //region //得到整点库存列表
+    //  private MonitorSummaryService monitorSummaryService;
+    @RequestMapping("/getInventoryAllList")
+    @ResponseBody
+    public ResultMsg getInventoryAllList(HttpServletRequest request,String begin,String end,String oucode){
+
+            ResultMsg result=new ResultMsg();
+            HashMap hashMap = new HashMap();
+
+            hashMap.put("begin",begin);
+            //hashMap.put("begin","20150201");
+            hashMap.put("end", end);
+
+            if (oucode!=null && oucode!=null) {
+                hashMap.put("oucode", oucode + "%");
+            }
+            else
+            {
+                hashMap.put("oucode", oucode);
+            }
+            List<HashMap<String, Object>> mylist= monitorSummaryService.getInventoryAllList(hashMap);
+
+            List xlist=new ArrayList();
+            List ylist=new ArrayList();
+            for(HashMap<String, Object> itemdata:mylist)
+            {
+
+                xlist.add(itemdata.get("alltime"));
+               // double dy=3.22;
+                double  dy  =  Double.parseDouble(itemdata.get("OilCubage").toString()) ;
+                String Ystr= new java.text.DecimalFormat("#.00").format(dy);
+                ylist.add(Ystr);
+
+            }
+
+
+           HashMap<String, Object> mynewlist=new HashMap<String, Object>();
+           mynewlist.put("xlist", xlist);
+           mynewlist.put("ylist", ylist);
+
+           result.setData(mynewlist);
+           result.setTotal(mylist.size());
+            // return result;
+           return result;
+
+    }
+    //endregion
+
+
+    @RequestMapping("/downloadzdkc")
+    @ResponseBody
+    public void downloadzdkc(HttpServletRequest request,String begin,String end,String oucode,String FileName)
+    {
+
+        HashMap hashMap = new HashMap();
+
+        hashMap.put("begin",begin);
+        hashMap.put("end", end);
+
+        if (oucode!=null && oucode!=null) {
+            hashMap.put("oucode", oucode + "%");
+        }
+        else
+        {
+            hashMap.put("oucode", oucode);
+        }
+
+        //FileName="mydownload";
+        response.setContentType("application/binary;charset=ISO8859_1");
+        try {
+            ServletOutputStream outputStream = response.getOutputStream();
+            String fileName =  java.net.URLDecoder.decode(FileName, "ISO8859_1");
+            response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xlsx");// 组装附件名称和格式
+            String[] titles = { "油罐编号", "油品", "时间","标准体积（L）","油水总高（mm）" ,"净油体积（L）", "水高（mm）", "水量","平均温度（℃）","空体积（L）"};
+            List<HashMap<String, Object>> list= monitorSummaryService.getInventoryAllList(hashMap);
+            monitorSummaryService.downloadzdkc(list, titles, outputStream);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+
+
+    //构造导航信息
+
+    @RequestMapping("/getMenu")
+    @ResponseBody
+    public ResultMsg getMenu(HttpServletRequest request,String oucode){
+
+        HashMap hashMap = new HashMap();
+        if (oucode!=null && oucode!=null) {
+
+            int oucodelenth=oucode.length();
+            if (oucodelenth==6)  //最大12 ，3位一级
+            {
+                oss_sys_OrgUnit myorg= sysOrgUnitService.selectByOUCode(oucode);
+                hashMap.put("sheng", myorg.getOuname() );
+            }
+            else if(oucodelenth==9)
+            {
+                oss_sys_OrgUnit sheng= sysOrgUnitService.selectByOUCode(oucode.substring(0,6));
+                hashMap.put("sheng", sheng.getOuname() );
+                oss_sys_OrgUnit qu= sysOrgUnitService.selectByOUCode(oucode);
+                hashMap.put("qu", qu.getOuname() );
+            }
+            else if(oucodelenth==12)
+            {
+                oss_sys_OrgUnit sheng= sysOrgUnitService.selectByOUCode(oucode.substring(0,6));
+                hashMap.put("sheng", sheng.getOuname() );
+                oss_sys_OrgUnit qu= sysOrgUnitService.selectByOUCode(oucode.substring(0,9));
+                hashMap.put("qu", qu.getOuname() );
+                oss_sys_OrgUnit zhan= sysOrgUnitService.selectByOUCode(oucode);
+                hashMap.put("zhan", zhan.getOuname() );
+            }
+
+
+        }
+
+        ResultMsg result=new ResultMsg();
+        result.setData(hashMap);
+        result.setTotal(hashMap.size());
+        result.setMsg(hashMap.size() + "");
+        return result;
+
+    }
+    //endregion
+
+
+
+    //region //库存、销量、进货量、提枪次数、液位仪使用率
+
+    @RequestMapping("/selectSummaryCountbyParent")
+    @ResponseBody
+    public ResultMsg selectSummaryCountbyParent(HttpServletRequest request,@RequestParam(value = "page", required = false) Integer page,@RequestParam(value = "rows",required = false) Integer rows,String Pcode){
+
+        try {
+            if (page != null && rows != null) {
+                page = page < 1 ? 1 : page;
+                int firstRow = (page - 1) * rows;
+                HashMap hashMap = new HashMap();
+                hashMap.put("firstRow", firstRow);
+                hashMap.put("pageSize", rows);
+
+                if (Pcode!=null && Pcode!=null) {
+                    hashMap.put("Pcode", Pcode);
+                }
+
+                List<HashMap<String, Object>> mylist= monitorSummaryService.selectSummarybyParent(hashMap);
+                ResultMsg result=new ResultMsg();
+                result.setRows(mylist);
+                result.setTotal(monitorSummaryService.selectSummaryCountbyParent(hashMap).size());
+
+                return result;
+            }
+            return null;
+        }
+        catch (Exception ex)
+        {
+            return  null;
+        }
+
+
+
+
+
+
+
+
+    }
+    //endregion
+
+
+
+    //region //库存、销量、进货量、提枪次数、液位仪使用率
+
+    @RequestMapping("/selectSummarybyParent")
+    @ResponseBody
+    public ResultMsg selectSummarybyParent(HttpServletRequest request,@RequestParam(value = "page", required = false) Integer page,@RequestParam(value = "rows",required = false) Integer rows,String Pcode){
+
+        try {
+            if (page != null && rows != null) {
+                page = page < 1 ? 1 : page;
+                int firstRow = (page - 1) * rows;
+                HashMap hashMap = new HashMap();
+                hashMap.put("firstRow", firstRow);
+                hashMap.put("pageSize", rows);
+
+                if (Pcode!=null && Pcode!=null) {
+                    hashMap.put("Pcode", Pcode);
+                }
+
+                List<HashMap<String, Object>> mylist= monitorSummaryService.selectSummarybyParent(hashMap);
+                ResultMsg result=new ResultMsg();
+                result.setRows(mylist);
+                result.setTotal(mylist.size());
+
+                return result;
+            }
+            return null;
+        }
+        catch (Exception ex)
+        {
+            return  null;
+        }
+
+
+
+
+
+
+
+
+    }
+    //endregion
+
+
+
+
+
+
+    @RequestMapping("/testAddSummaryData")
+    public  void  testAddSummaryData()
+    {
+        monitorSummaryService.AddSummaryData();
+
+    }
+
+
+
+
+
     //region 交接班损益预警当天报警次数 xhz 2015-12-27
     @Resource
     private AlarmShiftLostService alarmShiftLostService;
@@ -105,6 +490,34 @@ public class WebDeskTopController extends WebBaseController{
         return result;
     }
     //endregion
+
+
+
+    //region 进油损益预警次数
+    @Resource
+    private AlarmOilInContrastService alarmOilInContrastService;
+    @RequestMapping( value = "/selectOilInContrastCout",method = RequestMethod.GET)
+    @ResponseBody
+    public ResultMsg selectOilInContrastCout(HttpServletResponse response,String begin,String end,String oucode)
+    {
+
+        List<HashMap<String,Object>> lisOilInLost= alarmOilInContrastService.selectoilincontrastbywhere(begin,end,oucode);
+        ResultMsg result=new ResultMsg();
+        if (lisOilInLost!=null) {
+            result.setTotal(lisOilInLost.size());
+        }
+        else
+        {
+            result.setTotal(0);
+        }
+        return result;
+    }
+    //endregion
+
+
+
+
+
     //region  油管报警次数 xhz 2015-12-27
     @Resource
     private AlarmInventoryService alarmInventoryService;
@@ -238,7 +651,11 @@ public class WebDeskTopController extends WebBaseController{
         ResultMsg result=new ResultMsg();
         if (list!=null&&listOU!=null)
         {
-             result.setTotal(list.size()/listOU.size());
+            if(listOU.size()==0){
+                result.setTotal(0);
+            }else {
+                result.setTotal(list.size() / listOU.size());
+            }
         }
         return result;
     }
@@ -350,7 +767,16 @@ private AcceptanceService acceptanceService;
             }
         }
         long j=(long)(ListertotalByType/Listertotal)*100;
-        result.setTotal(j);
+        double kxb=(ListertotalByType/Listertotal)*100;
+        String newkxb= new java.text.DecimalFormat("#.00").format(kxb);
+
+
+//        BigDecimal b = new BigDecimal(kxb);
+//        double f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+
+       // result.setTotal(f1);
+      //  result.setdata(newkxb);
+        result.setData(newkxb);
         return result;
     }
     //endregion

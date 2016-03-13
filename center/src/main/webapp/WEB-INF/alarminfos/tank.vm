@@ -24,8 +24,8 @@
         <tr>
             <th> 起止时间：</th>
             <th colspan="5">
-                <input id="dateStartinput" type="text" class="easyui-datebox" required="required"/>至
-                <input id="dateEndinput" type="text" class="easyui-datebox" required="required"/>
+                <input id="dateStartinput" type="text" class="easyui-datebox" required="required" editable="false"/>至
+                <input id="dateEndinput" type="text" class="easyui-datebox" required="required" editable="false"/>
             </th>
 
 
@@ -35,7 +35,7 @@
             <th></th>
             <th>
                 <a id="btnSelect" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="initData();">查询</a>
-                <a id="btnExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="ExportExl();">导出</a>
+                <a id="btnExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-export'" onclick="ExportExl();">导出</a>
             </th>
             <th></th>
             <th></th>
@@ -115,13 +115,13 @@
     }
     function initData() {
         inittext();
-        BindDataGridAjax('tt','库存报警','/web/alarm/getalarmInventoryInfo',cols,paras,'true',10,[10,20,30]);
+        BindDataGridAjax('tt','油罐异常报警','/web/alarm/getalarmInventoryInfo',cols,paras,'true',10,[10,20,30]);
     }
 
 
     function ExportExl() {
         inittext();
-        var filename=encodeURI(encodeURI("库存报警"));
+        var filename=encodeURI(encodeURI("油罐异常报警"));
         window.open("/web/alarm/excelAlarmInventory?alarmtype="+alarmtype+"&begin="+begin+"&end="+end+"&FileName="+filename+"&oucode="+oucode);
     }
 

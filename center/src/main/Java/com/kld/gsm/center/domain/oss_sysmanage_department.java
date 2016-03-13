@@ -3,79 +3,79 @@ package com.kld.gsm.center.domain;
 import java.util.Date;
 
 public class oss_sysmanage_department {
-    private String sinopecnodeno;
+    private String sinopecnodeno; // 油站编码
 
-    private String physicalnodeno;
+    private String physicalnodeno;//
 
-    private String nodeno;
+    private String nodeno;//
 
-    private String nodename;
+    private String nodename;//油站名称
 
-    private String nodetag;
+    private String nodetag;//油站简介
 
-    private String areano;
+    private String areano;//片区编码
 
-    private String groupno;
+    private String groupno;//
 
-    private String nodenoowner;
+    private String nodenoowner;//
 
-    private String enterpriseno;
+    private String enterpriseno;//
 
-    private String nodeattribute;
+    private String nodeattribute;//
 
-    private String nodespecific;
+    private String nodespecific;//
 
-    private String regtype;
+    private String regtype;//
 
-    private String orgcode;
+    private String orgcode;//
 
-    private String nodeaddrs;
+    private String nodeaddrs;//油站地址
 
-    private String postno;
+    private String postno;//
 
-    private String manager;
+    private String manager;//负责人
 
-    private String telphno;
+    private String telphno;//电话
 
-    private String remark;
+    private String remark;//
 
-    private String foxno;
+    private String foxno;//传真
 
-    private String email;
+    private String email;//
 
-    private Date worktime;
+    private Date worktime;//营业时间
 
-    private String accountowner;
+    private String accountowner;//
 
-    private String nodetree;
+    private String nodetree;//
 
-    private String provinceno;
+    private String provinceno;//城市编码
 
-    private String nodetype;
+    private String nodetype;//
 
-    private String usefulstatus;
+    private String usefulstatus;//
 
-    private String lastnodeno;
+    private String lastnodeno;//
 
-    private Date modifytime;
+    private Date modifytime;//
 
-    private String taxpayercode;
+    private String taxpayercode;//税号
 
-    private String corporationname;
+    private String corporationname;//
 
-    private String expand1;
+    private String expand1;//
 
-    private String expand2;
+    private String expand2;//
 
-    private String areadesc;
+    private String areadesc;//片区名称
 
-    private String nodenoownerdesc;
+    private String nodenoownerdesc;//
 
-    private String provincedesc;
+    private String provincedesc;//市名称
 
-    private String transtatus;
+    private String transtatus;//
 
-    private String oucode;
+    private String oucode;//
 
     public String getSinopecnodeno() {
         return sinopecnodeno;

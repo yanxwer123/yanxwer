@@ -47,6 +47,7 @@ public class ApplicationMain {
         // 保证程序只有一个实例在运行.
         ApplicationRunSingle.makeSingle("ctrl");
         logger.warn("ctrl.main方法启动................");
+
         final NettyServer nettyServer = new NettyServer();
         ProtocolProcessor protocolProcessor = ProtocolProcessor.getInstance();
         CloudServerHandler handler = new CloudServerHandler(protocolProcessor);
@@ -124,6 +125,8 @@ public class ApplicationMain {
             public void run() {
                 //液位仪清理
                 try {
+                    logger.info("结束线程");
+                    TimeTask.stop();
                     logger.info("调用清理液位仪方法...");
                     ATGManager.clear();
                 }catch (Exception e){

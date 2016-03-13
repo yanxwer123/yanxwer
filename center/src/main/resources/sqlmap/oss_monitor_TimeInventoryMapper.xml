@@ -303,65 +303,45 @@
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
   </update>
   <select id="selectTimeInventoryInfo" resultType="hashmap" parameterType="hashmap">
-    <![CDATA[
-select OUCode,
-(select OUName from oss_sys_OrgUnit where oss_sys_OrgUnit.OUCode=new.OUCode) AS OUName,
-oil0,oil97,oil93,oil98,StoreTime
-FROM
-(
-select
-OUCode
-,
-SUM(CASE WHEN t.OilName LIKE '0%'  THEN OilL ELSE '0' END) AS oil0
-,
-SUM(CASE WHEN t.OilName LIKE '93%'  THEN OilL ELSE '0' END) AS oil97
-,
-SUM(CASE WHEN t.OilName LIKE '97%'  THEN OilL ELSE '0' END) AS oil93
-,
-SUM(CASE WHEN t.OilName LIKE '98%'  THEN OilL ELSE '0' END) AS oil98
-,StoreTime
-from
-(
-select *,( SELECT  OilName from  oss_sysmanage_oilType where oss_sysmanage_oilType.OilNo=a.OilNo limit 1) as OilName  from oss_monitor_TimeInventory as a
-where a.StoreTime =(SELECT MAX(b.StoreTime) from oss_monitor_TimeInventory as b
-WHERE a.OilNo=b.OilNo
-)
-  GROUP BY OUCode
-) t GROUP BY t.OilName
-) new where OUCode LIKE #{oucode,jdbcType=VARCHAR}
-    ]]>
+    select a.*,b.OUName,c.OilName from
+    (
+    select * from
+    (select * from oss_monitor_TimeInventory ORDER BY storetime DESC) as temp
+    GROUP BY oucode,OilCan ORDER BY storetime DESC
+    ) a  inner join oss_sys_OrgUnit b on a.OUCode=b.OUCode
+    left outer JOIN oss_sysmanage_oiltype c on a.OilNo=c.OilNo
+    WHERE 1=1
+    <if test="start != null">
+      <![CDATA[ AND StoreTime>=#{start,jdbcType=VARCHAR}]]>
+    </if>
+    <if test="end != null">
+      <![CDATA[ And StoreTime<=#{end,jdbcType=VARCHAR}]]>
+    </if>
+    <if test="oucode != null and oucode != '' ">
+      <![CDATA[  and a.OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    </if>
+    ORDER BY a.storetime DESC,OilCan ASC
     <if test="firstRow != null and  pageSize!= null">
       <![CDATA[ LIMIT #{firstRow},#{pageSize}]]>
     </if>
   </select>
-  <select id="selectPageCount" resultType="hashmap" parameterType="hashmap">
-    <![CDATA[
-select OUCode,
-(select OUName from oss_sys_OrgUnit where oss_sys_OrgUnit.OUCode=new.OUCode) AS OUName,
-oil0,oil97,oil93,oil98,StoreTime
-FROM
-(
-select
-OUCode
-,
-SUM(CASE WHEN t.OilName LIKE '0%'  THEN OilL ELSE '0' END) AS oil0
-,
-SUM(CASE WHEN t.OilName LIKE '93%'  THEN OilL ELSE '0' END) AS oil97
-,
-SUM(CASE WHEN t.OilName LIKE '97%'  THEN OilL ELSE '0' END) AS oil93
-,
-SUM(CASE WHEN t.OilName LIKE '98%'  THEN OilL ELSE '0' END) AS oil98
-,StoreTime
-from
-(
-select *,( SELECT  OilName from  oss_sysmanage_oilType where oss_sysmanage_oilType.OilNo=a.OilNo limit 1) as OilName  from oss_monitor_TimeInventory as a
-where a.StoreTime =(SELECT MAX(b.StoreTime) from oss_monitor_TimeInventory as b
-WHERE a.OilNo=b.OilNo
-)
-  GROUP BY OUCode
-) t GROUP BY t.OilName
-) new where OUCode LIKE #{oucode,jdbcType=VARCHAR}
-    ]]>
+  <select id="selectPageCount" resultType="Integer" parameterType="hashmap">
+    select count(*) from
+    (
+    select * from
+    (select * from oss_monitor_TimeInventory ORDER BY storetime DESC) as temp
+    GROUP BY oucode ORDER BY storetime DESC
+    ) a
+    WHERE 1=1
+    <if test="start != null">
+      <![CDATA[ AND  StoreTime>=#{start,jdbcType=VARCHAR}]]>
+    </if>
+    <if test="end != null">
+      <![CDATA[ And StoreTime<=#{end,jdbcType=VARCHAR}]]>
+    </if>
+    <if test="oucode != null and oucode != '' ">
+      <![CDATA[  and a.OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    </if>
   </select>
 
   <select id="selectInventory" resultType="hashmap" parameterType="hashmap">

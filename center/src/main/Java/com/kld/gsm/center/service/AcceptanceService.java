@@ -20,8 +20,12 @@ public interface AcceptanceService {
 
     int delAcceptBydeliverynoandnodeno(String nodeno,String deliveryno);
 
+    oss_acceptance_odRegister selectById(String ManualNo);
     List<HashMap<String,Object>> selectYYS(String oiltype,String start,String end,String oucode);
     //oss_acceptance_deliveryBill selectbybillno(String billno);
+    List<HashMap<String,Object>> selectAcceptanceServicePage(Integer intPage,Integer intPageSize,String deliveryno);
+
+    List<HashMap<String,Object>> selectAllAcceptanceServicePage(String deliveryno);
 
 
 }

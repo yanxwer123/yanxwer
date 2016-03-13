@@ -37,7 +37,6 @@ public class TbjzcsszPanel extends JPanel {
         JLabel tbjzcssz6 = new JLabel("倾斜偏移（毫米）");
         JLabel tbjzcssz7 = new JLabel("初始密度(kg/m3)");
         JLabel tbjzcssz8 = new JLabel("初始高度差(mm)");
-        JLabel tbjzcssz9 = new JLabel("油位与密度位之间的高度差");
         JLabel tbjzcssz10 = new JLabel("密度的修正系数");
         JLabel tbjzcssz11 = new JLabel("5点温度实测");
         JLabel tbjzcssz12 = new JLabel("5点温度探棒");
@@ -47,23 +46,23 @@ public class TbjzcsszPanel extends JPanel {
         //是用来控制添加进的组件的显示位置
         s.fill = GridBagConstraints.BOTH;
         this.add(tbjzcs);
-        this.add(tbjzcssz1);
+        this.add(tbjzcssz);
         this.add(strDeviceModelText);
-        this.add(tbjzcssz2);
+        this.add(tbjzcssz1);
         this.add(strProbeNoText);
-        this.add(tbjzcssz3);
+        this.add(tbjzcssz2);
         this.add(strOilTypeText);
-        this.add(tbjzcssz4);
+        this.add(tbjzcssz3);
         this.add(fOilCorrectionText);
-        this.add(tbjzcssz5);
+        this.add(tbjzcssz4);
         this.add(fWaterCorrectionText);
-        this.add(tbjzcssz6);
+        this.add(tbjzcssz5);
         this.add(fProbeOffsetText);
-        this.add(tbjzcssz7);
+        this.add(tbjzcssz6);
         this.add(fTiltOffsetText);
-        this.add(tbjzcssz8);
+        this.add(tbjzcssz7);
         this.add(fInitDesnsityText);
-        this.add(tbjzcssz9);
+        this.add(tbjzcssz8);
         this.add(fInitHighDiffText);
         this.add(tbjzcssz10);
         this.add(fCorrectionFactorText);
@@ -76,31 +75,31 @@ public class TbjzcsszPanel extends JPanel {
         s.weighty=0;
         layout.setConstraints(tbjzcs, s);//设置组件
         s.gridwidth=1;
-        layout.setConstraints(tbjzcssz1, s);//设置组件
+        layout.setConstraints(tbjzcssz, s);//设置组件
         layout.setConstraints(strDeviceModelText, s);//设置组件
-        layout.setConstraints(tbjzcssz2, s);//设置组件
+        layout.setConstraints(tbjzcssz1, s);//设置组件
         s.gridwidth=0;
         layout.setConstraints(strProbeNoText, s);//设置组件
         s.gridwidth=1;
-        layout.setConstraints(tbjzcssz3, s);//设置组件
+        layout.setConstraints(tbjzcssz2, s);//设置组件
         layout.setConstraints(strOilTypeText, s);//设置组件
-        layout.setConstraints(tbjzcssz4, s);//设置组件
+        layout.setConstraints(tbjzcssz3, s);//设置组件
         s.gridwidth=0;
         layout.setConstraints(fOilCorrectionText, s);//设置组件
         s.gridwidth=1;
-        layout.setConstraints(tbjzcssz5, s);//设置组件
+        layout.setConstraints(tbjzcssz4, s);//设置组件
         layout.setConstraints(fWaterCorrectionText, s);//设置组件
-        layout.setConstraints(tbjzcssz6, s);//设置组件
+        layout.setConstraints(tbjzcssz5, s);//设置组件
         s.gridwidth=0;
         layout.setConstraints(fProbeOffsetText, s);//设置组件
         s.gridwidth=1;
-        layout.setConstraints(tbjzcssz7, s);//设置组件
+        layout.setConstraints(tbjzcssz6, s);//设置组件
         layout.setConstraints(fTiltOffsetText, s);//设置组件
-        layout.setConstraints(tbjzcssz8, s);//设置组件
+        layout.setConstraints(tbjzcssz7, s);//设置组件
         s.gridwidth=0;
         layout.setConstraints(fInitDesnsityText, s);//设置组件
         s.gridwidth=1;
-        layout.setConstraints(tbjzcssz9, s);//设置组件
+        layout.setConstraints(tbjzcssz8, s);//设置组件
         layout.setConstraints(fInitHighDiffText, s);//设置组件
         layout.setConstraints(tbjzcssz10, s);//设置组件
         s.gridwidth=0;

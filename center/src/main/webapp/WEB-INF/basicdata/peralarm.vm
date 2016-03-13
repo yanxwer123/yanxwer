@@ -1,0 +1,215 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>加油站信息管理</title>
+    <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
+    <script type="text/javascript" src="easyui/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+</head>
+<body>
+<div id="toolbar">
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" onclick="add()"
+       plain="true">添加</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-edit" onclick="edituser()" plain="true">修改</a>
+</div>
+<div id="re" class="easyui-panel" style="width: auto;height: auto">
+    <table id="tb" class="easyui-datagrid">
+    </table>
+</div>
+
+<div id="win" class="easyui-window" title="新增" closed="true" style="width:550px;height:300px;"
+     data-options="modal:true">
+
+    <form id="loginForm" action="/web/basicdata/peralarm/add" method="post" style="padding:5px 5px 5px 5px;">
+        <table>
+            <tr>
+
+                <td style="padding-top:10px">网点编号</td>
+                <td style="padding-top:10px"><input class="easyui-numberbox" type="text" id="nodeno"
+                                                    name="nodeno" value="$!department.nodeno" /></td>
+                <td style="padding-top:10px">油站编码</td>
+                <td style="padding-top:10px"><input class="easyui-numberbox" type="text" id="oucode"
+                                                    name="oucode" value="$!department.oucode" /></td>
+            </tr>
+            <tr>
+                <td style="padding-top:10px">油罐号</td>
+                <td style="padding-top:10px"><select id=”oilcan” name="oilcan" class=”easyui-combobox” name=”dept”
+                                                     style=”width:200px;”>
+                    #foreach($item in $tankInfo)
+                        <option>$item</option>
+                    #end
+                </select></td>
+                <td style="padding-top:10px">盗油报警(L/H)</td>
+                <td style="padding-top:10px"><input class="easyui-numberbox" type="text" id="stealoilalarm"
+                                                    name="stealoilalarm" data-options="required:true,precision:2"
+                                                    validType="literValidate['#stealoilalarm']"/></td>
+            </tr>
+
+            <tr>
+                <td style="padding-top:10px">低液位预警(MM)</td>
+                <td style="padding-top:10px"><input class="easyui-numberbox" type="text" id="lowprealarm"
+                                                    name="lowprealarm" data-options="required:true,precision:2"
+                                                    validType="numberValidate['#lowprealarm']"/></td>
+                <td style="padding-top:10px">低液位报警(MM)</td>
+                <td style="padding-top:10px"><input class="easyui-numberbox" type="text" id="lowalarm"
+                                                    name="lowalarm" data-options="required:true,precision:2"
+                                                    validType="numberValidate['#lowalarm']"/></td>
+            </tr>
+
+            <tr>
+                <td style="padding-top:10px">高液位预警(MM)</td>
+                <td style="padding-top:10px"><input class="easyui-numberbox" type="text" id="highprealarm"
+                                                    name="highprealarm" data-options="required:true,precision:2"
+                                                    validType="numberValidate['#highprealarm']"/></td>
+                <td style="padding-top:10px">高液位报警(MM)</td>
+                <td style="padding-top:10px"><input class="easyui-numberbox" type="text" id="highalarm"
+                                                    name="highalarm" data-options="required:true,precision:2"
+                                                    validType="numberValidate['#highalarm']"/></td>
+            </tr>
+
+
+            <tr>
+                <td style="padding-top:10px">漏油报警(L/H)</td>
+                <td style="padding-top:10px"><input class="easyui-numberbox" type="text" id="leakageoilalarm"
+                                                    name="leakageoilalarm" data-options="required:true,precision:2"
+                                                    validType="literValidate['#leakageoilalarm']"/></td>
+                <td style="padding-top:10px">渗油报警(L/H)</td>
+                <td style="padding-top:10px"><input class="easyui-numberbox" type="text" id="leakoilalarm"
+                                                    name="leakoilalarm" data-options="required:true,precision:2"
+                                                    validType="literValidate['#leakoilalarm']"/></td>
+            </tr>
+            <tr>
+                <td style="padding-top:10px">高温报警(℃)</td>
+                <td style="padding-top:10px"><input class="easyui-numberbox" type="text" id="hightempalarm"
+                                                    name="hightempalarm" data-options="required:true,precision:2"
+                                                    validType="temperatureValidate['#hightempalarm']"/></td>
+                <td style="padding-top:10px">低温报警(℃)</td>
+                <td style="padding-top:10px"><input class="easyui-numberbox" type="text" id="lowtempalarm"
+                                                    name="lowtempalarm" data-options="required:true,precision:2"
+                                                    validType="temperatureValidate['#lowtempalarm']"/></td>
+            </tr>
+
+
+        </table>
+        <div style="padding:5px;text-align:center;">
+
+            <a  class="easyui-linkbutton" onclick="submitForm()">添加</a>
+        #*
+                    <a href="#" class="easyui-linkbutton" icon="icon-cancel">Cancel</a>
+        *#
+
+        </div>
+    </form>
+
+
+</div>
+
+
+<script type="text/javascript">
+
+    var col = [[
+        {field: 'oilcan', title: '油罐编号', width: 18, align: 'center'},
+        {field: 'oiltype', title: '油品类型', width: 18, align: 'center'},
+        {field: 'lowprealarm', title: '低液位预警', width: 23, align: 'center'},
+        {field: 'lowalarm', title: '低液位报警', width: 23, align: 'center'},
+        {field: 'highprealarm', title: '高液位预警', width: 23, align: 'center'},
+        {field: 'highalarm', title: '高液位报警', width: 23, align: 'center'},
+        {field: 'stealoilalarm', title: '盗油报警', width: 20, align: 'center'},
+        {field: 'leakageoilalarm', title: '漏油报警', width: 20, align: 'center'},
+        {field: 'leakoilalarm', title: '渗漏报警', width: 20, align: 'center'},
+        {field: 'hightempalarm', title: '高温报警', width: 20, align: 'center'},
+        {field: 'lowtempalarm', title: '低温报警', width: 20, align: 'center'},
+        {
+            field: 'lastoptime', title: '设置时间', width: 40, align: 'center', formatter: function (value) {
+            var time = formatDatebox(value);
+            return time;
+        }
+        }
+    ]];
+    var para;
+    $(function () {
+        var heigth = $(window).height() - 200;
+        $("#re").height(heigth);
+        initD();
+    });
+
+
+    function initt() {
+        var id;
+        #if($department.oucode)
+            id =$department.oucode;
+        #else
+            id = "null";
+
+        #end
+        para = {"id": id};
+
+    }
+    function initD() {
+        initt();
+        BindDataGridAjax('tb', '预报警', '/web/basicdata/peralarm', col, para, 'true', 10, [10, 20, 30]);
+    }
+    function formatDatebox(value) {
+        if (value == null || value == '') {
+            return '';
+        }
+        var dt;
+        if (value instanceof Date) {
+            dt = value;
+        } else {
+            dt = new Date(value);
+        }
+        return dt.format("yyyy-MM-dd hh:mm:ss"); //扩展的  Date的format方法(上述插件实现)
+    }
+
+    function add() {
+        $('#win').window('open');
+    }
+
+    $.extend($.fn.validatebox.defaults.rules, {
+        numberValidate: {
+            validator: function (value, param) {
+                return new Number(value) <= new Number(10000) && new Number(value) >= new Number(0);
+            },
+            message: '请输入小于等于10000的值!'
+        },
+        temperatureValidate: {
+            validator: function (value, param) {
+                return new Number(value) <= new Number(100) && new Number(value) >= new Number(-100);
+            },
+            message: '请输入-100~100之间的温度!'
+        },
+        literValidate: {
+            validator: function (value, param) {
+                return new Number(value) <= new Number(100) && new Number(value) >= new Number(0);
+            },
+            message: '请输入小于等于100的值!'
+        }
+    });
+
+
+    //表单提交
+    function submitForm() {
+      //  $("#loginForm").submit();
+
+        $(loginForm).form('submit', {
+            url : '/web/basicdata/peralarm/add',
+            dataType : 'text',
+            success : function(result) {
+                map = $.parseJSON(result);
+
+                if (map.result) {
+                    $.messager.alert('信息提示', map.msg, 'info');
+                } else {
+                    $.messager.alert('信息提示',map.msg, 'error');
+                }
+
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

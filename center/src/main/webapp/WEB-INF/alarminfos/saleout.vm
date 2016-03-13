@@ -3,43 +3,34 @@
 <div id="query" title="查询条件" collapsible="true" class="easyui-panel" icon="icon-search">
     <table width="80%">
             <tr>
-                <th width="8%">
+                <th width="100px">
                     选择油站：
                 </th>
-                <th colspan="3">
-                         #parse("business/realstock.vm")
+                <th width="150px">
+                    <input id="cc" name="cc"  class="easyui-combobox textbox" type="text"  style="width:150px" data-options="prompt:'--请选择--'"></input>
                 </th>
-            <th>
-                油品：
-            </th>
-            <th>
-                <select id="selectOil"  style=" width: 150px">
-                </select>
-            </th>
+                <th width="150px">
+                    <input id="aa" name="aa"  class="easyui-combobox textbox" type="text" style="width:150px" data-options="prompt:'--请选择--'"></input>
+                </th>
+                <th width="150px">
+                    <input id="ss" name="ss"  class="easyui-combobox textbox" type="text" style="width:150px" data-options="prompt:'--请选择--'"></input>
+                </th>
         </tr>
         <tr>
-            <th>配送建议：</th>
-            <th colspan="3">
-                <select id="selectPSJY" class="easyui-combobox" style=" width: 150px">
-                    <option value="">全部</option>
-                    <option value="1">紧急</option>
-                    <option value="2">一般</option>
-                </select>
+            <th width="100px">
+                起止日期：
             </th>
-            <th>
-                报警时间：
+            <th width="450px" colspan="3">
+                <input id="dateStartinput" type="text" class="easyui-datebox" required="required"   editable="false"/>
+                <input id="dateEndinput" type="text"  class="easyui-datebox" required="required"   editable="false"/>
+
             </th>
-            <th>
-                <input id="dateStartinput" type="text" class="easyui-datebox" required="required"/>至
-                <input id="dateEndinput" type="text" class="easyui-datebox" required="required"/>
-            </th>
-            <th></th>
         </tr>
         <tr>
             <th></th>
             <th>
-                <a id="btnSelect" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchDatabyParams();">查询</a>
-                <a id="btnExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="ExportExl();">导出</a>
+                <a id="btnSelect" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="initData();">查询</a>
+                <a id="btnExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-export'" onclick="ExportExl();">导出</a>
             </th>
             <th></th>
             <th></th>
@@ -47,51 +38,39 @@
         </tr>
     </table>
 </div>
-<div id="queryResult" title="报警详情" class="easyui-panel" collapsible="true" style="height: 500px;">
-    <table id="tt" fit="true" style="height: 500px;">
-      #* <thead>
-        <tr>
-            <th data-options="field:'StationName'">油站名称</th>
-            <th data-options="field:'OilName'">油品</th>
-            <th data-options="field:'MesasureTime'">测量时间</th>
-            <th data-options="field:'NowVolume'">当前体积</th>
-            <th data-options="field:'CanSaleVolume'">可销售体积</th>
-            <th data-options="field:'DayAverageSales'">日常销售量</th>
-            <th data-options="field:'HourAverageSales'">平均每小时销售量</th>
-            <th data-options="field:'PredictHours'">预计销售时间</th>
-            <th data-options="field:'SYL3'">预计销售天数</th>
-            <th data-options="field:'SYL4'">配送建议</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>AA油站</td>
-            <td>92号车用汽油</td>
-            <td>2015-11-06︱13:00:00</td>
-            <td>实时库存</td>
-            <td>当前体积减去低液位报警体积</td>
-            <td>日均值</td>
-            <td>时均值</td>
-            <td>可销售体积/时均值</td>
-            <td>可销售体积/日均值</td>
-            <td>紧急</td>
-        </tr>
-        </tbody>*#
+<div id="result">
+    <table class="easyui-datagrid" id="tt">
+
     </table>
 </div>
 <script>
 
+    function formatDatebox(value) {
+        if (value == null || value == '') {
+            return '';
+        }
+        var dt;
+        if (value instanceof Date) {
+            dt = value;
+        } else {
+            dt = new Date(value);
+        }
+
+        return dt.format("yyyy-MM-dd hh:mm"); //扩展的Date的format方法(上述插件实现)
+    }
+
     var cols=[[
-        {field:'STATION_NAME',title:'油站名称',width:100},
-        {field:'OilName',title:'油品',width:100},
-        {field:'MesasureTime',title:'测量时间',width:100},
-        {field:'NowVolume',title:'当前体积',width:100},
-        {field:'CanSaleVolume',title:'可销售体积',width:100},
-        {field:'DayAverageSales',title:'日常销售量',width:100},
-        {field:'HourAverageSales',title:'平均每小时销售量',width:100},
-        {field:'PredictHours',title:'预计销售时间',width:100},
-        {field:'YJSSTS',title:'预计销售天数',width:100},
-        {field:'PSYJ',title:'配送建议',width:100}
+        {field:'OUName',title:'油站名称',width:100,align:'center'},
+        {field:'OilName',title:'油品类型',width:100,align:'center'},
+        {field:'StartAlarmTime',title:'开始报警时间',width:100,formatter: formatDatebox,align:'center'},
+        {field:'EndAlarmTime',title:'结束报警时间',width:100,formatter: formatDatebox,align:'center'},
+        {field:'NowVolume',title:'当前体积(L)',width:100,align:'center'},
+        {field:'CanSaleVolume',title:'可销售体积(L)',width:100,align:'center'},
+        //{field:'DayAverageSales',title:'日常销售量(L)',width:100},
+        {field:'HourAverageSales',title:'平均每小时销售量(L)',width:100,align:'center'},
+        {field:'PredictHours',title:'预计销售时间(h)',width:100,align:'center'}
+        //{field:'YJSSTS',title:'预计销售天数',width:100},
+        //{field:'PSYJ',title:'配送建议',width:100}
     ]];
    var  oilno;//油品编号
     var psjy; //配送建议
@@ -99,92 +78,51 @@
     var  endTime;
     var paras;
     $(function(){
-        initOilCombox();
-      initData();
+        Loadcas("cc","aa","ss");
+        var myDate = new Date();
+        var MyTime=new Date();
+        var heigth=$(window).height()-160;
+        $("#result").height(heigth);
+        //var time=MyTime.getFullYear() + "-" + (MyTime.getMonth()) + "-" + MyTime.getDate();
+        $("#dateStartinput").datebox('setValue','<%=myDate.toLocaleDateString()%>');
+        $("#dateEndinput").datebox('setValue','<%=myDate.toLocaleDateString()%>');
+        initData();
     });
 
     function inittext(){
-        oilno=$('#selectOil').combobox('getValue');
-        psjy=$('#selectPSJY').combobox('getValue');; //配送建议
-        startTime=$('#dateStartinput').datebox('getValue');
-        endTime=$('#dateEndinput').datebox('getValue');
-        paras={'OilNo':oilno,'StartAlarmTime':startTime,'EndAlarmTime':endTime,'PSJY':psjy};
+        var startTime=$("#dateStartinput").datebox("getValue").replace(/-/g,"");
 
+        var endTime=$("#dateEndinput").datebox("getValue").replace(/-/g,"");
+
+        page=null;rows=null; begin=startTime;end=endTime;
+        var ss=$('#ss').combobox('getValue');
+        var aa=$('#aa').combobox('getValue');
+        var cc=$('#cc').combobox('getValue');
+        oucode="";
+        if(cc!="")
+        {
+            oucode=cc;
+        }
+        if(aa!="")
+        {
+            oucode=aa;
+        }
+        if(ss!="") {
+            oucode = ss;
+        }
+        paras={ "begin": startTime,"end": endTime,"oucode": oucode};
     }
     function initData() {
         inittext();
-        dataGridAjax('tt','/web/alarminfo/selectSaleOutPageList','',paras,cols,undefined,undefined,function(data){
+        //dataGridAjax('tt','/web/alarminfo/selectSaleOutPageList','',paras,cols,undefined,undefined,function(data){
           // alert('加载成功!');
-        });
-        //分页
-        var pager=$('#tt').datagrid('getPager');
-        pager.pagination({
-            total:0,
-            rows : 0,
-            pageList : [10,20,30],// 可以设置每页记录条数的列表
-            onBeforeRefresh: function () {
-            },
-            onSelectPage: function (pageNumber, pageSize) {//分页触发
-              find(pageNumber, pageSize);
-             /*   var data='{"total":11,"rows":[{"STATION_NAME":"1","OilName":"1","MesasureTime":"1","NowVolume":"1","CanSaleVolume":"1","DayAverageSales":"1","HourAverageSales":"1","PredictHours":"1","YJSSTS":"1","PSYJ":"1"}]}';
-                data=JSON.parse(data);
-                $("#tt").datagrid("loadData",data);*/
-    }
-        });
+        //});
+        BindDataGridAjax('tt','油站脱销报警','/web/alarm/getSaleOut',cols,paras,'true',10,[10,20,30]);
     }
 
-    function find(pageNumber, pageSize) {
-            $("#tt").datagrid('getPager').pagination({pageSize : pageSize, pageNumber : pageNumber});//重置
-            $("#tt").datagrid("loading"); //加屏蔽
-            $.ajax({
-                type : "get",
-                dataType : "json",
-                url :"/web/alarminfo/selectSaleOutPageList",
-                data : {
-                    'page' : pageNumber,
-                    'rows' : pageSize,
-                    'OilNo':oilno,
-                    'StartAlarmTime':startTime,
-                    'EndAlarmTime':endTime,
-                    'PSJY':psjy
-                },
-                success : function(data) {
-                    $("#tt").datagrid('loadData',pageData(data.rows,data.total));//这里的pageData是我自己创建的一个对象，用来封装获取的总条数，和数据，data.rows是我在控制器里面添加的一个map集合的键的名称
-                    var total =data.total;
-                    $("#tt").datagrid("loaded"); //移除屏蔽
-                },
-                error : function(err) {
-                    $.messager.alert('操作提示', '获取信息失败...请联系管理员!', 'error');
-                    $("#tt").datagrid("loaded"); //移除屏蔽
-                }
-            });
-       /* $("#tt").datagrid("loading"); //加屏蔽
-        paras={ 'page' : pageNumber,'rows' : pageSize,'OilNo':oilno,'StartAlarmTime':startTime,'EndAlarmTime':endTime};*/
-       // $('#tt').datagrid('reload');
-
-    }
-   function  searchDatabyParams() {
-       initData();
-    }
-    function pageData(list,total){
-        var obj=new Object();
-        obj.total=total;
-        obj.rows=list;
-        return obj;
-    }
     function ExportExl() {
-     inittext();
-    var filename=encodeURI(encodeURI("脱硝报警"));
-     window.open("/web/export/TXYJexportExcel?OilNo="+oilno+"&StartAlarmTime="+startTime+"&EndAlarmTime="+endTime+"&PSJY="+psjy+"&FileName="+filename);
+        inittext();
+        var filename=encodeURI(encodeURI("油站脱销报警"));
+        window.open("/web/alarm/exportSaleOut?oucode="+oucode+"&start="+startTime+"&end="+endTime+"&FileName="+filename);
     }
-
-    function initOilCombox() {
-        $('#selectOil').combobox({
-            url:'/web/oiltypeinfo/selectOilType',
-            valueField:'OilNo',
-            textField:'OilName'
-        });
-
-    }
-
 </script>

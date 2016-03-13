@@ -2,9 +2,12 @@ package com.kld.gsm.coord.timertask;
 import com.kld.gsm.coord.Context;
 import com.kld.gsm.coord.servcie.IMonitorInventoryService;
 import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -21,6 +24,9 @@ public class TimeStockThread extends Thread {
     boolean flag = true;
     @Override
     public void run(){
+        RuntimeMXBean rt = ManagementFactory.getRuntimeMXBean();
+        String pid = rt.getName();
+        MDC.put("PID", pid);
         while(true) {
             try {
                 logger.error("get in 整点库存..");

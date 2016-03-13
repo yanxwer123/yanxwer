@@ -68,6 +68,42 @@ public class oss_acceptance_odRegister extends oss_acceptance_odRegisterKey {
 
     private Date endtime;
 
+    @Override
+    public String toString() {
+        return "oss_acceptance_odRegister{" +
+                "oucode='" + oucode + '\'' +
+                ", oilno='" + oilno + '\'' +
+                ", shift='" + shift + '\'' +
+                ", deliveryno='" + deliveryno + '\'' +
+                ", dischargeloss=" + dischargeloss +
+                ", dischargelossv20=" + dischargelossv20 +
+                ", dischargerate=" + dischargerate +
+                ", dischargeratev20=" + dischargeratev20 +
+                ", planl=" + planl +
+                ", realreceivel=" + realreceivel +
+                ", heightempey=" + heightempey +
+                ", heighttotal=" + heighttotal +
+                ", heightwater=" + heightwater +
+                ", cubagetable=" + cubagetable +
+                ", plumbunbankoperator='" + plumbunbankoperator + '\'' +
+                ", calculateoperator='" + calculateoperator + '\'' +
+                ", backbankno='" + backbankno + '\'' +
+                ", cantrucktemp=" + cantrucktemp +
+                ", isfulldose=" + isfulldose +
+                ", servicelevel=" + servicelevel +
+                ", createtime=" + createtime +
+                ", isdel=" + isdel +
+                ", realgetlv20=" + realgetlv20 +
+                ", realgetl=" + realgetl +
+                ", duringsales=" + duringsales +
+                ", transtatus='" + transtatus + '\'' +
+                ", instationtime=" + instationtime +
+                ", indemnityloss=" + indemnityloss +
+                ", begintime=" + begintime +
+                ", endtime=" + endtime +
+                '}';
+    }
+
     public Date getBegintime() {
         return begintime;
     }

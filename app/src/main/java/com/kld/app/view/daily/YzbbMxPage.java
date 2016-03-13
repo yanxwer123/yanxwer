@@ -11,10 +11,8 @@ import com.kld.gsm.ATG.domain.DailyPumpDigitShift;
 import com.kld.gsm.ATG.domain.DailyStationShiftInfo;
 import com.kld.gsm.ATG.domain.DailyTankShift;
 import com.kld.gsm.MacLog.PayTypeEnum;
-import org.apache.log4j.chainsaw.Main;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
@@ -448,7 +446,7 @@ public class YzbbMxPage extends JFrame{
 		////System.out.println("!!!!!!!!!!!!!!!!!!!!"+GunStatusEnum.下班.value());
 		if (o.getType().equals(PayTypeEnum.现金.value()))//现金
 		{
-			minModel.setMoney(o.getAmount());
+			minModel.setMoney(o.getLiter());
 		}
 		else
 		{
@@ -593,7 +591,7 @@ public class YzbbMxPage extends JFrame{
 						{
 							if (o.getType().equals(PayTypeEnum.现金.value()))
 							{
-								minModel.setMoney(minModel.getMoney()+o.getAmount());
+								minModel.setMoney(o.getLiter());
 							}
 							if (o.getType().equals(PayTypeEnum.邮票.value()))
 							{
@@ -692,19 +690,19 @@ public class YzbbMxPage extends JFrame{
 			DailyTankShift shift = list.get(i);
 			//"油罐编号","油品","接班油量（L）","交班油高（mm）","交班升数",
 			//"交班水高（mm）","交班水量（L）","付油量","卸油量","损耗量","损耗率"
+			DecimalFormat df1=new DecimalFormat("######.00");
 			ob[i][0] = shift.getOilcan();
 			ob[i][1] = shift.getOilname();
-			ob[i][2] = shift.getTooill();
+			ob[i][2] = df1.format(shift.getTooill());
 			ob[i][3] = shift.getHooilhigh();
-			ob[i][4] = shift.getHooill();
+			ob[i][4] = df1.format(shift.getHooill());
 			ob[i][5] = shift.getHeightwater();
-			ob[i][6] = shift.getWaterl();
-			ob[i][7] = shift.getSalel();
+			ob[i][6] = df1.format(shift.getWaterl());
+			ob[i][7] = df1.format(shift.getSalel());
 			//ob[i][7] = shift.getInoill();
-			ob[i][8] = shift.getInoill();
-			DecimalFormat df = new DecimalFormat("######0.00");
+			ob[i][8] = df1.format(shift.getInoill());
 			//损耗量
-			ob[i][9] = df.format(shift.getTooill() + shift.getInoill() - shift.getSalel() - shift.getHooill());
+			ob[i][9] = df1.format(shift.getTooill() + shift.getInoill() - shift.getSalel() - shift.getHooill());
 			//计算损耗率,如果付油量为0,则设置损耗率为100
 			Double dShl=100.00;
 			if(shift.getSalel()>0)

@@ -283,5 +283,12 @@
       </select>
     -->
 
+    <select id="findByOilcan"  resultType="java.lang.String" parameterType="java.util.HashMap">
+         SELECT ToOilL FROM oss_daily_tankshift WHERE Shift=#{shift} AND OilCan =#{oilcan}
+    </select>
+
+    <select id="findToOilLByOilNo"  resultType="java.lang.String" parameterType="java.util.HashMap">
+        SELECT SUM(ToOilL) FROM oss_daily_tankshift WHERE Shift=#{shift} AND OilNo = #{oilno}
+    </select>
 
 </mapper>

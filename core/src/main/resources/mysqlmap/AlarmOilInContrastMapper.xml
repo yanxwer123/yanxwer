@@ -27,7 +27,7 @@
     where DeliveryNo = #{deliveryno,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.kld.gsm.ATG.domain.AlarmOilInContrast" >
-    insert into oss_alarm_OilInContrast (DeliveryNo, Shift, OilNo, 
+    replace into oss_alarm_OilInContrast (DeliveryNo, Shift, OilNo,
       PlanL, RealRecieve, Loss, 
       LossRate, DuringSales, TranStatus,CreatTime
       )
@@ -38,7 +38,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.AlarmOilInContrast" >
-    insert into oss_alarm_OilInContrast
+    replace into oss_alarm_OilInContrast
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="deliveryno != null" >
         DeliveryNo,

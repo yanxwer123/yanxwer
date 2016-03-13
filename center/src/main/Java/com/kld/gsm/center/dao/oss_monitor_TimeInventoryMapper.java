@@ -25,7 +25,7 @@ public interface oss_monitor_TimeInventoryMapper {
     int updateByPrimaryKey(oss_monitor_TimeInventory record);
 
     List<HashMap<String,Object>> selectTimeInventoryInfo(HashMap<String,Object> map);
-    List<HashMap<String,Object>> selectPageCount(HashMap<String,Object> map);
+    int selectPageCount(HashMap<String,Object> map);
 
 
     List<HashMap<String,Object>> selectInventory(HashMap map);

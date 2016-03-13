@@ -3,7 +3,9 @@ package com.kld.app.socket.client.handler;
 import com.kld.app.socket.ob.ConcreteWatched;
 import com.kld.gsm.Socket.protocol.GasMsg;
 import io.netty.channel.ChannelHandlerContext;
+import org.slf4j.Logger;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -17,6 +19,7 @@ import java.util.Map;
  * @Description: 协议逻辑处理
  */
 public class ProtocolProcessor {
+    private static Logger logger = org.slf4j.LoggerFactory.getLogger(ProtocolProcessor.class);
 
     private ProtocolProcessor() {
 
@@ -40,14 +43,13 @@ public class ProtocolProcessor {
 
     public void handlerProtocol(ChannelHandlerContext ctx, Object message) {
         GasMsg gasMsg = (GasMsg) message;
-
         if(gasMsg.getPid().startsWith("A")){
+            logger.info(new Date() + "[" + ctx + "]响应:" + gasMsg.getPid());
             ConcreteWatched.getInstance().notifyWechers(gasMsg, "A");
         }
         if(gasMsg.getPid().startsWith("C")){
             ConcreteWatched.getInstance().notifyWechers(gasMsg, "A");
         }
-
     }
 
     /**

@@ -9,6 +9,7 @@ import com.kld.gsm.center.domain.ResultMsg;
 import com.kld.gsm.center.domain.oss_alarm_SaleOut;
 import com.kld.gsm.center.service.AlarmSaleOutService;
 import com.kld.gsm.center.util.ExportUtil;
+import com.kld.gsm.center.util.FormatUtil;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,7 +49,8 @@ public class AlarmSaleOutServiceImpl implements AlarmSaleOutService {
     }
 
     @Override
-    public List<HashMap<String,Object>> queryPrepayPageList(Integer pageNo, Integer pageSize,String OilNo,String StartAlarmTime,String EndAlarmTime,String PSJY,Integer PSJYFZ) {
+    public List<HashMap<String,Object>>  queryPrepayPageList(Integer pageNo, Integer pageSize,String oucode,String StartAlarmTime,String EndAlarmTime){
+        HashMap hashMap = new HashMap();
         if (pageNo != null && pageSize != null) {
             pageNo = pageNo < 1 ? 1 : pageNo;//三元表达式，如果pageNo小于1，pageNo值就为1 否则就是传递进来的pageNo
             //pageSize = pageSize < 1 ? SystemConstant.PAGESIZE:pageSize; //三元表达式 如果pageSize小于1，就去取枚举里面的pageSize,否则就是传递进来的pageSize
@@ -58,30 +60,38 @@ public class AlarmSaleOutServiceImpl implements AlarmSaleOutService {
             }
             prepay.setFirstRow(firstRow);
             prepay.setRowSize(pageSize);*/
-            HashMap hashMap = new HashMap();
             hashMap.put("firstRow", firstRow);
             hashMap.put("pageSize", pageSize);
-            hashMap.put("oilno", OilNo);
-            hashMap.put("start", StartAlarmTime);
-            hashMap.put("end", EndAlarmTime);
-            hashMap.put("psjy", PSJY);
-            hashMap.put("psjyfz", PSJYFZ);
-            return ossAlarmSaleOutMapper.queryPrepayPageList(hashMap);
         }
-        return  null;
+        if (oucode!=null && oucode!="") {
+            hashMap.put("oucode", oucode + "%");
+        }
+        else
+        {
+            hashMap.put("oucode", oucode);
+        }
+        hashMap.put("start", StartAlarmTime);
+        hashMap.put("end", EndAlarmTime);
+        return ossAlarmSaleOutMapper.queryPrepayPageList(hashMap);
     }
 
     @Override
-    public int queryPrepayCount(String OilNo, String StartAlarmTime, String EndAlarmTime) {
+    public int queryPrepayCount(String oucode,String StartAlarmTime,String EndAlarmTime) {
         HashMap hashMap = new HashMap();
-        hashMap.put("oilno", OilNo);
+        if (oucode!=null && oucode!="") {
+            hashMap.put("oucode", oucode + "%");
+        }
+        else
+        {
+            hashMap.put("oucode", oucode);
+        }
         hashMap.put("start", StartAlarmTime);
         hashMap.put("end", EndAlarmTime);
         return ossAlarmSaleOutMapper.queryPrepayCount(hashMap);
     }
 
     @Override
-    public List<HashMap<String,Object>> queryJYPrepayPageList(Integer pageNo, Integer pageSize,String OilNo, String StartAlarmTime, String EndAlarmTime,String PSJY,Integer PSJYFZ,String oucode) {
+    public List<HashMap<String,Object>> queryJYPrepayPageList(Integer pageNo, Integer pageSize,String oucode,String StartAlarmTime,String EndAlarmTime) {
         if (pageNo != null && pageSize != null) {
             pageNo = pageNo < 1 ? 1 : pageNo;//三元表达式，如果pageNo小于1，pageNo值就为1 否则就是传递进来的pageNo
             //pageSize = pageSize < 1 ? SystemConstant.PAGESIZE:pageSize; //三元表达式 如果pageSize小于1，就去取枚举里面的pageSize,否则就是传递进来的pageSize
@@ -94,11 +104,8 @@ public class AlarmSaleOutServiceImpl implements AlarmSaleOutService {
             HashMap hashMap = new HashMap();
             hashMap.put("firstRow", firstRow);
             hashMap.put("pageSize", pageSize);
-            hashMap.put("oilno", OilNo);
             hashMap.put("start", StartAlarmTime);
             hashMap.put("end", EndAlarmTime);
-            hashMap.put("psjy", PSJY);
-            hashMap.put("psjyfz", PSJYFZ);
             if(oucode!=null && oucode!="") {
                 hashMap.put("oucode", oucode + "%");
             }
@@ -112,13 +119,10 @@ public class AlarmSaleOutServiceImpl implements AlarmSaleOutService {
     }
 
     @Override
-    public List<HashMap<String,Object>> queryJYCountPrepayPageList(String OilNo, String StartAlarmTime, String EndAlarmTime,String PSJY,Integer PSJYFZ,String oucode) {
+    public List<HashMap<String,Object>> queryJYCountPrepayPageList(String oucode,String StartAlarmTime,String EndAlarmTime) {
         HashMap hashMap = new HashMap();
-        hashMap.put("oilno", OilNo);
         hashMap.put("start", StartAlarmTime);
         hashMap.put("end", EndAlarmTime);
-        hashMap.put("psjy", PSJY);
-        hashMap.put("psjyfz", PSJYFZ);
         if(oucode!=null && oucode!="") {
             hashMap.put("oucode", oucode + "%");
         }
@@ -159,43 +163,35 @@ public class AlarmSaleOutServiceImpl implements AlarmSaleOutService {
 
                 cell = bodyRow.createCell(0);
                 cell.setCellStyle(bodyStyle);
-                cell.setCellValue(goods.get("STATION_NAME").toString());
+                cell.setCellValue(FormatUtil.ConvertToString(goods.get("OUName")));
 
                 cell = bodyRow.createCell(1);
                 cell.setCellStyle(bodyStyle);
-                cell.setCellValue(goods.get("OilName").toString());
+                cell.setCellValue(FormatUtil.ConvertToString(goods.get("OilName")));
 
                 cell = bodyRow.createCell(2);
                 cell.setCellStyle(bodyStyle);
-                cell.setCellValue(goods.get("MesasureTime").toString());
+                cell.setCellValue(FormatUtil.ConvertToString(goods.get("StartAlarmTime")));
 
                 cell = bodyRow.createCell(3);
                 cell.setCellStyle(bodyStyle);
-                cell.setCellValue(goods.get("NowVolume").toString());
+                cell.setCellValue(FormatUtil.ConvertToString(goods.get("EndAlarmTime")));
 
                 cell = bodyRow.createCell(4);
                 cell.setCellStyle(bodyStyle);
-                cell.setCellValue(goods.get("CanSaleVolume").toString());
+                cell.setCellValue(FormatUtil.ConvertToString(goods.get("NowVolume")));
 
                 cell = bodyRow.createCell(5);
                 cell.setCellStyle(bodyStyle);
-                cell.setCellValue(goods.get("DayAverageSales").toString());
+                cell.setCellValue(FormatUtil.ConvertToString(goods.get("CanSaleVolume")));
 
                 cell = bodyRow.createCell(6);
                 cell.setCellStyle(bodyStyle);
-                cell.setCellValue(goods.get("HourAverageSales").toString());
+                cell.setCellValue(FormatUtil.ConvertToString(goods.get("HourAverageSales")));
 
                 cell = bodyRow.createCell(7);
                 cell.setCellStyle(bodyStyle);
-                cell.setCellValue(goods.get("PredictHours").toString());
-
-                cell = bodyRow.createCell(8);
-                cell.setCellStyle(bodyStyle);
-                cell.setCellValue(goods.get("YJSSTS").toString());
-
-                cell = bodyRow.createCell(9);
-                cell.setCellStyle(bodyStyle);
-                cell.setCellValue(goods.get("PSYJ").toString());
+                cell.setCellValue(FormatUtil.ConvertToString(goods.get("PredictHours")));
 
             }
         }

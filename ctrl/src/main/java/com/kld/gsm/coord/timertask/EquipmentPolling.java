@@ -6,9 +6,12 @@ import com.kld.gsm.coord.Context;
 import com.kld.gsm.coord.servcie.IEquipmentService;
 import com.kld.gsm.coord.servcie.impl.EquipmentNewServiceImpl;
 import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.util.Date;
 import java.util.concurrent.*;
 
@@ -26,6 +29,9 @@ public class EquipmentPolling extends Thread {
 
     @Override
     public void run(){
+        RuntimeMXBean rt = ManagementFactory.getRuntimeMXBean();
+        String pid = rt.getName();
+        MDC.put("PID", pid);
         equipmentService = Context.getInstance().getBean(EquipmentNewServiceImpl.class);
         while(true) {
             try {
@@ -85,17 +91,19 @@ public class EquipmentPolling extends Thread {
         };
         //在这里可以做别的任何事情
         logger.info("do other things");
+        Future<Integer> future = exec.submit(call);
         try {
-            Future<Integer> future = exec.submit(call);
             iRet= future.get(1000*(TimeTaskPar.get("sbgzjgsj")-1), TimeUnit.MILLISECONDS); //取得结果，同时设置超时执行时间为5秒。同样可以用future.get()，不设置执行超时时间取得结果
-            logger.info("");
+            logger.info("取设备故障结束");
         }catch (TimeoutException ex){
-            logger.info("");
+            logger.info("取设备故障超时");
+            future.cancel(true);
         }
         catch (Exception e) {
-            logger.info("");
+            logger.info("取设备故障异常");
+            future.cancel(true);
         }
-        exec.shutdown();
+        exec.shutdownNow();
         logger.info("return");
         return iRet;
     }

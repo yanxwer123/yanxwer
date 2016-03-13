@@ -22,8 +22,8 @@
                 起止日期：
             </th>
             <th colspan="3" align="left">
-                <input id="dateStartinput" type="text" class="easyui-datebox" required="required"/> ——
-                <input id="dateEndinput" type="text"  class="easyui-datebox" required="required"/>
+                <input id="dateStartinput" type="text" class="easyui-datebox" required="required" editable="false"/> ——
+                <input id="dateEndinput" type="text"  class="easyui-datebox" required="required" editable="false"/>
             </th>
 
         </tr>
@@ -32,7 +32,7 @@
             <th></th>
             <th align="left" colspan="3">
                 <a id="btnSelect" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="initData()">查询</a>
-                <a id="btnExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="ExportExl()">导出</a>
+                <a id="btnExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-export'" onclick="ExportExl()">导出</a>
             </th>
 
         </tr>
@@ -50,37 +50,37 @@
     <form id="fm" method="post">
         <table width="390px" height: 100%; cellpadding="0" cellspacing="0">
            <tr>
-               <td width="130px;" align="center" height="23">油管编号</td><td align="left"><label id="OilCanNo"></label> </td>
+               <td width="130px;" align="right" height="23">油罐编号:&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left"><label id="OilCanNo"></label> </td>
                </tr>
             <tr>
-               <td width="130px;" align="center" height="23">泄漏状态</td><td align="left"><label id="RevealStatus"></label> </td>
+               <td width="130px;" align="right" height="23">泄漏状态:&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left"><label id="RevealStatus"></label> </td>
                 </tr>
             <tr>
-               <td width="130px;" align="center" height="23">泄漏速率(L/H)</td><td align="left"><label id="RevealRate"></label> </td>
+               <td width="130px;" align="right" height="23">泄漏速率(L/H):&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left"><label id="RevealRate"></label> </td>
                 </tr>
             <tr>
-               <td width="130px;" align="center" height="23">起始日期</td><td align="left"><label id="StartDate"></label> </td>
+               <td width="130px;" align="right" height="23">起始日期:&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left"><label id="StartDate"></label> </td>
                 </tr>
             <tr>
-               <td width="130px;" align="center" height="23">起始时间</td><td align="left"><label id="StartTime"></label> </td>
+               <td width="130px;" align="right" height="23">起始时间:&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left"><label id="StartTime"></label> </td>
                 </tr>
             <tr>
-               <td width="130px;" align="center" height="23">起始5点温度(℃)</td><td align="left"><label id="StartOilTemp"></label> </td>
+               <td width="130px;" align="right" height="23">起始5点温度(℃):&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left"><label id="StartOilTemp"></label> </td>
                 </tr>
             <tr>
-               <td width="130px;" align="center" height="23">结束日期</td><td align="left"><label id="EndDate"></label> </td>
+               <td width="130px;" align="right" height="23">结束日期:&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left"><label id="EndDate"></label> </td>
                 </tr>
             <tr>
-               <td width="130px;" align="center" height="23">结束时间</td><td align="left"><label id="EndTime"></label> </td>
+               <td width="130px;" align="right" height="23">结束时间:&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left"><label id="EndTime"></label> </td>
                 </tr>
             <tr>
-               <td width="130px;" align="center" height="23">结束油水总高(mm)</td><td align="left"><label id="EndOilHeight"></label> </td>
+               <td width="130px;" align="right" height="23">结束油水总高(mm):&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left"><label id="EndOilHeight"></label> </td>
                 </tr>
             <tr>
-               <td width="130px;" align="center" height="23">结束水高(mm)</td><td align="left"><label id="EndWaterHeight"></label> </td>
+               <td width="130px;" align="right" height="23">结束水高(mm):&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left"><label id="EndWaterHeight"></label> </td>
                 </tr>
             <tr>
-               <td width="130px;" align="center" height="23">结束5点温度(℃)</td><td align="left"><label id="EndOilTemp"></label> </td>
+               <td width="130px;" align="right" height="23">结束5点温度(℃):&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left"><label id="EndOilTemp"></label> </td>
            </tr>
             <tr>
                 <td width="100px;" align="right"></td><td align="right">
@@ -113,7 +113,7 @@
         $("#EndTime").html(arrEnd[1]);
     }
     var cols=[[
-        {field:'ouname',title:'油站名称',width:100,align:'center'},
+        {field:'OUName',title:'油站名称',width:100,align:'center'},
         {field:'OilCanNo',title:'油罐编号',width:100,align:'center'},
         {field:'StartDate',title:'开始时间',width:100,formatter: formatDatebox,align:'center'},
         {field:'EndDate',title:'结束时间',width:100,formatter: formatDatebox,align:'center'},
@@ -165,14 +165,6 @@
     function inittext(){
         start=$("#dateStartinput").datebox("getValue");
         end=$("#dateEndinput").datebox("getValue");
-        var endtime = new Date();
-        var date = endtime.getDate();
-        date = date + 1;
-        endtime.setDate(date);
-        var over=endtime.toLocaleDateString();
-
-
-        end=over;
         var ss=$('#ss').combobox('getValue');
         var aa=$('#aa').combobox('getValue');
         var cc=$('#cc').combobox('getValue');

@@ -89,4 +89,7 @@
     where OilCanNo = #{oilcanno,jdbcType=INTEGER}
       and Probeno = #{probeno,jdbcType=VARCHAR}
   </update>
+  <delete id="deleteByOilCanNo" parameterType="java.lang.Integer">
+    DELETE FROM oss_daily_DevicdInfoDetail WHERE OilCanNo=#{_parameter,jdbcType=INTEGER}
+  </delete>
 </mapper>

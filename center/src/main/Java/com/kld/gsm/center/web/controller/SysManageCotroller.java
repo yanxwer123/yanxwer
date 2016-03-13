@@ -5,10 +5,7 @@ package com.kld.gsm.center.web.controller;
  import com.fasterxml.jackson.databind.ObjectMapper;
  import com.kld.gsm.center.domain.*;
  import com.kld.gsm.center.domain.hn.*;
- import com.kld.gsm.center.service.AcceptanceService;
- import com.kld.gsm.center.service.HNRemoteToHnService;
- import com.kld.gsm.center.service.SysDictService;
- import com.kld.gsm.center.service.SystemManage;
+ import com.kld.gsm.center.service.*;
  import com.kld.gsm.center.util.action;
  import com.kld.gsm.center.util.httpClient;
  import com.kld.gsm.center.util.sysOrgUnit;
@@ -47,6 +44,9 @@ public class SysManageCotroller {
 
     @Resource
     private SysDictService sysDictService;
+
+    @Resource
+    private ISysmanageCubageService sysmanageCubageService;
 
 /*    *//*
     *上传预报警设置表
@@ -750,17 +750,57 @@ public class SysManageCotroller {
         List<oss_sysmanageCubgeMain> mains=new ArrayList<oss_sysmanageCubgeMain>();
 
         //get cubge list
-        List<oss_sysmanage_cubage> ossSysmanageCubages=systemManage.getcubgesByNodenoAndStatus(NodeNo,1);
+        List<oss_sysmanage_cubage> ossSysmanageCubages=systemManage.getcubgesByNodenoAndStatus(NodeNo, 1);
+/*
+        List<oss_sysmanage_cubage> downlist=new ArrayList<oss_sysmanage_cubage>();
 
+      for (oss_sysmanage_cubage item:ossSysmanageCubages){
+            oss_sysmanage_cubage item2=new oss_sysmanage_cubage();
+            item2.setStatus(0);
+            item2.setNodeno(item.getNodeno());
+            item2.setOucode(item.getOucode());
+            item2.setTranstatus(item.getTranstatus());
+            item2.setHeight(item.getHeight());
+            item2.setLiter(item.getLiter());
+            item2.setUpdatetime(item.getUpdatetime());
+        }
+*/
         // for cubge list
         for (oss_sysmanage_cubage item:ossSysmanageCubages){
             //create main
+
             oss_sysmanageCubgeMain main=new oss_sysmanageCubgeMain();
             main.setCubage(item);
             main.setCubageInfos(systemManage.getcubgeInfosByNodenoAndVersionandcanno(item.getNodeno(),item.getVersion(),item.getOilcan()));
             mains.add(main);
         }
+
         return mains;
+    }
+
+    @RequestMapping("/getUntranCubgeInfos")
+    @ResponseBody
+    @ApiOperation("获取未发送的容积表")
+    public Object getUntranCubgeInfos(@RequestParam("NodeNo")String NodeNo,@RequestParam("CV")String CV){
+        List<oss_sysmanageCubgeMain> cubages=new ArrayList<oss_sysmanageCubgeMain>();
+        String[] cvs=CV.split(",");
+        Map<String,Object> map = new HashMap<String, Object>();
+        for (int i=0;i<cvs.length;i++) {
+            String[] candversion=cvs[i].split("\\|");
+            map.put("nodeno", NodeNo);
+            map.put("oilcanno",candversion[0]);
+            map.put("version", candversion[1]);
+            List<oss_sysmanage_cubage> cubageList=sysmanageCubageService.getUntranCubages(map);
+            for(oss_sysmanage_cubage cubage:cubageList) {
+                oss_sysmanageCubgeMain sysmanageCubgeMain = new oss_sysmanageCubgeMain();
+                sysmanageCubgeMain.setCubage(cubage);
+                List<oss_sysmanage_cubageInfo> cubageInfoList = sysmanageCubageService.getUntranCubageInfos(cubage);
+                sysmanageCubgeMain.setCubageInfos(cubageInfoList);
+                cubages.add(sysmanageCubgeMain);
+            }
+            map.clear();
+        }
+        return cubages;
     }
 
 
@@ -773,6 +813,8 @@ public class SysManageCotroller {
          Result rs=new Result();
         try {
             systemManage.synMain(main,NodeNo);
+            sendoligun(main.getOilGunInfos());
+            sendtankinfo(main.getTankInfos());
             rs.setResult(true);
         }
         catch (Exception e){
@@ -879,9 +921,9 @@ public class SysManageCotroller {
                 item.setName(URLEncoder.encode(item.getName(),"UTF-8"));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
-            };
+            }
         }
         return dicts;
     }
-
 }
+

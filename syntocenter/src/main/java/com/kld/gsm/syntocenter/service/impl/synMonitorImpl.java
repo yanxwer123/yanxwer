@@ -4,6 +4,7 @@ import com.kld.gsm.ATG.domain.AlarmDailyLost;
 import com.kld.gsm.ATG.domain.MonitorInventory;
 import com.kld.gsm.ATG.domain.MonitorTimeInventory;
 import com.kld.gsm.ATG.domain.SysManageCubage;
+import com.kld.gsm.syntocenter.server.ApplicationMain;
 import com.kld.gsm.syntocenter.service.synMonitor;
 import com.kld.gsm.syntocenter.util.action;
 import com.kld.gsm.syntocenter.util.httpClient;
@@ -32,12 +33,12 @@ public class synMonitorImpl implements synMonitor {
         //获取action地址
         action ac=new action();
         String path=ac.getUri("resource.services.TI.AddTimeInventory");
-        List<SysManageCubage> sysManageCubages=sysManageCubageDao.selectCubageInused();
+      /*  List<SysManageCubage> sysManageCubages=sysManageCubageDao.selectCubageInused();
 
         Map<String,String> map= new HashMap<String,String>();
         for (SysManageCubage item:sysManageCubages){
             map.put(item.getOilcan().toString(),item.getVersion());
-        }
+        }*/
 
         //获取站级数据
         List<MonitorTimeInventory> monitorTimeInventories= monitorTimeInventoryDao.selectByTrans("0");
@@ -45,8 +46,8 @@ public class synMonitorImpl implements synMonitor {
         Map<String,String> hm=new param().getparam();
         //System.out.println("nodono"+hm.get("NodeNo"));
         for (MonitorTimeInventory item:monitorTimeInventories){
-            if (!map.isEmpty()&&map.get(item.getOilcan().toString())!=null)
-                item.setVersion(map.get(item.getOilcan().toString()));
+            if (!ApplicationMain.canversion.isEmpty()&&ApplicationMain.canversion.get(item.getOilcan().toString())!=null)
+                item.setVersion(ApplicationMain.canversion.get(item.getOilcan().toString()));
         }
         //
         httpClient client=new httpClient();
@@ -88,19 +89,19 @@ public class synMonitorImpl implements synMonitor {
         //获取action地址
         action ac=new action();
         String path=ac.getUri("resource.services.TI.InsertInventory");
-        List<SysManageCubage> sysManageCubages=sysManageCubageDao.selectCubageInused();
+        /*List<SysManageCubage> sysManageCubages=sysManageCubageDao.selectCubageInused();
 
         Map<String,String> map= new HashMap<String,String>();
         for (SysManageCubage item:sysManageCubages){
             map.put(item.getOilcan().toString(),item.getVersion());
         }
-
+*/
         //获取站级数据
         List<MonitorInventory> monitorInventories= monitorInventoryDao.selectByTrans("0");
         if (monitorInventories.isEmpty())return 1;
         for (MonitorInventory item:monitorInventories){
-            if (!map.isEmpty()&&map.get(item.getOilcanno().toString())!=null)
-                item.setVersion(map.get(item.getOilcanno().toString()));
+            if (!ApplicationMain.canversion.isEmpty()&&ApplicationMain.canversion.get(item.getOilcanno().toString())!=null)
+                item.setVersion(ApplicationMain.canversion.get(item.getOilcanno().toString()));
         }
         Map<String,String> hm=new param().getparam();
         //发送站级数据

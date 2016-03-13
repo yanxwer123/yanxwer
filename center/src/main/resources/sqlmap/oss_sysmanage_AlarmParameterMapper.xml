@@ -275,4 +275,19 @@
     where OilCan = #{oilcan,jdbcType=INTEGER}
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
   </update>
+
+  <select id="findByOUCodePage"  parameterType="java.util.Map"  resultType="com.kld.gsm.center.domain.oss_sysmanage_AlarmParameter" >
+    select *
+    from oss_sysmanage_AlarmParameter
+    where  OUCode = #{id,jdbcType=VARCHAR}
+    <if test="firstRow != null and  pageSize!= null">
+      <![CDATA[ LIMIT #{firstRow},#{pageSize}]]>
+    </if>
+  </select>
+  <select id="findByOUCode"  parameterType="java.util.Map"  resultType="com.kld.gsm.center.domain.oss_sysmanage_AlarmParameter" >
+    select *
+    from oss_sysmanage_AlarmParameter
+    where  OUCode = #{id,jdbcType=VARCHAR}
+  </select>
+
 </mapper>

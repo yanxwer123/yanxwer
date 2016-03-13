@@ -1,0 +1,190 @@
+#set($layout="layout/emptylayout.vm")
+#set($menuTitle="功能管理")
+
+<div id="toolbar">
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" onclick="addcatalog()" plain="true">新增</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-edit" onclick="editcatalog()" plain="true">修改</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove" onclick="dellcatalog()" plain="true">删除</a>
+</div>
+<div id="result" class="easyui-panel"  >
+    <table id="tt" class="easyui-datagrid">
+    </table>
+</div>
+<div id="wincatalog" class="easyui-window" title="新增" closed="true" style="width:460px;height:200px;"
+     data-options="modal:true">
+
+    <form id="loginForm" action="/web/sysmanage/addcatalog" method="post" style="padding:5px 5px 5px 5px;">
+        <table>
+            <tr>
+                <td style="padding-top:10px">功能编码</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="addfunccode" name="funccode" data-options="required:true,precision:2" /></td>
+                <td style="padding-top:10px">父级编码</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="addparentcode" name="parentcode" data-options="required:true,precision:2"/></td>
+            </tr>
+            <tr>
+                <td style="padding-top:10px">功能名称</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="addname" name="name" data-options="required:true,precision:2" /></td>
+                <td style="padding-top:10px">菜单目标地址</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="addtargeturl" name="targeturl" data-options="required:true,precision:2"/></td>
+            </tr>
+        </table>
+        <div style="padding:5px;text-align:center;">
+            <a  class="easyui-linkbutton" onclick="submitForm()">添加</a>
+        </div>
+    </form>
+
+
+</div>
+
+<div id="xiucatalog" class="easyui-window" title="修改" closed="true" style="width:460px;height:200px;"
+     data-options="modal:true">
+
+    <form id="logineditForm" action="/web/sysmanage/editcatalog" method="post" style="padding:5px 5px 5px 5px;">
+        <table>
+            <tr>
+                <td style="padding-top:10px">功能编码</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="editfunccode" name="funccode" data-options="required:true,precision:2" /></td>
+                <td style="padding-top:10px">父级编码</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="editparentcode" name="parentcode" data-options="required:true,precision:2"/></td>
+            </tr>
+            <tr>
+                <td style="padding-top:10px">功能名称</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="editname" name="name" data-options="required:true,precision:2" /></td>
+                <td style="padding-top:10px">菜单目标地址</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="edittargeturl" name="targeturl" data-options="required:true,precision:2"/></td>
+            </tr>
+        </table>
+        <div style="padding:5px;text-align:center;">
+            <a  class="easyui-linkbutton" onclick="saveForm()">保存</a>
+        </div>
+    </form>
+
+
+</div>
+
+
+<script>
+    var cols=[[
+        {field:'funccode',title:'功能编码',width:5,align:'center'},
+        {field:'parentcode',title:'父级编码',width:5,align:'center'},
+        {field:'name',title:'功能名称',width:5,align:'center'},
+        {field:'targeturl',title:'菜单目标地址',width:5,align:'center'}
+    ]]
+    var paras;
+    $(function(){
+        var heigth=$(window).height()-130;
+        $("#result").height(heigth);
+        initData();
+    });
+    function initData(){
+        BindDataGridAjax('tt','功能管理','/web/sysmanage/getCatalogList',cols,paras,'true',10,[10,20,30]);
+    }
+    function addcatalog () {
+        $('#wincatalog').window('open');
+    }
+    function editcatalog() {
+        var row = $('#tt').datagrid('getSelected');
+        if (row) {
+            $('#xiucatalog').window('open');
+            $("#editfunccode").textbox("setValue",row.funccode);
+//            $('#editfunccode').textbox({disabled:true});
+            $("#editparentcode").textbox("setValue",row.parentcode);
+            $("#editname").textbox("setValue",row.name);
+            $("#edittargeturl").textbox("setValue",row.targeturl);
+        } else {
+            $.messager.alert("提示", "请选择要修改的行！", "info");
+        }
+    }
+    function submitForm() {
+        $(loginForm).form('submit', {
+            url : '/web/sysmanage/addCatalog',
+            dataType : 'text',
+            success : function(result) {
+                //  var map = result
+                if (result>0) {
+                    $.messager.alert("提示", "恭喜您，信息添加成功！", "info");
+                    $("#addfunccode").textbox("setValue","");
+                    $("#addparentcode").textbox("setValue","");
+                    $("#addname").textbox("setValue","");
+                    $("#addtargeturl").textbox("setValue","");
+                    $('#wincatalog').window('close');
+                    $('#tt').datagrid("reload",{ });
+                } else {
+                    $.messager.alert("提示", "添加失败，请重新操作！", "info");
+                }
+            }
+        });
+    }
+
+    function saveForm() {
+        $(logineditForm).form('submit', {
+            url : '/web/sysmanage/editCatalog',
+            dataType : 'text',
+            success : function(result) {
+                if (result>0) {
+                    $.messager.alert("提示", "恭喜您，信息修改成功！", "info");
+                    $('#xiucatalog').window('close');
+                    $('#tt').datagrid("reload",{ });
+                } else {
+                    $.messager.alert("提示", "修改失败，请重新操作！", "info");
+                }
+            }
+        });
+    }
+    function dellcatalog() {
+        var delrow = $('#tt').datagrid('getSelected');
+        if (delrow == null) {
+            $.messager.alert("提示", "请选择要删除的行！", "info");
+            return;
+        } else {
+            $.messager.confirm('提示', '是否删除选中数据?', function (r) {
+                if (!r) {
+                    return;
+                }
+                var delfunccode=delrow.funccode;
+                //提交
+                $.ajax({
+                    type: "POST",
+                    url: "/web/sysmanage/selectRCBycode?delfunccode="+delfunccode,
+                    data: delfunccode,
+                    success: function (result) {
+                        if (result.length > 0) {
+                            $.messager.alert("提示", "对不起，已有角色拥有此权限，不允许删除", "info");
+                        } else {
+                            //提交
+                            $.ajax({
+                                type: "POST",
+                                url: "/web/sysmanage/delCatalog?funccode="+delfunccode,
+                                data: delfunccode,
+                                success: function (result) {
+                                    if (result > 0) {
+                                        $('#tt').datagrid('clearSelections');
+                                        $.messager.alert("提示", "恭喜您，信息删除成功！", "info");
+                                        $('#tt').datagrid('reload');
+                                    } else {
+                                        $.messager.alert("提示", "删除失败，请重新操作！", "info");
+                                        return;
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+
+            });
+        }
+    }
+    function formatDatebox(value) {
+        if (value == null || value == '') {
+            return '';
+        }
+        var dt;
+        if (value instanceof Date) {
+            dt = value;
+        } else {
+            dt = new Date(value);
+        }
+        return dt.format("yyyy-MM-dd hh:mm:ss"); //扩展的Date的format方法(上述插件实现)
+    }
+
+</script>

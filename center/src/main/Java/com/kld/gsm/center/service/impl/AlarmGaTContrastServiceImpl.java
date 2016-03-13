@@ -16,6 +16,7 @@ import com.kld.gsm.center.domain.oss_alarm_GaTContrast;
 import com.kld.gsm.center.service.AlarmGaTContrastService;
 import com.kld.gsm.center.service.SysDictService;
 import com.kld.gsm.center.util.ExportUtil;
+import com.kld.gsm.center.util.FormatUtil;
 import net.sf.json.JSONObject;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,7 @@ public class AlarmGaTContrastServiceImpl implements AlarmGaTContrastService {
     @Override
     public List<HashMap<String, Object>> selectGatInfo(Integer page, Integer rows, String begin, String end, String oucode,String result) {
 
+        List<HashMap<String, Object>>  list=null;
         if (page != null && rows != null) {
             page = page < 1 ? 1 : page;
             int firstRow = (page - 1) * rows;
@@ -60,27 +62,20 @@ public class AlarmGaTContrastServiceImpl implements AlarmGaTContrastService {
             {
                 hashMap.put("oucode", oucode);
             }
-            List<HashMap<String, Object>>  list=ossAlarmGaTContrastMapper.selectGatInfo(hashMap);
+            list=ossAlarmGaTContrastMapper.selectGatInfo(hashMap);
             List<HashMap<String, Object>> resultList=new ArrayList<HashMap<String, Object>>();
             for (HashMap<String, Object> item:list)
             {
-
-                Integer fz= sysManageDictDao.selectByName("动态液位异常");
+                item.put("ouname", ossSysOrgUnitMapper.selectByOUCode(item.get("OUCode").toString()).getOuname());
+                /*Integer fz= sysManageDictDao.selectByName("动态液位异常");
                 double difference=Double.parseDouble(item.get("Difference").toString());
-
                 if (result.equals("0"))//不录入按照结果查询条件的情况下
                 {
-
                     if (difference < fz) {
                         item.put("result","正常");
-                        item.put("ouname", ossSysOrgUnitMapper.selectByOUCode(item.get("OUCode").toString()).getOuname());
-
                     } else {
                         item.put("result", "异常");
-                        item.put("ouname", ossSysOrgUnitMapper.selectByOUCode(item.get("OUCode").toString()).getOuname());
-
                     }
-                    resultList.add(item);
                 }
                 else
                 {
@@ -88,33 +83,42 @@ public class AlarmGaTContrastServiceImpl implements AlarmGaTContrastService {
                     {
                         if (difference  < fz)
                         {
-
                             item.put("result", "正常");
-                            item.put("ouname", ossSysOrgUnitMapper.selectByOUCode(item.get("OUCode").toString()).getOuname());
-                            resultList.add(item);
                         }
                     }
                     if (result.equals("2"))//异常
                     {
                         if (difference > fz) {
-
                             item.put("result", "异常");
-                            item.put("ouname", ossSysOrgUnitMapper.selectByOUCode(item.get("OUCode").toString()).getOuname());
-                            resultList.add(item);
                         }
                     }
                 }
-
+                */
+                resultList.add(item);
             }
-
             return  resultList;
-
         }
-        return null;
+        return list;
     }
 
     @Resource
     private SysDictService sysDictService;
+
+    @Override
+    public int selectCountAllInfo(String begin, String end, String oucode, String result) {
+        HashMap hashMap = new HashMap();
+        hashMap.put("begin", begin);
+        hashMap.put("end", end);
+        if (oucode!=null && oucode!="") {
+            hashMap.put("oucode", oucode + "%");
+        }
+        else
+        {
+            hashMap.put("oucode", oucode);
+        }
+        int iCount=ossAlarmGaTContrastMapper.selectCountAllInfo(hashMap);
+        return iCount;
+    }
 
     @Override
     public List<HashMap<String, Object>> selectGatAllInfo(String begin, String end, String oucode, String result) {
@@ -133,16 +137,15 @@ public class AlarmGaTContrastServiceImpl implements AlarmGaTContrastService {
         String str=result;
         for (HashMap<String, Object> item:list)
         {
-            Integer fz= sysManageDictDao.selectByName("动态液位异常");
+            item.put("ouname", ossSysOrgUnitMapper.selectByOUCode(item.get("OUCode").toString()).getOuname());
+            /*Integer fz= sysManageDictDao.selectByName("动态液位异常");
             double difference=Double.parseDouble(item.get("Difference").toString());
             if (result.equals("0"))//不录入按照结果查询条件的情况下
             {
                 if (difference  < fz) {
                     item.put("result","正常");
-                    item.put("ouname",ossSysOrgUnitMapper.selectByOUCode(item.get("OUCode").toString()).getOuname());
                 } else {
                     item.put("result", "异常");
-                    item.put("ouname",ossSysOrgUnitMapper.selectByOUCode(item.get("OUCode").toString()).getOuname());
                 }
                 resultList.add(item);
             }
@@ -152,23 +155,17 @@ public class AlarmGaTContrastServiceImpl implements AlarmGaTContrastService {
                 {
                     if (difference  < fz)
                     {
-
                         item.put("result", "正常");
-                        item.put("ouname", ossSysOrgUnitMapper.selectByOUCode(item.get("OUCode").toString()).getOuname());
-                        resultList.add(item);
                     }
                 }
                 if (result.equals("2"))//异常
                 {
                     if (difference  > fz) {
-
                         item.put("result", "异常");
-                        item.put("ouname", ossSysOrgUnitMapper.selectByOUCode(item.get("OUCode").toString()).getOuname());
-                        resultList.add(item);
                     }
                 }
-            }
-
+            }*/
+            resultList.add(item);
         }
        return resultList;
     }
@@ -198,45 +195,37 @@ public class AlarmGaTContrastServiceImpl implements AlarmGaTContrastService {
             {
                 XSSFRow bodyRow = sheet.createRow(j + 1);
                 //List<oss_daily_StationShiftInfo> goods = list.get(j);
-                for (HashMap<String, Object> item:list) {
+               // for (HashMap<String, Object> item:list) {
+                HashMap<String, Object> item=list.get(j);
                     cell = bodyRow.createCell(0);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("ouname").toString());
-
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("ouname")));
                     cell = bodyRow.createCell(1);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("OilCan").toString());
-
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("OilCan")));
                     cell = bodyRow.createCell(2);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("FristMeasureTime").toString());
-
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("FristMeasureTime")));
                     cell = bodyRow.createCell(3);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("FristMeasureStore").toString());
-
-
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("FristMeasureStore")));
                     cell = bodyRow.createCell(4);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("SecodeMeasureTime").toString());
-
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("SecodeMeasureTime")));
                     cell = bodyRow.createCell(5);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("SecodeMeasureStore").toString());
-
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("SecodeMeasureStore")));
                     cell = bodyRow.createCell(6);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("IntervalSales").toString());
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("IntervalSales")));
                     cell = bodyRow.createCell(7);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("IntervalTime").toString());
+                    Integer iTime=Double.valueOf(item.get("IntervalTime").toString()).intValue();
+                    cell.setCellValue((iTime / 60) + "分" + (iTime % 60) + "秒");
                     cell = bodyRow.createCell(8);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("Difference").toString());
-                    cell = bodyRow.createCell(9);
-                    cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("result").toString());
-                }
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("Difference")));
+               // }
             }
         }
         try

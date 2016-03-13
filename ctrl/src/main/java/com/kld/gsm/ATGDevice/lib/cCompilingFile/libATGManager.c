@@ -24,6 +24,30 @@
 
 #define LIB_ATG_FILENAME  "ATGLib.so"
 
+jstring ctojstring(JNIEnv *env, char* tmpstr) {
+	jclass Class_string;
+	jmethodID mid_String,mid_getBytes;
+	jbyteArray bytes;
+	jbyte* log_utf8;
+	jstring codetype,jstr;
+	Class_string = (*env)->FindClass(env,"java/lang/String");//获取class
+	//先将gbk字符串转为java里的string格式
+	mid_String = (*env)->GetMethodID(env,Class_string, "<init>", "([BLjava/lang/String;)V");
+	bytes = (*env)->NewByteArray(env,strlen(tmpstr) + 1);
+	(*env)->SetByteArrayRegion(env,bytes, 0, strlen(tmpstr), (jbyte*)tmpstr);
+	codetype = (*env)->NewStringUTF(env, "gbk");
+	jstr = (jstring)(*env)->NewObject(env,Class_string, mid_String, bytes, codetype);
+	(*env)->DeleteLocalRef(env,bytes);
+
+	//再将string变utf-8字符串。
+	mid_getBytes = (* env)->GetMethodID(env,Class_string,   "getBytes",   "(Ljava/lang/String;)[B");
+	codetype = (*env)->NewStringUTF(env,"utf-8");
+	bytes=(jbyteArray)(*env)->CallObjectMethod(env,jstr,mid_getBytes,codetype);
+	log_utf8=(*env)->GetByteArrayElements(env,bytes,JNI_FALSE);
+	//LOGI(log_utf8);
+	return (*env)->NewStringUTF(env,log_utf8);
+}
+
 /*
  * Class:     ATGDevice_ATGManager
  * Method:    init
@@ -2587,14 +2611,12 @@ JNIEXPORT jobject JNICALL Java_com_kld_gsm_ATGDevice_ATGDevice_getDeviceInfo
 		//给String赋值
 		(*env)->SetIntField(env,obj_atg_device_in_t,uOilCanNo,atg_device_out[0].pDeviceData[i].uOilCanNo);
 		(*env)->SetObjectField(env,obj_atg_device_in_t,strProbeNo,(*env)->NewStringUTF(env,atg_device_out[0].pDeviceData[i].strProbeNo));
-		(*env)->SetObjectField(env,obj_atg_device_in_t,strProbeModel,(*env)->NewStringUTF(env,atg_device_out[0].pDeviceData[i].strProbeModel));
-//printf("atg_device_out[0].pDeviceData[%d].strProbeModel%s\n",i,atg_device_out[0].pDeviceData[i].strProbeModel);
-
+		(*env)->SetObjectField(env,obj_atg_device_in_t,strProbeModel,ctojstring(env,atg_device_out[0].pDeviceData[i].strProbeModel));
 		//对象加入到list中
 		(*env)->CallBooleanMethod(env,obj_ArrayList,arrayList_add,obj_atg_device_in_t);
 	}
 	(*env)->SetIntField(env,obj_atg_data_in_t,uRetCount,atg_device_out[0].uRetCount);
-	(*env)->SetObjectField(env,obj_atg_data_in_t,strDeviceModel,(*env)->NewStringUTF(env,atg_device_out[0].strDeviceModel));
+	(*env)->SetObjectField(env,obj_atg_data_in_t,strDeviceModel,ctojstring(env,atg_device_out[0].strDeviceModel));
 	(*env)->SetObjectField(env,obj_atg_data_in_t,strEquipCode,(*env)->NewStringUTF(env,atg_device_out[0].strEquipCode));
 	(*env)->SetObjectField(env,obj_atg_data_in_t,strSysVersion,(*env)->NewStringUTF(env,atg_device_out[0].strSysVersion));
 	(*env)->SetObjectField(env,obj_atg_data_in_t,strMakeDate,(*env)->NewStringUTF(env,atg_device_out[0].strMakeDate));	

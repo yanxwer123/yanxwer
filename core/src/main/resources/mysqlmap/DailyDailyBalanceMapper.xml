@@ -195,7 +195,7 @@
       WHERE b.AccountDate >= #{begin,jdbcType=TIMESTAMP} and #{end,jdbcType=TIMESTAMP} > b.AccountDate
   </select>
 
-
+    <!-- 原始版本 查看创建时间最新的期初库存-->
     <select id="findRealStock" parameterType="String" resultType="java.lang.String">
       SELECT RealStock FROM oss_daily_DailyBalance
       WHERE OilNo=#{oilno,jdbcType=VARCHAR}
