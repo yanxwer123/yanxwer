@@ -87,4 +87,25 @@ public class AcceptanceOdRegisterInfoServiceImpl implements IAcceptanceOdRegiste
         return dao.selectbycanno(hm);
 
     }
+
+    @Override
+    public String findByOilCan(String oilcan, Date begintime, Date endtime) {
+        HashMap hm=new HashMap();
+        hm.put("oilcan",oilcan);
+        hm.put("begintime",begintime);
+        hm.put("endtime",endtime);
+        return  dao.findByOilCan(hm);
+
+    }
+
+    @Override
+    public String findByOilNo(String oilno, Date begintime, Date endtime) {
+        HashMap hm=new HashMap();
+        hm.put("oilno",oilno);
+        hm.put("begintime",begintime);
+        hm.put("endtime",endtime);
+        return  dao.findByOilNo(hm);
+    }
+
+
 }

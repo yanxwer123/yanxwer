@@ -360,4 +360,18 @@ public class SystemManageImpl implements SystemManage {
     public List<oss_sysmanage_cubageInfo> getcubgeInfosByNodenoAndVersionandcanno(String nodeno, String version, String canno) {
         return ossSysmanageCubageInfoMapper.selectByNodenoAndVersionandcanno(nodeno,version,canno);
     }
+
+    @Override
+    public oss_sysmanage_cubage selectCubage(String nodeno, String oilcan, String version) {
+        oss_sysmanage_cubageKey key=new oss_sysmanage_cubageKey();
+        key.setNodeno(nodeno);
+        key.setOilcan(oilcan);
+        key.setVersion(version);
+        return ossSysmanageCubageMapper.selectByPrimaryKey(key);
+    }
+
+    @Override
+    public int updateCubage(oss_sysmanage_cubage record) {
+      return ossSysmanageCubageMapper.updateByPrimaryKey(record);
+    }
 }

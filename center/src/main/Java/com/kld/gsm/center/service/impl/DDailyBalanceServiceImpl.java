@@ -11,8 +11,7 @@ import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by xhz on 2015/11/18.
@@ -34,8 +33,28 @@ public class DDailyBalanceServiceImpl implements DDailyBalanceService {
     public List<HashMap<String, Object>> selectbalancebywhere(String start,String end,String oucode) {
         HashMap map=new HashMap();
         map.put("start",start);
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+        Date date=new Date();
+        try {
+            date = fmt.parse(end);
+            Calendar calendar = new GregorianCalendar();
+            calendar.setTime(date);
+            calendar.add(calendar.DATE, 1);//把日期往后增加一天.整数往后推,负数往前移动
+            end = fmt.format(calendar.getTime());
+
+        }
+        catch (Exception ex)
+        {
+
+        }
         map.put("end",end);
-        map.put("oucode",oucode);
+        if(oucode!=null && oucode!="") {
+            map.put("oucode", oucode + "%");
+        }
+        else
+        {
+            map.put("oucode", oucode);
+        }
         return ossDailyDailyBalanceMapper.selectbalancebywhere(map);
     }
 
@@ -43,19 +62,65 @@ public class DDailyBalanceServiceImpl implements DDailyBalanceService {
     public List<oss_daily_DailyBalance> selectbalance(String start,String end,String oucode) {
         HashMap map=new HashMap();
         map.put("start",start);
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+        Date date=new Date();
+        try {
+            date = fmt.parse(end);
+            Calendar calendar = new GregorianCalendar();
+            calendar.setTime(date);
+            calendar.add(calendar.DATE, 1);//把日期往后增加一天.整数往后推,负数往前移动
+            end = fmt.format(calendar.getTime());
+
+        }
+        catch (Exception ex)
+        {
+
+        }
         map.put("end",end);
-        map.put("oucode",oucode);
+        if(oucode!=null && oucode!="") {
+            map.put("oucode", oucode + "%");
+        }
+        else
+        {
+            map.put("oucode", oucode);
+        }
         return ossDailyDailyBalanceMapper.selectbalance(map);
     }
 
     @Override
-    public List<HashMap<String, Object>> querypage(Integer intPage, Integer intPageSize, String oucode, String start, String end) {
+    public List<HashMap<String, Object>> querypage(Integer page, Integer rows, String start, String end,String oucode){
         HashMap map=new HashMap();
+        if (page != null && rows != null) {
+            page = page < 1 ? 1 : page;
+            int firstRow = (page - 1) * rows;
+            map.put("firstRow", firstRow);
+            map.put("pageSize", rows);
+        }
+
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+        Date date=new Date();
+        try {
+            date = fmt.parse(end);
+            Calendar calendar = new GregorianCalendar();
+            calendar.setTime(date);
+            calendar.add(calendar.DATE, 1);//把日期往后增加一天.整数往后推,负数往前移动
+            end = fmt.format(calendar.getTime());
+
+        }
+        catch (Exception ex)
+        {
+
+        }
+
         map.put("start",start);
         map.put("end",end);
-        map.put("oucode",oucode);
-        map.put("firstRow",intPage);
-        map.put("intPageSize",intPageSize);
+        if(oucode!=null && oucode!="") {
+            map.put("oucode", oucode + "%");
+        }
+        else
+        {
+            map.put("oucode", oucode);
+        }
         return ossDailyDailyBalanceMapper.querypage(map);
     }
 
@@ -84,41 +149,45 @@ public class DDailyBalanceServiceImpl implements DDailyBalanceService {
             {
                 XSSFRow bodyRow = sheet.createRow(j + 1);
                 //List<oss_daily_StationShiftInfo> goods = list.get(j);
-                for (HashMap<String, Object> item:list) {
+                HashMap<String, Object> item=list.get(j);
                     cell = bodyRow.createCell(0);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("ouname").toString());
+                    cell.setCellValue(item.get("OUName").toString());
 
-                    cell = bodyRow.createCell(1);
+                cell = bodyRow.createCell(1);
+                cell.setCellStyle(bodyStyle);
+                cell.setCellValue(item.get("AccountDate").toString());
+
+
+                cell = bodyRow.createCell(2);
                     cell.setCellStyle(bodyStyle);
                     cell.setCellValue(item.get("DarlyankStock").toString());
 
-                    cell = bodyRow.createCell(2);
+                    cell = bodyRow.createCell(3);
                     cell.setCellStyle(bodyStyle);
                     cell.setCellValue(item.get("DeliveryNo").toString());
 
-                    cell = bodyRow.createCell(3);
+                    cell = bodyRow.createCell(4);
                     cell.setCellStyle(bodyStyle);
                     cell.setCellValue(item.get("ReceiveL").toString());
 
-                    cell = bodyRow.createCell(4);
+                    cell = bodyRow.createCell(5);
                     cell.setCellStyle(bodyStyle);
                     cell.setCellValue(item.get("TodayOut").toString());
 
-                    cell = bodyRow.createCell(5);
+                    cell = bodyRow.createCell(6);
                     cell.setCellStyle(bodyStyle);
                     cell.setCellValue(item.get("TodayStock").toString());
 
-                    cell = bodyRow.createCell(6);
-                    cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("RealStock").toString());
                     cell = bodyRow.createCell(7);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("Loss").toString());
+                    cell.setCellValue(item.get("RealStock").toString());
                     cell = bodyRow.createCell(8);
                     cell.setCellStyle(bodyStyle);
+                    cell.setCellValue(item.get("Loss").toString());
+                    cell = bodyRow.createCell(9);
+                    cell.setCellStyle(bodyStyle);
                     cell.setCellValue(item.get("LossSent").toString());
-                }
             }
         }
         try

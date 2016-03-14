@@ -5,6 +5,7 @@ import com.kld.gsm.center.domain.oss_alarm_Inventory;
 import com.kld.gsm.center.service.AlarmInventoryService;
 import com.kld.gsm.center.service.SysDictService;
 import com.kld.gsm.center.util.ExportUtil;
+import com.kld.gsm.center.util.FormatUtil;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import java.io.IOException;
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -127,39 +129,25 @@ public class AlarmInventoryServiceImpl implements AlarmInventoryService {
             for (int j = 0; j < list.size(); j++)
             {
                 XSSFRow bodyRow = sheet.createRow(j + 1);
-                //List<oss_daily_StationShiftInfo> goods = list.get(j);
-                for (HashMap<String, Object> item:list) {
+                HashMap<String, Object> item=list.get(j);
                     cell = bodyRow.createCell(0);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("OUName").toString());
-
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("OUName")));
                     cell = bodyRow.createCell(1);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("OilCan").toString());
-
-
-
-                    cell = bodyRow.createCell(2);
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("OilCan")));
+                   cell = bodyRow.createCell(2);
                     cell.setCellStyle(bodyStyle);
-                    //if (item.get("OilName")==null)
-
-                    cell.setCellValue(item.get("OilName") == null ? "" : item.get("OilName").toString());
-
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("OilName")));
                     cell = bodyRow.createCell(3);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("NAME").toString());
-
-
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("NAME")));
                     cell = bodyRow.createCell(4);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("StartTime").toString());
-
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("StartTime")));
                     cell = bodyRow.createCell(5);
                     cell.setCellStyle(bodyStyle);
-                    cell.setCellValue(item.get("EndTIme").toString());
-
-
-                }
+                    cell.setCellValue(FormatUtil.ConvertToString(item.get("EndTime")));
             }
         }
         try

@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -139,7 +140,7 @@ class ButtonListener implements ActionListener{
         for (int i = 0; i < sysManageCubageInfoList.size(); i++) {
             SysManageCubageInfo s = sysManageCubageInfoList.get(i);
             cubageInfoPanel.data[i][0] = s.getHeight();
-            cubageInfoPanel.data[i][1] = s.getLiter();
+            cubageInfoPanel.data[i][1] = new DecimalFormat("0").format(s.getLiter());
         }
         cubageInfoPanel.jTable.setModel(cubageInfoPanel.model);
         for (int i = 0; i < cubageInfoPanel.tableHeads.length; i++) {

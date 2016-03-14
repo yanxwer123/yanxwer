@@ -5,6 +5,7 @@ import com.kld.gsm.center.domain.oss_daily_opotCount;
 import com.kld.gsm.center.domain.oss_daily_opotCountKey;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 @MysqlRepository
@@ -20,5 +21,5 @@ public interface oss_daily_opotCountMapper {
     int updateByPrimaryKeySelective(oss_daily_opotCount record);
 
     int updateByPrimaryKey(oss_daily_opotCount record);
-    List<oss_daily_opotCount> selectFyxx(String shift);
+    List<oss_daily_opotCount> selectFyxx(HashMap<String,Object> map);
 }

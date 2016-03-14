@@ -36,30 +36,38 @@
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
   </delete>
   <select id="selectDailyLost" resultType="hashmap" parameterType="hashmap">
-    select * from oss_alarm_DailyLost where 1=1
+    SELECT a.*,b.OUName,c.OilName from
+    oss_alarm_DailyLost a
+    inner join oss_sys_OrgUnit b on a.OUCode=b.OUCode
+    left outer JOIN oss_sysmanage_oiltype c on a.OilNo=c.OilNo
+    WHERE 1=1
     <if test="begin != null">
-      <![CDATA[ AND AccountDate>=#{begin,jdbcType=TIMESTAMP}]]>
+      <![CDATA[ AND a.AccountDate>=#{begin,jdbcType=TIMESTAMP}]]>
     </if>
     <if test="end != null">
-      <![CDATA[ AND AccountDate < #{end,jdbcType=TIMESTAMP}]]>
+      <![CDATA[ AND a.AccountDate < #{end,jdbcType=TIMESTAMP}]]>
     </if>
     <if test="oucode != null ">
-      <![CDATA[  and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+      <![CDATA[  and a.OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
     </if>
-    ORDER BY AccountDate DESC
+    ORDER BY a.AccountDate DESC
   </select>
   <select id="selectPageDailyLost" resultType="hashmap" parameterType="hashmap">
-    select * from oss_alarm_DailyLost where  1=1
+    SELECT a.*,b.OUName,c.OilName from
+    oss_alarm_DailyLost a
+    inner join oss_sys_OrgUnit b on a.OUCode=b.OUCode
+    left outer JOIN oss_sysmanage_oiltype c on a.OilNo=c.OilNo
+    WHERE 1=1
     <if test="begin != null">
-      <![CDATA[ AND AccountDate>=#{begin,jdbcType=TIMESTAMP}]]>
+      <![CDATA[ AND a.AccountDate>=#{begin,jdbcType=TIMESTAMP}]]>
     </if>
     <if test="end != null">
-      <![CDATA[ AND AccountDate < #{end,jdbcType=TIMESTAMP}]]>
+      <![CDATA[ AND a.AccountDate < #{end,jdbcType=TIMESTAMP}]]>
     </if>
     <if test="oucode != null ">
-      <![CDATA[  and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+      <![CDATA[  and a.OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
     </if>
-    ORDER BY AccountDate DESC
+    ORDER BY a.AccountDate DESC
     <if test="firstRow != null and  pageSize!= null">
       <![CDATA[ LIMIT #{firstRow},#{pageSize}]]>
     </if>

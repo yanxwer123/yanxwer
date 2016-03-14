@@ -79,7 +79,14 @@ public class ATGManager {
             return null;
         }
         //查询到所有油罐编号
-        List<Integer> oilCanNo = saleOutAlarmService.selectAllOilCanNos();
+        List<Integer> oilCanNo = new ArrayList<Integer>();
+        if(EhCacheHelper.getAllCanNos()==null) {//如果缓存里是空，则查询数据库
+            oilCanNo = saleOutAlarmService.selectAllOilCanNos();
+            EhCacheHelper.updateCanNos(oilCanNo);
+        }else{//如果缓存不为空，则使用缓存
+            Element element = EhCacheHelper.getAllCanNos();
+            oilCanNo = (List<Integer>)element.getObjectValue();
+        }
         logger.info("获取所有油罐数量:" + oilCanNo.size());
         List<atg_stock_data_out_t> stockDataOutTList = ATGDevice.getStock(oilCanNo);
         List<atg_stock_data_out_t> stockRet = new ArrayList<atg_stock_data_out_t>();
@@ -183,9 +190,11 @@ public class ATGManager {
                         stockDataOutT.fWaterBulk = hightoliterDataOutT.fWaterBulk;//水体积
                     }
                 }
+                logger.info("遍历ret结束");
                 capacitytableDataInTList.clear();
                 hightoliterInTList.clear();
                 stockRet.add(stockDataOutT);
+                logger.info("add");
             }
         } catch (Exception e) {
             logger.error("高升转换error:" + e);
@@ -231,9 +240,10 @@ public class ATGManager {
             Element el = EhCacheHelper.getAllCanStock();
             if (el == null) {
                 //System.out.println("从液位仪获取油水体积");
-                logger.info("从液位仪获取油水体积...");
+                /*logger.info("从液位仪获取油水体积...");
                 outList = ATGManager.getAllStock();
-                EhCacheHelper.updateCanStocks(outList);
+                EhCacheHelper.updateCanStocks(outList);*/
+                return new ArrayList<atg_stock_data_out_t>();
             } else {
                 //System.out.println("从缓存获取油水体积");
                 logger.info("从缓存获取油水体积...");

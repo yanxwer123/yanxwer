@@ -20,7 +20,6 @@ import com.kld.gsm.coord.dao.OilCanInforDao;
 import com.kld.gsm.coord.domain.NodeInfor;
 import com.kld.gsm.coord.domain.Sysinfor;
 import com.kld.gsm.coord.servcie.*;
-import com.kld.gsm.coord.timertask.TimeTaskPar;
 import com.kld.gsm.coord.utils.ReflectUtils;
 import com.kld.gsm.util.JsonMapper;
 import io.netty.channel.ChannelHandlerContext;
@@ -122,7 +121,7 @@ public class ProtocolProcessor {
 
         //保存新会话
         if (gasMessage.getPid().startsWith("A")) {
-            System.out.println(new Date() + "]收到:" + gasMessage.getPid() + "请求");
+            log.info(new Date() + "["+ctx+"]请求:" + gasMessage.getPid());
             //if (gasMessage.getPid().startsWith(Constants.PID_Code.A15_10000.toString())) {
 
             //判断这个id是否有会话存在
@@ -267,6 +266,9 @@ public class ProtocolProcessor {
             }
             GasMsg gasMsg = ResultUtils.getInstance().sendSUCCESS(subMessage.getId(), list, Constants.PID_Code.A15_10002.toString());
             ////System.out.println("<" + gasMsg.toString() + ">");
+            if (list!=null) {
+                list.clear();
+            }
             ctx.writeAndFlush(gasMsg);//构造通知对象
         }
 //endregion
@@ -354,6 +356,9 @@ public class ProtocolProcessor {
 //                ////System.out.println(list);
 //            }
             GasMsg gss = ResultUtils.getInstance().sendSUCCESS(subMessage.getId(), list, Constants.PID_Code.A15_10004.toString());
+            if (list!=null) {
+                list.clear();
+            }
             log.info("return   " + gss);
             ctx.writeAndFlush(gss);
         }
@@ -411,7 +416,9 @@ public class ProtocolProcessor {
                     oilPurchaseAcceptanceService.updateNo(DeliveryNo, manualno);
                     log.info("状态为3" + DeliveryNo);
                 }
-                GasMsg gss = ResultUtils.getInstance().sendSUCCESS(subMessage.getId(), new ArrayList(), Constants.PID_Code.A15_10005.toString());
+                List list=new ArrayList();
+                list.add(DeliveryNo);
+                GasMsg gss = ResultUtils.getInstance().sendSUCCESS(subMessage.getId(),list, Constants.PID_Code.A15_10005.toString());
                 log.info("return   " + gss);
                 ctx.writeAndFlush(gss);
             }
@@ -557,6 +564,7 @@ public class ProtocolProcessor {
                         capacitytableList.add(capacitytable);
                     }
                     capacity.pCapacityTableData = capacitytableList;
+
                     //写入缓存
                     EhCacheHelper.updateCubageInfo(sysManageCubageInfoList);
                     ResultMsg resultMsg = new ResultMsg();
@@ -589,7 +597,6 @@ public class ProtocolProcessor {
                     gasMsg.setMessage(tankJson);
                     ////System.out.println("返回的对象" + gasMsg);
                     ctx.writeAndFlush(gasMsg);
-
                 } else if (flag == 0) {//上传
                     //todo 调用省中心接口
                     //调用方法，更新从省中心拿来的数据
@@ -700,9 +707,9 @@ public class ProtocolProcessor {
                 atg.fWaterWarning = sysManageAlarmParameter.getWaterhightalarm();//高高水位报警
                 atg.fHighTempAlarm = sysManageAlarmParameter.getHightempalarm();//高温报警
                 atg.fLowTempAlarm = sysManageAlarmParameter.getLowtempalarm();//低温报警
-                atg.fThiefAlarm = 0;//盗油报警
-                atg.fLeakAlarm = 0;//漏油报警
-                atg.fPercolatingAlarm = 0;//渗漏报警
+                atg.fThiefAlarm = sysManageAlarmParameter.getStealoilalarm();//盗油报警
+                atg.fLeakAlarm = sysManageAlarmParameter.getLeakageoilalarm();//漏油报警
+                atg.fPercolatingAlarm = sysManageAlarmParameter.getLeakoilalarm();//渗漏报警
                 //lastoptime;//上次设置时间
                 //optime;//操作时间
                 //transtatus;//传输状态
@@ -870,6 +877,69 @@ public class ProtocolProcessor {
                 log.info("deviceInfoService.DeviceInfoSave error");
                 gss = ResultUtils.getInstance().sendFAIL(subMessage.getId(), arrayList, Constants.PID_Code.A15_10015.toString());
                 log.error("DeviceInfoPolling error" + e);
+                e.printStackTrace();
+            } finally {
+                ctx.writeAndFlush(gss);
+            }
+        }
+        //TODO 高升转换 A15_10016
+        if (gasMessage.getPid().equals("A15_10016")) {
+            log.info("进入A15_10016");
+            GasMsg gss = new GasMsg();
+            List<Map> list = subMessage.getData();
+            List<atg_hightoliter_data_out_t> ret = new ArrayList<atg_hightoliter_data_out_t>();
+            try {
+                if(list.size()<1){
+                    log.warn("传入A15_10016的参数为空！直接返回。");
+                    gss = ResultUtils.getInstance().sendFAIL(subMessage.getId(), ret, Constants.PID_Code.A15_10016.toString());
+                    ctx.writeAndFlush(gss);
+                    return ;
+                }
+                Map map = list.get(0);
+                //从缓存中取得容积表
+                List<atg_capacitytable_data_in_t> capacitytableDataInTList = new ArrayList<atg_capacitytable_data_in_t>();
+                List<SysManageCubageInfo> sysManageCubageInfoList = EhCacheHelper.getCubageInfo(Integer.parseInt(map.get("oilcan").toString()));
+                for (SysManageCubageInfo sysManageCubageInfo : sysManageCubageInfoList) {
+                    atg_capacitytable_data_in_t capacitytableDataInT = new atg_capacitytable_data_in_t();
+                    capacitytableDataInT.uHigh = (int) (double) sysManageCubageInfo.getHeight();
+                    capacitytableDataInT.fLiter = sysManageCubageInfo.getLiter();
+                    capacitytableDataInTList.add(capacitytableDataInT);
+                }
+                atg_capacity_data_in_t capacityDataInT = new atg_capacity_data_in_t();
+                capacityDataInT.uCapacitySize = capacitytableDataInTList.size();//容积表明细长度
+                capacityDataInT.pCapacityTableData = capacitytableDataInTList;//容积表明细
+                capacityDataInT.uOilCanNO = Integer.parseInt(map.get("oilcan").toString());
+                List<atg_capacity_data_in_t> capacityDataInTList = new ArrayList<atg_capacity_data_in_t>();
+                capacityDataInTList.add(capacityDataInT);//容积表明细放到容积表
+
+                atg_hightoliter_in_t hightoliterInT = new atg_hightoliter_in_t();
+                //手工录入水高
+                hightoliterInT.fWaterHeight = Double.parseDouble(map.get("WaterHeight").toString());
+                //手工录入油水总高
+                hightoliterInT.fTotalHeight = Double.parseDouble(map.get("TotalHeight").toString());
+                //手工录入平均温度
+                hightoliterInT.fOilTemp =  Double.parseDouble(map.get("OilTemp").toString());
+                hightoliterInT.fOilTemp1 =  Double.parseDouble(map.get("OilTemp").toString());
+                hightoliterInT.fOilTemp2 =  Double.parseDouble(map.get("OilTemp").toString());
+                hightoliterInT.fOilTemp3 =  Double.parseDouble(map.get("OilTemp").toString());
+                hightoliterInT.fOilTemp4 =  Double.parseDouble(map.get("OilTemp").toString());
+                hightoliterInT.fOilTemp5 =  Double.parseDouble(map.get("OilTemp").toString());
+                hightoliterInT.uCount = capacityDataInTList.size();
+                hightoliterInT.pCapacityData = capacityDataInTList;
+                List<atg_hightoliter_in_t> hightoliterInTList = new ArrayList<atg_hightoliter_in_t>();
+                hightoliterInTList.add(hightoliterInT);
+                //开始高升转换
+                log.info("A15_10016开始高升转换");
+                ret = ATGManager.HightOLiter(hightoliterInTList);
+                log.info("A15_10016结束高升转换");
+                //返回给app
+                gss = ResultUtils.getInstance().sendSUCCESS(subMessage.getId(), ret, Constants.PID_Code.A15_10016.toString());
+                log.info("A15_10016高升转换return   " + gss);
+
+            } catch (Exception e) {
+                log.error("A15_10016 error");
+                gss = ResultUtils.getInstance().sendFAIL(subMessage.getId(), ret, Constants.PID_Code.A15_10016.toString());
+                log.error("A15_10016 error" + e);
                 e.printStackTrace();
             } finally {
                 ctx.writeAndFlush(gss);

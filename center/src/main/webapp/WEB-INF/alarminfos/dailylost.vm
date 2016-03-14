@@ -1,5 +1,5 @@
 #set($layout="layout/emptylayout.vm")
-#set($menuTitle="日结损益")
+#set($menuTitle="日结损溢报警")
 
 <div id="query"  title="查询条件" collapsible="true" class="easyui-panel search panel-body panel-body-noheader" style="border:0px;padding: 10px; width: 100%;" icon="icon-search">
     <table  width="550px">
@@ -23,8 +23,8 @@
                 起止日期：
             </th>
             <th colspan="3">
-                <input id="dateStartinput" type="text" class="easyui-datebox" required="required"/> ——
-                <input id="dateEndinput" type="text"  class="easyui-datebox" required="required"/>
+                <input id="dateStartinput" type="text" class="easyui-datebox" required="required"  editable="false"/> ——
+                <input id="dateEndinput" type="text"  class="easyui-datebox" required="required"  editable="false"/>
             </th>
 
         </tr>
@@ -32,7 +32,7 @@
             <th></th>
             <th>
                 <a id="searchExchange" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" style="width: 60px" onclick="initData()">查询</a>
-                <a id="btnExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="ExportExl()">导出</a>
+                <a id="btnExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-export'" onclick="ExportExl()">导出</a>
             </th>
             <th></th>
             <th></th>
@@ -46,27 +46,27 @@
 
 <script>
     var cols=[[
-        {field:'ouname',title:'油站名称',width:50,align:'center'
+        {field:'OUName',title:'油站名称',width:70,align:'center'
         },
-        {field:'oilname',title:'品种',width:100,align:'center'
+        {field:'OilName',title:'油品类型',width:70,align:'center'
         },
 
         {field:'AccountDate',title:'日期',width:100,formatter: formatDatebox,align:'center'
         },
 
-        {field:'DarlyankStock',title:'期初库存(L)',width:50,align:'center'
+        {field:'DarlyankStock',title:'期初库存(L)',width:70,align:'center'
         },
-        {field:'DeliveryNo',title:'出货单号',width:50,align:'center'},
-        {field:'ReceiveL',title:'进货数量(L)',width:50,align:'center'},
-        {field:'TodayOut',title:'期间付出(L)',width:50,align:'center'
+        {field:'DeliveryNo',title:'出货单号',width:70,align:'center'},
+        {field:'ReceiveL',title:'进货数量(L)',width:70,align:'center'},
+        {field:'TodayOut',title:'期间付出(L)',width:70,align:'center'
         },
-        {field:'TodayEndStock',title:'期末库存(L)',width:50,align:'center'
+        {field:'TodayEndStock',title:'期末库存(L)',width:70,align:'center'
         },
-        {field:'RealStock',title:'实测库存(L)',width:100,align:'center'
+        {field:'RealStock',title:'实测库存(L)',width:70,align:'center'
         },
-        {field:'Cost',title:'损溢量(L)',width:100,align:'center'
+        {field:'Cost',title:'损溢量(L)',width:70,align:'center'
         },
-        {field:'CostSent',title:'损溢率(%)',width:100,align:'center'
+        {field:'CostSent',title:'损溢率(%)',width:70,align:'center'
         }
 
 ]];
@@ -103,15 +103,7 @@
         var startTime=$("#dateStartinput").datebox("getValue");
         var endTime=$("#dateEndinput").datebox("getValue");
         begin=startTime;
-
-        var endtime = new Date();
-        var date = endtime.getDate();
-        date = date + 1;
-        endtime.setDate(date);
-        var over=endtime.toLocaleDateString();
-
-
-        end=over;
+        end=endTime;
 
         var ss=$('#ss').combobox('getValue');
         var aa=$('#aa').combobox('getValue');
@@ -135,12 +127,12 @@
     }
     function ExportExl() {
         inittext();
-        var filename=encodeURI(encodeURI("日结损益预警"));
+        var filename=encodeURI(encodeURI("日结损溢预警"));
         window.open("/web/alarm/excelDailyLost?begin="+begin+"&end="+end+"&oucode="+oucode+"&FileName="+filename);
     }
     function initData() {
         inittext();
-        BindDataGridAjax('tt','日结损益预警','/web/alarm/getDailyLostList',cols,paras,'true',10,[10,20,30]);
+        BindDataGridAjax('tt','日结损溢预警','/web/alarm/getDailyLostList',cols,paras,'true',10,[10,20,30]);
 
        /* dataGridAjax('tt','/web/alarm/getDailyLostList','',paras,cols,undefined,undefined,function(data){
             alert('加载成功!');

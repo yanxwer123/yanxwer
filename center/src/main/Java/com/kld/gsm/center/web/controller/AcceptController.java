@@ -1,33 +1,22 @@
 package com.kld.gsm.center.web.controller;
 
 
-import com.fasterxml.jackson.databind.JavaType;
-import com.kld.gsm.center.service.AcceptanceDeliveryBillService;
-import com.kld.gsm.center.dao.oss_sys_OrgUnitMapper;
-import com.kld.gsm.center.dao.oss_sysmanage_StationMapper;
-import com.kld.gsm.center.service.AcceptanceService;
-import com.kld.gsm.center.service.OilDownService;
-import com.kld.gsm.center.service.SysOrgUnitService;
-import com.kld.gsm.center.service.SystemManage;
-import com.kld.gsm.center.util.action;
-import com.kld.gsm.center.util.httpClient;
-
-/*import com.kld.gsm.util.JsonMapper;*/
-import com.kld.gsm.center.util.JsonMapper;
-import com.mangofactory.swagger.annotations.ApiIgnore;
-import com.wordnik.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 import com.kld.gsm.center.domain.*;
 import com.kld.gsm.center.domain.hn.*;
+import com.kld.gsm.center.service.*;
+import com.kld.gsm.center.util.JsonMapper;
+import com.kld.gsm.center.util.action;
+import com.kld.gsm.center.util.httpClient;
+import com.wordnik.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import javax.annotation.Resource;
+
+/*import com.kld.gsm.util.JsonMapper;*/
 
 /*
 Created BY niyang
@@ -49,8 +38,41 @@ public class AcceptController {
     @Autowired
     private AcceptanceDeliveryBillService acceptanceDeliveryBillService;
 
-
-
+    @Autowired
+   private Sys_SjfylService sys_sjfylService;
+   /*
+    * Createdby yanxiaowei
+   * description 根据出库单号，请求湖南接口，获取实际发油量，返回
+   * */
+   @RequestMapping(value = "/getsjfyl")
+   @ApiOperation("根据出库单号，查询湖南接口，返回数据给站级,数据保存")
+   @ResponseBody
+   public SysmanageRealgiveoil getsjfyl(@RequestParam("ckdId")String ckdId){
+       action ac=new action();
+       String path=ac.getUri("resources.hn.accept.getsjfyl");
+       httpClient client=new httpClient();
+       Map<String,String> map=new HashMap<String, String>();
+       map.put("ckdId",ckdId);
+       Result result=new Result();
+       SysmanageRealgiveoil realgiveoil=new SysmanageRealgiveoil();
+       try{
+           String jsonResult= client.request(path, null, map);
+           HNSjfyl sjfyl=new JsonMapper().fromJson(jsonResult,HNSjfyl.class);
+           if (sjfyl!=null) {
+               realgiveoil.setCkdid(ckdId);
+               realgiveoil.setSjfyl(sjfyl.getSJ_FYL());
+               realgiveoil.setWd(sjfyl.getSJ_WD());
+               realgiveoil.setMd(sjfyl.getSJ_MD());
+               List<SysmanageRealgiveoil> realgiveoils = new ArrayList<SysmanageRealgiveoil>();
+               realgiveoils.add(realgiveoil);
+               sys_sjfylService.Addsjfyl(realgiveoils);
+               realgiveoil=sys_sjfylService.selectBybillno(ckdId);
+           }
+       }catch (Exception e){
+           e.printStackTrace();
+       }
+       return realgiveoil;
+   }
     /*
   * Createdby niyang
   * description 根据出库单号，请求湖南接口，获取出库单，返回
@@ -235,6 +257,9 @@ catch (Exception e){
         List<HNodRegMain>  hnmains=new ArrayList<HNodRegMain>();
         for (AcceptOdRegMain item:acceptOdRegMains){
             oss_acceptance_odRegister odr=item.getAcceptanceOdRegister();
+            if (odr.getDeliveryno()==null||odr.getBegintime()==null||odr.getEndtime()==null){
+                continue;
+            }
             //regionfor main
             HNodRegMain main=new HNodRegMain();
             HNodRegister register=new HNodRegister();
@@ -290,6 +315,7 @@ catch (Exception e){
                 info1.setDuringsales(info.getDuringsales());
                 info1.setForcecancelstable(info.getForcecancelstable());
                 info1.setOilcan(info.getOilcan());
+                info1.setBeginwaterheight(info.getBeginwaterheight());
                 registerInfos.add(info1);
             }
             //endregion

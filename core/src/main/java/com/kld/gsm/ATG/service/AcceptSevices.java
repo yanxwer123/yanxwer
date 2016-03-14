@@ -9,6 +9,16 @@ Created BY niyang
 Created Date 2015/11/22
 */
 public interface AcceptSevices {
+  /*
+  * @description 根据出库单号从中心获取实际发油量
+  * @param  host 中心地址 ckdid  出库单号\
+  * */
+ SysmanageRealgiveoil getsjfyl(String host,String ckdid);
+
+ List<AcceptanceDeliveryBills>getUncompletebills();
+
+ SysmanageRealgiveoil getbydeliveryno(String deliveryno);
+
 
  /**
   * @description 根据单号从中心获取出货单
@@ -38,4 +48,7 @@ public interface AcceptSevices {
  int sendOdreg(String host,String NodeNo);
 
  List<AcceptanceOdRegisterInfo> selectAcceptanceOdRegisterInfo(String DeliveryNo);
+
+ List<AcceptanceOdRegisterInfo> selectUncompleteInfo();
+
 }

@@ -23,4 +23,6 @@ public interface DailyDeviceInfoDetailDao {
     List<DailyDailyBaseEquipment>  findByOilCanNo(String oilcanno);
     List<DailyDailyBaseEquipment> findAll();
     DailyDeviceInfoDetail  findByNO(String oilcan);
+    int deleteByOilCanNo(Integer oilcanno);
+
 }

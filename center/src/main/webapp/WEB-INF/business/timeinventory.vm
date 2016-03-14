@@ -44,11 +44,14 @@
 
     var cols=[[
         {field:'OUName',title:'油站名称',width:100},
+        {field:'OilCan',title:'油罐编号',width:100},
         {field:'StoreTime',title:'数据更新时间',width:100,formatter: formatDatebox},
-        {field:'oil0',title:'0#车用柴油（V）',width:100},
-        {field:'oil93',title:'93#汽油（V）',width:100},
-        {field:'oil97',title:'97#汽油（V）',width:100},
-        {field:'oil98',title:'98#汽油（V）',width:100}
+        {field:'StandardL',title:'标准体积(L)',width:100},
+        {field:'HeightTotal',title:'油水总高(mm)',width:100},
+        {field:'OilL',title:'油体积(L)',width:100},
+        {field:'HeightWater',title:'水高(mm)',width:100},
+        {field:'WaterL',title:'水体积(L)',width:100},
+        {field:'Temperature',title:'温度(℃)',width:100}
     ]];
 
     var oucode;
@@ -84,6 +87,6 @@
 
     function initData() {
         inittext();
-        BindDataGridAjax('tt','实时库存','/web/alarm/getTimeInventoryInfo',cols,paras,'true',10,[10,20,30]);
+        BindDataGridAjax('tt','实时库存','/web/business/getTimeInventoryInfo',cols,paras,'true',10,[10,20,30]);
     }
 </script>

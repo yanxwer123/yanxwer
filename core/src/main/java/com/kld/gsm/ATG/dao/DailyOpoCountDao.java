@@ -24,4 +24,6 @@ public interface DailyOpoCountDao {
 
     int updateByShift(Map<String,String> map);
 
+    String findByShift(String shift);
+
 }

@@ -10,6 +10,7 @@ import io.netty.handler.codec.bytes.ByteArrayDecoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,6 +41,7 @@ public class MessageDecoder extends ByteArrayDecoder {
         GasMsg Message = DecoderPackage.getP(msgStr);
         //out.add --- 添加到这个List里面后，netty会主动将这个数据往下传递
         out.add(Message);
+       // log.info(new Date().toLocaleString() + "Decoder[" + ctx + "]");
 
         //TODO 再写个方法遍历  当前链路中所有的对象，是不是还存在完整的包 然后 在添加到list中一并处理
         //TODO 循环的请求  只要有一个完整的包就跳出当前循环  然后再继续
@@ -54,6 +56,7 @@ public class MessageDecoder extends ByteArrayDecoder {
             } else {
                 GasMsg gasMessage = DecoderPackage.getP(str);
                 //  log.info("轮询 出完整的包 set Message：" + gasMessage);
+//                log.info(new Date().toLocaleString() + "Decoder[" + ctx + "]");
                 out.add(gasMessage);
             }
 

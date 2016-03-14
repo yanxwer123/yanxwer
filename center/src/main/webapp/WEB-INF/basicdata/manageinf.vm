@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>$!department.nodename</title>
+    <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
+    <script type="text/javascript" src="easyui/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/bootstrap/easyui.css">
+
+</head>
+<body>
+
+<p align="center" style="background: #eeeeee;font-size: 13px">基础信息管理 </p>
+
+<table>
+
+    <tr>
+        <td data-options="field:'code'"><p><span>油站编码:<input type="text"
+                                                             readonly="readonly"
+                                                             value="$!department.sinopecnodeno"/></span>
+        </p></td>
+##        <td data-options="field:'name'"><p><span>油站名称:<input type="text"
+##                                                             readonly="readonly"
+##                                                             value="$!department.nodename"/></span>
+##        </td>
+        <td data-options="field:'price'"><p><span>油站简称:<input type="text"
+                                                              readonly="readonly"
+                                                              value="$!department.nodetag"/></span>
+        </td>
+        <td data-options="field:'price'"><p><span>片区编码:<input type="text"
+                                                              readonly="readonly"
+                                                              value="$!department.areano"/></span>
+        </td>
+    </tr>
+    <tr>
+        <td data-options="field:'xiangxi'" colspan="4"><p><span>油站地址:<input type="text"
+                                                                            readonly="readonly"
+                                                                            value="$!department.nodeaddrs"
+                                                                            size="81"/></span>
+        </p></td>
+
+    </tr>
+
+</table>
+
+
+<p align="center" style="background: #eeeeee;font-size: 13px">油站资质</p>
+<table>
+
+    <tr>
+        <td data-options="field:'code'"><p align="left"><span>站长姓名:<input type="text"
+                                                                          readonly="readonly"
+                                                                          value="$!department.manager"/></span>
+        </p></td>
+        <td data-options="field:'name'"><p align="left"><span>联系电话:<input type="text"
+                                                                          readonly="readonly"
+                                                                          value="$!department.telphno"/></span>
+        </td>
+    </tr>
+    <tr>
+
+        <td data-options="field:'jiayouzhanbianma'"><p align="left"><span>站长传真:<input type="text"
+                                                                                      readonly="readonly"
+                                                                                      value="$!department.foxno"/></span>
+        </td>
+        <td data-options="field:'diduan'"><p
+                align="left"><span>Email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text"
+                                                                              readonly="readonly"
+                                                                              value="$!department.email"/></span>
+        </td>
+        <td data-options="field:'diduan'"><p align="left"><span>&nbsp;&nbsp;营业时间:<input type="text"
+                                                                                        readonly="readonly"
+                                                                                        value="$!date.format(
+                                                                                            'yyyy-MM-dd HH:mm:ss ',$!department.worktime)"/>
+        </td>
+    </tr>
+
+</table>
+<p align="center" style="background: #eeeeee;font-size: 13px">建筑规划</p>
+
+
+<table>
+
+    <tr>
+        <td data-options="field:'code'"><p align="left"><span>城市编码: <input type="text"
+                                                                           readonly="readonly"
+                                                                           value="$!department.provinceno"/></span>
+        </p></td>
+        <td data-options="field:'name'"><p align="left"><span>税号:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+                type="text"
+                readonly="readonly"
+                value="$!department.taxpayercode"/></span></td>
+        <td data-options="field:'price'"><p align="left"><span>片区名称: <input type="text"
+                                                                            readonly="readonly"
+                                                                            value="$!department.areadesc"/></span>
+        </td>
+        <td data-options="field:'price'"><p align="left"><span>市名称:&nbsp;&nbsp;&nbsp;<input type="text"
+                                                                                            readonly="readonly"
+                                                                                            value="$!department.provincedesc"/></span>
+        </td>
+    </tr>
+
+</table>
+</body>
+</html>

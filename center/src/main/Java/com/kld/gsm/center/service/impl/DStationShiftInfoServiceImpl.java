@@ -34,35 +34,43 @@ public class DStationShiftInfoServiceImpl implements DStationShiftInfoService {
     }
 
     @Override
-    public List<HashMap<String, Object>> getShiftList(HashMap<String,Object> map) {
+    public List<HashMap<String, Object>> getShiftList(String begin, String end, String oucode) {
 
-        List<HashMap<String,Object>> exchangeList=ossDailyStationShiftInfoMapper.selectShiftInfo(map);
+        HashMap hashMap = new HashMap();
+        hashMap.put("begin",begin);
+        hashMap.put("end", end);
+        if (oucode!=null && oucode !="") {
+            hashMap.put("oucode", oucode + "%");
+        }
+        else
+        {
+            hashMap.put("oucode", oucode);
+        }
+        List<HashMap<String,Object>> exchangeList=ossDailyStationShiftInfoMapper.selectShiftInfo(hashMap);
 
         return exchangeList;
     }
 
     @Override
     public List<HashMap<String, Object>> selectPageShiftInfo(Integer page, Integer rows, String begin, String end, String oucode) {
+        HashMap hashMap = new HashMap();
         if (page != null && rows != null) {
             page = page < 1 ? 1 : page;
             int firstRow = (page - 1) * rows;
-            HashMap hashMap = new HashMap();
             hashMap.put("firstRow", firstRow);
             hashMap.put("pageSize", rows);
-            hashMap.put("begin",begin);
-            hashMap.put("end", end);
-            if (oucode!=null && oucode !="") {
-                hashMap.put("oucode", oucode + "%");
-            }
-            else
-            {
-                hashMap.put("oucode", oucode);
-            }
-            List<HashMap<String,Object>> list = ossDailyStationShiftInfoMapper.selectPageShiftInfo(hashMap);
-
-            return list;
         }
-        return null;
+        hashMap.put("begin",begin);
+        hashMap.put("end", end);
+        if (oucode!=null && oucode !="") {
+            hashMap.put("oucode", oucode + "%");
+        }
+        else
+        {
+            hashMap.put("oucode", oucode);
+        }
+        List<HashMap<String,Object>> list = ossDailyStationShiftInfoMapper.selectPageShiftInfo(hashMap);
+        return list;
     }
 
     @Override
@@ -90,10 +98,10 @@ public class DStationShiftInfoServiceImpl implements DStationShiftInfoService {
             {
                 XSSFRow bodyRow = sheet.createRow(j + 1);
                 //List<oss_daily_StationShiftInfo> goods = list.get(j);
-               for (HashMap<String,Object> item:list) {
+               HashMap<String,Object> item=list.get(j);
                    cell = bodyRow.createCell(0);
                    cell.setCellStyle(bodyStyle);
-                   cell.setCellValue(item.get("ouname").toString());
+                   cell.setCellValue(item.get("OUName").toString());
 
                    cell = bodyRow.createCell(1);
                    cell.setCellStyle(bodyStyle);
@@ -105,17 +113,12 @@ public class DStationShiftInfoServiceImpl implements DStationShiftInfoService {
 
                    cell = bodyRow.createCell(3);
                    cell.setCellStyle(bodyStyle);
-                   cell.setCellValue(item.get("SucceedTIme").toString());
+                   cell.setCellValue(item.get("ShiftOperator").toString());
 
                    cell = bodyRow.createCell(4);
                    cell.setCellStyle(bodyStyle);
-                   cell.setCellValue(item.get("ShiftOperator").toString());
-
-                   cell = bodyRow.createCell(5);
-                   cell.setCellStyle(bodyStyle);
                    cell.setCellValue(item.get("ShiftTime").toString());
 
-               }
             }
         }
         try

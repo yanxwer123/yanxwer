@@ -12,5 +12,5 @@ import java.util.List;
  */
 public interface DopotCountService {
     int AddDopotCount(List<oss_daily_opotCount> oss_daily_opotCounts);
-    ResultMsg selectByShift(String shift);
+    ResultMsg selectByShift(String shift,String oucode);
 }

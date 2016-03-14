@@ -135,4 +135,12 @@
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
       and Height=#{height,jdbcType=DOUBLE}
   </update>
+  <select id="getUntranCubageInfos" parameterType="com.kld.gsm.center.domain.oss_sysmanage_cubage" resultType="com.kld.gsm.center.domain.oss_sysmanage_cubageInfo">
+    SELECT <include refid="Base_Column_List" />
+    FROM oss_sysmanage_cubageInfo cubage
+    WHERE cubage.OilCan = #{oilcan,jdbcType=INTEGER}
+    AND NodeNo = #{nodeno,jdbcType=VARCHAR}
+    AND cubage.Version = #{version,jdbcType=VARCHAR}
+  </select>
+
 </mapper>

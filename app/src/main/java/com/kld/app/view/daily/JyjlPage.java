@@ -10,15 +10,12 @@ import com.kld.app.util.DoubleDocument;
 import com.kld.app.util.IntegerDocument;
 import com.kld.app.view.acceptance.ComboboxItem;
 import com.kld.app.view.acceptance.MyTable;
-
 import com.kld.gsm.ATG.domain.DailyTradeAccount;
 import com.kld.gsm.ATG.domain.SysManageOilGunInfo;
 import com.kld.gsm.ATG.domain.SysManageOilType;
 import org.jdesktop.swingx.JXDatePicker;
 
-
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -28,6 +25,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
@@ -411,11 +409,11 @@ public class JyjlPage {
             }else {
                 billArray[i][6] = null;
             }
-            billArray[i][7] = info.getLiter();
+            billArray[i][7] = new DecimalFormat("0").format(info.getLiter());
             billArray[i][8] = info.getPrice();
             billArray[i][9] = dateFormat.format(info.getTakedate());
             billArray[i][10] = alarmDailyLostService.selectOilNo(info.getOilNo());
-            billArray[i][11] = info.getPumpNo();
+            billArray[i][11] = new DecimalFormat("0").format(info.getPumpNo());
         }
     }
 

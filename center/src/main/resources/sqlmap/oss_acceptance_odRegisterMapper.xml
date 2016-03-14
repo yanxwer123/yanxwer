@@ -49,6 +49,12 @@
     where ManualNo = #{manualno,jdbcType=VARCHAR}
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
   </select>
+  <select id="selectById" resultType="com.kld.gsm.center.domain.oss_acceptance_odRegister" parameterType="java.lang.String" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_acceptance_odRegister
+    where ManualNo = #{manualno,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_acceptance_odRegisterKey" >
     delete from oss_acceptance_odRegister
     where (ManualNo = #{manualno,jdbcType=VARCHAR} OR DeliveryNo=#{manualno,jdbcType=VARCHAR})

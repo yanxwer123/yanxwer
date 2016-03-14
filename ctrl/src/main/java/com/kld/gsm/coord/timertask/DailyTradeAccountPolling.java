@@ -11,6 +11,7 @@ import com.kld.gsm.coord.server.handler.ConnectionSession;
 import com.kld.gsm.coord.server.handler.ProtocolProcessor;
 import io.netty.channel.ChannelHandlerContext;
 import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 import org.quartz.Scheduler;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -18,6 +19,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.quartz.CronTriggerBean;
 import org.springframework.stereotype.Component;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -28,6 +31,9 @@ public class DailyTradeAccountPolling extends Thread{
 
     @Override
     public void run() {
+        RuntimeMXBean rt = ManagementFactory.getRuntimeMXBean();
+        String pid = rt.getName();
+        MDC.put("PID", pid);
         while(true) {
             try {
                 sleep(TimeTaskPar.get("tzjysjsjjg")*1000);

@@ -1,6 +1,7 @@
 package com.kld.gsm.center.service;
 
 import com.kld.gsm.center.domain.oss_sysmanage_cubage;
+import com.kld.gsm.center.domain.oss_sysmanage_cubageInfo;
 
 import java.io.OutputStream;
 import java.util.List;
@@ -21,4 +22,6 @@ public interface ISysmanageCubageService {
     List<Map<String,Object>> getCubageInfos(Map<String,Object> map);
     void ExportCubageInfos(List<Map<String, Object>> list,String[] titles,OutputStream outputStream);
     int useCubageSave(Map<String,Object> map);
+    List<oss_sysmanage_cubage> getUntranCubages(Map<String, Object> map);
+    List<oss_sysmanage_cubageInfo> getUntranCubageInfos(oss_sysmanage_cubage cubage);
 }

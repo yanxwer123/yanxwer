@@ -1,0 +1,637 @@
+#set($layout="layout/emptylayout.vm")
+#set($menuTitle="主页")
+<style xmlns="http://www.w3.org/1999/html">
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    .mianbox {
+        overflow: hidden;
+        background: #fed;
+        min-width: 1120px;
+    }
+
+    .row {
+        padding: 10px 10px 0 10px;
+        overflow: hidden;
+    }
+
+    .messagebox01 {
+        display: block;
+        float: left;
+        position: relative;
+        width: 458px;
+        border: 1px solid #dcdddd;
+        border-radius: 2px;
+        background: #fff;
+        margin-right: 10px;
+    }
+
+    .messagebox02 {
+        display: block;
+        float: left;
+        position: relative;
+        width: 305px;
+        border: 1px solid #dcdddd;
+        border-radius: 2px;
+        background: #fff;
+        margin-right: 10px;
+    }
+
+    .messagebox03 {
+        width: 100%;
+        margin-left: -787px;
+        float: right;
+    }
+
+    .messagebox03c {
+        /*margin-left: 707px;*/
+        border: 1px solid #dcdddd;
+        border-radius: 2px;
+        background: #fff;
+    }
+
+    .messagebox04 {
+        width: 100%;
+        margin-left: -470px;
+        float: right;
+    }
+
+    .messagebox04c {
+        /*margin-left: 470px;*/
+        border: 1px solid #dcdddd;
+        border-radius: 2px;
+        background: #fff;
+    }
+
+    .messagebox01 .messagetitle, .messagebox02 .messagetitle, .messagebox03c .messagetitle, .messagebox04c .messagetitle {
+        height: 36px;
+        line-height: 36px;
+        border-bottom: 1px solid #dcdddd;
+        font-size: 14px;
+        padding: 0 10px;
+    }
+
+    .messagebox01 .messagemian, .messagebox02 .messagemian, .messagebox03c .messagemian, .messagebox04c .messagemian {
+        overflow: hidden;
+    }
+
+    .messagemian li {
+        padding: 0 1%;
+        float: left;
+        width:14.5%;
+    }
+
+    .messagemian li.bgcolorred {
+        width: 15.4%;
+        padding-top: 8px;
+    }
+
+
+
+    .no-1-row .messagemian li:not(:first-child) {
+        border-left: 1px solid #dcdddd;
+    }
+
+    .timebox {
+        font-size: 12px;
+        color: #898989;
+        line-height: 36px;
+        display: block;
+        float: right;
+    }
+
+    .imita-btn {
+        width: 90%;
+        height: 36px;
+        border-radius: 2px;
+        display: block;
+        line-height: 36px;
+        text-align: center;
+        margin: 8px auto;
+        color: #fff;
+        font-size: 12px;
+    }
+
+    .imita-btn01 {
+        width: 130px;
+        height: 77px;
+        border-radius: 2px;
+        display: block;
+        line-height: 77px;
+        text-align: center;
+        margin: 8px auto;
+        color: #fff;
+        font-size: 16px;
+    }
+
+    .imita-btn02 {
+        width: 38px;
+        height: 80px;
+        border-radius: 2px;
+        display: block;
+        line-height: 1.25;
+        text-align: center;
+        margin: 6px 6px 6px 7px;
+        color: #fff;
+        font-size: 12px;
+        background: #9fa0a0;
+    }
+
+    .imita-btn02 span {
+        font-size: 28px;
+        font-family: adamina;
+        display: block;
+        margin-top:16px;
+    }
+
+    .all-warm {
+        color: #fff;
+        width: 20%;
+        height: 79px;
+        border-radius: 2px;
+        margin: 7px;
+        text-align: center;
+        overflow: hidden;
+        float: left;
+        padding-top: 8px;
+        font-size: 14px;
+        line-height:1;
+    }
+
+    .all-warm span {
+        font-size: 34px;
+        font-family: adamina;
+        display: block;
+    }
+
+    .imita-btn span {
+        font-size: 16px;
+        font-family: adamina;
+    }
+
+    .imita-p {
+        width: 99%;
+        height: 28px;
+        display: block;
+        line-height: 28px;
+        font-size: 12px;
+        color: #4c4948;
+        text-align: center;
+    }
+
+    .bgcolororange {
+        background: #f0831e;
+    }
+
+    .bgcolorred {
+        background: #d51a1b;
+    }
+
+    .bgcolotrblue {
+        background: #2fa7e5;
+    }
+
+    .bgcolorgreen {
+        background: #14c27e;
+    }
+
+    .selectArea {
+        height: 30px;
+        background-color: #f6f6f6;
+        vertical-align: middle;
+        line-height: 30px;
+        padding-left: 20px;
+        color: #838181;
+        font-size:14px;
+        font-weight:bold;
+    }
+    .selectArea a {
+        text-decoration: none;
+        color: black ;
+        margin:0px 5px;
+    }
+    .selectArea a:hover {
+        padding-left:1px;
+    }
+</style>
+<div id="dhmunu" class="selectArea">
+</div>
+<div class="mianbox" style="min-width:820px; padding-bottom:10px;padding-right:20px;">
+
+    <ul class="row no-1-row">
+        <li class="messagebox01" style="float:none;width:100%;">
+            <p class="messagetitle">库存与销量<span class="timebox" id="qycyxlTime"></span></p>
+            <ul class="messagemian">
+                <li>
+                    <span class="imita-btn bgcolororange"><span id="qyxl"></span>万升</span>
+                    <span class="imita-p">汽油销量</span>
+                </li>
+                <li>
+                    <span class="imita-btn bgcolorred"><span id="cyxl"></span>万升</span>
+                    <span class="imita-p">柴油销量</span>
+                </li>
+                <li>
+                    <span class="imita-btn bgcolororange"><span id="qyck"></span>万升</span>
+                    <span class="imita-p">汽油库存</span>
+                </li>
+                <li>
+                    <span class="imita-btn bgcolorred"><span id="cykc"></span>万升</span>
+                    <span class="imita-p">柴油库存</span>
+                </li>
+                <li>
+                    <span class="imita-btn bgcolororange"><span id="qyjhl"></span>万升</span>
+                    <span class="imita-p">汽油进货量</span>
+                </li>
+                <li>
+                    <span class="imita-btn bgcolorred"><span id="cyjhl"></span>万升</span>
+                    <span class="imita-p">柴油进货量</span>
+                </li>
+            </ul>
+        </li>
+
+    </ul>
+    <ul class="row">
+        <li class="messagebox01" style="width:66%;">
+            <p class="messagetitle">液位仪报警统计<span class="timebox" id="ywytjbjTime"></span></p>
+            <div class="messagemian">
+                <div class="row">
+                    <ul style=" overflow: hidden; float: left; width: 100%;">
+                        <li class="imita-btn02 bgcolorred" >全部报警<span id="allAlarm"></span></li>
+                        <li class="imita-btn02 bgcolorred" >油罐报警<span id="ygbjCount"></span></li>
+                        <li class="imita-btn02 bgcolorred" >设备故障报警<span id="sbyjCount"></span></li>
+                        <li class="imita-btn02 bgcolorred" >损益报警<span id="syyjCount"></span></li>
+                        <li class="imita-btn02 bgcolorred" >脱销报警<span id="txbjCount"></span></li>
+                    </ul>
+                </div>
+                <ul class="row">
+                    <span id="AlarmSort"></span>
+                </ul>
+
+            </div>
+        </li>
+        <li class="messagebox03" style="width:33%;">
+            <div class="messagebox03c">
+                <p class="messagetitle">加油机、液位仪监控<span style="display:none;" class="timebox" id="ywyjk"></span></p>
+                <ul class="messagemian" style="margin:10px 0px; text-align:center;width: 100%; ">
+                    <li class="imita-btn02 bgcolotrblue" style="width: 43%; padding-top: 8px;">提枪次数<span id="tqcs"></span></li>
+                    <li class="imita-btn02 bgcolorgreen" style="width: 43%; padding-top: 8px; ">液位仪使用率<span id="ywyssl"></span></li>
+
+                </ul>
+            </div>
+        </li>
+    </ul>
+    <ul class="row">
+        <li class="messagebox04">
+            <div class="messagebox04c">
+                <p class="messagetitle">分公司概要信息<span class="timebox" id="XxhzMapTime">截止时间:2015-11-16 24:00</span></p>
+                <div  style="width: 100%;height: 392px;">
+                    <table id="tt" fit="true" style="height: 500px;">
+                    </table>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<label id="list"></label>
+
+<script type="text/javascript">
+
+
+    // 对Date的扩展，将 Date 转化为指定格式的String
+    // 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
+    // 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
+    // 例子：
+    // (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
+    // (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18
+    Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
+
+    $(function()
+    {
+        loadSYData();            //损益报警
+        LoadAlarmInventory();   //油罐报警
+        LoadEq();              //设备故障报警
+        LoadJZTime();         //更新时间
+        loadSaleOutData();    //脱销报警
+
+        //库存、销量、进货量、提枪次数、液位仪使用率
+        LoadSummary();
+
+        //绑定分公司列表
+        selectSummarybyParent();
+
+        getMenu();  //导航菜单
+
+
+    })
+    var allTotal=0;
+
+
+    //油管报警
+    function LoadAlarmInventory()
+    {
+        //开始时间
+        var begin = new Date().Format("yyyy-MM-dd");
+        //结束时间
+//        var end = new Date();
+//        var date = end.getDate();
+//        date = date + 1;
+//        end.setDate(date);
+        var oucode="$!pcode";
+
+
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/selectAalrmInventoryCount?begin="+begin+"&end="+begin+"&oucode="+oucode,//这里的地址是选择select后执行后台的url，然后做处理
+            success: function(msg){
+
+                //最后将数据返回到这里，通过js显示在页面
+                $("#ygbjCount").html(msg.total);
+                allTotal+=msg.total;
+                $("#allAlarm").html(allTotal);
+
+            }
+        });
+    }
+    //设备报警
+    function LoadEq()
+    {
+        //开始时间
+        var begin = new Date().Format("yyyy-MM-dd");
+        //结束时间
+        var end = new Date();
+        var date = end.getDate();
+        date = date + 1;
+        end.setDate(date);
+        var oucode="$!pcode";
+
+
+        //绑定设备预警
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/selectEqCout?start="+begin+"&end="+end.Format("yyyy-MM-dd")+"&oucode="+oucode,//这里的地址是选择select后执行后台的url，然后做处理
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+
+                $("#sbyjCount").html(msg.total);
+                allTotal+=msg.total;
+                $("#allAlarm").html(allTotal);
+            }
+        });
+    }
+
+    //损益报警
+    function loadSYData()
+    {
+
+        //开始时间
+        var begin = new Date().Format("yyyy-MM-dd");
+        //结束时间
+        var end = new Date();
+        var date = end.getDate();
+        date = date + 1;
+        end.setDate(date);
+        var  over=end.Format("yyyy-MM-dd");
+        var oucode="$!pcode";
+
+
+        var total=0;
+        //绑定当天损益预警报警次数
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/selectDailyLostCout?begin="+begin+"&end="+over+"&oucode="+oucode,//这里的地址是选择select后执行后台的url，然后做处理
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+                total+=msg.total;
+                $("#syyjCount").html(total);
+                allTotal+=msg.total;
+                $("#allAlarm").html(allTotal);
+            }
+        });
+
+        //班结损益
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/selectShiftLostCout?start="+begin+"&end="+over+"&oucode="+oucode,//这里的地址是选择select后执行后台的url，然后做处理
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+                total+=msg.total;
+                $("#syyjCount").html(total);
+                allTotal+=msg.total;
+                $("#allAlarm").html(allTotal);
+            }
+        });
+
+
+        //进油损益
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/selectOilInContrastCout?begin="+begin+"&end="+over+"&oucode="+oucode,//这里的地址是选择select后执行后台的url，然后做处理
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+                total+=msg.total;
+                $("#syyjCount").html(total);
+                allTotal+=msg.total;
+                $("#allAlarm").html(allTotal);
+            }
+        });
+
+    }
+
+    //脱销报警
+    function loadSaleOutData()
+    {
+        //开始时间
+        var begin = new Date().Format("yyyy-MM-dd");
+        //结束时间
+        var end = new Date();
+        var date = end.getDate();
+        date = date + 1;
+        end.setDate(date);
+        var  over=end.Format("yyyy-MM-dd");
+        var oucode="$!pcode";
+
+
+        //绑定当天损益预警报警次数
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/selectAlarmSaleOutCount?begin="+begin+"&end="+over+"&oucode="+oucode,//这里的地址是选择select后执行后台的url，然后做处理
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+                $("#txbjCount").html(msg.total);
+                allTotal+=msg.total;
+                $("#allAlarm").html(allTotal);
+            }
+        });
+
+    }
+
+    //库存、销量、进货量、提枪次数、液位仪使用率
+    function LoadSummary()
+    {
+        var oucode="$!pcode";
+
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/selectMonitor_Summary?oucode="+oucode,//这里的地址是选择select后执行后台的url，然后做处理
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+                $("#qyxl").html(msg.rows[0].QYSales);  // 销量 汽油
+                $("#cyxl").html(msg.rows[0].CYSales);  // 销量 柴油
+                $("#qyck").html(msg.rows[0].QYStore);  // 库存 汽油
+                $("#cykc").html(msg.rows[0].CYStore);  // 库存 柴油
+                $("#qyjhl").html(msg.rows[0].QYOilin);  // 进货量 汽油
+                $("#cyjhl").html(msg.rows[0].CYOilin);  // 进货量 柴油
+                $("#tqcs").html(msg.rows[0].TJCount);  //提枪次数
+                $("#ywyssl").html(msg.rows[0].YwyRate);  //液位仪使用率
+
+                var s =formatDatebox(msg.rows[0].CreateDate);
+
+                $("#qycyxlTime").html("截止时间:"+s);
+                $("#XxhzMapTime").html("截止时间:"+s);   //汇总信息
+
+
+            }
+        });
+
+
+    }
+
+
+    function formatDatebox(value) {
+        if (value == null || value == '') {
+            return '';
+        }
+        var dt;
+        if (value instanceof Date) {
+            dt = value;
+        } else {
+            dt = new Date(value);
+        }
+        return dt.format("yyyy-MM-dd hh:mm:ss"); //扩展的Date的format方法(上述插件实现)
+    }
+
+
+    function selectSummarybyParent()
+    {
+
+        var Pcode="$!pcode";  //查询选定所有片区
+        var paras={"Pcode":Pcode};
+
+        var cols=[[
+            {field:'ouname',title:'分公司',width:100,align:'center'},
+            {field:'QYSales',title:'汽油销量',width:100,align:'center'},
+            {field:'CYSales',title:'柴油销量',width:100,align:'center'},
+            {field:'QYStore',title:'汽油库存',width:100,align:'center'},
+            {field:'CYStore',title:'柴油库存',width:100,align:'center'},
+            {field:'QYOilin',title:'汽油进货量',width:100,align:'center'},
+            {field:'CYOilin',title:'柴油进货量',width:100,align:'center'},
+            {field:'TJCount',title:'提枪次数',width:100,align:'center'},
+            {field:'YwyRate',title:'液位仪使用率',width:100,align:'center'},
+            {field:'action',title:'详情',width:100,
+                formatter:function(value,row,index)
+                {
+                    var successor;
+                    if(row.oucode!=undefined)
+                    {
+                        var str = '';
+                        //<a href="/web/desktop/shi?pcode=www" target="_self">详情</a>
+                        // str += "<a href='javascript:void(0);'  onclick='RemoteChk("+row.OilCanNo+",\""+encodeURI(row.Status)+"\","+row.RevealRate+",\""+startDate+"\",\""+st+"\",\""+endDate+"\","+row.EndOilHeight+","+row.EndWaterHeight+",\""+et+"\")'>详情</a>";
+                        str +="<a href='/web/desktop/station?pcode="+row.oucode+"' target='_self'>详情</a>";
+                        return str;
+                    }
+
+                },align:'center'
+            }
+
+        ]];
+
+        BindDataGridAjax('tt','','/web/desktop/selectSummarybyParent',cols,paras,'true',10,[10,20,30]);
+
+    }
+
+
+
+
+    //截止日期
+    function LoadJZTime()
+    {
+//        var today=new Date();
+//        var s=today.toLocaleDateString()+" "+today.getHours()+":"+today.getMinutes();
+        var s = new Date().Format("yyyy-MM-dd hh:mm:ss");
+        $("#ywytjbjTime").html("截止时间:"+s);
+        // $("#qycyxlTime").html("截止时间:"+s);
+        $("#ywyjk").html("截止时间:"+s);
+        $("#jhysjzsj").html("截止时间:"+s);
+        // $("#XxhzMapTime").html("截止时间:"+s);   //汇总信息
+
+    }
+
+
+    //构造导航信息
+    function getMenu()
+    {
+        var oucode="$!pcode";
+
+        //绑定设备预警
+        $.ajax({
+            type: "get",
+            url: "/web/desktop/getMenu?oucode="+oucode,
+            success: function(msg){
+                //最后将数据返回到这里，通过js显示在页面
+
+                var strmunu="<a href='/web/desktop/desktop' target='_self'>监控首页</a>";
+                // <a href="/web/desktop/desktop" target="_self">监控首页</a>  > <a href="#" target="_self">分公司</a> > <a href="#" target="_self">片区</a> > 加油站
+                if(msg.data.sheng!=""&&typeof(msg.data.sheng) != "undefined")
+                {
+                    strmunu+="> <a href='/web/desktop/city?pcode="+oucode.substring(0,6)+"' target='_self'>"+msg.data.sheng+"</a>";
+                }
+                if(msg.data.qu!=""&&typeof(msg.data.qu) != "undefined")
+                {
+
+                    if(msg.total==2)
+                    {
+                        strmunu+="> "+msg.data.qu+"";
+                    }
+                    else
+                    {
+                        strmunu+="> <a href='/web/desktop/county?pcode="+oucode.substring(0,9)+"' target='_self'>"+msg.data.qu+"</a>";
+                    }
+
+                }
+                if(msg.data.zhan!=""&&typeof(msg.data.zhan) != "undefined")
+                {
+                    strmunu+="> "+msg.data.zhan+"</a>";
+                }
+
+                $("#dhmunu").html(strmunu);
+
+
+
+            }
+        });
+
+
+    }
+
+
+</script>

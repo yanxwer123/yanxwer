@@ -2,146 +2,136 @@
 #set($menuTitle="进货验收")
 
 <div id="queryResult"  class="easyui-panel" collapsible="true" style=" height: 600px; border-top-color: #761c19;">
-
-    <style>
-        fieldset{border: 3px solid #68AACA;padding: 10px;margin: 20px;}
-        table{border: 1px solid #A0A0A0;margin-bottom:20px}
-        td{border: 1px solid #A0A0A0;;height:25px;width: 200px}
-        td.t-title{background: #F2F2F2;text-align: left;width: 130px}
-        table{width: 100%;}
-    </style>
-    <fieldset>
+#if($deliveryBill)
+    <fieldset style="border: 3px solid #68AACA;padding: 10px;margin: 20px;">
         <legend>计量发货信息(出库单信息)</legend>
-        <table cellpadding="0" cellspacing="0">
+        <table cellpadding="0" cellspacing="0" style="border: 1px solid #A0A0A0;margin-bottom:20px;width: 100%;">
             <tr>
-                <td class="t-title"">出库单号</td>
-                <td>"+DeliveryNo+"</td>
-                <td class="t-title">出库时间</td>
-                <td>"+DeliveryTime+"</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">出库单号</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!deliveryBill.deliveryno</td>
+                <td class="t-title"style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">出库时间</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!date.format('yyyy-MM-dd HH:mm:ss',$!deliveryBill.deliverytime)</td>
             </tr>
             <tr>
-                <td class="t-title">发油油库</td>
-                <td>"+FromDepotName+"</td>
-                <td class="t-title">目的油站</td>
-                <td>"+ToStationName+"</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">发油油库</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!deliveryBill.fromdepotname</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">目的油站</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!deliveryBill.tostationname</td>
             </tr>
             <tr>
-                <td class="t-title"">油品</td>
-                <td>"+OilNo+"</td>
-                <td class="t-title">交运时间</td>
-                <td>"+ShipmentTime+"</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px"">油品</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!deliveryBill.oilno</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">交运时间</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!date.format('yyyy-MM-dd HH:mm:ss',$!deliveryBill.shipmenttime)</td>
             </tr>
             <tr>
-                <td class="t-title">原发升数(L)</td>
-                <td>"+PlanL+"</td>
-                <td class="t-title">原发密度()</td>
-                <td>"+Density+"</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">原发升数(L)</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!deliveryBill.planl</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">原发密度()</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!deliveryBill.density</td>
             </tr>
             <tr>
-                <td class="t-title"">原发数量()</td>
-                <td>"+PlanTon+"</td>
-                <td class="t-title">原发温度()</td>
-                <td>"+DeliveryTemp+"</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px"">原发数量()</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!deliveryBill.planton</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">原发温度()</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!deliveryBill.deliverytemp</td>
             </tr>
             <tr>
-                <td class="t-title">出库铅封号</td>
-                <td>"+OutSealNo+"</td>
-                <td class="t-title">车牌号码</td>
-                <td>"+CarNo+"</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">出库铅封号</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!deliveryBill.outsealno</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">车牌号码</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!deliveryBill.carno</td>
             </tr>
         </table>
     </fieldset>
-    <fieldset>
+    #if($!odRegister)
+    <fieldset style="border: 3px solid #68AACA;padding: 10px;margin: 20px;">
         <legend>油站进货验收信息</legend>
-        <table cellpadding="0" cellspacing="0">
+        <table cellpadding="0" cellspacing="0" style="border: 1px solid #A0A0A0;margin-bottom:20px;width: 100%;">
             <tr>
-                <td class="t-title">出库单</td>
-                <td>"+ManualNo+"</td>
-                <td class="t-title">油站</td>
-                <td>"++"</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">出库单</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!deliveryBill.deliveryno</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">油站</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!deliveryBill.tostationname</td>
             </tr>
             <tr>
-                <td class="t-title">班 次</td>
-                <td>"+Shift+"</td>
-                <td class="t-title">验收日期</td>
-                <td>"+BeginTime+"</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">班 次</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!odRegister.shift</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">验收日期</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!date.format('yyyy-MM-dd',$!odRegister.begintime)</td>
             </tr>
             <tr>
-                <td class="t-title">开始时间</td>
-                <td>"+BeginTime+"</td>
-                <td class="t-title">结束时间</td>
-                <td>"+EndTime+"</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">开始时间</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!date.format('yyyy-MM-dd HH:mm:ss',$!odRegister.begintime)</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">结束时间</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!date.format('yyyy-MM-dd HH:mm:ss',$!odRegister.endtime)</td>
             </tr>
             <tr>
-                <td class="t-title">油罐实收升数(L)</td>
-                <td>"+RealGetLV20+"</td>
-                <td class="t-title">罐车验收空高()</td>
-                <td>"+HeightEmpey+"</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">油罐实收升数(L)</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!odRegister.realgetlv20</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">罐车验收空高()</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!odRegister.heightempey</td>
             </tr>
             <tr>
-                <td class="t-title">罐车实收升数</td>
-                <td>"+RealReceiveL+"</td>
-                <td class="t-title">罐车验收水高()</td>
-                <td>"+HeightWater+"</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">罐车实收升数</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!odRegister.realreceivel</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">罐车验收水高()</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!odRegister.heightwater</td>
             </tr>
             <tr>
-                <td class="t-title">罐车验收油水总高()</td>
-                <td>"+HeightTotal+"</td>
-                <td class="t-title">罐车到站时间</td>
-                <td>"+InStationTime+"td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">罐车验收油水总高()</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!odRegister.heighttotal</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">罐车到站时间</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!date.format('yyyy-MM-dd HH:mm:ss',$!odRegister.instationtime)</td>
             </tr>
             <tr>
-                <td class="t-title">罐车验收计量温度()</td>
-                <td>"+CanTruckTemp+"</td>
-                <td class="t-title">油站计量员</td>
-                <td>"+CalculateOperator+"</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">罐车验收计量温度()</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!odRegister.cantrucktemp</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">油站计量员</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!odRegister.calculateoperator</td>
             </tr>
             <tr>
-                <td class="t-title">罐车实收使用容积表</td>
-                <td>"+CubageTable+"</td>
-                <td class="t-title">油站铅封员</td>
-                <td>"+PlumbunBankOperator+"</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">罐车实收使用容积表</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!odRegister.cubagetable</td>
+                <td class="t-title" style="border: 1px solid #A0A0A0;background: #F2F2F2;text-align: left;width: 130px">油站铅封员</td>
+                <td style="border: 1px solid #A0A0A0;;height:25px;width: 200px">$!odRegister.plumbunbankoperator</td>
             </tr>
         </table>
     </fieldset>
-    <div id="result">
-        <table class="easyui-datagrid" id="tt">
-        </table>
-<script>
+#end
+#end
+
+<div id="result" class="easyui-panel">
+    <table id="tt" class="easyui-datagrid">
+    </table>
+</div>
+</div>
+<script  type="text/javascript">
     var cols=[[
-        {field:'ouname',title:'罐号',width:50,align:'center'
-        },
-        {field:'oilname',title:'计量前体积',width:100,align:'center'
-        },
-        {field:'oilname',title:'计量后体积',width:100,align:'center'
-        },
-        {field:'oilname',title:'计量前温度',width:100,align:'center'
-        },
-        {field:'oilname',title:'计量后温度',width:100,align:'center'
-        },
-        {field:'oilname',title:'实收升数',width:100,align:'center'
-        }
+        {field:'OilCan',title:'罐号',width:50,align:'center'},
+        {field:'BeginV20L',title:'计量前体积',width:50,align:'center'},
+        {field:'EndV20L',title:'计量后体积',width:50,align:'center'},
+        {field:'BeginTemperature',title:'计量前温度',width:50,align:'center'},
+        {field:'EndTemperature',title:'计量后温度',width:50,align:'center'},
+        {field:'realgetl',title:'实收升数',width:50,align:'center', formatter:function(value,row,index){
+            return row.EndV20L-row.BeginV20L;
+        } }
     ]];
+    var ManualNo;
+    var paras;
+
     $(function(){
+        var heigth=$(window).height()-400;
+        $("#result").height(heigth);
         initData();
     });
     function inittext(){
-        var ManualNo="";
+
+        ManualNo="$!deliveryBill.deliveryno";
+        paras={"deliveryno":ManualNo}
     }
     function initData() {
         inittext();
-        BindDataGridAjax('tt','卸油登记明细 ','/web/alarm/getDailyLostList',cols,ManualNo,'true',10,[10,20,30]);
+        BindDataGridAjax('tt','卸油登记明细 ','/web/acceptance/selectList',cols,paras,'true',10,[10,20,30]);
     }
-
-
 </script>
-
-
-
-
-
-    </div>
-    <div  class="easyui-panel" collapsible="true" style=" height: 30px;">
-    </div>
-
-</div>

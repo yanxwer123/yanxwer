@@ -122,4 +122,22 @@ public class SysManageDict {
     public void setVersion(Integer version) {
         this.version = version;
     }
+
+    @Override
+    public String toString() {
+        return "SysManageDict{" +
+                "bsnsid=" + bsnsid +
+                ", dictid=" + dictid +
+                ", parentid=" + parentid +
+                ", sort=" + sort +
+                ", name='" + name + '\'' +
+                ", code='" + code + '\'' +
+                ", isdel=" + isdel +
+                ", value='" + value + '\'' +
+                ", createtime=" + createtime +
+                ", creator='" + creator + '\'' +
+                ", isappcache=" + isappcache +
+                ", version=" + version +
+                '}';
+    }
 }

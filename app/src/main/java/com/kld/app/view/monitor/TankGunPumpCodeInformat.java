@@ -8,6 +8,7 @@ import com.kld.app.springcontext.Context;
 import com.kld.app.util.Common;
 import com.kld.app.util.Constant;
 import com.kld.app.view.main.Main;
+import com.kld.app.view.main.TablePanel;
 import com.kld.gsm.ATG.domain.MonitorTimeInventory;
 import com.kld.gsm.ATG.domain.SysManageCanInfo;
 import com.kld.gsm.ATG.domain.SysManageOilGunInfo;
@@ -37,7 +38,6 @@ import java.util.Map;
  */
 public class TankGunPumpCodeInformat implements Watcher {
     private static Logger logger = org.slf4j.LoggerFactory.getLogger(TankGunPumpCodeInformat.class);
-
 
     private JPanel centerPanel = null;
 
@@ -95,9 +95,13 @@ public class TankGunPumpCodeInformat implements Watcher {
 
 
     //中部需要滚动条
-    public void setPanel(JPanel centerPanel, final boolean bool) {
+   // public void setPanel(JPanel centerPanel, final boolean bool) {
+    public void setPanel(JPanel centerPanel ) {
         mainPanel.removeAll();
         mainPanel.repaint();
+
+        Main.thread= new MyThread();
+        Main.thread.start();
         oilCaninfo = new LinkedHashMap<String, JTable>();
         gunMap = new LinkedHashMap<String, Map<String, GasGunJpanel>>();
         //   Iterator<Map.Entry<String, JTable>> iterator = oilCaninfo.entrySet().iterator();
@@ -186,12 +190,12 @@ public class TankGunPumpCodeInformat implements Watcher {
                     Object[][] playerInfo = {
                             {"油罐编号", CaninfoList.get(i).getOilcan()},
                             {"油品", typeName},
-                            {"净油体积(L)", "0.0"},
-                            {"标准体积(L)", "0.0"},
-                            {"空体积(L)", "0.0"},
+                            {"净油体积(L)", "0"},
+                            {"标准体积(L)", "0"},
+                            {"空体积(L)", "0"},
                             {"油水总高(mm)", "0.0"},
                             {"水高(mm)", "0.0"},
-                            {"水体积(L)", "0.0"},
+                            {"水体积(L)", "0"},
                             {"平均温度(℃)", "0.0"}
                     };
                     String[] Names = {"", ""};
@@ -280,16 +284,18 @@ public class TankGunPumpCodeInformat implements Watcher {
             // ////System.out.println("-------------------------------------------");
             //endregion
             //  更新油枪信息 油罐信息
-            new Thread(new Runnable() {
+            //thread.start();
+
+            /*new Thread(new Runnable() {
                 GasMsg gasMsg;
 
                 @Override
                 public void run() {
                     int i = 0;
-                    flag = bool;
+                   // flag = bool;
                     //  //System.out.println("传进来的是：" + bool);
                     boolean gasbool = true;
-                    while (flag) {
+                    while (true) {
                         try {
 
                             gasMsg = ResultUtils.getInstance().sendSUCCESS(Main.sign, new ArrayList(), Constants.PID_Code.A15_10002.toString());
@@ -312,7 +318,7 @@ public class TankGunPumpCodeInformat implements Watcher {
                         }
                     }
                 }
-            }).start();
+            }).start();*/
         }
 
 //endregion
@@ -348,6 +354,9 @@ public class TankGunPumpCodeInformat implements Watcher {
 //endregion
     }
 
+    public void stopMyThread(){
+        Main.thread.stop();
+    }
 
     //回调
     @Override
@@ -374,12 +383,13 @@ public class TankGunPumpCodeInformat implements Watcher {
                         if (jTable != null) {
                             TableModel tableModel = jTable.getModel();
                             DecimalFormat decimalFormat = new DecimalFormat("######0.00");
-                            tableModel.setValueAt(decimalFormat.format(((Map) (resultMsg.getData().get(i))).get("fOilCubage")), 2, 1);
-                            tableModel.setValueAt(decimalFormat.format(((Map) (resultMsg.getData().get(i))).get("fOilStandCubage")), 3, 1);
-                            tableModel.setValueAt(decimalFormat.format(((Map) (resultMsg.getData().get(i))).get("fEmptyCubage")), 4, 1);
+                            DecimalFormat decimalFormat1 = new DecimalFormat("0");
+                            tableModel.setValueAt(decimalFormat1.format(((Map) (resultMsg.getData().get(i))).get("fOilCubage")), 2, 1);
+                            tableModel.setValueAt(decimalFormat1.format(((Map) (resultMsg.getData().get(i))).get("fOilStandCubage")), 3, 1);
+                            tableModel.setValueAt(decimalFormat1.format(((Map) (resultMsg.getData().get(i))).get("fEmptyCubage")), 4, 1);
                             tableModel.setValueAt(decimalFormat.format(((Map) (resultMsg.getData().get(i))).get("fTotalHeight")), 5, 1);
                             tableModel.setValueAt(decimalFormat.format(((Map) (resultMsg.getData().get(i))).get("fWaterHeight")), 6, 1);
-                            tableModel.setValueAt(decimalFormat.format(((Map) (resultMsg.getData().get(i))).get("fWaterBulk")), 7, 1);
+                            tableModel.setValueAt(decimalFormat1.format(((Map) (resultMsg.getData().get(i))).get("fWaterBulk")), 7, 1);
                             tableModel.setValueAt(decimalFormat.format(((Map) (resultMsg.getData().get(i))).get("fOilTemp")), 8, 1);
                             //System.out.println("water" + ((Map) (resultMsg.getData().get(i))).get("fWaterBulk").toString());
                             //System.out.println("oil" + ((Map) (resultMsg.getData().get(i))).get("fOilCubage").toString());
@@ -461,35 +471,40 @@ public class TankGunPumpCodeInformat implements Watcher {
                             jPanelMap.get(oilgun).hold1.setIcon(Common.createImageIcon(this.getClass(), "gas-gun.png"));
 
                         }else {
-                            jPanelMap.get(oilgun).hold1.setIcon(Common.createImageIcon(this.getClass(), "green_8.png"));
-                            Map map=(Map)resultMsg.getData().get(i);
-                            DecimalFormat decimalFormat = new DecimalFormat("######0.00");
+                            if(jPanelMap!=null){
+                                 jPanelMap.get(oilgun).hold1.setIcon(Common.createImageIcon(this.getClass(), "green_8.png"));
 
-                            if (map!=null&&map.get("amount") != null&&map.get("qty") != null&&map.get("Price") != null) {
-                                String amount = ((Map) (resultMsg.getData().get(i))).get("amount") == null ? "0.0" : decimalFormat.format(((Map) (resultMsg.getData().get(i))).get("amount")).toString();//元
-                                String qty = ((Map) (resultMsg.getData().get(i))).get("qty") == null ? "0.0" : decimalFormat.format(((Map) (resultMsg.getData().get(i))).get("qty")).toString();//升
-                                String Price = ((Map) (resultMsg.getData().get(i))).get("Price") == null ? "0.0" : decimalFormat.format(((Map) (resultMsg.getData().get(i))).get("Price")).toString();//元/升
+                                Map map = (Map) resultMsg.getData().get(i);
+                                DecimalFormat decimalFormat = new DecimalFormat("######0.00");
 
-                                logger.info("qty:"+qty);
-                                jPanelMap.get(oilgun).Label3.setText(qty);
-                                jPanelMap.get(oilgun).Label5.setText(amount);
-                                jPanelMap.get(oilgun).Label7.setText(Price);
+                                if (map != null && map.get("amount") != null && map.get("qty") != null && map.get("Price") != null) {
+                                    String amount = ((Map) (resultMsg.getData().get(i))).get("amount") == null ? "0.0" : decimalFormat.format(((Map) (resultMsg.getData().get(i))).get("amount")).toString();//元
+                                    String qty = ((Map) (resultMsg.getData().get(i))).get("qty") == null ? "0.0" : decimalFormat.format(((Map) (resultMsg.getData().get(i))).get("qty")).toString();//升
+                                    String Price = ((Map) (resultMsg.getData().get(i))).get("Price") == null ? "0.0" : decimalFormat.format(((Map) (resultMsg.getData().get(i))).get("Price")).toString();//元/升
+
+                                    logger.info("qty:" + qty);
+                                    jPanelMap.get(oilgun).Label3.setText(qty);
+                                    jPanelMap.get(oilgun).Label5.setText(amount);
+                                    jPanelMap.get(oilgun).Label7.setText(Price);
+
+                                }
                             }
-                            //String pumpReadout = ((Map) (resultMsg.getData().get(i))).get("PumpReadout").toString();//泵码
-                            //   doubPumpReadout = Double.parseDouble(pumpReadout);
-                            //java.text.DecimalFormat df = new java.text.DecimalFormat("#.##");
-                            //  DecimalFormat decimalFormat = new DecimalFormat("######0.00");
-                            //jPanelMap.get(oilgun).Label3.setText(qty);
-                            //jPanelMap.get(oilgun).Label5.setText(amount);
-                            //jPanelMap.get(oilgun).Label7.setText(Price);
+                                //String pumpReadout = ((Map) (resultMsg.getData().get(i))).get("PumpReadout").toString();//泵码
+                                //   doubPumpReadout = Double.parseDouble(pumpReadout);
+                                //java.text.DecimalFormat df = new java.text.DecimalFormat("#.##");
+                                //  DecimalFormat decimalFormat = new DecimalFormat("######0.00");
+                                //jPanelMap.get(oilgun).Label3.setText(qty);
+                                //jPanelMap.get(oilgun).Label5.setText(amount);
+                                //jPanelMap.get(oilgun).Label7.setText(Price);
 
 
-                            //System.out.println("[" + oilgun + "号油枪<挂枪>]" + "amout[" + amount + "]");
-                            //System.out.println("[" + oilgun + "号油枪<挂枪>]" + "qty[" + qty + "]");
-                            //System.out.println("[" + oilgun + "号油枪<挂枪>]" + "Price[" + Price + "]");
-                            //  jPanelMap.get(gunNum).Label2.setText("泵码： " + decimalFormat.format(doubPumpReadout));
+                                //System.out.println("[" + oilgun + "号油枪<挂枪>]" + "amout[" + amount + "]");
+                                //System.out.println("[" + oilgun + "号油枪<挂枪>]" + "qty[" + qty + "]");
+                                //System.out.println("[" + oilgun + "号油枪<挂枪>]" + "Price[" + Price + "]");
+                                //  jPanelMap.get(gunNum).Label2.setText("泵码： " + decimalFormat.format(doubPumpReadout));
 
-                        }
+                            }
+
                         //System.out.println("结束一次循环"+j);
                         // break;
                     }
@@ -499,13 +514,6 @@ public class TankGunPumpCodeInformat implements Watcher {
 //endregion
     }
 
-    @Test
-    public void test() {
-        String str = "11.111";
-        double douStr = 1.111;
-        DecimalFormat decimalFormat = new DecimalFormat("######0.00");
-        ////System.out.println("douStr:" + decimalFormat.format(douStr));
-    }
 
     //region 判断油罐所属的油枪信息表
     public List<SysManageOilGunInfo> getOilGunByOilCan(String oilcan, List<SysManageOilGunInfo> oilGunList) {
@@ -649,5 +657,40 @@ class JpanelElement {
                 ", oilJpanel=" + oilJpanel +
                 ", airJpanel=" + airJpanel +
                 '}';
+    }
+
+}
+class  MyThread extends Thread{
+
+    GasMsg gasMsg;
+
+    @Override
+    public void run() {
+        int i = 0;
+
+        //  //System.out.println("传进来的是：" + bool);
+        boolean gasbool = true;
+        while (true) {
+            try {
+
+                gasMsg = ResultUtils.getInstance().sendSUCCESS(Main.sign, new ArrayList(), Constants.PID_Code.A15_10002.toString());
+                // System.out.println("request[02]:" + gasMsg);
+                //System.out.println("request[02]" );
+                Main.CC.writeAndFlush(gasMsg);
+                i++;
+                //油罐
+                if (i == 10 || gasbool) {
+                    gasMsg = ResultUtils.getInstance().sendSUCCESS(Main.sign, new ArrayList(), Constants.PID_Code.A15_10004.toString());
+                    //System.out.println("request[04]:" + gasMsg);
+
+                    Main.CC.writeAndFlush(gasMsg);
+                    i = 0;
+                    gasbool = false;
+                }
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

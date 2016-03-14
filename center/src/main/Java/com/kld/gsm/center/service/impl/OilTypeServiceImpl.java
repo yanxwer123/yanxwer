@@ -22,4 +22,9 @@ public class OilTypeServiceImpl  implements OilTypeService {
     public List<HashMap<String,String>> selectOilType() {
         return oss_sysmanage_oilTypeMapper.selectOilType();
     }
+
+    @Override
+    public String selectByoilNo(HashMap map) {
+        return oss_sysmanage_oilTypeMapper.selectByoilNo(map);
+    }
 }

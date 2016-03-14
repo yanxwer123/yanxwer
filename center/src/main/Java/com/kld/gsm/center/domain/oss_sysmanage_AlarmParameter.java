@@ -5,39 +5,39 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 
 public class oss_sysmanage_AlarmParameter extends oss_sysmanage_AlarmParameterKey {
-    private Double lowprealarm;
+    private Double lowprealarm;// 低液位预警
 
-    private Double lowalarm;
+    private Double lowalarm;//低液位报警
 
-    private Double highprealarm;
+    private Double highprealarm;//高液位预警
 
-    private Double highalarm;
+    private Double highalarm;//高液位报警
 
-    private Double wateralarm;
+    private Double wateralarm;//水杂报警
 
-    private Double hightempalarm;
+    private Double hightempalarm;//高温报警
 
-    private Double lowtempalarm;
+    private Double lowtempalarm;//低温报警
 
-    private Date lastoptime;
+    private Date lastoptime;//上次设置时间
 
-    private Date optime;
+    private Date optime;//操作时间
 
-    private String transtatus;
+    private String transtatus;// 传输状态
 
-    private String oucode;
+    private String oucode;//
 
     //高水位报警 不与数据库交互
-    private Double waterhightalarm;
+    private Double waterhightalarm;//
 
     //盗油报警 不与数据库交互
-    private Double stealoilalarm;
+    private Double stealoilalarm;//
 
     //渗油报警 不与数据库交互
-    private Double leakoilalarm;
+    private Double leakoilalarm;//
 
     //漏油报警 不与数据库交互
-    private Double leakageoilalarm;
+    private Double leakageoilalarm;//
 
 
     public Double getWaterhightalarm() {
@@ -162,5 +162,26 @@ public class oss_sysmanage_AlarmParameter extends oss_sysmanage_AlarmParameterKe
 
     public void setOucode(String oucode) {
         this.oucode = oucode == null ? null : oucode.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "oss_sysmanage_AlarmParameter{" +
+                "lowprealarm=" + lowprealarm +
+                ", lowalarm=" + lowalarm +
+                ", highprealarm=" + highprealarm +
+                ", highalarm=" + highalarm +
+                ", wateralarm=" + wateralarm +
+                ", hightempalarm=" + hightempalarm +
+                ", lowtempalarm=" + lowtempalarm +
+                ", lastoptime=" + lastoptime +
+                ", optime=" + optime +
+                ", transtatus='" + transtatus + '\'' +
+                ", oucode='" + oucode + '\'' +
+                ", waterhightalarm=" + waterhightalarm +
+                ", stealoilalarm=" + stealoilalarm +
+                ", leakoilalarm=" + leakoilalarm +
+                ", leakageoilalarm=" + leakageoilalarm +
+                '}';
     }
 }

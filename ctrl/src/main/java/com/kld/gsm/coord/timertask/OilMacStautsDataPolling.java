@@ -12,9 +12,12 @@ import com.kld.gsm.coord.servcie.IOilMacStautsDataService;
 import net.sf.ehcache.Element;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.util.*;
 
 /**
@@ -37,6 +40,9 @@ public class OilMacStautsDataPolling extends Thread {
 
     @Override
     public void run() {
+        RuntimeMXBean rt = ManagementFactory.getRuntimeMXBean();
+        String pid = rt.getName();
+        MDC.put("PID", pid);
         while(true) {
             try {
                 logger.error("枪出罐出进入休眠--");
@@ -66,7 +72,7 @@ public class OilMacStautsDataPolling extends Thread {
                     logger.info("枪出罐出（2）初始化计数器:" + oilCanCountMap.size());
                 }
                 //查询轮询次数，挂枪间隔时间设置
-                SysManageDictDao sysManageDictDao = Context.getInstance().getBean(SysManageDictDao.class);
+                //SysManageDictDao sysManageDictDao = Context.getInstance().getBean(SysManageDictDao.class);
                 maxCount = TimeTaskPar.get("dtywycsjjg");//Integer.parseInt(sysManageDictDao.selectByCode("qcgcdblxcs").getValue());
                 logger.info("枪出罐出（3）定时器取值:"+maxCount);
 

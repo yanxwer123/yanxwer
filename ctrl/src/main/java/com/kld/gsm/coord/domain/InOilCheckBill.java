@@ -425,4 +425,56 @@ public class InOilCheckBill {
     public void setDayflag(String dayflag) {
         this.dayflag = dayflag;
     }
+
+
+    public String toString2() {
+        return "InOilCheckBill{" +"\r\n"+
+                "vouchno=" + vouchno +"\r\n"+
+                ", inoilcompno='" + inoilcompno + '\'' +"\r\n"+
+                ", oilno='" + oilno + '\'' +"\r\n"+
+                ", teamvouchno='" + teamvouchno + '\'' +"\r\n"+
+                ", goodsbillno='" + goodsbillno + '\'' +"\r\n"+
+                ", origamount='" + origamount + '\'' +"\r\n"+
+                ", origvidedens='" + origvidedens + '\'' +"\r\n"+
+                ", origtemper='" + origtemper + '\'' +"\r\n"+
+                ", origcnttemper='" + origcnttemper + '\'' +"\r\n"+
+                ", origstandens='" + origstandens + '\'' +"\r\n"+
+                ", origvolucorr='" + origvolucorr + '\'' +"\r\n"+
+                ", origstdliter='" + origstdliter + '\'' +"\r\n"+
+                ", origairhigh='" + origairhigh + '\'' +"\r\n"+
+                ", origoiwahigh='" + origoiwahigh + '\'' +"\r\n"+
+                ", origwatehigh='" + origwatehigh + '\'' +"\r\n"+
+                ", origlitramout='" + origlitramout + '\'' +"\r\n"+
+                ", pickupplace='" + pickupplace + '\'' +"\r\n"+
+                ", checamount='" + checamount + '\'' +"\r\n"+
+                ", checvidedens='" + checvidedens + '\'' +"\r\n"+
+                ", chectemper='" + chectemper + '\'' +"\r\n"+
+                ", checcnttemper='" + checcnttemper + '\'' +"\r\n"+
+                ", checstandens='" + checstandens + '\'' +"\r\n"+
+                ", checvolucorr='" + checvolucorr + '\'' +"\r\n"+
+                ", checoiwahigh='" + checoiwahigh + '\'' +"\r\n"+
+                ", checairhigh='" + checairhigh + '\'' +"\r\n"+
+                ", checwatehigh='" + checwatehigh + '\'' +"\r\n"+
+                ", checlitramount='" + checlitramount + '\'' +"\r\n"+
+                ", checstdliter='" + checstdliter + '\'' +"\r\n"+
+                ", deinweight='" + deinweight + '\'' +"\r\n"+
+                ", deinvolu='" + deinvolu + '\'' +"\r\n"+
+                ", deinanalyse='" + deinanalyse + '\'' +"\r\n"+
+                ", shipdept='" + shipdept + '\'' +"\r\n"+
+                ", chiptrucno='" + chiptrucno + '\'' +"\r\n"+
+                ", checothers='" + checothers + '\'' +"\r\n"+
+                ", vittaperson='" + vittaperson + '\'' +"\r\n"+
+                ", driver='" + driver + '\'' +"\r\n"+
+                ", accountdate='" + accountdate + '\'' +"\r\n"+
+                ", arrivetime='" + arrivetime + '\'' +"\r\n"+
+                ", acceptflag='" + acceptflag + '\'' +"\r\n"+
+                ", refusersn='" + refusersn + '\'' +"\r\n"+
+                ", operatorcode='" + operatorcode + '\'' +"\r\n"+
+                ", chkoprno='" + chkoprno + '\'' +"\r\n"+
+                ", billstatus='" + billstatus + '\'' +"\r\n"+
+                ", transflag='" + transflag + '\'' +"\r\n"+
+                ", oilcanno='" + oilcanno + '\'' +"\r\n"+
+                ", dayflag='" + dayflag + '\'' +"\r\n"+
+                '}';
+    }
 }

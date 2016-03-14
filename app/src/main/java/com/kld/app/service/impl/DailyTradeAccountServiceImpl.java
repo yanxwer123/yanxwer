@@ -25,94 +25,94 @@ public class DailyTradeAccountServiceImpl implements DailyTradeAccountService {
     @Resource
     private SysManageOilGunInfoDao sysmanageOilGunInfoDao;
 
-	@Override
-	public int deleteByPrimaryKey(DailyTradeAccountKey key) {
-		// TODO Auto-generated method stub
-		return dailyTradeAccountDao.deleteByPrimaryKey(key);
-	}
+    @Override
+    public int deleteByPrimaryKey(DailyTradeAccountKey key) {
+        // TODO Auto-generated method stub
+        return dailyTradeAccountDao.deleteByPrimaryKey(key);
+    }
 
-	@Override
-	public int insert(DailyTradeAccount record) {
-		// TODO Auto-generated method stub
-		return dailyTradeAccountDao.insert(record);
-	}
+    @Override
+    public int insert(DailyTradeAccount record) {
+        // TODO Auto-generated method stub
+        return dailyTradeAccountDao.insert(record);
+    }
 
-	@Override
-	public int insertSelective(DailyTradeAccount record) {
-		// TODO Auto-generated method stub
-		return dailyTradeAccountDao.insertSelective(record);
-	}
+    @Override
+    public int insertSelective(DailyTradeAccount record) {
+        // TODO Auto-generated method stub
+        return dailyTradeAccountDao.insertSelective(record);
+    }
 
-	@Override
-	public DailyTradeAccount selectByPrimaryKey(DailyTradeAccountKey key) {
-		// TODO Auto-generated method stub
-		return dailyTradeAccountDao.selectByPrimaryKey(key);
-	}
+    @Override
+    public DailyTradeAccount selectByPrimaryKey(DailyTradeAccountKey key) {
+        // TODO Auto-generated method stub
+        return dailyTradeAccountDao.selectByPrimaryKey(key);
+    }
 
-	@Override
-	public int updateByPrimaryKeySelective(DailyTradeAccount record) {
-		// TODO Auto-generated method stub
-		return dailyTradeAccountDao.updateByPrimaryKeySelective(record);
-	}
+    @Override
+    public int updateByPrimaryKeySelective(DailyTradeAccount record) {
+        // TODO Auto-generated method stub
+        return dailyTradeAccountDao.updateByPrimaryKeySelective(record);
+    }
 
-	@Override
-	public int updateByPrimaryKey(DailyTradeAccount record) {
-		// TODO Auto-generated method stub
-		return dailyTradeAccountDao.updateByPrimaryKey(record);
-	}
+    @Override
+    public int updateByPrimaryKey(DailyTradeAccount record) {
+        // TODO Auto-generated method stub
+        return dailyTradeAccountDao.updateByPrimaryKey(record);
+    }
 
 	/*@Override
-	public int updateByKey(List list) {
+    public int updateByKey(List list) {
 		// TODO Auto-generated method stub
 		dailyTradeAccountDao.updateByKey(String Vo);
 		return 0;
 	}*/
 
-	@Override
-	public List<DailyTradeAccount> findNotRecieved() {
-		// TODO Auto-generated method stub
-		return dailyTradeAccountDao.findNotRecieved();
-	}
+    @Override
+    public List<DailyTradeAccount> findNotRecieved() {
+        // TODO Auto-generated method stub
+        return dailyTradeAccountDao.findNotRecieved();
+    }
 
-	@Override
-	public int updateIsRecieved(DailyTradeAccount record) {
-		// TODO Auto-generated method stub
-		return dailyTradeAccountDao.updateIsRecieved(record);
-	}
-    
-	public static void main(String[] args) {
-		DailyTradeAccountService iquidInstrumentService =
-				(DailyTradeAccountService) (Context.getInstance().getBean("dailyTradeAccountService"));
-		DailyTradeAccount account = new DailyTradeAccount();
-		account.setShift("20141114");
-		account.setMacno(20141114);
-		account.setTtc(1234);
-		account.setTakedate(new Date());
-		account.setOilgun("12");
-		iquidInstrumentService.insert(account);
-		try {
-			List<DailyTradeAccount> xx = iquidInstrumentService.findNotRecieved();
+    @Override
+    public int updateIsRecieved(DailyTradeAccount record) {
+        // TODO Auto-generated method stub
+        return dailyTradeAccountDao.updateIsRecieved(record);
+    }
+
+    public static void main(String[] args) {
+        DailyTradeAccountService iquidInstrumentService =
+                (DailyTradeAccountService) (Context.getInstance().getBean("dailyTradeAccountService"));
+        DailyTradeAccount account = new DailyTradeAccount();
+        account.setShift("20141114");
+        account.setMacno(20141114);
+        account.setTtc(1234);
+        account.setTakedate(new Date());
+        account.setOilgun("12");
+        iquidInstrumentService.insert(account);
+        try {
+            List<DailyTradeAccount> xx = iquidInstrumentService.findNotRecieved();
 //			////System.out.println(xx.get(0).getShift());
-			////System.out.println(xx.size());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+            ////System.out.println(xx.size());
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 
-	@Override
-	public List<DailyTradeAccount> query(HashMap map) {
-		// TODO Auto-generated method stub
-		return dailyTradeAccountDao.query(map);
-	}
+    @Override
+    public List<DailyTradeAccount> query(HashMap map) {
+        // TODO Auto-generated method stub
+        return dailyTradeAccountDao.query(map);
+    }
 
-	@Override
-	public List<SysManageOilGunInfo> selectAllOilGun() {
-		// TODO Auto-generated method stub
-		return sysmanageOilGunInfoDao.selectAllOilGun();
-	}
-	
-	    @SuppressWarnings({"unchecked" })
+    @Override
+    public List<SysManageOilGunInfo> selectAllOilGun() {
+        // TODO Auto-generated method stub
+        return sysmanageOilGunInfoDao.selectAllOilGun();
+    }
+
+    @SuppressWarnings({"unchecked"})
     @Override
     public Map selectDuringSales(Integer oilCan, Date begin, Date end) {
         Map params = new HashMap();
@@ -122,19 +122,39 @@ public class DailyTradeAccountServiceImpl implements DailyTradeAccountService {
         return dailyTradeAccountDao.selectDuringSales(params);
     }
 
-	@Override
-	public Map GetSaleOilSumByCanNoAndDate(String canno, Date st, Date et) {
-		Map<String,Object> hm=new HashMap<String, Object>();
-		hm.put("canno",canno);
-		hm.put("st",st);
-		hm.put("et",et);
-		return dailyTradeAccountDao.GetSaleOilLiterByCanNo(hm);
+    @Override
+    public Map GetSaleOilSumByCanNoAndDate(String canno, Date st, Date et) {
+        Map<String, Object> hm = new HashMap<String, Object>();
+        hm.put("canno", canno);
+        hm.put("st", st);
+        hm.put("et", et);
+        return dailyTradeAccountDao.GetSaleOilLiterByCanNo(hm);
 
-	}
+    }
 
-	@Override
-	public ArrayList<String> findLikeShift(HashMap shiftmap) {
-		ArrayList<String> list =dailyTradeAccountDao.findLikeShift(shiftmap);
-		return list;
-	}
+    @Override
+    public ArrayList<String> findLikeShift(HashMap shiftmap) {
+        ArrayList<String> list = dailyTradeAccountDao.findLikeShift(shiftmap);
+        return list;
+    }
+
+
+    @Override
+    public String findByOilGun(String oilgun, Date begintime, Date endtime) {
+        HashMap hm = new HashMap();
+        hm.put("oilgun", oilgun);
+        hm.put("begintime", begintime);
+        hm.put("endtime", endtime);
+
+        return dailyTradeAccountDao.findByOilGun(hm);
+    }
+
+    @Override
+    public String findByOilNo(String oilno, Date begintime, Date endtime) {
+        HashMap hm = new HashMap();
+        hm.put("oilno", oilno);
+        hm.put("begintime", begintime);
+        hm.put("endtime", endtime);
+        return dailyTradeAccountDao.findByOilNo(hm);
+    }
 }

@@ -80,11 +80,14 @@ public class AcceptanceOdRegisterServiceImpl implements IAcceptanceOdRegisterSer
     }
 
     @Override
-    public List<HashMap<String, ?>> selectjhysbynoanddate(String no, Date st, Date et) {
+    public List<HashMap<String, ?>> selectjhysbynoanddate(String no, Date st, Date et,String oilcan,String symbol,String dischargeRate) {
         Map params = new HashMap();
         params.put("deliveryNo", no);
         params.put("begin", st);
         params.put("end", et);
+        params.put("oilcan", oilcan);
+        params.put("symbol", symbol);
+        params.put("dischargeRate", dischargeRate);
         return  dao.selectjhysbynoanddate(params);
     }
 

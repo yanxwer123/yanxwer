@@ -198,4 +198,11 @@
     AND OUCode = #{oucode,jdbcType=VARCHAR}
     AND Version = #{version,jdbcType=VARCHAR}
   </update>
+  <select id="getUntranCubages" parameterType="java.util.Map" resultType="com.kld.gsm.center.domain.oss_sysmanage_cubage">
+    SELECT <include refid="Base_Column_List" />
+    FROM oss_sysmanage_cubage cubage
+    WHERE cubage.OilCan = #{oilcanno,jdbcType=INTEGER}
+    AND NodeNo = #{nodeno,jdbcType=VARCHAR}
+    AND cubage.Version > #{version,jdbcType=VARCHAR}
+  </select>
 </mapper>

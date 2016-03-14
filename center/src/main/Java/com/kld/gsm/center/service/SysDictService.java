@@ -17,4 +17,16 @@ public interface SysDictService {
     List<HashMap<String,String>> selectByParentId(String parentid);
 
     List<SysManageDict> selectbyVersion(Integer version);
+    SysManageDict selectByPrimaryKey(int id);
+    List<SysManageDict> selectAll();
+    int insertSelective(SysManageDict sysManageDict);
+    int updateByPrimaryKeySelective(SysManageDict sysManageDict);
+    int deleteByPrimaryKey(Integer id);
+    List<HashMap<String,Object>>  getDictList(Integer intPage,Integer intPageSize,Integer dictID,Integer parentID,String name);
+
+    List<HashMap<String,Object>> getDictAllList(Integer dictID,Integer parentID,String name);
+
+    int insertRow(HashMap map);
+
+    int updateRow(HashMap map);
 }

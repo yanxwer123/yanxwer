@@ -25,8 +25,8 @@
                 起止日期：
             </th>
             <th colspan="3" align="left">
-                <input id="dateStartinput" type="text" class="easyui-datebox" required="required"/> ——
-                <input id="dateEndinput" type="text"  class="easyui-datebox" required="required"/>
+                <input id="dateStartinput" type="text" class="easyui-datebox" required="required" editable="false"/> ——
+                <input id="dateEndinput" type="text"  class="easyui-datebox" required="required" editable="false"/>
             </th>
 
         </tr>
@@ -35,7 +35,7 @@
             <th></th>
             <th align="left">
                 <a id="searchExchange" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" style="width: 60px" onclick="initData()">查询</a>
-                <a id="btnExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-undo'" style="width: 60px" onclick="ExportExl()">导出</a>
+                <a id="btnExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-export'" style="width: 60px" onclick="ExportExl()">导出</a>
             </th>
             <th></th>
             <th></th>
@@ -52,12 +52,12 @@
 <script>
 
     var cols=[[
-        {field:'ouname',title:'油站名称',width:100,align:'center'},
+        {field:'OUName',title:'油站名称',width:100,align:'center'},
+        {field:'OUCode',title:'油站编码',width:100,align:'center'},
         {field:'Shift',title:'班次',width:100,align:'center'},
         {field:'Successor',title:'接班人',width:100,align:'center'},
-        {field:'SucceedTIme',title:'接班时间',width:100,formatter: formatDatebox,align:'center'},
         {field:'ShiftOperator',title:'交班人',width:100,align:'center'},
-        {field:'ShiftTime',title:'交班时间',width:100,formatter: formatDatebox,align:'center'},
+        {field:'ShiftTime',title:'交接班时间',width:100,formatter: formatDatebox,align:'center'},
         {field:'action',title:'详情',width:100,
             formatter:function(value,row,index)
             {
@@ -68,7 +68,7 @@
                     var succeedtime=formatDatebox(row.SucceedTIme);
                     var shifttime=formatDatebox(row.ShiftTime)
                     var str = '';
-                    str += "<a href='javascript:void(0);'  onclick='Show("+row.Shift+",\""+encodeURI(encodeURI( row.Successor))+"\",\""+encodeURI(encodeURI(row.ShiftOperator))+"\",\""+succeedtime+"\",\""+shifttime+"\")'>查看</a>";
+                    str += "<a href='javascript:void(0);'  onclick='Show("+row.OUCode+","+row.Shift+",\""+encodeURI(encodeURI( row.Successor))+"\",\""+encodeURI(encodeURI(row.ShiftOperator))+"\",\""+succeedtime+"\",\""+shifttime+"\")'>查看</a>";
                     return str;
                 }
 
@@ -94,9 +94,9 @@
 
     });
 
-    function Show(shift,successor,shiftoperator,succeedtime,shifttime){
+    function Show(oucode,shift,successor,shiftoperator,succeedtime,shifttime){
 
-        window.open ('/web/alarm/dailylostdetail?shift='+shift+'&successor='+successor+'&shiftoperator='+shiftoperator+'&succeedtime='+succeedtime+'&shifttime='+shifttime,'newwindow','height=630,width=900,top=0,left=0')
+        window.open ('/web/business/shiftdetail?oucode='+oucode+'&shift='+shift+'&successor='+successor+'&shiftoperator='+shiftoperator+'&succeedtime='+succeedtime+'&shifttime='+shifttime,'newwindow','height=630,width=900,top=0,left=0')
     }
     function inittext(){
         begin=$("#dateStartinput").datebox("getValue").replace(/-/g,"");
@@ -123,7 +123,7 @@
     function ExportExl() {
         inittext();
         var filename=encodeURI(encodeURI("油站班报"));
-        window.open("/web/alarm/ExcelShift?begin="+begin+"&end="+end+"&oucode="+oucode+"&FileName="+filename);
+        window.open("/web/business/ExcelShift?begin="+begin+"&end="+end+"&oucode="+oucode+"&FileName="+filename);
     }
     function initData() {
 

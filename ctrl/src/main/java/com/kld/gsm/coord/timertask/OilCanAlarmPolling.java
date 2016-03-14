@@ -12,11 +12,14 @@ import com.kld.gsm.ATGDevice.atg_stock_data_out_t;
 import com.kld.gsm.coord.Context;
 import com.kld.gsm.coord.servcie.IOilCanAlarmProbeService;
 import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -50,6 +53,12 @@ public class OilCanAlarmPolling extends Thread  {
 
     @Override
     public void run() {
+        RuntimeMXBean rt = ManagementFactory.getRuntimeMXBean();
+        String pid = rt.getName();
+        MDC.put("PID", pid);
+        sysManageCanInfoDao = Context.getInstance().getBean(SysManageCanInfoDao.class);
+        sysManageAlarmParameterDao = Context.getInstance().getBean(SysManageAlarmParameterDao.class);
+        alarmInventoryDao = Context.getInstance().getBean(AlarmInventoryDao.class);
         while(true){
             try {
                 sleep(TimeTaskPar.get("ygbjjgsj")*1000);
@@ -64,7 +73,6 @@ public class OilCanAlarmPolling extends Thread  {
             List<atg_stock_data_out_t> out_ts;
             //region获取所有油罐信息
             try {
-                sysManageCanInfoDao = Context.getInstance().getBean(SysManageCanInfoDao.class);
                 //List<SysManageCanInfo> list = sysManageCanInfoDao.selectAll();
                 //所有的油罐号
                 //oilCanList = new ArrayList();
@@ -85,7 +93,6 @@ public class OilCanAlarmPolling extends Thread  {
 
             //region获取所有油罐报警设置信息
             try {
-                sysManageAlarmParameterDao = Context.getInstance().getBean(SysManageAlarmParameterDao.class);
                 alarmList = sysManageAlarmParameterDao.selectAll();
                 logger.info("get AlarmParameter List :" + alarmList.size());
                 for (SysManageAlarmParameter a : alarmList) {
@@ -116,7 +123,7 @@ public class OilCanAlarmPolling extends Thread  {
 
             //region获取正在报警数据
             try {
-                alarmInventoryDao = Context.getInstance().getBean(AlarmInventoryDao.class);
+
                 alarmInventotyList = alarmInventoryDao.findBeginAlarm();
                 logger.info("baojingsize:" + alarmInventotyList.size());
                 for (AlarmInventory alarmInventory : alarmInventotyList) {
@@ -238,7 +245,6 @@ public class OilCanAlarmPolling extends Thread  {
                             if (alarmInventory != null) {
                                 //TODO 做更新操作
                                 logger.info("update alarmParam[2003] come in");
-
                                 alarmInventory.setEndtime(new Date());
                                 alarmInventory.setTranstatus("0");
                                 update(alarmInventory);

@@ -19,6 +19,15 @@
     where rolecode = #{rolecode,jdbcType=VARCHAR}
       and funccode = #{funccode,jdbcType=VARCHAR}
   </select>
+  <select id="selectAll" resultType="com.kld.gsm.center.domain.Sys_rolefuncrel" >
+    select *from Sys_rolefuncrel
+  </select>
+  <select id="selectByrolecode" parameterType="java.lang.String" resultType="com.kld.gsm.center.domain.Sys_rolefuncrel" >
+    select * from Sys_rolefuncrel WHERE rolecode=#{rolecode}
+  </select>
+  <select id="selectRCBycode" parameterType="java.lang.String" resultType="com.kld.gsm.center.domain.Sys_rolefuncrel" >
+    select * from Sys_rolefuncrel WHERE funccode=#{delfunccode}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.center.domain.Sys_rolefuncrelKey" >
     delete from Sys_rolefuncrel
     where rolecode = #{rolecode,jdbcType=VARCHAR}
@@ -106,4 +115,17 @@
   <delete id="deleteRoleFuncByRolecode" parameterType="java.lang.String">
     delete from sys_rolefuncrel where rolecode=#{rolecode}
   </delete>
+  <insert id="insertList" parameterType="java.util.List">
+    INSERT into sys_rolefuncrel (rolecode,funccode)VALUES
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{item.rolecode},#{item.funccode})
+    </foreach>
+  </insert>
+<select id="selectRCBylist" parameterType="java.util.List" resultType="com.kld.gsm.center.domain.Sys_rolefuncrel" >
+  select * from sys_rolefuncrel where  rolecode in (
+  <foreach collection="list" item="item" index="index" separator="," >
+    #{item.rolecode}
+  </foreach>
+  )
+</select>
 </mapper>

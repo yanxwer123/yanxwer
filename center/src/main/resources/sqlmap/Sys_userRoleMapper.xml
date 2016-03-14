@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.Sys_userRoleMapper" >
+    <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.Sys_userrole" >
+        <id column="userid" property="userid" jdbcType="VARCHAR" />
+        <id column="rolecode" property="rolecode" jdbcType="VARCHAR" />
+        <result column="createDate" property="createtime" jdbcType="TIMESTAMP" />
+        <result column="createBy" property="createBy" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        userid, rolecode, createDate, createBy
+    </sql>
+
+    <select id="selectByUserids" parameterType="java.lang.String" resultType="com.kld.gsm.center.domain.Sys_userrole" >
+    select * from Sys_userrole WHERE userid=#{userids}
+</select>
+    <select id="selectByrolecode" parameterType="java.lang.String" resultType="com.kld.gsm.center.domain.Sys_userrole" >
+        select * from Sys_userrole WHERE rolecode=#{delrolecode}
+    </select>
+    <delete id="deleteUserRoleByUserids" parameterType="java.lang.String">
+        delete from Sys_userrole where userid=#{userids}
+    </delete>
+    <insert id="insertList" parameterType="java.util.List">
+        INSERT into Sys_userrole (userid,rolecode,createDate)VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (#{item.userid},#{item.rolecode},#{item.createDate})
+        </foreach>
+    </insert>
+
+</mapper>

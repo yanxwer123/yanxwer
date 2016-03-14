@@ -32,4 +32,6 @@ public interface SysManageCubageDao {
     List<SysManageCubage> selectCubageInused();
 
     int updateUnused(SysManageCubage record);
+
+    List<SysManageCubage> getMaxVersion();
 }

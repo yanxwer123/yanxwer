@@ -137,7 +137,11 @@ public class OilMacStautsDataServiceImpl implements IOilMacStautsDataService {
                         alarmGaTContrast.setSecodemeasurestore(stockDataOutT.fOilCubage);
 
                         //间隔时间
-                        alarmGaTContrast.setIntervaltime(Double.parseDouble(sd.format(alarmGaTContrast.getSecodemeasuretime())) - Double.parseDouble(sd.format(alarmGaTContrast.getFristmeasuretime())) + "");
+                        //(end.getTime() - start.getTime())/(1000*60);
+                        Long iInterval=(alarmGaTContrast.getSecodemeasuretime().getTime() - alarmGaTContrast.getFristmeasuretime().getTime())/1000;
+                        alarmGaTContrast.setIntervaltime(iInterval.toString());
+                        //原时间计算错误
+                        //alarmGaTContrast.setIntervaltime(Double.parseDouble(sd.format(alarmGaTContrast.getSecodemeasuretime())) - Double.parseDouble(sd.format(alarmGaTContrast.getFristmeasuretime())) + "");
                         alarmGaTContrast.setTranstatus("0");
                         logger.info("枪出罐出保存（12）第二次以及以后的检测，开始给第二次检测时间和库存赋值，并执行新增操作...alarmGaTContrast:"+alarmGaTContrast);
                         //System.out.println("枪出罐出保存(12)第二次以及以后的检测，开始给第二次检测时间和库存赋值，并执行新增操作...:"+alarmGaTContrast);

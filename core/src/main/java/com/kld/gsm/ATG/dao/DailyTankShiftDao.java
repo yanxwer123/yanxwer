@@ -28,7 +28,7 @@ public interface DailyTankShiftDao {
 
     List<DailyTankShift> selectByTrans(String stauts);
 
-    //期初-期末库存
+
     List<HashMap> findToOilL(String shift);
     List<DailyTankShift> findBetweenShift(Map map);
     int updateByShift(Map map);
@@ -36,6 +36,10 @@ public interface DailyTankShiftDao {
 
     List<DailyTankShift> selectByAccountIsNull(String shift);
 
-    //查询班次号 条件：未日结 已班结
+
     String findOilNoAndShift();
-  }
+
+    String findByOilcan(Map map);
+
+    String findToOilLByOilNo(Map map);
+}

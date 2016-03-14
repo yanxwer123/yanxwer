@@ -1,36 +1,27 @@
 package com.kld.app.view.alarm;
 
-import java.awt.Color;
-import java.awt.Dimension;
+import com.kld.app.service.AlarmShiftLostService;
+import com.kld.app.service.SysManageCanInfoService;
+import com.kld.app.springcontext.Context;
+import com.kld.app.util.Constant;
+import com.kld.app.view.acceptance.MyTable;
+import com.kld.gsm.ATG.domain.AlarmShiftLost;
+import com.kld.gsm.ATG.domain.SysManageCanInfo;
+import com.kld.gsm.ATG.domain.SysManageOilType;
+import org.jdesktop.swingx.JXDatePicker;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
-import javax.swing.*;
-import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
-
-import com.kld.app.service.SysManageCanInfoService;
-import com.kld.app.view.acceptance.MyTable;
-import com.kld.gsm.ATG.dao.SysManageOilTypeDao;
-import com.kld.gsm.ATG.domain.SysManageCanInfo;
-import com.kld.gsm.ATG.domain.SysManageOilType;
-import org.jdesktop.swingx.JXDatePicker;
-
-import com.kld.app.service.AlarmShiftLostService;
-import com.kld.app.service.SysManagePaTRelationService;
-import com.kld.app.springcontext.Context;
-import com.kld.app.util.Constant;
-import com.kld.gsm.ATG.domain.AlarmShiftLost;
-import com.kld.gsm.ATG.domain.SysManagePaTRelation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import java.util.List;
 
 /**
  *@author xuchaoj E-mail:oscarxcc@163.com
@@ -184,6 +175,7 @@ public class HandDescAlarm {
 					"付油量(L)",
 					"交班帐存(L)",
 					"损耗率(%)"*/
+			DecimalFormat df=new DecimalFormat("0");
 			data[i][0] = info.getShift();
 			data[i][1] = info.getOilcanno();
 			SysManageOilType sysManageOil=alarmShiftLostService.selectByPrimaryKey(info.getOilno());
@@ -194,16 +186,16 @@ public class HandDescAlarm {
 			}
 			data[i][2] = info.getOilno();
 			data[i][3] = info.getStartoilheight();
-			data[i][4] = info.getStartoill();
+			data[i][4] = df.format(info.getStartoill());
 			data[i][5] = info.getEndoilheight();
-			data[i][6] = info.getEndoill();
+			data[i][6] = df.format(info.getEndoill());
 			data[i][7] = info.getEndwaterheight();
-			data[i][8] = info.getEndwaterl();
-			data[i][9] = info.getOildischarge();
-			data[i][10] = info.getSale();
-			DecimalFormat df=new DecimalFormat("###########0.00");
+			data[i][8] = df.format(info.getEndwaterl());
+			data[i][9] = df.format(info.getOildischarge());
+			data[i][10] = df.format(info.getSale());
+			DecimalFormat df1=new DecimalFormat("###########0.00");
 			data[i][11] = df.format(info.getInventory());
-			data[i][12] = df.format(info.getLoss())+"%";
+			data[i][12] = df1.format(info.getLoss())+"%";
 		}
 		//probePartable = getTable(tableHeads,data);
 		getTable(tableHeads,data);

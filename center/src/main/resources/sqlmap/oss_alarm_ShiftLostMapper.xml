@@ -25,28 +25,36 @@
     <result column="ProfitLossRatio" property="profitlossratio" jdbcType="DOUBLE" />
   </resultMap>
   <select id="selectshiftlostbywhere" resultType="hashmap" parameterType="hashmap">
-    SELECT * FROM oss_alarm_ShiftLost WHERE 1=1
+    SELECT a.*,b.OUName,c.OilName from
+    oss_alarm_ShiftLost a
+    inner join oss_sys_OrgUnit b on a.OUCode=b.OUCode
+    left outer JOIN oss_sysmanage_oiltype c on a.OilNo=c.OilNo
+    WHERE 1=1
     <if test="start != null">
-    <![CDATA[ AND  LEFT(Shift,8)>=#{start,jdbcType=VARCHAR}]]>
+    <![CDATA[ AND  a.ShiftTime>=#{start,jdbcType=VARCHAR}]]>
     </if>
     <if test="end != null">
-    <![CDATA[ And LEFT(Shift,8)<=#{end,jdbcType=VARCHAR}]]>
+    <![CDATA[ And a.ShiftTime<=#{end,jdbcType=VARCHAR}]]>
     </if>
     <if test="oucode != null and oucode != '' ">
-      <![CDATA[  and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+      <![CDATA[  and a.OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
     </if>
     ORDER BY Shift DESC
   </select>
   <select id="querypage" resultType="hashmap" parameterType="hashmap">
-  SELECT * FROM oss_alarm_ShiftLost WHERE 1=1
+    SELECT a.*,b.OUName,c.OilName from
+    oss_alarm_ShiftLost a
+    inner join oss_sys_OrgUnit b on a.OUCode=b.OUCode
+    left outer JOIN oss_sysmanage_oiltype c on a.OilNo=c.OilNo
+    WHERE 1=1
   <if test="start != null">
-    <![CDATA[ AND  LEFT(Shift,8)>=#{start,jdbcType=VARCHAR}]]>
+    <![CDATA[ AND  ShiftTime>=#{start,jdbcType=VARCHAR}]]>
   </if>
   <if test="end != null">
-    <![CDATA[ And LEFT(Shift,8)<=#{end,jdbcType=VARCHAR}]]>
+    <![CDATA[ And ShiftTime<=#{end,jdbcType=VARCHAR}]]>
   </if>
   <if test="oucode != null and oucode != '' ">
-    <![CDATA[  and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+    <![CDATA[  and a.OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
   </if>
     ORDER BY Shift DESC
   <if test="firstRow != null and  pageSize!= null">

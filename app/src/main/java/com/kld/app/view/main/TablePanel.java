@@ -141,12 +141,13 @@ public class TablePanel extends JPanel implements Watcher {
                         centerPanel.repaint();
                         SwitchTabColor(0);
                         if (Main.menuList.contains("ssjk")) {
-                            tankGunPumpCodeInformat.setPanel(centerPanel, true);
+                            tankGunPumpCodeInformat.setPanel(centerPanel);
                         }
                         break;
 
                     case 1:
-                        tankGunPumpCodeInformat.setPanel(centerPanel, false);
+                        /*tankGunPumpCodeInformat.setPanel(centerPanel, false);*/
+                        tankGunPumpCodeInformat.stopMyThread();
                         Main.setStatus("进货验收");
                         centerPanel.removeAll();
                         centerPanel.repaint();
@@ -181,7 +182,8 @@ public class TablePanel extends JPanel implements Watcher {
                     case 2:
                         //停止请求
                         Main.setStatus("日常运行");
-                        tankGunPumpCodeInformat.setPanel(centerPanel, false);
+                        /*tankGunPumpCodeInformat.setPanel(centerPanel, false);*/
+                        tankGunPumpCodeInformat.stopMyThread();
                         centerPanel.removeAll();
                         centerPanel.repaint();
                         SwitchTabColor(2);
@@ -193,7 +195,8 @@ public class TablePanel extends JPanel implements Watcher {
                         break;
                     case 3:
                         Main.setStatus("报警提醒");
-                        tankGunPumpCodeInformat.setPanel(centerPanel, false);
+                        /*tankGunPumpCodeInformat.setPanel(centerPanel, false);*/
+                        tankGunPumpCodeInformat.stopMyThread();
                         centerPanel.removeAll();
                         centerPanel.repaint();
                         SwitchTabColor(3);
@@ -210,7 +213,8 @@ public class TablePanel extends JPanel implements Watcher {
                         break;
                     case 4:
                         Main.setStatus("系统设置");
-                        tankGunPumpCodeInformat.setPanel(centerPanel, false);
+                        /*tankGunPumpCodeInformat.setPanel(centerPanel, false);*/
+                        tankGunPumpCodeInformat.stopMyThread();
                         centerPanel.removeAll();
                         centerPanel.repaint();
                         SwitchTabColor(4);
@@ -264,8 +268,7 @@ public class TablePanel extends JPanel implements Watcher {
                     centerPanel.removeAll();
                     centerPanel.repaint();
                     new SbjcxxcxPage().setPanel(centerPanel);
-                }
-                else {
+                } else {
                     JOptionPane.showMessageDialog(null, "用户[" + Main.oprname + "]没有此权限!", "错误提示", JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -1210,12 +1213,13 @@ public class TablePanel extends JPanel implements Watcher {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (Main.menuList.contains("rcyx_rphb")) {
+                    Main.setStatus("盘点");
                     centerPanel.removeAll();
                     centerPanel.repaint();
                     Main.watch.addWetcher("A", new PdPage());
                     GasMsg gasMsg = ResultUtils.getInstance().sendSUCCESS(Main.sign, new ArrayList(), Constants.PID_Code.A15_10004.toString());
                     System.out.println("request[04]:" + gasMsg);
-                    Main.CC.writeAndFlush(gasMsg);
+//                    Main.CC.writeAndFlush(gasMsg);
                     curBtn.setSelected(false);
                     curBtn = pd;
                     curBtn.setSelected(true);
@@ -1230,6 +1234,7 @@ public class TablePanel extends JPanel implements Watcher {
         pdLabel.setBounds(320, 45, 72, 12);
         pdLabel.setForeground(new Color(Integer.decode(Constant.HOMEPAGE_COCLER)));
         pan3.add(pdLabel);
+
     }
 
     //endregion
@@ -1490,7 +1495,6 @@ public class TablePanel extends JPanel implements Watcher {
         });
 
 
-
         //出库单查询-删除
         scLabel.addMouseListener(new MouseAdapter() {
             /**
@@ -1549,7 +1553,6 @@ public class TablePanel extends JPanel implements Watcher {
                             Main.jhys = psdxx;
                         }
                         Main.ckdcxPage.jhys(psdxx);
-
 
                     } catch (Exception e1) {
                         e1.printStackTrace();
@@ -1636,7 +1639,7 @@ public class TablePanel extends JPanel implements Watcher {
         });
 
 
-        // 查看进货
+       // 查看进货
         ckLabel1.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -1658,7 +1661,7 @@ public class TablePanel extends JPanel implements Watcher {
                             jhyscxPage = new JhyscxPage();
                             jhyscxPage.setPanel(centerPanel);
                         } else {
-                            jhyscxPage.showdetail();
+                            jhyscxPage.ckJhdys();
                         }
 
                     } catch (Exception e1) {
@@ -1681,7 +1684,7 @@ public class TablePanel extends JPanel implements Watcher {
         if (Main.menuList.contains("ssjk_ssgqjk")) {
             centerPanel.removeAll();
             centerPanel.repaint();
-            tankGunPumpCodeInformat.setPanel(centerPanel, true);
+            tankGunPumpCodeInformat.setPanel(centerPanel);
         }
         pan1.setLayout(null);
         pan1.setPreferredSize(new Dimension(800, 115));
@@ -1735,7 +1738,7 @@ public class TablePanel extends JPanel implements Watcher {
                     curBtn.setSelected(false);
                     curBtn = ssgqjkbutton;
                     curBtn.setSelected(true);
-                    tankGunPumpCodeInformat.setPanel(centerPanel, true);
+                    tankGunPumpCodeInformat.setPanel(centerPanel);
                 } else {
                     JOptionPane.showMessageDialog(null, "用户[" + Main.oprname + "]没有此权限!", "错误提示", JOptionPane.ERROR_MESSAGE);
                 }
@@ -1857,12 +1860,12 @@ class GlLabel2MouseListener implements MouseListener, Watcher {
                     capacTabMsg.setOperation(1);//下发到液位仪
                     capacTabMsg.setStrVersion(sysManageCubage.getVersion());
                     ArrayList<CapacTabBMsg> sysManageCubageInfoArrayList = new ArrayList<CapacTabBMsg>();
-//                    for (SysManageCubageInfo s : sysManageCubageInfoList) {
-//                        CapacTabBMsg capacTabBMsg = new CapacTabBMsg();
-//                        capacTabBMsg.setHeight(s.getHeight());
-//                        capacTabBMsg.setLiter(s.getLiter());
-//                        sysManageCubageInfoArrayList.add(capacTabBMsg);
-//                    }
+                    /*for (SysManageCubageInfo s : sysManageCubageInfoList) {
+                        CapacTabBMsg capacTabBMsg = new CapacTabBMsg();
+                        capacTabBMsg.setHeight(s.getHeight());
+                        capacTabBMsg.setLiter(s.getLiter());
+                        sysManageCubageInfoArrayList.add(capacTabBMsg);
+                    }*/
                     capacTabMsg.setCapacTabBMsgs(sysManageCubageInfoArrayList);
                     ArrayList<CapacTabMsg> list = new ArrayList<CapacTabMsg>();
                     list.add(capacTabMsg);
@@ -2015,6 +2018,11 @@ class YzzcMouseListener extends MouseAdapter implements Watcher {
     @Override
     public void mouseClicked(MouseEvent e) {
         if (Main.menuList.contains("xtsz_rjb")) {
+            Object[] options = {"确定","取消"};
+            int response=JOptionPane.showOptionDialog(null, "初始化将同步管控系统中油罐，油枪,\n 油品类型,油站信息等数据。", "初始化", JOptionPane.YES_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+            if (response!=0){
+                return;
+            }
             Main.setStatus("正在初始化，请稍后...");
             //注册观察者开始
             YzzcMouseListener yzzc = new YzzcMouseListener();
@@ -2199,14 +2207,14 @@ class JsyjMouseListener extends MouseAdapter implements Watcher {
                     JOptionPane.showMessageDialog(null, "该条记录已经停止，请选择正确记录", "信息提示", JOptionPane.INFORMATION_MESSAGE);
                     return;
                 }
-                canno=oilcanno;
+                canno = oilcanno;
                 //region 判断是否未达到指定时间
                 String starttime = Main.oilExcep.table.getValueAt(selectRow, 1).toString();
                 SimpleDateFormat sd1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date start = null;
                 try {
                     start = sd1.parse(starttime);
-                    startDate=start;
+                    startDate = start;
                 } catch (ParseException e1) {
                     e1.printStackTrace();
                 }
@@ -2222,23 +2230,23 @@ class JsyjMouseListener extends MouseAdapter implements Watcher {
                             "没有达到测漏时长" + time + "个小时，是否确认结束？", "液位仪应用系统",
                             JOptionPane.YES_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                             options, options[0]);
-                    if (response !=0) {
+                    if (response != 0) {
                         return;
                     }
                 }
                 //endregion 判断是否为达到指定时间
                 //region 判定连接类型控制台or探棒直连
-                if (iquidService==null){
-                    iquidService=Context.getInstance().getBean(IquidService.class);
+                if (iquidService == null) {
+                    iquidService = Context.getInstance().getBean(IquidService.class);
                 }
-                SysManageIquidInstrument iquidInstrument=iquidService.selectLast();
+                SysManageIquidInstrument iquidInstrument = iquidService.selectLast();
 
                 //endregion
 
                 Main.setStatus("正在生成静态液位报告，请稍候...");
                 //JsyjMouseListener Jsyj = new JsyjMouseListener(Main.oilExcep);
                 Main.watch.addWetcher("A", this);
-                if(iquidInstrument.getWorktype().equals("控制台采集")) {
+                if (iquidInstrument.getWorktype().equals("控制台采集")) {
                     //region 控制台采集end
                     //System.out.println("测试走到这里的");
                     Integer oilno = oilcanno;
@@ -2252,7 +2260,7 @@ class JsyjMouseListener extends MouseAdapter implements Watcher {
 
 
                     //endregion
-                }else{
+                } else {
                     //region  探棒直连
                     GasMsg gasMsg = ResultUtils.getInstance().sendSUCCESS(Main.sign, new ArrayList(), Constants.PID_Code.A15_10004.toString());
                     Main.CC.writeAndFlush(gasMsg);
@@ -2303,12 +2311,12 @@ class JsyjMouseListener extends MouseAdapter implements Watcher {
                 dialog.setVisible(true);
                 //System.out.println("走到这里了" + map);
 
-            }else{
+            } else {
                 //
                 AlarmMeasureLeakService alarmMeasureLeakService = (AlarmMeasureLeakService) (Context.getInstance().getBean("alarmMeasureLeakService"));
                 List<AlarmMeasureLeak> alarmMeasureLeakList = alarmMeasureLeakService.selecthasStartByOilcan(canno);
-                if (alarmMeasureLeakList!=null&&alarmMeasureLeakList.size()>0){
-                    AlarmMeasureLeak item=alarmMeasureLeakList.get(0);
+                if (alarmMeasureLeakList != null && alarmMeasureLeakList.size() > 0) {
+                    AlarmMeasureLeak item = alarmMeasureLeakList.get(0);
                     item.setEnddate(new Date());
                     item.setValid(0);
                     alarmMeasureLeakService.updateByPrimaryKeySelective(item);
@@ -2327,34 +2335,34 @@ class JsyjMouseListener extends MouseAdapter implements Watcher {
             });
             //endregion
         }
-        if ("A15_10004".equals(gasMsg.getPid())){
+        if ("A15_10004".equals(gasMsg.getPid())) {
             //region 探棒直连
             Integer oilcanno;
             Date startdate;
             ResultMsg resultMsg = new JsonMapper().fromJson(gasMsg.getMessage(), ResultMsg.class);
             List<Map<String, ?>> candata = resultMsg.getData();
-            DecimalFormat df=new DecimalFormat("######.00");
+            DecimalFormat df = new DecimalFormat("######.00");
             for (int m = 0; m < candata.size(); m++) {
-                if (canno==Integer.parseInt(candata.get(m).get("uOilCanNo").toString())) {
-                    oilcanno=canno;
+                if (canno == Integer.parseInt(candata.get(m).get("uOilCanNo").toString())) {
+                    oilcanno = canno;
                     //得到该罐的罐存
-                    Map map=candata.get(m);
-                    atg_stock_data_out_t stock=(atg_stock_data_out_t)mapToObject(atg_stock_data_out_t.class, map);
-                    SysManageCanInfoService sysManageCanInfoService=Context.getInstance().getBean(SysManageCanInfoService.class);
-                    SysManageCanInfo canInfo=sysManageCanInfoService.selectbycanno(canno);
+                    Map map = candata.get(m);
+                    atg_stock_data_out_t stock = (atg_stock_data_out_t) mapToObject(atg_stock_data_out_t.class, map);
+                    SysManageCanInfoService sysManageCanInfoService = Context.getInstance().getBean(SysManageCanInfoService.class);
+                    SysManageCanInfo canInfo = sysManageCanInfoService.selectbycanno(canno);
                     //获取油品类型
-                    if (canInfo!=null){
-                        if (odRegisterService==null){
-                            odRegisterService=Context.getInstance().getBean(IAcceptanceOdRegisterService.class);
+                    if (canInfo != null) {
+                        if (odRegisterService == null) {
+                            odRegisterService = Context.getInstance().getBean(IAcceptanceOdRegisterService.class);
                         }
-                        oiltype=odRegisterService.selectOilType(canInfo.getOilno()).getOiltype().toString();
+                        oiltype = odRegisterService.selectOilType(canInfo.getOilno()).getOiltype().toString();
                     }
                     //获取记录
-                    if(alarmMeasureLeakService==null){
-                        alarmMeasureLeakService=Context.getInstance().getBean(AlarmMeasureLeakService.class);
+                    if (alarmMeasureLeakService == null) {
+                        alarmMeasureLeakService = Context.getInstance().getBean(AlarmMeasureLeakService.class);
                     }
-                    AlarmMeasureLeak alarmMeasureLeak=alarmMeasureLeakService.selectinfoByCanNo(canno);
-                    alarmMeasureLeak.setEndoill(getV20L(oiltype,stock.fOilTemp,stock.fOilCubage));
+                    AlarmMeasureLeak alarmMeasureLeak = alarmMeasureLeakService.selectinfoByCanNo(canno);
+                    alarmMeasureLeak.setEndoill(getV20L(oiltype, stock.fOilTemp, stock.fOilCubage));
                     alarmMeasureLeak.setEndoill(stock.fOilCubage);
                     alarmMeasureLeak.setEndoilheight(stock.fTotalHeight);
                     alarmMeasureLeak.setEndwaterheight(stock.fWaterHeight);
@@ -2366,40 +2374,39 @@ class JsyjMouseListener extends MouseAdapter implements Watcher {
                     alarmMeasureLeak.setEndwaterl(stock.fWaterBulk);
 
 
-
                     //期间有无卸油,无付油
-                    IAcceptanceOdRegisterInfoService infoService=Context.getInstance().getBean(IAcceptanceOdRegisterInfoService.class);
-                    List<AcceptanceOdRegisterInfo>infos=infoService.selecbycanno(canno,alarmMeasureLeak.getStartdate(),alarmMeasureLeak.getEnddate());
+                    IAcceptanceOdRegisterInfoService infoService = Context.getInstance().getBean(IAcceptanceOdRegisterInfoService.class);
+                    List<AcceptanceOdRegisterInfo> infos = infoService.selecbycanno(canno, alarmMeasureLeak.getStartdate(), alarmMeasureLeak.getEnddate());
 
-                    Double duringSales=0.0;
-                    if(dailyTradeAccountService==null){
-                        dailyTradeAccountService=Context.getInstance().getBean(DailyTradeAccountService.class);
+                    Double duringSales = 0.0;
+                    if (dailyTradeAccountService == null) {
+                        dailyTradeAccountService = Context.getInstance().getBean(DailyTradeAccountService.class);
                     }
                     Map salemap = dailyTradeAccountService.GetSaleOilSumByCanNoAndDate(canno.toString(), startDate, new Date());
-                    if (salemap!=null&&salemap.get("Liter") != null) {
+                    if (salemap != null && salemap.get("Liter") != null) {
                         duringSales = Double.parseDouble(salemap.get("Liter").toString());
                     }
-                    if (duringSales>0||infos==null||infos.size()==0){
+                    if (duringSales > 0 || infos == null || infos.size() == 0) {
                         //无效
                         alarmMeasureLeak.setValid(0);
-                    }else{
+                    } else {
                         alarmMeasureLeak.setValid(1);
                     }
                     //时间间隔
-                    Double time=(new Date().getTime()-startDate.getTime())/(1000*3600.0);
+                    Double time = (new Date().getTime() - startDate.getTime()) / (1000 * 3600.0);
 
                     //计算速率
 
-                    Double rate=(alarmMeasureLeak.getEndoill()-alarmMeasureLeak.getStartoill())/time;
-                    rate=Double.parseDouble(df.format(rate));
+                    Double rate = (alarmMeasureLeak.getEndoill() - alarmMeasureLeak.getStartoill()) / time;
+                    rate = Double.parseDouble(df.format(rate));
                     alarmMeasureLeak.setRevealrate(rate.toString());
                     //判定类型
-                    if (almService==null){
-                        almService=Context.getInstance().getBean(AlmService.class);
+                    if (almService == null) {
+                        almService = Context.getInstance().getBean(AlmService.class);
                     }
-                    SysManageAlarmParameter parameter= almService.selectByPrimaryKey(canno);
+                    SysManageAlarmParameter parameter = almService.selectByPrimaryKey(canno);
                     //泄漏状态：0：不泄漏，1:渗漏，2：漏油，3：盗油
-                    if(parameter!=null&&parameter.getStealoilalarm()!=null&&parameter.getLeakageoilalarm()!=null&&parameter.getLeakoilalarm()!=null) {
+                    if (parameter != null && parameter.getStealoilalarm() != null && parameter.getLeakageoilalarm() != null && parameter.getLeakoilalarm() != null) {
                         if (rate > parameter.getStealoilalarm()) {
                             alarmMeasureLeak.setRevealstatus("3");
                         }
@@ -2426,7 +2433,8 @@ class JsyjMouseListener extends MouseAdapter implements Watcher {
                             zc.setVisible(false);
                         }
                     });
-                    startdate=alarmMeasureLeak.getStartdate();
+
+                    startdate = alarmMeasureLeak.getStartdate();
                     GetChartFrame getChartFrame = new GetChartFrame(oilcanno, startdate);
                     JDialog dialog = getChartFrame.getFrame(oilcanno, startdate);
                     Main.setCenter(dialog);
@@ -2443,19 +2451,23 @@ class JsyjMouseListener extends MouseAdapter implements Watcher {
             //endregion
         }
     }
-    private double getV20L(String oilType,double vt, double V) {
-        V20Utils v20Utils=new V20Utils();
-        if (V==0.0){return 0.0;}
-        if (oilType.equals("03")){
+
+    private double getV20L(String oilType, double vt, double V) {
+        V20Utils v20Utils = new V20Utils();
+        if (V == 0.0) {
+            return 0.0;
+        }
+        if (oilType.equals("03")) {
             //柴油
-            return  v20Utils.getDieV20(vt, V);
-        }else {
+            return v20Utils.getDieV20(vt, V);
+        } else {
             //汽油
-            return  v20Utils.getGasV20(vt,V);
+            return v20Utils.getGasV20(vt, V);
         }
     }
-    public  Object mapToObject(Class clazz, Map<String,Object> map){
-        if(null == map){
+
+    public Object mapToObject(Class clazz, Map<String, Object> map) {
+        if (null == map) {
             return null;
         }
         Field[] fields = clazz.getDeclaredFields(); //取到类下所有的属性，也就是变量名
@@ -2468,53 +2480,53 @@ class JsyjMouseListener extends MouseAdapter implements Watcher {
         } catch (IllegalAccessException e1) {
             e1.printStackTrace();
         }
-        for(int i=0; i<fields.length; i++){
+        for (int i = 0; i < fields.length; i++) {
             field = fields[i];
             String fieldName = field.getName();
             //把属性的第一个字母处理成大写
-            String stringLetter=fieldName.substring(0, 1).toUpperCase();
+            String stringLetter = fieldName.substring(0, 1).toUpperCase();
             //取得set方法名，比如setBbzt
-            String setterName="set"+stringLetter+fieldName.substring(1);
+            String setterName = "set" + stringLetter + fieldName.substring(1);
             //真正取得set方法。
             Method setMethod = null;
             Class fieldClass = field.getType();
             try {
-                if(isHaveSuchMethod(clazz, setterName)){
-                    if(fieldClass == String.class){
+                if (isHaveSuchMethod(clazz, setterName)) {
+                    if (fieldClass == String.class) {
                         setMethod = clazz.getMethod(setterName, fieldClass);
                         setMethod.invoke(o, String.valueOf(map.get(fieldName)));//为其赋值
-                    }else if(fieldClass == Integer.class || fieldClass == int.class){
+                    } else if (fieldClass == Integer.class || fieldClass == int.class) {
                         setMethod = clazz.getMethod(setterName, fieldClass);
                         setMethod.invoke(o, Integer.parseInt(String.valueOf(map.get(fieldName))));//为其赋值
-                    }else if(fieldClass == Boolean.class || fieldClass == boolean.class){
+                    } else if (fieldClass == Boolean.class || fieldClass == boolean.class) {
                         setMethod = clazz.getMethod(setterName, fieldClass);
                         setMethod.invoke(o, Boolean.getBoolean(String.valueOf(map.get(fieldName))));//为其赋值
-                    }else if(fieldClass == Short.class || fieldClass == short.class){
+                    } else if (fieldClass == Short.class || fieldClass == short.class) {
                         setMethod = clazz.getMethod(setterName, fieldClass);
                         setMethod.invoke(o, Short.parseShort(String.valueOf(map.get(fieldName))));//为其赋值
-                    }else if(fieldClass == Long.class || fieldClass == long.class){
+                    } else if (fieldClass == Long.class || fieldClass == long.class) {
                         setMethod = clazz.getMethod(setterName, fieldClass);
                         setMethod.invoke(o, Long.parseLong(String.valueOf(map.get(fieldName))));//为其赋值
-                    }else if(fieldClass == Double.class || fieldClass == double.class){
+                    } else if (fieldClass == Double.class || fieldClass == double.class) {
                         setMethod = clazz.getMethod(setterName, fieldClass);
                         setMethod.invoke(o, Double.parseDouble(String.valueOf(map.get(fieldName))));//为其赋值
-                    }else if(fieldClass == Float.class || fieldClass == float.class){
+                    } else if (fieldClass == Float.class || fieldClass == float.class) {
                         setMethod = clazz.getMethod(setterName, fieldClass);
                         setMethod.invoke(o, Float.parseFloat(String.valueOf(map.get(fieldName))));//为其赋值
-                    }else if(fieldClass == BigInteger.class ){
+                    } else if (fieldClass == BigInteger.class) {
                         setMethod = clazz.getMethod(setterName, fieldClass);
                         setMethod.invoke(o, BigInteger.valueOf(Long.parseLong(String.valueOf(map.get(fieldName)))));//为其赋值
-                    }else if(fieldClass == BigDecimal.class){
+                    } else if (fieldClass == BigDecimal.class) {
                         setMethod = clazz.getMethod(setterName, fieldClass);
                         setMethod.invoke(o, BigDecimal.valueOf(Long.parseLong(String.valueOf(map.get(fieldName)))));//为其赋值
-                    }else if(fieldClass == Date.class){
+                    } else if (fieldClass == Date.class) {
                         setMethod = clazz.getMethod(setterName, fieldClass);
-                        if(map.get(fieldName).getClass() == java.sql.Date.class){
-                            setMethod.invoke(o, new Date(((java.sql.Date)map.get(fieldName)).getTime()));//为其赋值
-                        }else if(map.get(fieldName).getClass() == java.sql.Time.class){
-                            setMethod.invoke(o, new Date(((java.sql.Time)map.get(fieldName)).getTime()));//为其赋值
-                        }else if(map.get(fieldName).getClass() == java.sql.Timestamp.class){
-                            setMethod.invoke(o, new Date(((java.sql.Timestamp)map.get(fieldName)).getTime()));//为其赋值
+                        if (map.get(fieldName).getClass() == java.sql.Date.class) {
+                            setMethod.invoke(o, new Date(((java.sql.Date) map.get(fieldName)).getTime()));//为其赋值
+                        } else if (map.get(fieldName).getClass() == java.sql.Time.class) {
+                            setMethod.invoke(o, new Date(((java.sql.Time) map.get(fieldName)).getTime()));//为其赋值
+                        } else if (map.get(fieldName).getClass() == java.sql.Timestamp.class) {
+                            setMethod.invoke(o, new Date(((java.sql.Timestamp) map.get(fieldName)).getTime()));//为其赋值
                         }
                     }
                 }
@@ -2522,7 +2534,7 @@ class JsyjMouseListener extends MouseAdapter implements Watcher {
                 e.printStackTrace();
             } catch (NoSuchMethodException e) {
                 e.printStackTrace();
-            }   catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
@@ -2533,12 +2545,13 @@ class JsyjMouseListener extends MouseAdapter implements Watcher {
         }
         return o;
     }
-    public  boolean isHaveSuchMethod(Class<?> clazz, String methodName){
+
+    public boolean isHaveSuchMethod(Class<?> clazz, String methodName) {
         Method[] methodArray = clazz.getMethods();
         boolean result = false;
-        if(null != methodArray){
-            for(int i=0; i<methodArray.length; i++){
-                if(methodArray[i].getName().equals(methodName)){
+        if (null != methodArray) {
+            for (int i = 0; i < methodArray.length; i++) {
+                if (methodArray[i].getName().equals(methodName)) {
                     result = true;
                     break;
                 }
@@ -2607,7 +2620,7 @@ class SbjcxxhqMouseListener extends MouseAdapter implements Watcher {
             zc.setsInfo("正在获取，请稍后...");
             Main.setCenter(zc);
             zc.setVisible(true);
-        }else {
+        } else {
             JOptionPane.showMessageDialog(null, "用户[" + Main.oprname + "]没有此权限!", "错误提示", JOptionPane.ERROR_MESSAGE);
         }
     }

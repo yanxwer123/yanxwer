@@ -23,14 +23,9 @@
                 起止日期：
             </th>
             <th width="450px" colspan="3">
-                <input id="dateStartinput" type="text" class="easyui-datebox" required="required"/>
-                <input id="dateEndinput" type="text"  class="easyui-datebox" required="required"/>
-                状态：
-                <select  class="easyui-combobox" id="cboType">
-                    <option selected value="0">-请选择-</option>
-                    <option value="1">正常</option>
-                    <option value="2">异常</option>
-                </select>
+                <input id="dateStartinput" type="text" class="easyui-datebox" required="required"   editable="false"/>
+                <input id="dateEndinput" type="text"  class="easyui-datebox" required="required"   editable="false"/>
+
             </th>
 
 
@@ -42,7 +37,7 @@
             <th></th>
             <th>
                 <a id="btnSelect" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="initData()">查询</a>
-                <a id="btnExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="ExportExl()">导出</a>
+                <a id="btnExport" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-export'" onclick="ExportExl()">导出</a>
             </th>
             <th></th>
             <th></th>
@@ -80,7 +75,7 @@
         {field:'SecodeMeasureTime',title:'第二次检测时间',width:110,formatter: formatDatebox,align:'center'},
         {field:'SecodeMeasureStore',title:'第二次检测库存(L)',width:100,align:'center'},
         {field:'IntervalSales',title:'两次检测时间内销售量(L)',width:120,align:'center'},
-        {field:'IntervalTime',title:'间隔时间（分:秒）',width:100,align:'center'},
+        {field:'IntervalTime',title:'间隔时间(分:秒)',width:100,align:'center'},
         {field:'Difference',title:'差异(L)',width:100,align:'center'}
        /* {field:'result',title:'状态',width:100}*/
     ]];
@@ -127,7 +122,7 @@
             oucode=ss;
         }
 
-        result=$('#cboType').combobox('getValue');
+        result="";
 
         paras={ "begin": startTime,"end": endTime,"oucode": oucode,"result": result};
     }

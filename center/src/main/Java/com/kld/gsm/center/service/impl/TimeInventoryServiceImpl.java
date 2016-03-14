@@ -46,19 +46,36 @@ public class TimeInventoryServiceImpl implements TimeInventoryService {
 
     @Override
     public List<HashMap<String,Object>> selectTimeInventoryInfo(Integer page, Integer rows,String oucode) {
+        HashMap hashMap = new HashMap();
         if (page != null && rows != null) {
             page = page < 1 ? 1 : page;
             int firstRow = (page - 1) * rows;
-            HashMap hashMap = new HashMap();
+
             hashMap.put("firstRow", firstRow);
             hashMap.put("pageSize", rows);
-            hashMap.put("oucode", oucode + "%");
-            return ossMonitorTimeInventoryMapper.selectTimeInventoryInfo(hashMap);
-
         }
-        return null;
+        if (oucode!=null&&oucode!="") {
+            hashMap.put("oucode", oucode+"%");
+        }
+        else
+        {
+            hashMap.put("oucode", oucode);
+        }
+        return ossMonitorTimeInventoryMapper.selectTimeInventoryInfo(hashMap);
     }
-
+    @Override
+    public int selectTimeInventoryCount(String oucode)
+    {
+        HashMap hashMap = new HashMap();
+        if (oucode!=null&&oucode!="") {
+            hashMap.put("oucode", oucode+"%");
+        }
+        else
+        {
+            hashMap.put("oucode", oucode);
+        }
+        return ossMonitorTimeInventoryMapper.selectPageCount(hashMap);
+    }
 
     @Override
     public List<HashMap<String, Object>> selectInventory(String oiltype, String oucode) {

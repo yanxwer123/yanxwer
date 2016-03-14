@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.kld.gsm.coord.dao.BillInforDao">
-    <select id="selectAll" resultType="com.kld.gsm.coord.domain.BillInfor">
+    <select id="sele/ctAll" resultType="com.kld.gsm.coord.domain.BillInfor">
        select * FROM BillInfor
     </select>
     <select id="selectBycode" parameterType="String" resultType="com.kld.gsm.coord.domain.BillInfor">
-       select * FROM BillInfor where typeno=#{typeno}
+       select typeno,maxvouchno FROM BillInfor where typeno=#{typeno,jdbcType=VARCHAR}
     </select>
     <update id="updateBillInfor" parameterType="com.kld.gsm.coord.domain.BillInfor">
         update BillInfor set maxvouchno=#{maxvouchno} where typeno=#{typeno}

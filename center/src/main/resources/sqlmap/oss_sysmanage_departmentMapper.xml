@@ -1,63 +1,63 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.kld.gsm.center.dao.oss_sysmanage_departmentMapper" >
-  <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_sysmanage_department" >
-    <id column="SinopecNodeNo" property="sinopecnodeno" jdbcType="CHAR" />
-    <result column="PhysicalNodeNo" property="physicalnodeno" jdbcType="CHAR" />
-    <result column="NodeNo" property="nodeno" jdbcType="CHAR" />
-    <result column="NodeName" property="nodename" jdbcType="CHAR" />
-    <result column="NodeTag" property="nodetag" jdbcType="CHAR" />
-    <result column="AreaNo" property="areano" jdbcType="CHAR" />
-    <result column="GroupNo" property="groupno" jdbcType="CHAR" />
-    <result column="NodeNoOwner" property="nodenoowner" jdbcType="CHAR" />
-    <result column="EnterPriseNo" property="enterpriseno" jdbcType="CHAR" />
-    <result column="NodeAttribute" property="nodeattribute" jdbcType="CHAR" />
-    <result column="NodeSpecific" property="nodespecific" jdbcType="CHAR" />
-    <result column="RegType" property="regtype" jdbcType="CHAR" />
-    <result column="OrgCode" property="orgcode" jdbcType="CHAR" />
-    <result column="NodeAddrs" property="nodeaddrs" jdbcType="CHAR" />
-    <result column="PostNo" property="postno" jdbcType="CHAR" />
-    <result column="Manager" property="manager" jdbcType="CHAR" />
-    <result column="TelphNo" property="telphno" jdbcType="CHAR" />
-    <result column="Remark" property="remark" jdbcType="CHAR" />
-    <result column="FoxNo" property="foxno" jdbcType="CHAR" />
-    <result column="Email" property="email" jdbcType="CHAR" />
-    <result column="WorkTime" property="worktime" jdbcType="TIMESTAMP" />
-    <result column="AccountOwner" property="accountowner" jdbcType="CHAR" />
-    <result column="NodeTree" property="nodetree" jdbcType="CHAR" />
-    <result column="ProvinceNo" property="provinceno" jdbcType="CHAR" />
-    <result column="NodeType" property="nodetype" jdbcType="CHAR" />
-    <result column="UsefulStatus" property="usefulstatus" jdbcType="CHAR" />
-    <result column="LastNodeNo" property="lastnodeno" jdbcType="CHAR" />
-    <result column="ModifyTime" property="modifytime" jdbcType="TIMESTAMP" />
-    <result column="TaxpayerCode" property="taxpayercode" jdbcType="CHAR" />
-    <result column="CorporationName" property="corporationname" jdbcType="CHAR" />
-    <result column="Expand1" property="expand1" jdbcType="CHAR" />
-    <result column="Expand2" property="expand2" jdbcType="CHAR" />
-    <result column="AreaDesc" property="areadesc" jdbcType="CHAR" />
-    <result column="NodeNoOwnerDesc" property="nodenoownerdesc" jdbcType="CHAR" />
-    <result column="ProvinceDesc" property="provincedesc" jdbcType="CHAR" />
-    <result column="TranStatus" property="transtatus" jdbcType="VARCHAR" />
-    <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.kld.gsm.center.dao.oss_sysmanage_departmentMapper">
+    <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_sysmanage_department">
+        <id column="SinopecNodeNo" property="sinopecnodeno" jdbcType="CHAR"/>
+        <result column="PhysicalNodeNo" property="physicalnodeno" jdbcType="CHAR"/>
+        <result column="NodeNo" property="nodeno" jdbcType="CHAR"/>
+        <result column="NodeName" property="nodename" jdbcType="CHAR"/>
+        <result column="NodeTag" property="nodetag" jdbcType="CHAR"/>
+        <result column="AreaNo" property="areano" jdbcType="CHAR"/>
+        <result column="GroupNo" property="groupno" jdbcType="CHAR"/>
+        <result column="NodeNoOwner" property="nodenoowner" jdbcType="CHAR"/>
+        <result column="EnterPriseNo" property="enterpriseno" jdbcType="CHAR"/>
+        <result column="NodeAttribute" property="nodeattribute" jdbcType="CHAR"/>
+        <result column="NodeSpecific" property="nodespecific" jdbcType="CHAR"/>
+        <result column="RegType" property="regtype" jdbcType="CHAR"/>
+        <result column="OrgCode" property="orgcode" jdbcType="CHAR"/>
+        <result column="NodeAddrs" property="nodeaddrs" jdbcType="CHAR"/>
+        <result column="PostNo" property="postno" jdbcType="CHAR"/>
+        <result column="Manager" property="manager" jdbcType="CHAR"/>
+        <result column="TelphNo" property="telphno" jdbcType="CHAR"/>
+        <result column="Remark" property="remark" jdbcType="CHAR"/>
+        <result column="FoxNo" property="foxno" jdbcType="CHAR"/>
+        <result column="Email" property="email" jdbcType="CHAR"/>
+        <result column="WorkTime" property="worktime" jdbcType="TIMESTAMP"/>
+        <result column="AccountOwner" property="accountowner" jdbcType="CHAR"/>
+        <result column="NodeTree" property="nodetree" jdbcType="CHAR"/>
+        <result column="ProvinceNo" property="provinceno" jdbcType="CHAR"/>
+        <result column="NodeType" property="nodetype" jdbcType="CHAR"/>
+        <result column="UsefulStatus" property="usefulstatus" jdbcType="CHAR"/>
+        <result column="LastNodeNo" property="lastnodeno" jdbcType="CHAR"/>
+        <result column="ModifyTime" property="modifytime" jdbcType="TIMESTAMP"/>
+        <result column="TaxpayerCode" property="taxpayercode" jdbcType="CHAR"/>
+        <result column="CorporationName" property="corporationname" jdbcType="CHAR"/>
+        <result column="Expand1" property="expand1" jdbcType="CHAR"/>
+        <result column="Expand2" property="expand2" jdbcType="CHAR"/>
+        <result column="AreaDesc" property="areadesc" jdbcType="CHAR"/>
+        <result column="NodeNoOwnerDesc" property="nodenoownerdesc" jdbcType="CHAR"/>
+        <result column="ProvinceDesc" property="provincedesc" jdbcType="CHAR"/>
+        <result column="TranStatus" property="transtatus" jdbcType="VARCHAR"/>
+        <result column="OUCode" property="oucode" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     SinopecNodeNo, PhysicalNodeNo, NodeNo, NodeName, NodeTag, AreaNo, GroupNo, NodeNoOwner, 
     EnterPriseNo, NodeAttribute, NodeSpecific, RegType, OrgCode, NodeAddrs, PostNo, Manager, 
     TelphNo, Remark, FoxNo, Email, WorkTime, AccountOwner, NodeTree, ProvinceNo, NodeType, 
     UsefulStatus, LastNodeNo, ModifyTime, TaxpayerCode, CorporationName, Expand1, Expand2, 
     AreaDesc, NodeNoOwnerDesc, ProvinceDesc, TranStatus, OUCode
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 'true' as QUERYID,
-    <include refid="Base_Column_List" />
-    from oss_sysmanage_department
-    where SinopecNodeNo = #{sinopecnodeno,jdbcType=CHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select 'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from oss_sysmanage_department
+        where SinopecNodeNo = #{sinopecnodeno,jdbcType=CHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from oss_sysmanage_department
     where SinopecNodeNo = #{sinopecnodeno,jdbcType=CHAR}
   </delete>
-  <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_sysmanage_department" >
+    <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_sysmanage_department">
     insert into oss_sysmanage_department (SinopecNodeNo, PhysicalNodeNo, NodeNo, 
       NodeName, NodeTag, AreaNo, GroupNo, 
       NodeNoOwner, EnterPriseNo, NodeAttribute, 
@@ -83,579 +83,579 @@
       #{areadesc,jdbcType=CHAR}, #{nodenoownerdesc,jdbcType=CHAR}, #{provincedesc,jdbcType=CHAR}, 
       #{transtatus,jdbcType=VARCHAR}, #{oucode,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_sysmanage_department" >
-    insert into oss_sysmanage_department
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="sinopecnodeno != null" >
-        SinopecNodeNo,
-      </if>
-      <if test="physicalnodeno != null" >
-        PhysicalNodeNo,
-      </if>
-      <if test="nodeno != null" >
-        NodeNo,
-      </if>
-      <if test="nodename != null" >
-        NodeName,
-      </if>
-      <if test="nodetag != null" >
-        NodeTag,
-      </if>
-      <if test="areano != null" >
-        AreaNo,
-      </if>
-      <if test="groupno != null" >
-        GroupNo,
-      </if>
-      <if test="nodenoowner != null" >
-        NodeNoOwner,
-      </if>
-      <if test="enterpriseno != null" >
-        EnterPriseNo,
-      </if>
-      <if test="nodeattribute != null" >
-        NodeAttribute,
-      </if>
-      <if test="nodespecific != null" >
-        NodeSpecific,
-      </if>
-      <if test="regtype != null" >
-        RegType,
-      </if>
-      <if test="orgcode != null" >
-        OrgCode,
-      </if>
-      <if test="nodeaddrs != null" >
-        NodeAddrs,
-      </if>
-      <if test="postno != null" >
-        PostNo,
-      </if>
-      <if test="manager != null" >
-        Manager,
-      </if>
-      <if test="telphno != null" >
-        TelphNo,
-      </if>
-      <if test="remark != null" >
-        Remark,
-      </if>
-      <if test="foxno != null" >
-        FoxNo,
-      </if>
-      <if test="email != null" >
-        Email,
-      </if>
-      <if test="worktime != null" >
-        WorkTime,
-      </if>
-      <if test="accountowner != null" >
-        AccountOwner,
-      </if>
-      <if test="nodetree != null" >
-        NodeTree,
-      </if>
-      <if test="provinceno != null" >
-        ProvinceNo,
-      </if>
-      <if test="nodetype != null" >
-        NodeType,
-      </if>
-      <if test="usefulstatus != null" >
-        UsefulStatus,
-      </if>
-      <if test="lastnodeno != null" >
-        LastNodeNo,
-      </if>
-      <if test="modifytime != null" >
-        ModifyTime,
-      </if>
-      <if test="taxpayercode != null" >
-        TaxpayerCode,
-      </if>
-      <if test="corporationname != null" >
-        CorporationName,
-      </if>
-      <if test="expand1 != null" >
-        Expand1,
-      </if>
-      <if test="expand2 != null" >
-        Expand2,
-      </if>
-      <if test="areadesc != null" >
-        AreaDesc,
-      </if>
-      <if test="nodenoownerdesc != null" >
-        NodeNoOwnerDesc,
-      </if>
-      <if test="provincedesc != null" >
-        ProvinceDesc,
-      </if>
-      <if test="transtatus != null" >
-        TranStatus,
-      </if>
-      <if test="oucode != null" >
-        OUCode,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="sinopecnodeno != null" >
-        #{sinopecnodeno,jdbcType=CHAR},
-      </if>
-      <if test="physicalnodeno != null" >
-        #{physicalnodeno,jdbcType=CHAR},
-      </if>
-      <if test="nodeno != null" >
-        #{nodeno,jdbcType=CHAR},
-      </if>
-      <if test="nodename != null" >
-        #{nodename,jdbcType=CHAR},
-      </if>
-      <if test="nodetag != null" >
-        #{nodetag,jdbcType=CHAR},
-      </if>
-      <if test="areano != null" >
-        #{areano,jdbcType=CHAR},
-      </if>
-      <if test="groupno != null" >
-        #{groupno,jdbcType=CHAR},
-      </if>
-      <if test="nodenoowner != null" >
-        #{nodenoowner,jdbcType=CHAR},
-      </if>
-      <if test="enterpriseno != null" >
-        #{enterpriseno,jdbcType=CHAR},
-      </if>
-      <if test="nodeattribute != null" >
-        #{nodeattribute,jdbcType=CHAR},
-      </if>
-      <if test="nodespecific != null" >
-        #{nodespecific,jdbcType=CHAR},
-      </if>
-      <if test="regtype != null" >
-        #{regtype,jdbcType=CHAR},
-      </if>
-      <if test="orgcode != null" >
-        #{orgcode,jdbcType=CHAR},
-      </if>
-      <if test="nodeaddrs != null" >
-        #{nodeaddrs,jdbcType=CHAR},
-      </if>
-      <if test="postno != null" >
-        #{postno,jdbcType=CHAR},
-      </if>
-      <if test="manager != null" >
-        #{manager,jdbcType=CHAR},
-      </if>
-      <if test="telphno != null" >
-        #{telphno,jdbcType=CHAR},
-      </if>
-      <if test="remark != null" >
-        #{remark,jdbcType=CHAR},
-      </if>
-      <if test="foxno != null" >
-        #{foxno,jdbcType=CHAR},
-      </if>
-      <if test="email != null" >
-        #{email,jdbcType=CHAR},
-      </if>
-      <if test="worktime != null" >
-        #{worktime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="accountowner != null" >
-        #{accountowner,jdbcType=CHAR},
-      </if>
-      <if test="nodetree != null" >
-        #{nodetree,jdbcType=CHAR},
-      </if>
-      <if test="provinceno != null" >
-        #{provinceno,jdbcType=CHAR},
-      </if>
-      <if test="nodetype != null" >
-        #{nodetype,jdbcType=CHAR},
-      </if>
-      <if test="usefulstatus != null" >
-        #{usefulstatus,jdbcType=CHAR},
-      </if>
-      <if test="lastnodeno != null" >
-        #{lastnodeno,jdbcType=CHAR},
-      </if>
-      <if test="modifytime != null" >
-        #{modifytime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="taxpayercode != null" >
-        #{taxpayercode,jdbcType=CHAR},
-      </if>
-      <if test="corporationname != null" >
-        #{corporationname,jdbcType=CHAR},
-      </if>
-      <if test="expand1 != null" >
-        #{expand1,jdbcType=CHAR},
-      </if>
-      <if test="expand2 != null" >
-        #{expand2,jdbcType=CHAR},
-      </if>
-      <if test="areadesc != null" >
-        #{areadesc,jdbcType=CHAR},
-      </if>
-      <if test="nodenoownerdesc != null" >
-        #{nodenoownerdesc,jdbcType=CHAR},
-      </if>
-      <if test="provincedesc != null" >
-        #{provincedesc,jdbcType=CHAR},
-      </if>
-      <if test="transtatus != null" >
-        #{transtatus,jdbcType=VARCHAR},
-      </if>
-      <if test="oucode != null" >
-        #{oucode,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <insert id="merge" parameterType="com.kld.gsm.center.domain.oss_sysmanage_department" >
-    replace into oss_sysmanage_department
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="sinopecnodeno != null" >
-        SinopecNodeNo,
-      </if>
-      <if test="physicalnodeno != null" >
-        PhysicalNodeNo,
-      </if>
-      <if test="nodeno != null" >
-        NodeNo,
-      </if>
-      <if test="nodename != null" >
-        NodeName,
-      </if>
-      <if test="nodetag != null" >
-        NodeTag,
-      </if>
-      <if test="areano != null" >
-        AreaNo,
-      </if>
-      <if test="groupno != null" >
-        GroupNo,
-      </if>
-      <if test="nodenoowner != null" >
-        NodeNoOwner,
-      </if>
-      <if test="enterpriseno != null" >
-        EnterPriseNo,
-      </if>
-      <if test="nodeattribute != null" >
-        NodeAttribute,
-      </if>
-      <if test="nodespecific != null" >
-        NodeSpecific,
-      </if>
-      <if test="regtype != null" >
-        RegType,
-      </if>
-      <if test="orgcode != null" >
-        OrgCode,
-      </if>
-      <if test="nodeaddrs != null" >
-        NodeAddrs,
-      </if>
-      <if test="postno != null" >
-        PostNo,
-      </if>
-      <if test="manager != null" >
-        Manager,
-      </if>
-      <if test="telphno != null" >
-        TelphNo,
-      </if>
-      <if test="remark != null" >
-        Remark,
-      </if>
-      <if test="foxno != null" >
-        FoxNo,
-      </if>
-      <if test="email != null" >
-        Email,
-      </if>
-      <if test="worktime != null" >
-        WorkTime,
-      </if>
-      <if test="accountowner != null" >
-        AccountOwner,
-      </if>
-      <if test="nodetree != null" >
-        NodeTree,
-      </if>
-      <if test="provinceno != null" >
-        ProvinceNo,
-      </if>
-      <if test="nodetype != null" >
-        NodeType,
-      </if>
-      <if test="usefulstatus != null" >
-        UsefulStatus,
-      </if>
-      <if test="lastnodeno != null" >
-        LastNodeNo,
-      </if>
-      <if test="modifytime != null" >
-        ModifyTime,
-      </if>
-      <if test="taxpayercode != null" >
-        TaxpayerCode,
-      </if>
-      <if test="corporationname != null" >
-        CorporationName,
-      </if>
-      <if test="expand1 != null" >
-        Expand1,
-      </if>
-      <if test="expand2 != null" >
-        Expand2,
-      </if>
-      <if test="areadesc != null" >
-        AreaDesc,
-      </if>
-      <if test="nodenoownerdesc != null" >
-        NodeNoOwnerDesc,
-      </if>
-      <if test="provincedesc != null" >
-        ProvinceDesc,
-      </if>
-      <if test="transtatus != null" >
-        TranStatus,
-      </if>
-      <if test="oucode != null" >
-        OUCode,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="sinopecnodeno != null" >
-        #{sinopecnodeno,jdbcType=CHAR},
-      </if>
-      <if test="physicalnodeno != null" >
-        #{physicalnodeno,jdbcType=CHAR},
-      </if>
-      <if test="nodeno != null" >
-        #{nodeno,jdbcType=CHAR},
-      </if>
-      <if test="nodename != null" >
-        #{nodename,jdbcType=CHAR},
-      </if>
-      <if test="nodetag != null" >
-        #{nodetag,jdbcType=CHAR},
-      </if>
-      <if test="areano != null" >
-        #{areano,jdbcType=CHAR},
-      </if>
-      <if test="groupno != null" >
-        #{groupno,jdbcType=CHAR},
-      </if>
-      <if test="nodenoowner != null" >
-        #{nodenoowner,jdbcType=CHAR},
-      </if>
-      <if test="enterpriseno != null" >
-        #{enterpriseno,jdbcType=CHAR},
-      </if>
-      <if test="nodeattribute != null" >
-        #{nodeattribute,jdbcType=CHAR},
-      </if>
-      <if test="nodespecific != null" >
-        #{nodespecific,jdbcType=CHAR},
-      </if>
-      <if test="regtype != null" >
-        #{regtype,jdbcType=CHAR},
-      </if>
-      <if test="orgcode != null" >
-        #{orgcode,jdbcType=CHAR},
-      </if>
-      <if test="nodeaddrs != null" >
-        #{nodeaddrs,jdbcType=CHAR},
-      </if>
-      <if test="postno != null" >
-        #{postno,jdbcType=CHAR},
-      </if>
-      <if test="manager != null" >
-        #{manager,jdbcType=CHAR},
-      </if>
-      <if test="telphno != null" >
-        #{telphno,jdbcType=CHAR},
-      </if>
-      <if test="remark != null" >
-        #{remark,jdbcType=CHAR},
-      </if>
-      <if test="foxno != null" >
-        #{foxno,jdbcType=CHAR},
-      </if>
-      <if test="email != null" >
-        #{email,jdbcType=CHAR},
-      </if>
-      <if test="worktime != null" >
-        #{worktime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="accountowner != null" >
-        #{accountowner,jdbcType=CHAR},
-      </if>
-      <if test="nodetree != null" >
-        #{nodetree,jdbcType=CHAR},
-      </if>
-      <if test="provinceno != null" >
-        #{provinceno,jdbcType=CHAR},
-      </if>
-      <if test="nodetype != null" >
-        #{nodetype,jdbcType=CHAR},
-      </if>
-      <if test="usefulstatus != null" >
-        #{usefulstatus,jdbcType=CHAR},
-      </if>
-      <if test="lastnodeno != null" >
-        #{lastnodeno,jdbcType=CHAR},
-      </if>
-      <if test="modifytime != null" >
-        #{modifytime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="taxpayercode != null" >
-        #{taxpayercode,jdbcType=CHAR},
-      </if>
-      <if test="corporationname != null" >
-        #{corporationname,jdbcType=CHAR},
-      </if>
-      <if test="expand1 != null" >
-        #{expand1,jdbcType=CHAR},
-      </if>
-      <if test="expand2 != null" >
-        #{expand2,jdbcType=CHAR},
-      </if>
-      <if test="areadesc != null" >
-        #{areadesc,jdbcType=CHAR},
-      </if>
-      <if test="nodenoownerdesc != null" >
-        #{nodenoownerdesc,jdbcType=CHAR},
-      </if>
-      <if test="provincedesc != null" >
-        #{provincedesc,jdbcType=CHAR},
-      </if>
-      <if test="transtatus != null" >
-        #{transtatus,jdbcType=VARCHAR},
-      </if>
-      <if test="oucode != null" >
-        #{oucode,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_sysmanage_department" >
-    update oss_sysmanage_department
-    <set >
-      <if test="physicalnodeno != null" >
-        PhysicalNodeNo = #{physicalnodeno,jdbcType=CHAR},
-      </if>
-      <if test="nodeno != null" >
-        NodeNo = #{nodeno,jdbcType=CHAR},
-      </if>
-      <if test="nodename != null" >
-        NodeName = #{nodename,jdbcType=CHAR},
-      </if>
-      <if test="nodetag != null" >
-        NodeTag = #{nodetag,jdbcType=CHAR},
-      </if>
-      <if test="areano != null" >
-        AreaNo = #{areano,jdbcType=CHAR},
-      </if>
-      <if test="groupno != null" >
-        GroupNo = #{groupno,jdbcType=CHAR},
-      </if>
-      <if test="nodenoowner != null" >
-        NodeNoOwner = #{nodenoowner,jdbcType=CHAR},
-      </if>
-      <if test="enterpriseno != null" >
-        EnterPriseNo = #{enterpriseno,jdbcType=CHAR},
-      </if>
-      <if test="nodeattribute != null" >
-        NodeAttribute = #{nodeattribute,jdbcType=CHAR},
-      </if>
-      <if test="nodespecific != null" >
-        NodeSpecific = #{nodespecific,jdbcType=CHAR},
-      </if>
-      <if test="regtype != null" >
-        RegType = #{regtype,jdbcType=CHAR},
-      </if>
-      <if test="orgcode != null" >
-        OrgCode = #{orgcode,jdbcType=CHAR},
-      </if>
-      <if test="nodeaddrs != null" >
-        NodeAddrs = #{nodeaddrs,jdbcType=CHAR},
-      </if>
-      <if test="postno != null" >
-        PostNo = #{postno,jdbcType=CHAR},
-      </if>
-      <if test="manager != null" >
-        Manager = #{manager,jdbcType=CHAR},
-      </if>
-      <if test="telphno != null" >
-        TelphNo = #{telphno,jdbcType=CHAR},
-      </if>
-      <if test="remark != null" >
-        Remark = #{remark,jdbcType=CHAR},
-      </if>
-      <if test="foxno != null" >
-        FoxNo = #{foxno,jdbcType=CHAR},
-      </if>
-      <if test="email != null" >
-        Email = #{email,jdbcType=CHAR},
-      </if>
-      <if test="worktime != null" >
-        WorkTime = #{worktime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="accountowner != null" >
-        AccountOwner = #{accountowner,jdbcType=CHAR},
-      </if>
-      <if test="nodetree != null" >
-        NodeTree = #{nodetree,jdbcType=CHAR},
-      </if>
-      <if test="provinceno != null" >
-        ProvinceNo = #{provinceno,jdbcType=CHAR},
-      </if>
-      <if test="nodetype != null" >
-        NodeType = #{nodetype,jdbcType=CHAR},
-      </if>
-      <if test="usefulstatus != null" >
-        UsefulStatus = #{usefulstatus,jdbcType=CHAR},
-      </if>
-      <if test="lastnodeno != null" >
-        LastNodeNo = #{lastnodeno,jdbcType=CHAR},
-      </if>
-      <if test="modifytime != null" >
-        ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="taxpayercode != null" >
-        TaxpayerCode = #{taxpayercode,jdbcType=CHAR},
-      </if>
-      <if test="corporationname != null" >
-        CorporationName = #{corporationname,jdbcType=CHAR},
-      </if>
-      <if test="expand1 != null" >
-        Expand1 = #{expand1,jdbcType=CHAR},
-      </if>
-      <if test="expand2 != null" >
-        Expand2 = #{expand2,jdbcType=CHAR},
-      </if>
-      <if test="areadesc != null" >
-        AreaDesc = #{areadesc,jdbcType=CHAR},
-      </if>
-      <if test="nodenoownerdesc != null" >
-        NodeNoOwnerDesc = #{nodenoownerdesc,jdbcType=CHAR},
-      </if>
-      <if test="provincedesc != null" >
-        ProvinceDesc = #{provincedesc,jdbcType=CHAR},
-      </if>
-      <if test="transtatus != null" >
-        TranStatus = #{transtatus,jdbcType=VARCHAR},
-      </if>
-      <if test="oucode != null" >
-        OUCode = #{oucode,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where SinopecNodeNo = #{sinopecnodeno,jdbcType=CHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_sysmanage_department" >
+    <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_sysmanage_department">
+        insert into oss_sysmanage_department
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sinopecnodeno != null">
+                SinopecNodeNo,
+            </if>
+            <if test="physicalnodeno != null">
+                PhysicalNodeNo,
+            </if>
+            <if test="nodeno != null">
+                NodeNo,
+            </if>
+            <if test="nodename != null">
+                NodeName,
+            </if>
+            <if test="nodetag != null">
+                NodeTag,
+            </if>
+            <if test="areano != null">
+                AreaNo,
+            </if>
+            <if test="groupno != null">
+                GroupNo,
+            </if>
+            <if test="nodenoowner != null">
+                NodeNoOwner,
+            </if>
+            <if test="enterpriseno != null">
+                EnterPriseNo,
+            </if>
+            <if test="nodeattribute != null">
+                NodeAttribute,
+            </if>
+            <if test="nodespecific != null">
+                NodeSpecific,
+            </if>
+            <if test="regtype != null">
+                RegType,
+            </if>
+            <if test="orgcode != null">
+                OrgCode,
+            </if>
+            <if test="nodeaddrs != null">
+                NodeAddrs,
+            </if>
+            <if test="postno != null">
+                PostNo,
+            </if>
+            <if test="manager != null">
+                Manager,
+            </if>
+            <if test="telphno != null">
+                TelphNo,
+            </if>
+            <if test="remark != null">
+                Remark,
+            </if>
+            <if test="foxno != null">
+                FoxNo,
+            </if>
+            <if test="email != null">
+                Email,
+            </if>
+            <if test="worktime != null">
+                WorkTime,
+            </if>
+            <if test="accountowner != null">
+                AccountOwner,
+            </if>
+            <if test="nodetree != null">
+                NodeTree,
+            </if>
+            <if test="provinceno != null">
+                ProvinceNo,
+            </if>
+            <if test="nodetype != null">
+                NodeType,
+            </if>
+            <if test="usefulstatus != null">
+                UsefulStatus,
+            </if>
+            <if test="lastnodeno != null">
+                LastNodeNo,
+            </if>
+            <if test="modifytime != null">
+                ModifyTime,
+            </if>
+            <if test="taxpayercode != null">
+                TaxpayerCode,
+            </if>
+            <if test="corporationname != null">
+                CorporationName,
+            </if>
+            <if test="expand1 != null">
+                Expand1,
+            </if>
+            <if test="expand2 != null">
+                Expand2,
+            </if>
+            <if test="areadesc != null">
+                AreaDesc,
+            </if>
+            <if test="nodenoownerdesc != null">
+                NodeNoOwnerDesc,
+            </if>
+            <if test="provincedesc != null">
+                ProvinceDesc,
+            </if>
+            <if test="transtatus != null">
+                TranStatus,
+            </if>
+            <if test="oucode != null">
+                OUCode,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sinopecnodeno != null">
+                #{sinopecnodeno,jdbcType=CHAR},
+            </if>
+            <if test="physicalnodeno != null">
+                #{physicalnodeno,jdbcType=CHAR},
+            </if>
+            <if test="nodeno != null">
+                #{nodeno,jdbcType=CHAR},
+            </if>
+            <if test="nodename != null">
+                #{nodename,jdbcType=CHAR},
+            </if>
+            <if test="nodetag != null">
+                #{nodetag,jdbcType=CHAR},
+            </if>
+            <if test="areano != null">
+                #{areano,jdbcType=CHAR},
+            </if>
+            <if test="groupno != null">
+                #{groupno,jdbcType=CHAR},
+            </if>
+            <if test="nodenoowner != null">
+                #{nodenoowner,jdbcType=CHAR},
+            </if>
+            <if test="enterpriseno != null">
+                #{enterpriseno,jdbcType=CHAR},
+            </if>
+            <if test="nodeattribute != null">
+                #{nodeattribute,jdbcType=CHAR},
+            </if>
+            <if test="nodespecific != null">
+                #{nodespecific,jdbcType=CHAR},
+            </if>
+            <if test="regtype != null">
+                #{regtype,jdbcType=CHAR},
+            </if>
+            <if test="orgcode != null">
+                #{orgcode,jdbcType=CHAR},
+            </if>
+            <if test="nodeaddrs != null">
+                #{nodeaddrs,jdbcType=CHAR},
+            </if>
+            <if test="postno != null">
+                #{postno,jdbcType=CHAR},
+            </if>
+            <if test="manager != null">
+                #{manager,jdbcType=CHAR},
+            </if>
+            <if test="telphno != null">
+                #{telphno,jdbcType=CHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=CHAR},
+            </if>
+            <if test="foxno != null">
+                #{foxno,jdbcType=CHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=CHAR},
+            </if>
+            <if test="worktime != null">
+                #{worktime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="accountowner != null">
+                #{accountowner,jdbcType=CHAR},
+            </if>
+            <if test="nodetree != null">
+                #{nodetree,jdbcType=CHAR},
+            </if>
+            <if test="provinceno != null">
+                #{provinceno,jdbcType=CHAR},
+            </if>
+            <if test="nodetype != null">
+                #{nodetype,jdbcType=CHAR},
+            </if>
+            <if test="usefulstatus != null">
+                #{usefulstatus,jdbcType=CHAR},
+            </if>
+            <if test="lastnodeno != null">
+                #{lastnodeno,jdbcType=CHAR},
+            </if>
+            <if test="modifytime != null">
+                #{modifytime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="taxpayercode != null">
+                #{taxpayercode,jdbcType=CHAR},
+            </if>
+            <if test="corporationname != null">
+                #{corporationname,jdbcType=CHAR},
+            </if>
+            <if test="expand1 != null">
+                #{expand1,jdbcType=CHAR},
+            </if>
+            <if test="expand2 != null">
+                #{expand2,jdbcType=CHAR},
+            </if>
+            <if test="areadesc != null">
+                #{areadesc,jdbcType=CHAR},
+            </if>
+            <if test="nodenoownerdesc != null">
+                #{nodenoownerdesc,jdbcType=CHAR},
+            </if>
+            <if test="provincedesc != null">
+                #{provincedesc,jdbcType=CHAR},
+            </if>
+            <if test="transtatus != null">
+                #{transtatus,jdbcType=VARCHAR},
+            </if>
+            <if test="oucode != null">
+                #{oucode,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="merge" parameterType="com.kld.gsm.center.domain.oss_sysmanage_department">
+        replace into oss_sysmanage_department
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sinopecnodeno != null">
+                SinopecNodeNo,
+            </if>
+            <if test="physicalnodeno != null">
+                PhysicalNodeNo,
+            </if>
+            <if test="nodeno != null">
+                NodeNo,
+            </if>
+            <if test="nodename != null">
+                NodeName,
+            </if>
+            <if test="nodetag != null">
+                NodeTag,
+            </if>
+            <if test="areano != null">
+                AreaNo,
+            </if>
+            <if test="groupno != null">
+                GroupNo,
+            </if>
+            <if test="nodenoowner != null">
+                NodeNoOwner,
+            </if>
+            <if test="enterpriseno != null">
+                EnterPriseNo,
+            </if>
+            <if test="nodeattribute != null">
+                NodeAttribute,
+            </if>
+            <if test="nodespecific != null">
+                NodeSpecific,
+            </if>
+            <if test="regtype != null">
+                RegType,
+            </if>
+            <if test="orgcode != null">
+                OrgCode,
+            </if>
+            <if test="nodeaddrs != null">
+                NodeAddrs,
+            </if>
+            <if test="postno != null">
+                PostNo,
+            </if>
+            <if test="manager != null">
+                Manager,
+            </if>
+            <if test="telphno != null">
+                TelphNo,
+            </if>
+            <if test="remark != null">
+                Remark,
+            </if>
+            <if test="foxno != null">
+                FoxNo,
+            </if>
+            <if test="email != null">
+                Email,
+            </if>
+            <if test="worktime != null">
+                WorkTime,
+            </if>
+            <if test="accountowner != null">
+                AccountOwner,
+            </if>
+            <if test="nodetree != null">
+                NodeTree,
+            </if>
+            <if test="provinceno != null">
+                ProvinceNo,
+            </if>
+            <if test="nodetype != null">
+                NodeType,
+            </if>
+            <if test="usefulstatus != null">
+                UsefulStatus,
+            </if>
+            <if test="lastnodeno != null">
+                LastNodeNo,
+            </if>
+            <if test="modifytime != null">
+                ModifyTime,
+            </if>
+            <if test="taxpayercode != null">
+                TaxpayerCode,
+            </if>
+            <if test="corporationname != null">
+                CorporationName,
+            </if>
+            <if test="expand1 != null">
+                Expand1,
+            </if>
+            <if test="expand2 != null">
+                Expand2,
+            </if>
+            <if test="areadesc != null">
+                AreaDesc,
+            </if>
+            <if test="nodenoownerdesc != null">
+                NodeNoOwnerDesc,
+            </if>
+            <if test="provincedesc != null">
+                ProvinceDesc,
+            </if>
+            <if test="transtatus != null">
+                TranStatus,
+            </if>
+            <if test="oucode != null">
+                OUCode,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sinopecnodeno != null">
+                #{sinopecnodeno,jdbcType=CHAR},
+            </if>
+            <if test="physicalnodeno != null">
+                #{physicalnodeno,jdbcType=CHAR},
+            </if>
+            <if test="nodeno != null">
+                #{nodeno,jdbcType=CHAR},
+            </if>
+            <if test="nodename != null">
+                #{nodename,jdbcType=CHAR},
+            </if>
+            <if test="nodetag != null">
+                #{nodetag,jdbcType=CHAR},
+            </if>
+            <if test="areano != null">
+                #{areano,jdbcType=CHAR},
+            </if>
+            <if test="groupno != null">
+                #{groupno,jdbcType=CHAR},
+            </if>
+            <if test="nodenoowner != null">
+                #{nodenoowner,jdbcType=CHAR},
+            </if>
+            <if test="enterpriseno != null">
+                #{enterpriseno,jdbcType=CHAR},
+            </if>
+            <if test="nodeattribute != null">
+                #{nodeattribute,jdbcType=CHAR},
+            </if>
+            <if test="nodespecific != null">
+                #{nodespecific,jdbcType=CHAR},
+            </if>
+            <if test="regtype != null">
+                #{regtype,jdbcType=CHAR},
+            </if>
+            <if test="orgcode != null">
+                #{orgcode,jdbcType=CHAR},
+            </if>
+            <if test="nodeaddrs != null">
+                #{nodeaddrs,jdbcType=CHAR},
+            </if>
+            <if test="postno != null">
+                #{postno,jdbcType=CHAR},
+            </if>
+            <if test="manager != null">
+                #{manager,jdbcType=CHAR},
+            </if>
+            <if test="telphno != null">
+                #{telphno,jdbcType=CHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=CHAR},
+            </if>
+            <if test="foxno != null">
+                #{foxno,jdbcType=CHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=CHAR},
+            </if>
+            <if test="worktime != null">
+                #{worktime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="accountowner != null">
+                #{accountowner,jdbcType=CHAR},
+            </if>
+            <if test="nodetree != null">
+                #{nodetree,jdbcType=CHAR},
+            </if>
+            <if test="provinceno != null">
+                #{provinceno,jdbcType=CHAR},
+            </if>
+            <if test="nodetype != null">
+                #{nodetype,jdbcType=CHAR},
+            </if>
+            <if test="usefulstatus != null">
+                #{usefulstatus,jdbcType=CHAR},
+            </if>
+            <if test="lastnodeno != null">
+                #{lastnodeno,jdbcType=CHAR},
+            </if>
+            <if test="modifytime != null">
+                #{modifytime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="taxpayercode != null">
+                #{taxpayercode,jdbcType=CHAR},
+            </if>
+            <if test="corporationname != null">
+                #{corporationname,jdbcType=CHAR},
+            </if>
+            <if test="expand1 != null">
+                #{expand1,jdbcType=CHAR},
+            </if>
+            <if test="expand2 != null">
+                #{expand2,jdbcType=CHAR},
+            </if>
+            <if test="areadesc != null">
+                #{areadesc,jdbcType=CHAR},
+            </if>
+            <if test="nodenoownerdesc != null">
+                #{nodenoownerdesc,jdbcType=CHAR},
+            </if>
+            <if test="provincedesc != null">
+                #{provincedesc,jdbcType=CHAR},
+            </if>
+            <if test="transtatus != null">
+                #{transtatus,jdbcType=VARCHAR},
+            </if>
+            <if test="oucode != null">
+                #{oucode,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_sysmanage_department">
+        update oss_sysmanage_department
+        <set>
+            <if test="physicalnodeno != null">
+                PhysicalNodeNo = #{physicalnodeno,jdbcType=CHAR},
+            </if>
+            <if test="nodeno != null">
+                NodeNo = #{nodeno,jdbcType=CHAR},
+            </if>
+            <if test="nodename != null">
+                NodeName = #{nodename,jdbcType=CHAR},
+            </if>
+            <if test="nodetag != null">
+                NodeTag = #{nodetag,jdbcType=CHAR},
+            </if>
+            <if test="areano != null">
+                AreaNo = #{areano,jdbcType=CHAR},
+            </if>
+            <if test="groupno != null">
+                GroupNo = #{groupno,jdbcType=CHAR},
+            </if>
+            <if test="nodenoowner != null">
+                NodeNoOwner = #{nodenoowner,jdbcType=CHAR},
+            </if>
+            <if test="enterpriseno != null">
+                EnterPriseNo = #{enterpriseno,jdbcType=CHAR},
+            </if>
+            <if test="nodeattribute != null">
+                NodeAttribute = #{nodeattribute,jdbcType=CHAR},
+            </if>
+            <if test="nodespecific != null">
+                NodeSpecific = #{nodespecific,jdbcType=CHAR},
+            </if>
+            <if test="regtype != null">
+                RegType = #{regtype,jdbcType=CHAR},
+            </if>
+            <if test="orgcode != null">
+                OrgCode = #{orgcode,jdbcType=CHAR},
+            </if>
+            <if test="nodeaddrs != null">
+                NodeAddrs = #{nodeaddrs,jdbcType=CHAR},
+            </if>
+            <if test="postno != null">
+                PostNo = #{postno,jdbcType=CHAR},
+            </if>
+            <if test="manager != null">
+                Manager = #{manager,jdbcType=CHAR},
+            </if>
+            <if test="telphno != null">
+                TelphNo = #{telphno,jdbcType=CHAR},
+            </if>
+            <if test="remark != null">
+                Remark = #{remark,jdbcType=CHAR},
+            </if>
+            <if test="foxno != null">
+                FoxNo = #{foxno,jdbcType=CHAR},
+            </if>
+            <if test="email != null">
+                Email = #{email,jdbcType=CHAR},
+            </if>
+            <if test="worktime != null">
+                WorkTime = #{worktime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="accountowner != null">
+                AccountOwner = #{accountowner,jdbcType=CHAR},
+            </if>
+            <if test="nodetree != null">
+                NodeTree = #{nodetree,jdbcType=CHAR},
+            </if>
+            <if test="provinceno != null">
+                ProvinceNo = #{provinceno,jdbcType=CHAR},
+            </if>
+            <if test="nodetype != null">
+                NodeType = #{nodetype,jdbcType=CHAR},
+            </if>
+            <if test="usefulstatus != null">
+                UsefulStatus = #{usefulstatus,jdbcType=CHAR},
+            </if>
+            <if test="lastnodeno != null">
+                LastNodeNo = #{lastnodeno,jdbcType=CHAR},
+            </if>
+            <if test="modifytime != null">
+                ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="taxpayercode != null">
+                TaxpayerCode = #{taxpayercode,jdbcType=CHAR},
+            </if>
+            <if test="corporationname != null">
+                CorporationName = #{corporationname,jdbcType=CHAR},
+            </if>
+            <if test="expand1 != null">
+                Expand1 = #{expand1,jdbcType=CHAR},
+            </if>
+            <if test="expand2 != null">
+                Expand2 = #{expand2,jdbcType=CHAR},
+            </if>
+            <if test="areadesc != null">
+                AreaDesc = #{areadesc,jdbcType=CHAR},
+            </if>
+            <if test="nodenoownerdesc != null">
+                NodeNoOwnerDesc = #{nodenoownerdesc,jdbcType=CHAR},
+            </if>
+            <if test="provincedesc != null">
+                ProvinceDesc = #{provincedesc,jdbcType=CHAR},
+            </if>
+            <if test="transtatus != null">
+                TranStatus = #{transtatus,jdbcType=VARCHAR},
+            </if>
+            <if test="oucode != null">
+                OUCode = #{oucode,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where SinopecNodeNo = #{sinopecnodeno,jdbcType=CHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.kld.gsm.center.domain.oss_sysmanage_department">
     update oss_sysmanage_department
     set PhysicalNodeNo = #{physicalnodeno,jdbcType=CHAR},
       NodeNo = #{nodeno,jdbcType=CHAR},
@@ -695,13 +695,17 @@
       OUCode = #{oucode,jdbcType=VARCHAR}
     where SinopecNodeNo = #{sinopecnodeno,jdbcType=CHAR}
   </update>
-  <select id="selectById" parameterType="java.util.List" resultMap="BaseResultMap">
-    SELECT
-    <include refid="Base_Column_List"/>
-    FROM oss_sysmanage_department
-    WHERE SinopecNodeNo IN
-    <foreach collection="list" item="item" open="(" close=")" separator=",">
-      #{item.nodeno}
-    </foreach>
+    <select id="selectById" parameterType="java.util.List" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM oss_sysmanage_department
+        WHERE SinopecNodeNo IN
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item.nodeno}
+        </foreach>
+    </select>
+    <select id="findByOUCode" parameterType="java.lang.String" resultType="com.kld.gsm.center.domain.oss_sysmanage_department">
+    SELECT * FROM oss_sysmanage_department
+    WHERE  oucode =  #{oucode}
   </select>
 </mapper>

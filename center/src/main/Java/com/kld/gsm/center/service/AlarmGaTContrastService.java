@@ -16,5 +16,6 @@ public interface AlarmGaTContrastService {
     int AddGaTContrastService(List<oss_alarm_GaTContrast> oss_alarm_gaTContrastList);
     List<HashMap<String,Object>> selectGatInfo(Integer page, Integer rows,String begin,String end,String oucode,String result);
     List<HashMap<String,Object>> selectGatAllInfo(String begin,String end,String oucode,String result);
+    int selectCountAllInfo(String begin,String end,String oucode,String result);
     public void ExportGatContrast(List<HashMap<String,Object>> list,String [] titles,ServletOutputStream outputStream);
 }

@@ -1,0 +1,411 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>用户管理</title>
+    <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
+    <script type="text/javascript" src="easyui/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+</head>
+<body>
+
+<div id="query"  data-options="region:'center',title:'湖南省',split:true" title="查询条件" collapsible="true" class="easyui-panel search panel-body panel-body-noheader" style="border:0px;padding: 1px; width: 100%;" icon="icon-search">
+    <table  width="550px">
+        <tr>
+            <th width="100px">
+                用户编号：
+            </th>
+            <th width="100px">
+                <input id="username" type="text" value="">
+            </th>
+            <th width="100px">
+                用户姓名：
+            </th>
+            <th width="100px">
+                <input id="realname" type="text" value="">
+            </th>
+            <th>
+                <a id="searchExchange" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" style="width: 60px" onclick="initD()">查询</a>
+            </th>
+        </tr>
+    </table>
+</div>
+
+<div id="toolbar">
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" onclick="adduser()" plain="true">新增</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-edit" onclick="edituser()" plain="true">修改</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove" onclick="delluser()" plain="true">删除</a>
+</div>
+<div id="re" class="easyui-panel" >
+    <table id="tb" class="easyui-datagrid">
+    </table>
+</div>
+<div id="win" class="easyui-window" title="新增" closed="true" style="width:430px;height:230px;"
+     data-options="modal:true">
+
+    <form id="loginForm" action="/web/sysmanage/add" method="post" style="padding:5px 5px 5px 5px;">
+        <table>
+            <tr>
+                <td style="padding-top:10px">用户编号</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="addusername" name="username" data-options="required:true,precision:2" /></td>
+                <td style="padding-top:10px">姓名</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="addrealname" name="realname" data-options="required:true,precision:2"/></td>
+            </tr>
+            <tr>
+                <td style="padding-top:10px">手机号</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="addmobile" name="mobile" data-options="precision:2"/></td>
+                <td style="padding-top:10px">组织机构</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="addoucode" name="oucode" data-options="required:true,precision:2"/></td>
+
+            </tr>
+            <tr>
+                <td style="padding-top:10px">状态</td>
+                <td style="padding-top:10px">
+                    <select id="addstate" name="state" class="easyui-combobox"  data-options="required:true,precision:2"name=”dept” style="width:136px;">
+                        <option value="0">生效</option>
+                        <option value="1">无效</option>
+                    </select></td>
+                <td style="padding-top:10px">邮箱</td>
+                <td style="padding-top:10px"><input class="easyui-validatebox textbox" id=”addemail” name="email" data-options="prompt:'Enter a valid email.',validType:'email'"></td>
+            </tr>
+
+            <tr>
+                <td style="padding-top:10px">创建者</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="addcreator" name="creator" data-options="required:true,precision:2" value="$session.getAttribute("realname")"/></td>
+                <td style="padding-top:10px">创建时间</td>
+                <td style="padding-top:10px"><input class="easyui-datetimebox"  id="addcreatetime"
+                                                    name="createtime" data-options="required:true,precision:2"</td>
+            </tr>
+        </table>
+        <div style="padding:5px;text-align:center;">
+            <a  class="easyui-linkbutton" onclick="submitForm()">添加</a>
+        </div>
+    </form>
+
+
+</div>
+
+<div id="xiu" class="easyui-window" title="修改" closed="true" style="width:430px;height:230px;" data-options="modal:true">
+
+    <form id="logineditForm" action="/web/sysmanage/edituser" method="post" style="padding:5px 5px 5px 5px;">
+        <table>
+            <tr>
+                <td style="padding-top:10px">用户编号</td>
+                <td style="padding-top:10px"><input class="easyui-textbox " type="text" id="editusername" name="username" data-options="editable:true" /></td>
+                <td style="padding-top:10px">用户姓名</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="editrealnamee" name="realname" data-options="required:true,precision:2"/></td>
+            </tr>
+            <tr>
+                <td style="padding-top:10px">组织机构</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="editoucode" name="oucode" data-options="required:true,precision:2"/></td>
+
+                <td style="padding-top:10px">邮箱</td>
+              <td style="padding-top:10px"><input class="easyui-validatebox"  id="editemail" name="email" data-options="prompt:'Enter a valid email.',validType:'email'"/></td>
+            </tr>
+            <tr>
+                <td style="padding-top:10px">手机号</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="editmobile" name="mobile" data-options="precision:2"/></td>
+
+                <td style="padding-top:10px">创建者</td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="editcreator" name="creator" data-options="precision:2"/></td>
+            </tr>
+
+            <tr>
+                <td style="padding-top:10px">状态</td>
+                <td style="padding-top:10px">
+                    <select id="editstate" name="state" class="easyui-combobox"  data-options="required:true,precision:2"name=”dept” style="width:136px;">
+                        <option value="0">生效</option>
+                        <option value="1">无效</option>
+                    </select></td>
+                <td style="padding-top:10px">创建时间</td>
+                <td style="padding-top:10px"><input class="easyui-datetimebox"  id="editcreatetime"
+                                                    name="createtime" data-options="required:true,precision:2"</td>
+            </tr>
+        </table>
+        <div style="padding:5px;text-align:center;">
+            <a  class="easyui-linkbutton" onclick="saveForm()">保存</a>
+        </div>
+    </form>
+
+
+</div>
+
+<div id="Userrole" class="easyui-window" title="用户角色" closed="true"  style="width:400px;height:300px;" data-options="checkbox:true,modal:true">
+    <div style="padding:0px;text-align:left;">
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-save" onclick="saveUserrole()" plain="true">保存</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-redo" onclick="removeUserrole()" plain="true">撤销更改</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-no" onclick="closeUserrole()" plain="true">关闭</a>
+    </div>
+    <div id="UserRole" data-options="region:'north',title:'用户角色',split:true" style="padding:5px;width:100px;height:100px;"></div>
+
+
+
+</div>
+
+<script type="text/javascript">
+    var col = [[
+        {field: 'username', title: '用户编号', width: 33, align: 'center'},
+        {field: 'realname', title: '姓名', width:33, align: 'center'},
+        {field: 'mobile', title: '手机号', width:33, align: 'center'},
+        {field: 'oucode', title: '组织机构', width: 33, align: 'center'},
+        {field: 'email', title: '邮箱', width: 33, align: 'center'},
+        {field: 'state', title: '状态', width: 33, align: 'center'},
+        {field: 'creator', title: '创建者', width: 33, align: 'center'},
+        {field: 'createtime', title: '创建时间', width: 55, align: 'center',formatter:function(value,row,index){
+            var time=formatDatebox(row.createtime);
+            return time;
+        }},
+        {field:'action',title:'用户角色',width:55,align:'center',formatter:function(value,row,index){
+            var str = '';
+            str += "<a href='javascript:void(0);' onclick='Show("+row.username+")'>查看或修改</a>";
+            return str;
+        }},
+
+    ]];
+    var username;//用户名，相当于用户ID
+    var realname;//姓名，用户中文姓名
+    var para;
+    var id;//对应组织机构 oucode
+    var userids;
+
+    $(function () {
+        var heigth = $(window).height() - 130;
+        $("#re").height(heigth);
+        initD();
+    });
+    function Show (username) {
+        $('#Userrole').window('open');
+        nextrole (username);
+    }
+    function nextrole (username) {
+        userids=username;
+        $('#UserRole').tree({
+            url: "/web/sysmanage/findallUserRole",
+            checkbox:true,
+            loadFilter: function (data) {
+                if (data != null) {
+                    return data;
+                }
+            },
+            onLoadSuccess:function(node, data){
+                loader(userids);
+        }
+        });
+    }
+    //初始化角色，加载用户已经拥有的角色
+    function loader(userids){
+        $.ajax({
+            type: "POST",
+            url: "/web/sysmanage/selectUR?userids="+userids,
+            data: userids,
+            success: function (result) {
+                if(result!=""){//避免没有任何权限还去遍历浪费时间
+                    var rootse= $('#UserRole').tree("getChildren");
+                    for(var i= 0; i<rootse.length;i++){
+                        for(var j=0; j<result.length;j++){
+                            if( rootse[i].id==result[j]){
+                                var nodep = $('#UserRole').tree('find', result[j]);
+                                $('#UserRole').tree('check', nodep.target);
+                            }
+                        }
+
+                    }
+                }
+            }
+        });
+
+    }
+
+
+    function initT() {
+        username=$("#username").val();//用户名
+        realname=$("#realname").val();//用户姓名
+        #if($department.oucode)
+            id =$department.oucode;
+        #else
+            id =null;
+        #end
+        para = {"id": id,"username":username,"realname":realname};
+    }
+
+    function initD() {
+        initT();
+        BindDataGridAjax('tb', '用户信息','/web/sysmanage/userList', col, para, 'true', 10, [10, 20, 30]);
+    }
+
+    function adduser () {
+        $('#win').window('open');
+        $("#addoucode").textbox("setValue", id);
+        $("#addstate").combobox("setValue", 0);
+        $("#addoucode").textbox("setValue",$department.oucode);
+        var curr_time = new Date();
+        var strDate = curr_time.getFullYear()+"-";
+        strDate += curr_time.getMonth()+1+"-";
+        strDate += curr_time.getDate()+"-";
+        strDate += curr_time.getHours()+":";
+        strDate += curr_time.getMinutes()+":";
+        strDate += curr_time.getSeconds();
+        $("#addcreatetime").datetimebox("setValue", strDate);
+    }
+
+    function edituser() {
+        var row = $('#tb').datagrid('getSelected');
+        if (row) {
+            $('#xiu').window('open');
+            $("#editusername").textbox("setValue", row.username);
+//            $('#editusername').textbox({disabled:true});
+            $("#editrealnamee").textbox("setValue", row.realname);
+            $("#editmobile").textbox("setValue", row.mobile);
+            $("#editcreator").textbox("setValue", row.creator);
+            $("#editoucode").textbox("setValue", row.oucode);
+            $("#editstate").combobox("setValue", row.state);
+            $("#editemail").val(row.email);
+            var times=formatDatebox(row.createtime)
+            $("#editcreatetime").datetimebox("setValue",times);
+
+        } else {
+            $.messager.alert("提示", "请选择要修改的行！", "info");
+        }
+    }
+
+    function delluser() {
+        var delrow = $('#tb').datagrid('getSelected');
+        if (delrow == null) {
+            $.messager.alert("提示", "请选择要删除的行！", "info");
+            return;
+        } else {
+            $.messager.confirm('提示', '是否删除选中数据?', function (r) {
+                if (!r) {
+                    return;
+                }
+                var delusername=delrow.username;
+                //提交
+                $.ajax({
+                    type: "POST",
+                    url: "/web/sysmanage/deluser?username="+delusername,
+                    data: delusername,
+                    success: function (result) {
+                        if (result > 0) {
+                            $('#tb').datagrid('clearSelections');
+                            $.messager.alert("提示", "恭喜您，信息删除成功！", "info");
+                            $('#tb').datagrid('reload');
+                        } else {
+                            $.messager.alert("提示", "删除失败，请重新操作！", "info");
+                            return;
+                        }
+                    }
+                });
+            });
+        }
+    }
+
+    function submitForm() {
+        //手机号校验
+        var mymobile = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+        if($("#addmobile").val()){
+            if(!mymobile.test($("#addmobile").val()))
+            {
+                $.messager.alert("提示", "请输入正确的手机号！", "info");
+                return false;
+            }
+        }
+        $(loginForm).form('submit', {
+            url : '/web/sysmanage/add',
+            dataType : 'text',
+            success : function(result) {
+              //  var map = result
+                if (result>0) {
+                    $.messager.alert("提示", "恭喜您，信息添加成功！", "info");
+                    $("#addusername").textbox("setValue","");
+                    $("#addrealname").textbox("setValue","");
+                    $("#addoucode").textbox("setValue","");
+                    $("#addemail").val("");
+                    $("#addstate").combobox("setValue","");
+                    $("#addcreatetime").datetimebox("setValue","");
+                    $('#win').window('close');
+                    $('#tb').datagrid("reload",{ });
+                } else {
+                    $.messager.alert("提示", "添加失败，请重新操作！", "info");
+                }
+            }
+        });
+    }
+
+    function saveForm() {
+        //手机号校验
+        var mymobile = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+        if($("#editmobile").val()){
+            if(!mymobile.test($("#editmobile").val()))
+            {
+                $.messager.alert("提示", "请输入正确的手机号！", "info");
+                return false;
+            }
+        }
+        $(logineditForm).form('submit', {
+            url : '/web/sysmanage/edituser',
+            dataType : 'text',
+            success : function(result) {
+                //  var map = result
+                if (result>0) {
+                    $.messager.alert("提示", "恭喜您，信息修改成功！", "info");
+                    $('#xiu').window('close');
+                    $('#tb').datagrid("reload",{ });
+                } else {
+                    $.messager.alert("提示", "修改失败，请重新操作！", "info");
+                }
+            }
+        });
+    }
+    //保存用户-角色对应关系 TODO
+    function saveUserrole(){
+        //查询出选择的节点
+        var Userrolenodes = $('#UserRole').tree('getChecked');	// 获取已选择节点
+        var myUsercar="";
+        for(var i=0; i<Userrolenodes.length; i++){
+            myUsercar += Userrolenodes[i].id+",";
+        }
+        //提交
+        $.ajax({
+            type: "POST",
+            url: "/web/sysmanage/saveUR",
+            data:{myUsercar:myUsercar,userids:userids},
+
+            success: function (result) {
+                if (result > 0) {
+                    $.messager.alert("提示", "恭喜您，角色设置成功！", "info");
+                    loader();
+                } else {
+                    $.messager.alert("提示", "角色设置失败，请重新操作！", "info");
+                    loader();
+                    return;
+                }
+            }
+        });
+
+    }
+    //撤销更改，还原用户-角色对应关系 TODO
+    function removeUserrole(){
+        //重新加载树
+        $('#UserRole').tree('reload');
+    }
+    //关闭用户-角色设置
+    function closeUserrole(){
+        $('#Userrole').window('close');
+    }
+    function formatDatebox(value) {
+        if (value == null || value == '') {
+            return '';
+        }
+        var dt;
+        if (value instanceof Date) {
+            dt = value;
+        } else {
+            dt = new Date(value);
+        }
+        return dt.format("yyyy-MM-dd hh:mm:ss"); //扩展的Date的format方法(上述插件实现)
+    }
+
+</script>
+</body>
+</html>

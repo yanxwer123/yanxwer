@@ -13,12 +13,13 @@ import com.kld.gsm.ATG.service.SysManageDic;
 import com.kld.gsm.ATG.service.SysmanageService;
 import com.kld.gsm.util.DateUtil;
 import org.apache.log4j.Logger;
-import org.jfree.util.Log;
+import org.junit.Test;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -169,21 +170,24 @@ public class CkdcxPage  extends  JPanel{
 
 
         if (bill==null)return;
-        boolean iswhd=false;
+       /* boolean iswhd=false;
         if (deliveryService==null){
             deliveryService=Context.getInstance().getBean(IAcceptanceDeliveryService.class);
         }
         AcceptanceDeliveryBills bills=deliveryService.selectByPrimaryKey(bill.getDeliveryno());
         if (bills==null){
                 iswhd=true;
-        }
+        }*/
 
-        if (bill==null)return;
-        jhysPage.setCkdcxPage(this);
-        Main.ckdcxPage=this;
-        jhysPage.setCkdxx(bill,iswhd);
-        //jhysPage.initOilTankInfo();
-        jhysPage.getFrame().setVisible(true);
+
+            Main.jhysNewPage=new JhysNewPage(bill);
+            Main.jhysNewPage.Init();
+
+            //Main.jhysNewPage.addbill(bill);
+            //Main.jhysNewPage.getFrame().setVisible(true);
+        //}
+        //Main.jhysNewPage=new JhysNewPage(bill);
+
     }
 
     public AcceptanceDeliveryBills getinfo() throws Exception {
@@ -278,8 +282,13 @@ public class CkdcxPage  extends  JPanel{
                     LOG.error(e.getMessage());
                 }
                 billArray[i][7] = bill.getDeliverytemp();
-                billArray[i][8] = bill.getPlanl();
-                billArray[i][9] = bill.getPlanton();
+                billArray[i][8] = new DecimalFormat("0").format(bill.getPlanl());
+                Double a = bill.getPlanton();
+                if (a==null){
+                    a=0.000;
+                }
+                billArray[i][9] = new DecimalFormat("0.000").format(a);
+//                billArray[i][9] = Math.round(bill.getPlanton()*1000/1000.000);
                 billArray[i][10] = DateUtil.getDate(bill.getShipmenttime(), "yyyy-MM-dd HH:mm:ss");
                 billArray[i][11] = bill.getCarno();
                 billArray[i][12] = bill.getOutsealno();
@@ -369,6 +378,13 @@ public class CkdcxPage  extends  JPanel{
         }
         // 进行相关处理
         return bill;
+    }
+    @Test
+    public void a(){
+        Double a=13000.0;
+        Double b = Double.parseDouble(new DecimalFormat("0.000").format(a));
+        System.out.println(b);
+
     }
 }
 

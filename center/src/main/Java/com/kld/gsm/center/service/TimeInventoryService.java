@@ -16,6 +16,7 @@ public interface TimeInventoryService {
      int AddTimeInventory(List<oss_monitor_TimeInventory> oss_monitor_timeInventories) ;
      int InsertInventory(List<oss_monitor_Inventory> oss_monitor_inventories);
      List<HashMap<String,Object>> selectTimeInventoryInfo(Integer page, Integer rows,String oucode);
+     int selectTimeInventoryCount(String oucode);
      List<HashMap<String,Object>> selectInventory(String oiltype,String oucode);
      List<HashMap<String,Object>> selectUploadInventory(String oucode);
 }

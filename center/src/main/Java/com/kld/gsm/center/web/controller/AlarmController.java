@@ -545,7 +545,6 @@ public class AlarmController {
                      item.getTankoil().setNodeno(NodeNo);
                  }
                 List<oss_monitor_tankoil> tankoils=daily.addJTGC(tankoilgunLst,NodeNo);
-
                 //调用数据传输给湖南
                 boolean res=PassHn_JTGC(tankoilgunLst);
                 if (res){

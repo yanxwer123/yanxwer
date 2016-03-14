@@ -16,18 +16,28 @@
     <result column="CreatTime" property="creattime" jdbcType="TIMESTAMP" />
   </resultMap>
   <select id="selectoilincontrastbywhere" resultType="hashmap" parameterType="hashmap">
-    <![CDATA[SELECT * FROM oss_alarm_OilInContrast WHERE LEFT(Shift,8)>=#{start,jdbcType=VARCHAR} And LEFT(Shift,8)<=#{end,jdbcType=VARCHAR}
+    <![CDATA[
+       SELECT a.*,b.OUName,c.OilName from
+      oss_alarm_OilInContrast a
+      inner join oss_sys_OrgUnit b on a.OUCode=b.OUCode
+      left outer JOIN oss_sysmanage_oiltype c on a.OilNo=c.OilNo
+      WHERE CreatTime>=#{start,jdbcType=VARCHAR} And CreatTime<=#{end,jdbcType=VARCHAR}
     ]]>
     <if test="oucode != null and  oucode!= ''">
-      <![CDATA[ and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+      <![CDATA[ and a.OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
     </if>
     ORDER BY Shift DESC
   </select>
   <select id="querypage" resultType="hashmap" parameterType="hashmap">
-    <![CDATA[SELECT * FROM oss_alarm_OilInContrast WHERE LEFT(Shift,8)>=#{start,jdbcType=VARCHAR} And LEFT(Shift,8)<=#{end,jdbcType=VARCHAR}
+    <![CDATA[
+      SELECT a.*,b.OUName,c.OilName from
+      oss_alarm_OilInContrast a
+      inner join oss_sys_OrgUnit b on a.OUCode=b.OUCode
+      left outer JOIN oss_sysmanage_oiltype c on a.OilNo=c.OilNo
+      WHERE CreatTime>=#{start,jdbcType=VARCHAR} And CreatTime<=#{end,jdbcType=VARCHAR}
   ]]>
     <if test="oucode != null and  oucode!= ''">
-      <![CDATA[ and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
+      <![CDATA[ and a.OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
     </if>
     ORDER BY Shift DESC
     <if test="firstRow != null and  pageSize!= null">

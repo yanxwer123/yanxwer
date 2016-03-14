@@ -46,7 +46,13 @@ public class WebBasicInfoController  extends WebBaseController{
     @ResponseBody
     public List<oss_sys_OrgUnit> getOrgUnitsByPOUCode(@RequestParam("parentoucode")String parentoucode)
     {
-       return sysOrgUnitService.selectByPOUCode(parentoucode);
+        List<oss_sys_OrgUnit> list=sysOrgUnitService.selectByPOUCode(parentoucode);
+        //增加全部
+        oss_sys_OrgUnit orgUnit=new oss_sys_OrgUnit();
+        orgUnit.setOucode("");
+        orgUnit.setOuname("<全部>");
+        list.add(0,orgUnit);
+        return list;
     }
     //endregion
 

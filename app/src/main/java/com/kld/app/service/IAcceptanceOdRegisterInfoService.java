@@ -1,6 +1,7 @@
 package com.kld.app.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import com.kld.gsm.ATG.domain.AcceptanceOdRegisterInfo;
@@ -31,4 +32,9 @@ public interface IAcceptanceOdRegisterInfoService {
     AcceptanceOdRegisterInfo selectbegintime(String manualno);
 
     List<AcceptanceOdRegisterInfo> selecbycanno(Integer canno,Date st,Date et);
+
+    String findByOilCan(String oilcan,Date begintime,Date endtime);
+
+    String findByOilNo(String oilno,Date begintime,Date endtime);
+
 }

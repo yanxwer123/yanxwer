@@ -9,8 +9,8 @@
     <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
     <script type="text/javascript" src="easyui/jquery-1.7.2.min.js"></script>
     <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
-</head>
-<body>
+    </head>
+<body class="easyui-layout">
 ## Velocity  注释
 
 #*
@@ -30,88 +30,44 @@ Velocity 直接输出的内容
 #* $!{city}*#
 
 
-#*
-<ul class="easyui-tree" data-options="url:'/web/basicdata/go'">
-
-</ul>*#
-#*
-<ul   class="easyui-tree">
-        #if($citylist)
-            #foreach($item in $citylist)
-                <li>
-                    <span>$item.city</span>
-                    <ul>
-                        #if($!item.body)
-                            #foreach($items in $item.body)
-                                <li >
-                                    <span>$items.name</span>
-                                </li>
-                            #end
-                        #end
-                    </ul>
-                </li>
-            #end
-
-        #end
-
-
-</ul>*#
-<ul id="tt"></ul>
+<div id="cc" class="easyui-layout" style="width:1170px;height:521px;">
+    <div id="td" data-options="region:'west',title:'湖南省',split:true" style="padding:10px;width:200px;"></div>
+    <div id ="station"  data-options="region:'center',title:'$!department.nodename'">
+        <div class="easyui-tabs" style="width:960px;height:470px">
+            #*<div title="加油站信息管理" >
+                #parse("basicdata/manageinf.vm")
+            </div>*#
+            <div title="油枪管理">
+                #parse("basicdata/GasGun.vm")
+            </div>
+            <div   title="预报警信息管理">
+                #parse("basicdata/peralarm.vm")
+            </div>
+        </div>
+    </div>
 </div>
+
+
 <script type="text/javascript">
-      /*  var a ;
-        $('#tt').tree({
-            url: "/web/basicdata/tojson",
-            loadFilter: function(data) {
-                if(data!=null){
-                    return data;
 
-                }
+
+
+    var toUrl;
+    var param;
+    $('#td').tree({
+        url: "/web/basicdata/findallstation",
+        loadFilter: function (data) {
+            if (data != null) {
+                return data;
             }
-        });*/
+        },
+        onClick: function (node) {
+            var toUrl = '/web/basicdata/basicdatamanage';
+            //调用方法 如
+            window.location.href = toUrl + "?id=" + node.attributes;
+        }
+    });
 
-
-   /* $('#tt').tree({
-        data:[{
-            "id":1,
-            "text":"Folder1",
-            "iconCls":"icon-save",
-            "children":[{
-                "text":"File1",
-                "checked":true
-            },{
-                "text":"Books",
-                "state":"open",
-                "attributes":{
-                    "url":"/web/basicdata/tojson",
-                    "price":100
-                },
-                "children":[{
-                    "text":"PhotoShop",
-                    "checked":true,
-                    "attributes":{
-                        "url":"/web/basicdata/tojson",
-                        "price":100
-                },{
-                    "id": 8,
-                    "text":"Sub Bookds",
-                    "state":"closed",
-
-                }
-
-                ]
-            }]
-        },{
-            "text":"Languages",
-            "state":"closed",
-            "children":[{
-                "text":"Java"
-            },{
-                "text":"C#"
-            }]
-        }]
-
-    });*/
 
 </script>
 </body>

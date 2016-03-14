@@ -197,9 +197,9 @@
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
   </update>
   <select id="selectSaleOut" resultType="hashmap" parameterType="hashmap">
-    SELECT stn.STATION_NAME,otp.OilName,sot.MesasureTime,sot.NowVolume,sot.CanSaleVolume,sot.DayAverageSales,
+    SELECT stn.ouname,otp.OilName,sot.MesasureTime,sot.NowVolume,sot.CanSaleVolume,sot.DayAverageSales,
     sot.HourAverageSales,sot.PredictHours,floor((sot.CanSaleVolume/sot.DayAverageSales)) YJSSTS from oss_alarm_SaleOut sot
-    inner join oss_sysmanage_Station stn on sot.OUCode=stn.STATION_CODE
+    inner join oss_sys_OrgUnit stn on sot.OUCode=stn.OUCode
     inner JOIN oss_sysmanage_oilType otp on  sot.OilNo=otp.OilNo
     where 1=1
     <if test="start != null and start!='' " >
@@ -211,12 +211,16 @@
     <if test="oilno != null and oilno!='' " >
       and sot.OilNo = #{oilno,jdbcType=VARCHAR}
     </if>
+    <if test="oucode != null and  oucode!= ''">
+      and sot.OUCode LIKE #{oucode,jdbcType=VARCHAR}
+    </if>
   </select>
 
   <select id="queryPrepayPageList" resultType="hashmap" parameterType="hashmap">
-    SELECT sot.*,stn.STATION_NAME,floor((sot.CanSaleVolume/sot.DayAverageSales)) YJSSTS, otp.OilName from oss_alarm_SaleOut sot
-    inner join oss_sysmanage_Station stn on sot.OUCode=stn.STATION_CODE
-    inner JOIN oss_sysmanage_oilType otp on  sot.OilNo=otp.OilNo
+    SELECT sot.*,b.OUName,c.OilName from
+    oss_alarm_SaleOut sot
+    inner join oss_sys_OrgUnit b on sot.OUCode=b.OUCode
+    left outer JOIN oss_sysmanage_oiltype c on sot.OilNo=c.OilNo
     where 1=1
     <if test="start != null" >
       and  sot.StartAlarmTime  &gt; #{start,jdbcType=TIMESTAMP}
@@ -224,6 +228,7 @@
     <if test="end !=null" >
       and sot.EndAlarmTime &lt; #{end,jdbcType=TIMESTAMP}
     </if>
+    <!--
     <if test="oilno != null" >
     and sot.OilNo = #{oilno,jdbcType=VARCHAR}
      </if>
@@ -232,6 +237,10 @@
     </if>
     <if test="psjy != null and psjy==1" >
       and sot.PredictHours &lt; #{psjyfz,jdbcType=INTEGER}
+    </if>
+    -->
+    <if test="oucode != null and oucode !=''">
+      <![CDATA[ and sot.OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
     </if>
     ORDER BY Shift DESC
     <if test="firstRow != null and  pageSize!= null">
@@ -251,6 +260,7 @@
     <if test="end !=null" >
       and MesasureTime &lt; #{end,jdbcType=TIMESTAMP}
     </if>
+    <!--
     <if test="oilno != null" >
       and OilNo = #{oilno,jdbcType=VARCHAR}
     </if>
@@ -260,6 +270,7 @@
     <if test="psjy != null and psjy==1" >
       and PredictHours &lt; #{psjyfz,jdbcType=INTEGER}
     </if>
+    -->
     <if test="oucode != null and oucode !=''">
       <![CDATA[ and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
     </if>
@@ -281,6 +292,7 @@
     <if test="end !=null" >
       and MesasureTime &lt; #{end,jdbcType=TIMESTAMP}
     </if>
+    <!--
     <if test="oilno != null" >
       and OilNo = #{oilno,jdbcType=VARCHAR}
     </if>
@@ -289,7 +301,7 @@
     </if>
     <if test="psjy != null and psjy==1" >
       and PredictHours &lt; #{psjyfz,jdbcType=INTEGER}
-    </if>
+    </if>-->
     <if test="oucode != null ">
       <![CDATA[  and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
     </if>
@@ -299,8 +311,6 @@
 
   <select id="queryPrepayCount"  resultType="Integer"  parameterType="hashmap">
     SELECT COUNT(*) from oss_alarm_SaleOut sot
-    inner join oss_sysmanage_Station stn on sot.OUCode=stn.STATION_CODE
-    inner JOIN oss_sysmanage_oilType otp on  sot.OilNo=otp.OilNo
     where 1=1
     <if test="start != null" >
       and  sot.StartAlarmTime  &gt; #{start,jdbcType=TIMESTAMP}
@@ -308,8 +318,8 @@
     <if test="end !=null" >
       and sot.EndAlarmTime &lt; #{end,jdbcType=TIMESTAMP}
     </if>
-    <if test="oilno != null" >
-      and sot.OilNo = #{oilno,jdbcType=VARCHAR}
+    <if test="oucode != null and oucode !=''">
+      <![CDATA[ and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>
     </if>
   </select>
 </mapper>

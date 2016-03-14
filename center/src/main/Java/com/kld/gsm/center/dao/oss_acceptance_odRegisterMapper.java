@@ -25,5 +25,9 @@ public interface oss_acceptance_odRegisterMapper {
 
     int deletebybillnoAndnodeno(String bill,String nodeno);
 
+    oss_acceptance_odRegister selectById(String ManualNo);
+
     List<HashMap<String,Object>> selectYYS(HashMap map);
+
+
 }

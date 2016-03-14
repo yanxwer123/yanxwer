@@ -1,30 +1,26 @@
 package com.kld.app.view.daily;
 
-import java.awt.Color;
-import java.awt.Dimension;
+import com.kld.app.service.AlarmDailyLostService;
+import com.kld.app.service.DailyDailyBalanceService;
+import com.kld.app.springcontext.Context;
+import com.kld.app.util.Constant;
+import com.kld.app.view.acceptance.MyTable;
+import com.kld.gsm.ATG.domain.DailyDailyBalance;
+import org.jdesktop.swingx.JXDatePicker;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
-import javax.swing.*;
-import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
-
-import com.kld.app.service.AlarmDailyLostService;
-import com.kld.app.view.acceptance.MyTable;
-import com.kld.app.view.alarm.AlarmTableModel;
-import org.jdesktop.swingx.JXDatePicker;
-
-import com.kld.app.service.DailyDailyBalanceService;
-import com.kld.app.springcontext.Context;
-import com.kld.app.util.Constant;
-import com.kld.gsm.ATG.domain.DailyDailyBalance;
+import java.util.List;
 
 
 /**
@@ -148,21 +144,22 @@ public class RphbPage {
 				data = new Object[list.size()][tableHeads.length];
 				for (int i = 0; i < list.size(); i++) {
 					DailyDailyBalance info = list.get(i);
+					DecimalFormat df=new DecimalFormat("0");
 					data[i][0] = alarmDailyLostService.selectOilNo(info.getOilno());//油品类型
-					data[i][1] = info.getDarlyankstock();//本日罐存（账存）
+					data[i][1] = df.format(info.getDarlyankstock());//本日罐存（账存）
 					//data[i][2] = info.getDeliveryno();//出库单号
 					if (info.getDeliveryno().equals(",")){
 						data[i][2] = "";
 					}else{
 						data[i][2] = info.getDeliveryno();
 					}
-					data[i][3] = info.getReceivel();//进货数量
-					data[i][4] = info.getTodayout();//本日付出
+					data[i][3] = df.format(info.getReceivel());//进货数量
+					data[i][4] = df.format(info.getTodayout());//本日付出
 					String todaystock=decimalFormat.format(info.getTodaystock());
-					data[i][5] = todaystock;//期末库存
-					data[i][6] = info.getRealstock();//实测库存
+					data[i][5] = Double.parseDouble(todaystock);//期末库存
+					data[i][6] = df.format(info.getRealstock());//实测库存
 					String loss=decimalFormat.format(info.getLoss());
-					data[i][7] =loss ;//损耗量
+					data[i][7] =Double.parseDouble(loss) ;//损耗量
 					String losssent=decimalFormat.format(info.getLosssent())+"%";
 					data[i][8] = losssent;//损耗率
 				}

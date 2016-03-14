@@ -70,6 +70,7 @@ public class EhCacheHelper {
         Element element = new Element(info.GunNum, info);
         logger.info("add new cache item GunNum:"+info.GunNum+"info:"+info.toString()+"\n");
         myCache.put(element);
+        //info=null;
     }
     //仅更新泵码数
     public static void updteCache(byte GunNum,Double PumpReadout) {
@@ -124,6 +125,7 @@ public class EhCacheHelper {
      * @param stocks
      */
     public static void updateCanStocks(List<atg_stock_data_out_t> stocks) {
+        logger.info("update stocks:"+stocks.toString());
         Cache myCache = cacheManager.getCache("ATGCache");
         Element el = new Element("allstock", stocks);
         myCache.put(el);
@@ -195,5 +197,25 @@ public class EhCacheHelper {
             return null;
         }
         return (List<SysManageCubageInfo>) element.getObjectValue();
+    }
+
+    /**
+     * 获取所有罐号
+     * 键值为 allcannos 未找到返回null
+     * @return
+     */
+    public static Element getAllCanNos() {
+        Cache myCache = cacheManager.getCache("ATGCache");
+        return myCache.get("allcannos");
+    }
+
+    /**
+     * 更新罐号
+     * @param cannos
+     */
+    public static void updateCanNos(List<Integer> cannos){
+        Cache myCache = cacheManager.getCache("ATGCache");
+        Element element = new Element("allcannos", cannos);
+        myCache.put(element);
     }
 }

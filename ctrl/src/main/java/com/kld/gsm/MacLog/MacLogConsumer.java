@@ -65,6 +65,7 @@ public class MacLogConsumer implements Runnable {
 
                 // //System.out.println("proce new line:" + newdata);
                 ConsumerLine(newdata);
+                Thread.sleep(1);
             } catch (Exception e) {
                 logger.error("maclog consumer exception.." + e);
                 e.printStackTrace();

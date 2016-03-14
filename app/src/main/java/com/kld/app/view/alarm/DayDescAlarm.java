@@ -1,31 +1,24 @@
 package com.kld.app.view.alarm;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import com.kld.app.service.AlarmDailyLostService;
+import com.kld.app.springcontext.Context;
+import com.kld.app.util.Constant;
+import com.kld.app.view.acceptance.MyTable;
+import com.kld.gsm.ATG.domain.AlarmDailyLost;
+import org.jdesktop.swingx.JXDatePicker;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
-
-import com.kld.app.util.RjsyStore;
-import com.kld.app.view.acceptance.MyTable;
-import com.kld.app.view.acceptance.MyTableModel;
-import org.jdesktop.swingx.JXDatePicker;
-
-import com.kld.app.service.AlarmDailyLostService;
-import com.kld.app.springcontext.Context;
-import com.kld.app.util.Constant;
-import com.kld.app.util.StoreTable;
-import com.kld.gsm.ATG.domain.AlarmDailyLost;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.List;
 
 
 /**
@@ -150,17 +143,18 @@ public class DayDescAlarm {
 		for (int i = 0; i < dailyLostList.size(); i++) {
 			AlarmDailyLost info = dailyLostList.get(i);
 			////System.out.println(info.getAccountdate());
+			DecimalFormat df=new DecimalFormat("0");
 			data[i][0] =alarmDailyLostService.selectOilNo(info.getOilno());//品种
 			data[i][1]=dateFormat.format(info.getAccountdate());
-			data[i][2] = info.getDarlyankstock();
+			data[i][2] = df.format(info.getDarlyankstock());
 			data[i][3] = info.getDeliveryno();
-			data[i][4] = info.getReceivel();
-			data[i][5] = info.getTodayout();
-			data[i][6] = info.getTodayendstock();//期末库存
-			data[i][7] = info.getRealstock();
-			DecimalFormat df=new DecimalFormat("###########0.00");
+			data[i][4] = df.format(info.getReceivel());
+			data[i][5] = df.format(info.getTodayout());
+			data[i][6] = df.format(info.getTodayendstock());//期末库存
+			data[i][7] = df.format(info.getRealstock());
+			DecimalFormat df1=new DecimalFormat("###########0.00");
 			data[i][8] = df.format(info.getCost());
-			data[i][9] = df.format(info.getCostsent())+"%";
+			data[i][9] = df1.format(info.getCostsent())+"%";
 		}
 		/*probePartable = getTable(tableHeads,data);
 		scrollPane.setViewportView(probePartable);

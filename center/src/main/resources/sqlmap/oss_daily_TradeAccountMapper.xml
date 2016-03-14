@@ -40,6 +40,7 @@
     <result column="TransFlag" property="transflag" jdbcType="VARCHAR" />
     <result column="IsRecieved" property="isrecieved" jdbcType="VARCHAR" />
     <result column="OUCode" property="oucode" jdbcType="VARCHAR" />
+    <result column="BackCanFlag" property="backcanflag" jdbcType="VARCHAR"/>
   </resultMap>
   <sql id="Base_Column_List" >
     MacNo, TTC, TakeDate, OilGun, NodeNo, CardNo, MachineOilNo, OilNo, CTC, OpeNo, Liter, 
@@ -211,6 +212,9 @@
       <if test="oucode != null" >
         OUCode,
       </if>
+      <if test="backcanflag!=null">
+        BackCanFlag,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="macno != null" >
@@ -326,6 +330,9 @@
       </if>
       <if test="oucode != null" >
         #{oucode,jdbcType=VARCHAR},
+      </if>
+      <if test="backcanflag !=null">
+        #{backcanflag,jdbcType=VARCHAR}
       </if>
     </trim>
   </insert>
@@ -754,10 +761,9 @@
   </select>
   <select id="selectTqCount" resultType="hashmap" parameterType="hashmap">
     select COUNT(*) as num,OilType FROM
-    (
-    select  *,(select OilType from oss_sysmanage_oilType where oss_sysmanage_oilType.OilNo=oss_daily_TradeAccount.OilNo) as OilType from oss_daily_TradeAccount
-    )  a
-    WHERE 1=1
+    ( select  dp.*,(select OilType from oss_sysmanage_oilType where oss_sysmanage_oilType.OilNo=dp.OilNo) as OilType,
+    (SELECT Shift FROM oss_daily_tankshift where oucode=dp.oucode and AccountDate is not null order by Shift desc limit 1) as maxShift
+    from oss_daily_TradeAccount as dp where dp.Shift is not null)  a   where (Shift>maxShift or Shift is null)
     <if test="start != null">
       <![CDATA[and TakeDate>#{start,jdbcType=VARCHAR}]]>
     </if>
@@ -772,17 +778,16 @@
     </if>
   </select>
   <select id="selectNewLiter" resultType="hashmap" parameterType="hashmap">
-    select * FROM (
+    select b.* from (
     select *,
-    (SELECT OilType from oss_sysmanage_oilType where oss_sysmanage_oilType.OilNo=oss_daily_opotCount.OilNo) AS OilType
-    from oss_daily_opotCount  where LEFT(Shift,8)=(SELECT MAX(LEFT(Shift,8)) from oss_daily_opotCount)
-    ) a
-    where 1=1
+    (SELECT OilType from oss_sysmanage_oilType where oss_sysmanage_oilType.OilNo=dp.OilNo) AS OilType,
+    (SELECT Shift FROM oss_daily_tankshift where oucode=dp.oucode and AccountDate is not null order by Shift desc limit 1 ) as maxShift
+    from oss_daily_TradeAccount  as dp ) as b  where (Shift>maxShift or Shift is null)
     <if test="oiltype !=null">
       <![CDATA[and OilType=#{oiltype,jdbcType=VARCHAR}]]>
     </if>
     <if test="type != null and type != '' ">
-      <![CDATA[and Type LIKE #{type,jdbcType=VARCHAR}]]>
+      <![CDATA[and PayMode LIKE #{type,jdbcType=VARCHAR}]]>
     </if>
     <if test="oucode != null and oucode != '' ">
       <![CDATA[and OUCode LIKE #{oucode,jdbcType=VARCHAR}]]>

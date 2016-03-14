@@ -10,7 +10,11 @@ import com.kld.gsm.ATGDevice.atg_timestock_data_in_t;
 import com.kld.gsm.coord.Context;
 import com.kld.gsm.coord.servcie.IMonitorInventoryService;
 import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -32,6 +36,9 @@ public class StockThead extends Thread {
     SysManageCanInfoDao sysManageCanInfodao;
     @Override
     public void run(){
+        RuntimeMXBean rt = ManagementFactory.getRuntimeMXBean();
+        String pid = rt.getName();
+        MDC.put("PID", pid);
         sysManageCanInfodao = Context.getInstance().getBean(SysManageCanInfoDao.class);
         while(true){
             try {
@@ -93,7 +100,6 @@ public class StockThead extends Thread {
     /**
      * 液位仪赋值时点库存
      * @param stock
-     * @param monitorInventory
      */
     public void stockData2MonitorTimeInventory(atg_stock_data_out_t stock,MonitorTimeInventory monitorTimeInventory) throws Exception{
         SimpleDateFormat sd = new SimpleDateFormat("yyyyMMddHHmmss");

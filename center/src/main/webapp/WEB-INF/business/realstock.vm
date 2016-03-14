@@ -10,8 +10,8 @@
 
 
 <script type="text/javascript">
-    LoadOrgunit("cc","aa","ss");
-    //Loadcas("cc","aa","ss");
+    //LoadOrgunit("cc","aa","ss");
+    Loadcas("cc","aa","ss");
    /* var data = $('#cc').combobox('getData');
     alert(data);
     $("#cc ").combobox('select',data[0].oucode);*/

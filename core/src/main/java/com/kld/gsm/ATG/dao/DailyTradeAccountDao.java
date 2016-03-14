@@ -58,4 +58,10 @@ public interface DailyTradeAccountDao {
     List<Map<String,Object>> getLiter(String shift);
     List<Map<String,Object>> getLiterByAccountDate();
 
+    //  根据油罐-开始时间-结束时间查询付油量
+    String findByOilGun(HashMap map);
+
+    //  根据油品-开始时间-结束时间查询付油量
+    String findByOilNo(HashMap map);
+
 }

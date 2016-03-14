@@ -1,9 +1,9 @@
 package com.kld.gsm.center.domain;
 
 public class oss_sysmanage_AlarmParameterKey {
-    private Integer oilcan;
+    private Integer oilcan; //油罐编号
 
-    private String nodeno;
+    private String nodeno;//网点编号
 
     public Integer getOilcan() {
         return oilcan;
@@ -19,5 +19,13 @@ public class oss_sysmanage_AlarmParameterKey {
 
     public void setNodeno(String nodeno) {
         this.nodeno = nodeno == null ? null : nodeno.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "oss_sysmanage_AlarmParameterKey{" +
+                "oilcan=" + oilcan +
+                ", nodeno='" + nodeno + '\'' +
+                '}';
     }
 }

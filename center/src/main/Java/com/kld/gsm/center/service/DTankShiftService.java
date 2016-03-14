@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface DTankShiftService {
     int AddTankShift(List<oss_daily_tankshift> oss_daily_tankshifts);
-    ResultMsg selectByShift(String shift);
+    ResultMsg selectByShift(String shift,String oucode);
 }

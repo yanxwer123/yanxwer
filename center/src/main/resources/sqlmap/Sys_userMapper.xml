@@ -27,7 +27,7 @@
     username, realname, pwd, gender, phone, mobile, email, state, creator, createtime, 
     modifier, moditime, rolecode, oucode, oulevel, job, isdel, rolename, ouname, opinion
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultType="com.kld.gsm.center.domain.Sys_user" parameterType="java.lang.String" >
     select 'true' as QUERYID,
     <include refid="Base_Column_List" />
     from Sys_user
@@ -53,6 +53,14 @@
       #{job,jdbcType=VARCHAR}, #{isdel,jdbcType=INTEGER}, #{rolename,jdbcType=VARCHAR}, 
       #{ouname,jdbcType=VARCHAR}, #{opinion,jdbcType=VARCHAR})
   </insert>
+  <insert id="insertRow" parameterType="hashmap" >
+    insert into Sys_user (username, realname, email, oucode,state, mobile,creator,createtime,pwd)
+    values (#{username}, #{realname},#{email}, #{oucode},#{state}, #{mobile},#{creator},#{createtime},#{pwd})
+  </insert>
+  <update id="updateRow" parameterType="hashmap" >
+    UPDATE  Sys_user set email=#{email},oucode=#{oucode},state=#{state},mobile=#{mobile},creator=#{creator},createtime=#{createtime}
+    where username=#{username}
+  </update>
   <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.Sys_user" >
     insert into Sys_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -284,6 +292,36 @@
     select * from sys_user where rolecode=#{rolecode}
   </select>
 
+  <select id="getSysUserPageList" parameterType="hashmap" resultType="hashmap">
+    select * from sys_user
+    where 1=1
+    <if test="username != null and username != ''">
+      AND username= #{username}
+    </if>
+    <if test="realname != null and realname != ''">
+      AND realname= #{realname}
+    </if>
+    and OUCode LIKE #{oucode}
+    ORDER BY username ASC
+    <if test="firstRow != null and  pageSize!= null">
+      <![CDATA[ LIMIT #{firstRow},#{pageSize}]]>
+    </if>
+  </select>
+
+  <select id="getUserPageList" parameterType="hashmap" resultType="hashmap">
+    select * from sys_user
+    where 1=1
+    <if test="username != null and username != ''">
+      AND username= #{username}
+    </if>
+    <if test="realname != null and realname != ''">
+      AND realname= #{realname}
+    </if>
+    <if test="oucode != null and oucode != ''">
+      and OUCode LIKE #{oucode}
+    </if>
+  </select>
+
   <select id="selectUserMoreInfo" parameterType="java.lang.String" resultType="com.kld.gsm.center.domain.Sys_user">
     select u.*,o.oulevel,o.ouname from sys_user u
     left join oss_sys_orgunit o on u.oucode=o.oucode
@@ -296,5 +334,8 @@
     left join (select * from approval where  APPROVETYPE=2) a on a.bsnsId=u.username
     where u.state=0
     ORDER  BY u.createtime DESC
+  </select>
+  <select id="selectUserIdByRealname" resultType="java.lang.String" parameterType="java.lang.String">
+    select username from sys_user where realname= #{realname}
   </select>
 </mapper>

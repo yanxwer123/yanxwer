@@ -147,10 +147,17 @@ public class SysmanageServiceImpl implements SysmanageService {
     public int GetCubgeByNodeNobackInt(String host, String nodeno) {
         //获取action地址
         action ac=new action();
-        String path=ac.getUri(host, "resource.services.sys.getcubebynodeno");
+        String path=ac.getUri(host, "resource.services.sys.getUntranCubgeInfos");
 
         Map<String,String> hm=new param().getparam();
-        hm.put("NodeNo",nodeno);
+        hm.put("NodeNo", nodeno);
+        List<SysManageCubage> cubageList = cubageDao.getMaxVersion();
+        StringBuffer CV = new StringBuffer();
+        for(SysManageCubage cubage:cubageList){
+            //格式为：罐号|版本号，
+            CV.append(cubage.getOilcan()+"|"+cubage.getVersion()+",");
+        }
+        hm.put("CV",CV.toString());
         //发送请求数据
         httpClient client=new httpClient();
         try {

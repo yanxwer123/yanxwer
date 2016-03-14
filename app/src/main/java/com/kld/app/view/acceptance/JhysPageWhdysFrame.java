@@ -455,19 +455,33 @@ public class JhysPageWhdysFrame  extends JFrame{
                                                     deliveryService.insert(bill);
                                                 }
                                                 // 调用卸油流程
-                                                if (Main.jhys == null) {
+                                                /*if (Main.jhys == null) {
                                                     Main.jhys = new JhysPage(JhysPage.ENTERTYPE_SGLR);
                                                 }
                                                 //endregion
 
                                                 Main.jhys.setCkdxx(bill, true);
-                                                Main.jhys.initOilTankInfo();
+                                                Main.jhys.initOilTankInfo();*/
+                                               /* if (Main.jhysNewPage==null) {
+                                                    Main.jhysNewPage = new JhysNewPage(bill);
+                                                    Main.jhysNewPage.Init();
+                                                }else{
+                                                    Main.jhysNewPage.addbill(bill);
+                                                    Main.jhysNewPage.getFrame().setVisible(true);
+                                                }*/
+
+                                                Main.jhysNewPage = new JhysNewPage(bill);
+                                                Main.jhysNewPage.Init();
+
+                                                /*Main.jhysNewPage.addbill(bill);
+                                                Main.jhysNewPage.getFrame().setVisible(true);
+                                                Main.jhysNewPage.Inittabpanel();*/
                                             } catch (Exception e1) {
                                                 Toolkit.getDefaultToolkit().beep();
                                                 JOptionPane.showMessageDialog(frame, e1.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
                                                 return;
                                             }
-                                            Main.jhys.getFrame().setVisible(true);
+                                            //Main.jhys.getFrame().setVisible(true);
                                             frame.setVisible(false);
                                             frame.dispose();
                                         }

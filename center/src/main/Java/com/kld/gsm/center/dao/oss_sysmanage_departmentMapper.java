@@ -24,4 +24,11 @@ public interface oss_sysmanage_departmentMapper {
     int merge(oss_sysmanage_department record);
 
     List<oss_sysmanage_department> selectById(@Param("list")List<StationStatus> stationStatuses);
+
+    /**
+     *
+     * @param oucode 单位编码
+     * @return 单位信息
+     */
+    oss_sysmanage_department findByOUCode(String oucode);
 }

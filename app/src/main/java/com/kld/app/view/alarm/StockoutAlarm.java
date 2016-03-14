@@ -16,6 +16,7 @@ import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
@@ -142,13 +143,14 @@ public class StockoutAlarm {
 //				data[0] = tableHeads;
 		for (int i = 0; i < list.size(); i++) {
 			AlarmSaleOut info = list.get(i);
+			DecimalFormat df=new DecimalFormat("0");
 			//data[i][0] = info.getOilno();
 			data[i][0] = alarmDailyLostService.selectOilNo(info.getOilno());//油品类型
 			data[i][1] = dateFormat.format(info.getMesasuretime());
-			data[i][2] = info.getNowvolume();
-			data[i][3] = info.getCansalevolume();
+			data[i][2] = df.format(info.getNowvolume());
+			data[i][3] = df.format(info.getCansalevolume());
 			//data[i][4] = info.getDayaveragesales();
-			data[i][4] = info.getHouraveragesales();
+			data[i][4] = df.format(info.getHouraveragesales());
 			data[i][5] = info.getPredictHours();
 			data[i][6] = dateFormat.format(info.getStartalarmtime());
 			if(info.getEndalarmtime()!=null) {
