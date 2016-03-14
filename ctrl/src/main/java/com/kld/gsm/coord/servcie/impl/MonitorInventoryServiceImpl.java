@@ -69,7 +69,7 @@ public class MonitorInventoryServiceImpl implements IMonitorInventoryService {
      */
     public void stockData2MonitorInventory(atg_stock_data_out_t stock, MonitorInventory monitorInventory) throws Exception {
         SimpleDateFormat sd2 = new SimpleDateFormat("yyyyMMdd");
-        SimpleDateFormat sd3 = new SimpleDateFormat("HHmmss");
+        SimpleDateFormat sd3 = new SimpleDateFormat("HH0000");
         Date date = new Date();
         monitorInventory.setOilcanno(stock.uOilCanNo);
         monitorInventory.setDate(sd2.format(date));
