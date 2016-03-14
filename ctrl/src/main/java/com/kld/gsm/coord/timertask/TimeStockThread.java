@@ -70,7 +70,7 @@ public class TimeStockThread extends Thread {
 
 //    public static void main(String[] args)throws Exception{
 //        //18:19:11  长度是1罐号是0   18点左右10分钟调用一次实时库存
-//        System.out.println(getHour(1,0));
+//        System.out.println(getHour(59,60));
 //    }
 
     public static long getHour(int minute,int second) throws ParseException {
@@ -87,7 +87,7 @@ public class TimeStockThread extends Thread {
         Date NextHour = currentTime.getTime();
         currentTime.set(Calendar.HOUR_OF_DAY, currentHour);
         currentTime.set(Calendar.MINUTE, minute);
-        currentTime.set(Calendar.MILLISECOND, second);
+        currentTime.set(Calendar.MILLISECOND, second*1000);
         Date Hour = currentTime.getTime();
         return (NextHour.getTime() - Hour.getTime());
     }
