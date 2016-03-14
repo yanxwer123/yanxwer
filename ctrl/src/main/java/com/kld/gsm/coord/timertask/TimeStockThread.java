@@ -75,10 +75,7 @@ public class TimeStockThread extends Thread {
 
     public static long getHour(int minute,int second) throws ParseException {
         Calendar currentTime = Calendar.getInstance();
-        String d = "2016-03-31 23:59:59";
-        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date ddd = sd.parse(d);
-        currentTime.setTime(ddd);
+        currentTime.setTime(new Date());
         int currentHour = currentTime.get(currentTime.HOUR);
         currentTime.set(Calendar.HOUR_OF_DAY, currentHour + 1);
         currentTime.set(Calendar.MINUTE, 0);
@@ -87,7 +84,7 @@ public class TimeStockThread extends Thread {
         Date NextHour = currentTime.getTime();
         currentTime.set(Calendar.HOUR_OF_DAY, currentHour);
         currentTime.set(Calendar.MINUTE, minute);
-        currentTime.set(Calendar.MILLISECOND, second*1000);
+        currentTime.set(Calendar.MILLISECOND, second * 1000);
         Date Hour = currentTime.getTime();
         return (NextHour.getTime() - Hour.getTime());
     }
