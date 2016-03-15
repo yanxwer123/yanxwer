@@ -6,7 +6,7 @@
        select * FROM BillInfor
     </select>
     <select id="selectBycode" parameterType="String" resultType="com.kld.gsm.coord.domain.BillInfor">
-       select typeno,maxvouchno FROM BillInfor where typeno=#{typeno,jdbcType=VARCHAR}
+       select * FROM BillInfor where typeno=#{typeno,jdbcType=VARCHAR}
     </select>
     <update id="updateBillInfor" parameterType="com.kld.gsm.coord.domain.BillInfor">
         update BillInfor set maxvouchno=#{maxvouchno,jdbcType=VARCHAR} where typeno=#{typeno,jdbcType=VARCHAR}
