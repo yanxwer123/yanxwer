@@ -528,6 +528,7 @@ public class PrintUIComponent extends JDialog {
                         paintLabel(g2, acceptanceOdRegisterInfo.getBeginv20l() == null ? "" : acceptanceOdRegisterInfo.getBeginv20l().toString(), 370, this.getHeight() - 345);
                         paintLabel(g2, acceptanceOdRegisterInfo.getBegintime() == null ? "" : acceptanceOdRegisterInfo.getBegintime().toLocaleString(), 461, this.getHeight() - 345);
                         paintLabel(g2, "", 550, this.getHeight() - 345);
+
                         paintLabel(g2, "", 610, this.getHeight() - 345);
 
 
