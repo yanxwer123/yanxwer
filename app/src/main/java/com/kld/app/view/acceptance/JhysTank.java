@@ -846,7 +846,7 @@ public class JhysTank  extends JPanel{
                     acceptanceOdRegisterInfo.setBegintemperature(temperature);
                     acceptanceOdRegisterInfo.setBegintime(new Date());
                     acceptanceOdRegisterInfo.setIsdel(0);
-                    acceptanceOdRegisterInfo.setEntertype(1);
+                    acceptanceOdRegisterInfo.setEntertype(0);
                     // 保存卸油明细信息
                     odRegisterInfoService.insert(acceptanceOdRegisterInfo);
                     UpdateButton3Status(acceptanceOdRegisterInfo.getManualNo());
