@@ -328,8 +328,9 @@ public class SeeUIComponent extends JDialog  {
                     paintLabel(g2, acceptanceOdRegisterInfo.getBeginv20l() == null ? "" : acceptanceOdRegisterInfo.getBeginv20l().toString(), 370, this.getHeight() - 182);
                     paintLabel(g2, acceptanceOdRegisterInfo.getBegintime() == null ? "" : acceptanceOdRegisterInfo.getBegintime().toLocaleString(), 461, this.getHeight() - 182);
                     paintLabel(g2, "", 550, this.getHeight() - 182);
-                    paintLabel(g2, "", 610, this.getHeight() - 182);
-
+                    if(acceptanceOdRegisterInfo.getEntertype()!=null&&acceptanceOdRegisterInfo.getEntertype()==1){
+                        paintLabel(g2, "是", 610, this.getHeight() - 182);
+                    }
                     paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 202);
                     paintLabel(g2, "卸后", 65, this.getHeight() - 202);
                     paintLabel(g2, acceptanceOdRegisterInfo.getEndoilheight() == null ? "" : acceptanceOdRegisterInfo.getEndoilheight().toString(), 130, this.getHeight() - 202);
@@ -339,7 +340,9 @@ public class SeeUIComponent extends JDialog  {
                     paintLabel(g2, acceptanceOdRegisterInfo.getEndv20l() == null ? "" : acceptanceOdRegisterInfo.getEndv20l().toString(), 370, this.getHeight() - 202);
                     paintLabel(g2, acceptanceOdRegisterInfo.getEndtime() == null ? "" : acceptanceOdRegisterInfo.getEndtime().toLocaleString(), 461, this.getHeight() - 202);
                     paintLabel(g2, "", 550, this.getHeight() - 202);
-                    paintLabel(g2, "", 610, this.getHeight() - 202);
+                    if(acceptanceOdRegisterInfo.getEntertype()!=null&&acceptanceOdRegisterInfo.getEntertype()==1){
+                        paintLabel(g2, "是", 610, this.getHeight() - 202);
+                    }
                 }
                 if (odRegisterInfos.size() > 1) {
                     if (odRegisterInfos.get(1) != null) {
@@ -355,8 +358,9 @@ public class SeeUIComponent extends JDialog  {
                         paintLabel(g2, acceptanceOdRegisterInfo.getBeginv20l() == null ? "" : acceptanceOdRegisterInfo.getBeginv20l().toString(), 370, this.getHeight() - 222);
                         paintLabel(g2, acceptanceOdRegisterInfo.getBegintime() == null ? "" : acceptanceOdRegisterInfo.getBegintime().toLocaleString(), 461, this.getHeight() - 222);
                         paintLabel(g2, "", 550, this.getHeight() - 222);
-                        paintLabel(g2, "", 610, this.getHeight() - 222);
-
+                        if(acceptanceOdRegisterInfo.getEntertype()!=null&&acceptanceOdRegisterInfo.getEntertype()==1){
+                            paintLabel(g2, "是", 610, this.getHeight() - 222);
+                        }
 
                         paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 242);
                         paintLabel(g2, "卸后", 65, this.getHeight() - 242);
@@ -367,7 +371,9 @@ public class SeeUIComponent extends JDialog  {
                         paintLabel(g2, acceptanceOdRegisterInfo.getEndv20l() == null ? "" : acceptanceOdRegisterInfo.getEndv20l().toString(), 370, this.getHeight() - 242);
                         paintLabel(g2, acceptanceOdRegisterInfo.getEndtime() == null ? "" : acceptanceOdRegisterInfo.getEndtime().toLocaleString(), 461, this.getHeight() - 242);
                         paintLabel(g2, "", 550, this.getHeight() - 242);
-                        paintLabel(g2, "", 610, this.getHeight() - 242);
+                        if(acceptanceOdRegisterInfo.getEntertype()!=null&&acceptanceOdRegisterInfo.getEntertype()==1){
+                            paintLabel(g2, "是", 610, this.getHeight() - 242);
+                        }
                     }
                 }
 
