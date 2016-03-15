@@ -340,8 +340,9 @@ public class PrintUIComponent extends JDialog {
                     paintLabel(g2, acceptanceOdRegisterInfo.getBeginv20l() == null ? "" : acceptanceOdRegisterInfo.getBeginv20l().toString(), 370, this.getHeight() - 86);
                     paintLabel(g2, acceptanceOdRegisterInfo.getBegintime() == null ? "" : acceptanceOdRegisterInfo.getBegintime().toLocaleString(), 461, this.getHeight() - 86);
                     paintLabel(g2, "", 550, this.getHeight() - 86);
-                    paintLabel(g2, "", 610, this.getHeight() - 86);
-
+                    if(acceptanceOdRegisterInfo.getEntertype()!=null&&acceptanceOdRegisterInfo.getEntertype()==1){
+                        paintLabel(g2, "是", 610, this.getHeight() - 86);
+                    }
                     paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 96);
                     paintLabel(g2, "卸后", 65, this.getHeight() - 96);
                     paintLabel(g2, acceptanceOdRegisterInfo.getEndoilheight() == null ? "" : acceptanceOdRegisterInfo.getEndoilheight().toString(), 130, this.getHeight() - 96);
@@ -351,7 +352,9 @@ public class PrintUIComponent extends JDialog {
                     paintLabel(g2, acceptanceOdRegisterInfo.getEndv20l() == null ? "" : acceptanceOdRegisterInfo.getEndv20l().toString(), 370, this.getHeight() - 96);
                     paintLabel(g2, acceptanceOdRegisterInfo.getEndtime() == null ? "" : acceptanceOdRegisterInfo.getEndtime().toLocaleString(), 461, this.getHeight() - 96);
                     paintLabel(g2, "", 550, this.getHeight() - 96);
-                    paintLabel(g2, "", 610, this.getHeight() - 96);
+                    if(acceptanceOdRegisterInfo.getEntertype()!=null&&acceptanceOdRegisterInfo.getEntertype()==1){
+                        paintLabel(g2, "是", 610, this.getHeight() - 96);
+                    }
                 }
                 if (odRegisterInfos.size() > 1) {
                     if (odRegisterInfos.get(1) != null) {
@@ -367,8 +370,9 @@ public class PrintUIComponent extends JDialog {
                         paintLabel(g2, acceptanceOdRegisterInfo.getBeginv20l() == null ? "" : acceptanceOdRegisterInfo.getBeginv20l().toString(), 370, this.getHeight() - 106);
                         paintLabel(g2, acceptanceOdRegisterInfo.getBegintime() == null ? "" : acceptanceOdRegisterInfo.getBegintime().toLocaleString(), 461, this.getHeight() - 106);
                         paintLabel(g2, "", 550, this.getHeight() - 106);
-                        paintLabel(g2, "", 610, this.getHeight() - 106);
-
+                        if(acceptanceOdRegisterInfo.getEntertype()!=null&&acceptanceOdRegisterInfo.getEntertype()==1){
+                            paintLabel(g2, "是", 610, this.getHeight() - 106);
+                        }
 
                         paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 116);
                         paintLabel(g2, "卸后", 65, this.getHeight() - 116);
@@ -379,7 +383,9 @@ public class PrintUIComponent extends JDialog {
                         paintLabel(g2, acceptanceOdRegisterInfo.getEndv20l() == null ? "" : acceptanceOdRegisterInfo.getEndv20l().toString(), 370, this.getHeight() - 116);
                         paintLabel(g2, acceptanceOdRegisterInfo.getEndtime() == null ? "" : acceptanceOdRegisterInfo.getEndtime().toLocaleString(), 461, this.getHeight() - 116);
                         paintLabel(g2, "", 550, this.getHeight() - 116);
-                        paintLabel(g2, "", 610, this.getHeight() - 116);
+                        if(acceptanceOdRegisterInfo.getEntertype()!=null&&acceptanceOdRegisterInfo.getEntertype()==1){
+                            paintLabel(g2, "是", 610, this.getHeight() - 116);
+                        }
                     }
                 }
 
@@ -501,7 +507,9 @@ public class PrintUIComponent extends JDialog {
                     paintLabel(g2, acceptanceOdRegisterInfo.getBeginv20l() == null ? "" : acceptanceOdRegisterInfo.getBeginv20l().toString(), 370, this.getHeight() - 325);
                     paintLabel(g2, acceptanceOdRegisterInfo.getBegintime() == null ? "" : acceptanceOdRegisterInfo.getBegintime().toLocaleString(), 461, this.getHeight() - 325);
                     paintLabel(g2, "", 550, this.getHeight() - 325);
-                    paintLabel(g2, "", 610, this.getHeight() - 325);
+                    if(acceptanceOdRegisterInfo.getEntertype()!=null&&acceptanceOdRegisterInfo.getEntertype()==1){
+                        paintLabel(g2, "是", 610, this.getHeight() - 325);
+                    }
 
                     paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 335);
                     paintLabel(g2, "卸后", 65, this.getHeight() - 335);
@@ -512,7 +520,9 @@ public class PrintUIComponent extends JDialog {
                     paintLabel(g2, acceptanceOdRegisterInfo.getEndv20l() == null ? "" : acceptanceOdRegisterInfo.getEndv20l().toString(), 370, this.getHeight() - 335);
                     paintLabel(g2, acceptanceOdRegisterInfo.getEndtime() == null ? "" : acceptanceOdRegisterInfo.getEndtime().toLocaleString(), 461, this.getHeight() - 335);
                     paintLabel(g2, "", 550, this.getHeight() - 335);
-                    paintLabel(g2, "", 610, this.getHeight() - 335);
+                    if(acceptanceOdRegisterInfo.getEntertype()!=null&&acceptanceOdRegisterInfo.getEntertype()==1){
+                        paintLabel(g2, "是", 610, this.getHeight() - 335);
+                    }
                 }
                 if (odRegisterInfos.size() > 1) {
                     if (odRegisterInfos.get(1) != null) {
@@ -528,8 +538,9 @@ public class PrintUIComponent extends JDialog {
                         paintLabel(g2, acceptanceOdRegisterInfo.getBeginv20l() == null ? "" : acceptanceOdRegisterInfo.getBeginv20l().toString(), 370, this.getHeight() - 345);
                         paintLabel(g2, acceptanceOdRegisterInfo.getBegintime() == null ? "" : acceptanceOdRegisterInfo.getBegintime().toLocaleString(), 461, this.getHeight() - 345);
                         paintLabel(g2, "", 550, this.getHeight() - 345);
-
-                        paintLabel(g2, "", 610, this.getHeight() - 345);
+                        if(acceptanceOdRegisterInfo.getEntertype()!=null&&acceptanceOdRegisterInfo.getEntertype()==1){
+                            paintLabel(g2, "是", 610, this.getHeight() - 345);
+                        }
 
 
                         paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 355);
@@ -541,7 +552,9 @@ public class PrintUIComponent extends JDialog {
                         paintLabel(g2, acceptanceOdRegisterInfo.getEndv20l() == null ? "" : acceptanceOdRegisterInfo.getEndv20l().toString(), 370, this.getHeight() - 355);
                         paintLabel(g2, acceptanceOdRegisterInfo.getEndtime() == null ? "" : acceptanceOdRegisterInfo.getEndtime().toLocaleString(), 461, this.getHeight() - 355);
                         paintLabel(g2, "", 550, this.getHeight() - 355);
-                        paintLabel(g2, "", 610, this.getHeight() - 355);
+                        if(acceptanceOdRegisterInfo.getEntertype()!=null&&acceptanceOdRegisterInfo.getEntertype()==1){
+                            paintLabel(g2, "是", 610, this.getHeight() - 355);
+                        }
                     }
                 }
 
