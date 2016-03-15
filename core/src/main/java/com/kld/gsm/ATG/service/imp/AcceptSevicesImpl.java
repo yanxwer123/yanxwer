@@ -102,7 +102,9 @@ public class AcceptSevicesImpl implements AcceptSevices {
         //发送请求数据
         httpClient client = new httpClient();
         try {
-            client.request(path, odregStatus, hm);
+            List<OdregStatus> statuses=new ArrayList<OdregStatus>();
+            statuses.add(odregStatus);
+            client.request(path, statuses, hm);
             return 1;
 
         } catch (Exception e) {
