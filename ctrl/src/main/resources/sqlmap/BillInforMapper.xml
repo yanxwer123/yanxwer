@@ -9,10 +9,10 @@
        select typeno,maxvouchno FROM BillInfor where typeno=#{typeno,jdbcType=VARCHAR}
     </select>
     <update id="updateBillInfor" parameterType="com.kld.gsm.coord.domain.BillInfor">
-        update BillInfor set maxvouchno=#{maxvouchno} where typeno=#{typeno}
+        update BillInfor set maxvouchno=#{maxvouchno,jdbcType=VARCHAR} where typeno=#{typeno,jdbcType=VARCHAR}
     </update>
     <insert id="insertBillInfor" parameterType="com.kld.gsm.coord.domain.BillInfor">
         INSERT INTO BillInfor(typeno,maxvouchno,billname)
-               VALUES (#{typeno},#{maxvouchno},#{billname})
+               VALUES (#{typeno,jdbcType=VARCHAR},#{maxvouchno,jdbcType=VARCHAR},#{billname,jdbcType=VARCHAR})
     </insert>
 </mapper>
