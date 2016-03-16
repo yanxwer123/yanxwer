@@ -139,7 +139,7 @@ public class TransacServiceImpl implements ITransacService {
                 //mysql保存  交易库存表oss_daily_TradeInventory
                 DailyTradeInventory dailyTradeInventory = new DailyTradeInventory();
                 //给mysql交易库存表赋值
-               if(ret!=null) {
+               if(ret!=null&&ret.size()>0) {
                    getDailyTradeInventory(oilVouch, ret, dailyTradeInventory);
                }else{
                    getDailyTradeInventory(oilVouch, ret, dailyTradeInventory,oilCanNo.get(0));
@@ -247,6 +247,7 @@ public class TransacServiceImpl implements ITransacService {
     }
 
     private void getDailyTradeInventory(OilVouch oilVouch,List<atg_stock_data_out_t> ret,DailyTradeInventory dailyTradeInventory)throws Exception{
+        log.info("oilVouch"+oilVouch);
         SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         SimpleDateFormat sd2 = new SimpleDateFormat("yyyyMMddHHmmss");
         if(ret!=null&&ret.size()>0) {
@@ -289,6 +290,7 @@ public class TransacServiceImpl implements ITransacService {
     }
 
     private void getDailyTradeInventory(OilVouch oilVouch,List<atg_stock_data_out_t> ret,DailyTradeInventory dailyTradeInventory,int oilcanno)throws Exception{
+        log.info("getDailyTradeInventory have no stockinfo,oilVouch"+oilVouch);
         SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         SimpleDateFormat sd2 = new SimpleDateFormat("yyyyMMddHHmmss");
         Date date = new Date();
@@ -329,6 +331,7 @@ public class TransacServiceImpl implements ITransacService {
         if("51".equals(oilVouch.getCardno().substring(4, 6))) {
             dailyTradeInventory.setBackcanflag("1");
         }
+        log.info("getDailyTradeInventory have no stockinfo,dailyTradeInventory"+dailyTradeInventory);
     }
 
 
