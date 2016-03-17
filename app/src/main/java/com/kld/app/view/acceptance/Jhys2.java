@@ -482,12 +482,12 @@ public class Jhys2 extends JPanel {
                         String canno = source.getText().replace("#", "");
                         canlist.put(canno, jhysTank);
                         if (null == infomap.get(source.getText().replace("#", "")) && candata != null&&candata.size()>0) {
-                            if (checkKR(cbill.getPlanl()) < 0) {
-                                JOptionPane.showMessageDialog(null, "空容小于卸油量", "信息提示", JOptionPane.INFORMATION_MESSAGE);
-                            }
                             jhysTank.UpdateGun(gundata);
                             if (candatamap != null && candatamap.size() > 0) {
                                 jhysTank.UpdateTank(candatamap.get(canno));
+                            }
+                            if (checkKR(cbill.getPlanl()) < 0) {
+                                JOptionPane.showMessageDialog(null, "空容小于卸油量", "信息提示", JOptionPane.INFORMATION_MESSAGE);
                             }
                         } else {
                              LOG.info("candata is null");
