@@ -9,18 +9,18 @@
        tracode,gettime,key_version,key_index,compmatchflag,compno,backmatchflag,
        paymatchflag,teamvouchno,transflag,teamhotoflag,billstatus
        FROM oilvouch vouch
-       WHERE macno = #{MacNo} AND oilgunno = #{GunNo} AND ttc=#{TTC}
-       AND takedate =  #{TakeDate}
+       WHERE macno = #{MacNo,jdbcType=INTEGER} AND oilgunno = #{GunNo,jdbcType=VARCHAR} AND ttc=#{TTC,jdbcType=INTEGER}
+       AND takedate =  #{TakeDate,jdbcType=VARCHAR}
     </select>
     <select id="selectByshift" parameterType="String" resultType="com.kld.gsm.ATG.domain.OilVouch">
 
         SELECT macno,ttc,takedate,oilgunno,teamvouchno,oilno
         FROM oilvouch
-        WHERE teamvouchno = #{oilvoch}
+        WHERE teamvouchno = #{oilvoch,jdbcType=VARCHAR}
     </select>
     <select id="selectByshift1" parameterType="String" resultType="com.kld.gsm.ATG.domain.OilVouch">
         SELECT macno,ttc,takedate,oilgunno,teamvouchno
         FROM oilvouch
-        WHERE teamvouchno = #{oilvoch}
+        WHERE teamvouchno = #{oilvoch,jdbcType=VARCHAR}
     </select>
 </mapper>
