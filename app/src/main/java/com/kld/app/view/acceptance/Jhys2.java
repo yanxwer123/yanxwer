@@ -52,6 +52,7 @@ public class Jhys2 extends JPanel {
     private SysmanageService sysmanageService;
     private JTable table;
     private JPanel tablePanel;
+    private JLabel tipLabel;
     JScrollPane scrollPane;
     private JPanel mainPanel;
     private AcceptanceDeliveryBills cbill;
@@ -135,7 +136,7 @@ public class Jhys2 extends JPanel {
 
     private void init(){
         canpanel=new JPanel();
-        canpanel.setBounds(0, 85, 500, 25);
+        canpanel.setBounds(0, 85, 550, 25);
         canpanel.setLayout(null);
         this.add(canpanel);
 
@@ -420,6 +421,11 @@ public class Jhys2 extends JPanel {
         labelcan.setBounds(5, 2, 30, 22);
         canpanel.add(labelcan);
 
+        tipLabel=new JLabel();
+        tipLabel.setBounds(453, 2, 110, 20);
+        tipLabel.setForeground(Color.red);
+        canpanel.add(tipLabel);
+
         JLabel labelck=new JLabel("出库铅封:");
         labelck.setBounds(220, 60, 60, 20);
         this.add(labelck);
@@ -481,20 +487,23 @@ public class Jhys2 extends JPanel {
                         LOG.info("8:" + new Date());
                         String canno = source.getText().replace("#", "");
                         canlist.put(canno, jhysTank);
-                        if (null == infomap.get(source.getText().replace("#", "")) && candata != null&&candata.size()>0) {
+                        if (null == infomap.get(source.getText().replace("#", "")) && candata != null && candata.size() > 0) {
                             jhysTank.UpdateGun(gundata);
                             if (candatamap != null && candatamap.size() > 0) {
                                 jhysTank.UpdateTank(candatamap.get(canno));
                             }
-                            if (checkKR(cbill.getPlanl()) < 0) {
-                                JOptionPane.showMessageDialog(null, "空容小于卸油量", "信息提示", JOptionPane.INFORMATION_MESSAGE);
-                            }
                         } else {
-                             LOG.info("candata is null");
-                           //checkBox.setSelected(false);
+                            LOG.info("candata is null");
+                            //checkBox.setSelected(false);
                         }
                     } else {
                         canlist.remove(source.getText().replace("#", ""));
+                    }
+                    if (checkKR(cbill.getPlanl()) < 0) {
+                        //JOptionPane.showMessageDialog(null, "空容小于卸油量", "信息提示", JOptionPane.INFORMATION_MESSAGE);
+                        tipLabel.setText("空容小于卸油量");
+                    } else {
+                        tipLabel.setText("");
                     }
                     LoadMainPanel();
                 }
@@ -691,16 +700,20 @@ public class Jhys2 extends JPanel {
 
     private Double checkKR(Double Vt){
         Double krsum=0.0;
-        for (int m=0;m<candata.size();m++) {
-            // region获取罐号
-            Map<String, ?> map = (Map) (candata.get(m));
-            String canno1 = map.get("uOilCanNo").toString();
-            JhysTank tank=canlist.get(canno1);
-            if (tank!=null) {
-                Double dktj=Double.parseDouble(new DecimalFormat("0").format(map.get("fEmptyCubage")).toString());
-                krsum+=dktj;
+        if (canlist!=null&&canlist.size()>0&&candata!=null&&candata.size()>0) {
+            for (int m = 0; m < candata.size(); m++) {
+                // region获取罐号
+                Map<String, ?> map = (Map) (candata.get(m));
+                String canno1 = map.get("uOilCanNo").toString();
+                JhysTank tank = canlist.get(canno1);
+                if (tank != null) {
+                    Double dktj = Double.parseDouble(new DecimalFormat("0").format(map.get("fEmptyCubage")).toString());
+                    krsum += dktj;
+                }
             }
+            return krsum - Vt;
+        }else {
+            return 0d;
         }
-        return krsum-Vt;
     }
 }
