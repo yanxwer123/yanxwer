@@ -259,7 +259,12 @@ public class TransacServiceImpl implements ITransacService {
                 dailyTradeInventory.setOilgun(oilVouch.getOilgunno());//油枪编号
                 dailyTradeInventory.setOilcan(out.uOilCanNo);//油罐编号
                 dailyTradeInventory.setOilno(oilVouch.getOilno());//油品编码
-                dailyTradeInventory.setOpetime(sd2.parse(out.strDate + out.strTime));//采集时间
+                try {
+                    dailyTradeInventory.setOpetime(sd.parse(oilVouch.getGettime()));//采集时间
+                }catch (Exception e){
+                    dailyTradeInventory.setOpetime(sd2.parse(out.strDate + out.strTime));//采集时间
+                }
+
                 dailyTradeInventory.setStockdate(out.strDate);//日期
                 dailyTradeInventory.setStocktime(out.strTime);//时间
                 dailyTradeInventory.setOill(out.fOilCubage);//净油体积
