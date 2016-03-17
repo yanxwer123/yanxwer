@@ -139,14 +139,18 @@ public class TransacServiceImpl implements ITransacService {
                 //mysql保存  交易库存表oss_daily_TradeInventory
                 DailyTradeInventory dailyTradeInventory = new DailyTradeInventory();
                 //给mysql交易库存表赋值
-                getDailyTradeInventory(oilVouch, ret, dailyTradeInventory);
+               if(ret!=null&&ret.size()>0) {
+                   getDailyTradeInventory(oilVouch, ret, dailyTradeInventory);
+               }else{
+                   getDailyTradeInventory(oilVouch, ret, dailyTradeInventory,oilCanNo.get(0));
+               }
                 //保存mysql交易库存表
                 dailyTradeInventoryDao.insert(dailyTradeInventory);
 
                 //把读取液位仪的实时库存赋值到sybase的实时库存vouchStock
                 VouchStock vouchStock = new VouchStock();
                 //给sybase交易库存表赋值
-                getVouchStock(oilVouch, ret, vouchStock);
+               getVouchStock(oilVouch, ret, vouchStock);
                log.info("vouchStock:"+vouchStock);
                 //sybase实时库存保存操作
                 int ret_vouchStock = vouchStockDao.insert(vouchStock);
@@ -243,6 +247,7 @@ public class TransacServiceImpl implements ITransacService {
     }
 
     private void getDailyTradeInventory(OilVouch oilVouch,List<atg_stock_data_out_t> ret,DailyTradeInventory dailyTradeInventory)throws Exception{
+        log.info("oilVouch"+oilVouch);
         SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         SimpleDateFormat sd2 = new SimpleDateFormat("yyyyMMddHHmmss");
         if(ret!=null&&ret.size()>0) {
@@ -288,6 +293,52 @@ public class TransacServiceImpl implements ITransacService {
             }
         }
     }
+
+    private void getDailyTradeInventory(OilVouch oilVouch,List<atg_stock_data_out_t> ret,DailyTradeInventory dailyTradeInventory,int oilcanno)throws Exception{
+        log.info("getDailyTradeInventory have no stockinfo,oilVouch"+oilVouch);
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        SimpleDateFormat sd2 = new SimpleDateFormat("yyyyMMddHHmmss");
+        Date date = new Date();
+        SimpleDateFormat sdDate = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat sdMinute = new SimpleDateFormat("HHmmss");
+        String d = sdDate.format(date);
+        String m = sdMinute.format(date);
+        DecimalFormat decimalFormat = new DecimalFormat("######0.00");
+        dailyTradeInventory.setMacno(oilVouch.getMacno());//油机编号
+        dailyTradeInventory.setTtc(oilVouch.getTtc());//交易序号
+        dailyTradeInventory.setTakedate(sd.parse(oilVouch.getTakedate()));//交易时间
+        dailyTradeInventory.setOilgun(oilVouch.getOilgunno());//油枪编号
+        dailyTradeInventory.setOilcan(oilcanno);//油罐编号
+        dailyTradeInventory.setOilno(oilVouch.getOilno());//油品编码
+        dailyTradeInventory.setOpetime(date);//采集时间
+        dailyTradeInventory.setStockdate(d);//日期
+        dailyTradeInventory.setStocktime(m);//时间
+        dailyTradeInventory.setOill(0.0);//净油体积
+        dailyTradeInventory.setStandardl(0.0);//标准体积
+        dailyTradeInventory.setEmptyl(0.0);//空体积
+        dailyTradeInventory.setHeighttotal(0.0);//油水总高
+        dailyTradeInventory.setHeightwater(0.0);//水高
+        dailyTradeInventory.setOiltemp(0.0);//油温
+        dailyTradeInventory.setWaterl(0.0);//水体积
+        dailyTradeInventory.setDensity(0.0);//视密度
+        dailyTradeInventory.setDensitystandard(0.0);//标准密度
+        //处理空班次
+        if(oilVouch.getTeamvouchno()==null) {
+            dailyTradeInventory.setShift("");//班次号
+        }
+        else
+        {
+            //+""会存为NULL
+            dailyTradeInventory.setShift(oilVouch.getTeamvouchno() + "");//班次号
+        }
+        dailyTradeInventory.setTranstatus("0");
+        //加油卡号 1000514400001542554  如果第56位是51，那么是回罐的
+        if("51".equals(oilVouch.getCardno().substring(4, 6))) {
+            dailyTradeInventory.setBackcanflag("1");
+        }
+        log.info("getDailyTradeInventory have no stockinfo,dailyTradeInventory"+dailyTradeInventory);
+    }
+
 
     private void getVouchStock(OilVouch oilVouch,List<atg_stock_data_out_t> ret,VouchStock vouchStock)throws Exception{
         SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
