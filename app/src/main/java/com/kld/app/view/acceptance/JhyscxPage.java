@@ -44,7 +44,7 @@ public class JhyscxPage extends  JPanel implements Watcher {
     private JPanel cpanel;
     SysManageCanInfoService tankInfoService=(SysManageCanInfoService) (Context.getInstance().getBean("SysManageTankInfoService"));
     private static final Logger LOG = Logger.getLogger(JhyscxPage.class);
-    private static final String[] CKD_TITLES = new String[] { "序号", "出库单号","损溢率","卸入罐号","到站时间","验收模式","验收状态", "出库时间", "发油油库", "目的油站", "油品", "发货温度(℃)",
+    private static final String[] CKD_TITLES = new String[] { "序号", "出库单号","损溢率(‰)","卸入罐号","到站时间","验收模式","验收状态", "出库时间", "发油油库", "目的油站", "油品", "发货温度(℃)",
             "原发升数(L)", "原发数量(t)", "交运时间", "车牌号码", "出库铅封号","班次" };
     private JTextField ckdhField;
     private JTextField ghField;
@@ -344,7 +344,7 @@ public class JhyscxPage extends  JPanel implements Watcher {
             JhyscxPageDetailFrame jhck=new JhyscxPageDetailFrame();
             //System.out.println("出库单号"+tableModel.getValueAt(selectRow,1).toString());
             SeeUIComponent myFrame = new SeeUIComponent();
-            myFrame.init(tableModel.getValueAt(selectRow,1).toString());
+            myFrame.init(tableModel.getValueAt(selectRow, 1).toString());
             // jhck.initOilCan(tableModel.getValueAt(selectRow,1).toString());
             // jhck.getFrame().setVisible(true);
         }
@@ -390,7 +390,11 @@ public class JhyscxPage extends  JPanel implements Watcher {
                 billArray[i][1] = bill.get("DeliveryNo").toString();
                 Date DeliveryTime=(Date)bill.get("DeliveryTime");
                 //损益率，卸入罐号，到站时间，验收模式，验收状态
-                billArray[i][2]=bill.get("Dischargerate");
+                if(bill.get("Dischargerate")==null||"".equals(bill.get("Dischargerate"))){
+                    billArray[i][2] = "";
+                }else {
+                    billArray[i][2] = Double.parseDouble(bill.get("Dischargerate").toString()) * 1000;
+                }
                 billArray[i][3] = bill.get("OilCan");
                 SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 billArray[i][4] = isNotEmpty(bill.get("ArrivalTime"))?sd.format(bill.get("ArrivalTime")):"";
