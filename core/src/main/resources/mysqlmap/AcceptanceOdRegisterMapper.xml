@@ -70,7 +70,7 @@
 
   <select id="findByShift" parameterType="java.util.Map" resultMap="byShift">
     <![CDATA[
-         SELECT oilno ,SUM(RealGetLV20) AS RealGetLV20
+         SELECT oilno ,SUM(RealGetLV20) AS RealGetLV20,SUM(RealGetL) AS RealGetL
         FROM oss_acceptance_odRegister
         WHERE shift >=#{minshift} AND shift <= #{maxshift}
         GROUP BY oilno
