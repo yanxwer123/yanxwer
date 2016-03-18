@@ -277,11 +277,14 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
         //oilCanIndeTail.setTeamvouchno((null == selectAcceptanceOdRegisterInfo.getShift() || "".equals(selectAcceptanceOdRegisterInfo.getShift())) ? "" : selectAcceptanceOdRegisterInfo.getShift());
         oilCanIndeTail.setIngoodsdate(selectAcceptanceOdRegisterInfo.getBegintime());
         oilCanIndeTail.setIngoodsperson((null == String.valueOf(oprno) || "".equals(String.valueOf(oprno)) ? "" : String.valueOf(oprno)));
-        oilCanIndeTail.setGoodsbillno((null == selectAcceptanceOdRegisterInfo.getManualNo()|| "".equals(selectAcceptanceOdRegisterInfo.getManualNo())) ? "" : selectAcceptanceOdRegisterInfo.getManualNo());
+        oilCanIndeTail.setGoodsbillno((null == selectAcceptanceOdRegisterInfo.getManualNo() || "".equals(selectAcceptanceOdRegisterInfo.getManualNo())) ? "" : selectAcceptanceOdRegisterInfo.getManualNo());
         oilCanIndeTail.setInbefofootage((null == selectAcceptanceOdRegisterInfo.getBeginoilheight() || "".equals(selectAcceptanceOdRegisterInfo.getBeginoilheight())) ? 0 : selectAcceptanceOdRegisterInfo.getBeginoilheight());
-        oilCanIndeTail.setInbefoliter((null == selectAcceptanceOdRegisterInfo.getBeginv20l() || "".equals(selectAcceptanceOdRegisterInfo.getBeginv20l())) ? 0 : selectAcceptanceOdRegisterInfo.getBeginv20l());
+        oilCanIndeTail.setInbefoliter((null == selectAcceptanceOdRegisterInfo.getBeginoill() || "".equals(selectAcceptanceOdRegisterInfo.getBeginoill())) ? 0 : selectAcceptanceOdRegisterInfo.getBeginoill());
         oilCanIndeTail.setInaftefootage((null == selectAcceptanceOdRegisterInfo.getEndoilheight() || "".equals(selectAcceptanceOdRegisterInfo.getEndoilheight())) ? 0 : selectAcceptanceOdRegisterInfo.getEndoilheight());
-        oilCanIndeTail.setInafteliter((null == selectAcceptanceOdRegisterInfo.getEndv20l() || "".equals(selectAcceptanceOdRegisterInfo.getEndv20l())) ? 0 : selectAcceptanceOdRegisterInfo.getEndv20l());
+        oilCanIndeTail.setInafteliter((null == selectAcceptanceOdRegisterInfo.getEndoill() || "".equals(selectAcceptanceOdRegisterInfo.getEndoill())) ? 0 : selectAcceptanceOdRegisterInfo.getEndoill());
+        if (selectAcceptanceOdRegisterInfo.getDuringsales()!=null){
+            oilCanIndeTail.setInafteliter(oilCanIndeTail.getInafteliter()+selectAcceptanceOdRegisterInfo.getDuringsales());
+        }
         oilCanIndeTail.setAccountdate(selectAcceptanceOdRegisterInfo.getCreatetime());
         oilCanIndeTail.setBillstatus(2);
         oilCanIndeTail.setTransflag((null == selectAcceptanceOdRegisterInfo.getTranstatus() || "".equals(selectAcceptanceOdRegisterInfo.getTranstatus())) ? "" : selectAcceptanceOdRegisterInfo.getTranstatus());
