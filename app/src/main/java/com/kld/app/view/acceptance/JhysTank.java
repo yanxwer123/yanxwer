@@ -911,6 +911,7 @@ public class JhysTank  extends JPanel{
                         Map salemap = dailyTradeAccountService.GetSaleOilSumByCanNoAndDate(acceptanceOdRegisterInfo.getOilcan().toString(), acceptanceOdRegisterInfo.getBegintime(), acceptanceOdRegisterInfo.getEndtime());
                         if (salemap!=null&&salemap.get("Liter") != null) {
                             duringSales = Double.parseDouble(salemap.get("Liter").toString());
+                            fyssField.setText(duringSales+"");
                         }
                         //todo
                         //fyssField.setText(duringSales+"");

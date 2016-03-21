@@ -24,18 +24,22 @@ public class ShiftHandler {
      * @param shiftno
      */
     public void saveShiftInfo(String shiftno) {
-        IShiftService shiftService =Context.getInstance().getBean(IShiftService.class);
-        SysManageDic dic=Context.getInstance().getBean(SysManageDic.class);
-        log.info("start saveShiftInfo~~~~~~||||||||||||||||||||||||||~~~~~~~~~");
-        shiftService.saveShiftInfo(shiftno);
-        DailyRunning  pDailyRunning=Context.getInstance().getBean(DailyRunning.class);
-        log.info("Value"+SysConfig.getCenterIP());
-        //pDailyRunning.AddClassKnotData(dic.GetByCode("zxfwqdz").getValue());
-        //上传省中心
-        log.info("上传省中心IP"+SysConfig.getCenterIP());
-        pDailyRunning.AddClassKnotData(SysConfig.getCenterIP());
-        //System.out.println("-------"+shiftService);
-        log.info("end saveShiftInfo~~~||||||||||||||||||||||~~~~~~~~~~");
+        try {
+            IShiftService shiftService = Context.getInstance().getBean(IShiftService.class);
+            SysManageDic dic = Context.getInstance().getBean(SysManageDic.class);
+            log.info("start saveShiftInfo~~~~~~||||||||||||||||||||||||||~~~~~~~~~");
+            shiftService.saveShiftInfo(shiftno);
+            DailyRunning pDailyRunning = Context.getInstance().getBean(DailyRunning.class);
+            log.info("Value" + SysConfig.getCenterIP());
+            //pDailyRunning.AddClassKnotData(dic.GetByCode("zxfwqdz").getValue());
+            //上传省中心
+            log.info("上传省中心IP" + SysConfig.getCenterIP());
+            pDailyRunning.AddClassKnotData(SysConfig.getCenterIP());
+            //System.out.println("-------"+shiftService);
+            log.info("end saveShiftInfo~~~||||||||||||||||||||||~~~~~~~~~~");
+        }catch (Exception e){
+            log.error("saveShiftInfo error:"+e.getMessage());
+        }
     }
 
     public static void main(String[] args) {

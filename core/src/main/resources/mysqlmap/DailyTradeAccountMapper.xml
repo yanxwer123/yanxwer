@@ -574,7 +574,7 @@
 
     <select id="findLiter" parameterType="java.util.Map" resultType="java.lang.String">
         SELECT sum(Liter)
-        FROM oss_daily_TradeAccount WHERE OilGun=#{OilGun} AND Shift=#{Shift}
+        FROM oss_daily_TradeAccount WHERE BackCanFlag IS NULL AND OilGun=#{OilGun} AND Shift=#{Shift}
     </select>
     <select id="selectRangeOil" parameterType="java.util.Map" resultType="java.lang.Double">
       SELECT sum(Liter)
