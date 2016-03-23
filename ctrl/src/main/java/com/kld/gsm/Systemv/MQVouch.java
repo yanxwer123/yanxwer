@@ -36,7 +36,12 @@ public class MQVouch implements Runnable {
                     logger.info("strmsg:" + strmsg);
                     //交易
                     //DateUtil.convertStringToDate(strmsg);
-                    TransacHandler.getInformation(macno, gunno, ttc, strmsg);
+                    if(0==macno&&0==gunno&&0==ttc){
+                        logger.error("MQVouch parameters are null");
+                        continue;
+                    }else {
+                        TransacHandler.getInformation(macno, gunno, ttc, strmsg);
+                    }
                 }
                 Thread.sleep(1);
             } catch (Exception e) {
