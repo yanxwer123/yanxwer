@@ -354,13 +354,13 @@ public class JhysTank  extends JPanel{
         LOG.info("Updatetank begin:"+new Date());
         try {
             DecimalFormat df = new DecimalFormat("######0.00");
-            Double dstj = Double.parseDouble(df.format(Double.parseDouble(new DecimalFormat("0").format(map.get("fWaterBulk")).toString())));
+            Double dstj = Double.parseDouble(df.format(Double.parseDouble(map.get("fWaterBulk").toString())));
             stjLabel.setText(String.valueOf(dstj));
             Double dpjwd = Double.parseDouble(df.format(Double.parseDouble(map.get("fOilTemp").toString())));
             pjwdLabel.setText(String.valueOf(dpjwd));
-            Double djytj = Double.parseDouble(df.format(Double.parseDouble(new DecimalFormat("0").format(map.get("fOilCubage")).toString())));
+            Double djytj = Double.parseDouble(df.format(Double.parseDouble(map.get("fOilCubage").toString())));
             jytjLabel.setText(String.valueOf(djytj));
-            Double dktj = Double.parseDouble(df.format(Double.parseDouble(new DecimalFormat("0").format(map.get("fEmptyCubage")).toString())));
+            Double dktj = Double.parseDouble(df.format(Double.parseDouble(map.get("fEmptyCubage").toString())));
             ktjLabel.setText(String.valueOf(dktj));
             Double dyszg = Double.parseDouble(df.format(Double.parseDouble(map.get("fTotalHeight").toString())));
             yszgLabel.setText(String.valueOf(dyszg));
