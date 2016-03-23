@@ -252,7 +252,7 @@ public class Jhys2 extends JPanel {
 
                 // region更新卸油主表信息
                 TableModel tableModel = table.getModel();
-                double yfss = Double.parseDouble(tableModel.getValueAt(0, 3).toString());
+                double yfss =cbill.getPlanl();// Double.parseDouble(tableModel.getValueAt(0, 3).toString());
                 double yfssv20 = 0.0;
                 if (tableModel.getValueAt(0, 4) != null && !tableModel.getValueAt(0, 4).toString().equals("")) {
                     double yfwd = Double.parseDouble(tableModel.getValueAt(0, 4).toString());
@@ -393,7 +393,7 @@ public class Jhys2 extends JPanel {
                     if (realgiveoil==null){
                         realgiveoil=acceptSevices.getsjfyl(SysConfig.regmoteIp(), cbill.getDeliveryno());
                     }
-                    if (realgiveoil!=null) {
+                    if (realgiveoil!=null&&realgiveoil.getWd()!=null&&realgiveoil.getSjfyl()!=null) {
                         cbill.setDeliverytemp(realgiveoil.getWd());
                         cbill.setDensity(realgiveoil.getMd());
                         cbill.setPlanl(Double.parseDouble(realgiveoil.getSjfyl()));
