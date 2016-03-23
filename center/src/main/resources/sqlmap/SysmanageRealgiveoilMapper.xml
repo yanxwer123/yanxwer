@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.kld.gsm.center.dao.SysmanageRealgiveoilMapper" >
   <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.SysmanageRealgiveoil" >
-    <id column="ckdId" property="" jdbcType="VARCHAR" />
+    <id column="ckdId" property="ckdid" jdbcType="VARCHAR" />
     <result column="sjfyl" property="sjfyl" jdbcType="VARCHAR" />
     <result column="wd" property="wd" jdbcType="DOUBLE" />
     <result column="md" property="md" jdbcType="DOUBLE" />

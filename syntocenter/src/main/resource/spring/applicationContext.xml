@@ -17,15 +17,19 @@
     <context:annotation-config/>
     <context:component-scan base-package="com.kld.gsm"/>
 
-    <task:annotation-driven/>
+
+    <task:executor id="executor" pool-size="3" />
+    <task:scheduler id="scheduler" pool-size="6" />
+    <task:annotation-driven executor="executor" scheduler="scheduler" />
+
     <bean id="Timetask" class="com.kld.gsm.syntocenter.timetask.DailyPolling"/>
     <task:scheduled-tasks>
         <!--罐枪实时状态 5秒一次-->
         <task:scheduled ref="Timetask" method="transCanAndGunStatus" cron="0/5 * * * * ?"/>
         <!-- 10min一次-->
-        <task:scheduled ref="Timetask" method="ten" cron="0 0/10 * * * ?"/>
+        <task:scheduled ref="Timetask" method="ten" cron="* 0/10  * * * ?"/>
         <!-- 30min一次-->
-        <task:scheduled ref="Timetask" method="thirty" cron="0 0/30 * * * ?"/>
+        <task:scheduled ref="Timetask" method="thirty" cron="* 0/30  * * * ?"/>
     </task:scheduled-tasks>
 
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">

@@ -81,7 +81,10 @@ public class TransacServiceImpl implements ITransacService {
                 log.error("获取交易数据失败.交易对象为空");
                 return;
             }
-
+            oilVouch.setMacno(MacNo);
+            oilVouch.setOilgunno(GunNo+"");
+            oilVouch.setTtc(TTC);
+            oilVouch.setTakedate(TakeDate);
 /*
              try {
                 MacLogInfo macLogInfo = new MacLogInfo();
