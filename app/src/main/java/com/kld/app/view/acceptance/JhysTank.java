@@ -789,10 +789,10 @@ public class JhysTank  extends JPanel{
                         return;
                     }
                     //判断油枪状态
-                    if(tguncount>0){
+                   /* if(tguncount>0){
                         JOptionPane.showMessageDialog(null, "油枪正在付油，不允许卸油", "信息提示", JOptionPane.INFORMATION_MESSAGE);
                         return;
-                    }
+                    }*/
                     //判断页面是否取到值
                     if (yszgLabel.getText().trim().isEmpty()||jytjLabel.getText().trim().isEmpty()){
                         JOptionPane.showMessageDialog(null, "请等待页面取得液位仪数据后，开始卸油", "信息提示", JOptionPane.INFORMATION_MESSAGE);
