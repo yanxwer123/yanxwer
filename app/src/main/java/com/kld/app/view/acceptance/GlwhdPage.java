@@ -12,6 +12,7 @@ import com.kld.app.util.SysConfig;
 import com.kld.app.view.main.Main;
 import com.kld.gsm.ATG.dao.SysManageDictDao;
 import com.kld.gsm.ATG.domain.*;
+import com.kld.gsm.ATG.service.AcceptSevices;
 import com.kld.gsm.Socket.Constants;
 import com.kld.gsm.Socket.protocol.GasMsg;
 import com.kld.gsm.Socket.protocol.ResultMsg;
@@ -44,7 +45,7 @@ public class GlwhdPage extends JOptionPane implements WindowListener,Watcher {
     private AlarmOilInContrastService alarmOilInContrastService;
     private JDialog frame;
     private JTable table;
-
+    private AcceptSevices acceptSevices;
     private JPanel centermain;
 
     public JPanel getCentermain() {
@@ -399,6 +400,26 @@ public class GlwhdPage extends JOptionPane implements WindowListener,Watcher {
 
             double yfss = bill.getPlanl() == null ? 0 : bill.getPlanl();
             double yfssv20 = 0.0;
+
+            try{
+
+                if (acceptSevices==null){
+                    acceptSevices=Context.getInstance().getBean(AcceptSevices.class);
+                }
+                //region 油库实发温度接口
+                SysmanageRealgiveoil realgiveoil= acceptSevices.getbydeliveryno(bill.getDeliveryno());
+                if (realgiveoil==null){
+                    realgiveoil=acceptSevices.getsjfyl(SysConfig.regmoteIp(), bill.getDeliveryno());
+                }
+                if (realgiveoil!=null&&realgiveoil.getWd()!=null&&realgiveoil.getSjfyl()!=null) {
+                    bill.setDeliverytemp(realgiveoil.getWd());
+                    bill.setDensity(realgiveoil.getMd());
+                    bill.setPlanl(Double.parseDouble(realgiveoil.getSjfyl()));
+                }
+            }catch(Exception e){
+                LOG.error("get res："+e.getMessage());
+            }
+
             double yfwd = bill.getDeliverytemp() == null ? 0 : bill.getDeliverytemp();
             yfssv20 = getV20L(OIL_TYPE_1, yfwd, yfss);
 
