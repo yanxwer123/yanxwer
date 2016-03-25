@@ -176,7 +176,7 @@ public class TransacServiceImpl implements ITransacService {
             }
 
         }catch (Exception e){
-            log.error("dailyTradeAccountDao insert error"+e);
+            log.error("dailyTradeAccountDao insert error"+e.getStackTrace(),e);
             e.printStackTrace();
         }
     }
@@ -188,12 +188,13 @@ public class TransacServiceImpl implements ITransacService {
      */
     private void oilVouch2dailyTradeAccount(OilVouch oilVouch,DailyTradeAccount dailyTradeAccount)throws Exception{
         SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        SimpleDateFormat sd2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         dailyTradeAccount.setMacno(oilVouch.getMacno());
         dailyTradeAccount.setTtc(oilVouch.getTtc());
         dailyTradeAccount.setCardNo(oilVouch.getCardno());
         dailyTradeAccount.setMachineOilNo(oilVouch.getMachineoilno());
         dailyTradeAccount.setOilNo(oilVouch.getOilno());
-        dailyTradeAccount.setTakedate(sd.parse(oilVouch.getTakedate()));
+        dailyTradeAccount.setTakedate(sd2.parse(oilVouch.getTakedate()));
         dailyTradeAccount.setCTC(oilVouch.getCtc());
         dailyTradeAccount.setOilgun(oilVouch.getOilgunno());
         dailyTradeAccount.setOpeNo(oilVouch.getOpeno());
@@ -252,22 +253,23 @@ public class TransacServiceImpl implements ITransacService {
     private void getDailyTradeInventory(OilVouch oilVouch,List<atg_stock_data_out_t> ret,DailyTradeInventory dailyTradeInventory)throws Exception{
         log.info("oilVouch"+oilVouch);
         SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        SimpleDateFormat sd3 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         SimpleDateFormat sd2 = new SimpleDateFormat("yyyyMMddHHmmss");
         if(ret!=null&&ret.size()>0) {
             for (atg_stock_data_out_t out : ret) {
                 DecimalFormat decimalFormat = new DecimalFormat("######0.00");
                 dailyTradeInventory.setMacno(oilVouch.getMacno());//油机编号
                 dailyTradeInventory.setTtc(oilVouch.getTtc());//交易序号
-                dailyTradeInventory.setTakedate(sd.parse(oilVouch.getTakedate()));//交易时间
+                dailyTradeInventory.setTakedate(sd3.parse(oilVouch.getTakedate()));//交易时间
                 dailyTradeInventory.setOilgun(oilVouch.getOilgunno());//油枪编号
                 dailyTradeInventory.setOilcan(out.uOilCanNo);//油罐编号
                 dailyTradeInventory.setOilno(oilVouch.getOilno());//油品编码
                 try {
-                    dailyTradeInventory.setOpetime(sd.parse(oilVouch.getGettime()));//采集时间
+                    //dailyTradeInventory.setOpetime(sd3.parse(oilVouch.getGettime()));//采集时间
                 }catch (Exception e){
-                    dailyTradeInventory.setOpetime(sd2.parse(out.strDate + out.strTime));//采集时间
+                    //dailyTradeInventory.setOpetime(sd2.parse(out.strDate + out.strTime));//采集时间
                 }
-
+                dailyTradeInventory.setOpetime(sd2.parse(out.strDate + out.strTime));//采集时间
                 dailyTradeInventory.setStockdate(out.strDate);//日期
                 dailyTradeInventory.setStocktime(out.strTime);//时间
                 dailyTradeInventory.setOill(out.fOilCubage);//净油体积
@@ -300,6 +302,7 @@ public class TransacServiceImpl implements ITransacService {
     private void getDailyTradeInventory(OilVouch oilVouch,List<atg_stock_data_out_t> ret,DailyTradeInventory dailyTradeInventory,int oilcanno)throws Exception{
         log.info("getDailyTradeInventory have no stockinfo,oilVouch"+oilVouch);
         SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        SimpleDateFormat sd3 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         SimpleDateFormat sd2 = new SimpleDateFormat("yyyyMMddHHmmss");
         Date date = new Date();
         SimpleDateFormat sdDate = new SimpleDateFormat("yyyyMMdd");
@@ -309,7 +312,7 @@ public class TransacServiceImpl implements ITransacService {
         DecimalFormat decimalFormat = new DecimalFormat("######0.00");
         dailyTradeInventory.setMacno(oilVouch.getMacno());//油机编号
         dailyTradeInventory.setTtc(oilVouch.getTtc());//交易序号
-        dailyTradeInventory.setTakedate(sd.parse(oilVouch.getTakedate()));//交易时间
+        dailyTradeInventory.setTakedate(sd3.parse(oilVouch.getTakedate()));//交易时间
         dailyTradeInventory.setOilgun(oilVouch.getOilgunno());//油枪编号
         dailyTradeInventory.setOilcan(oilcanno);//油罐编号
         dailyTradeInventory.setOilno(oilVouch.getOilno());//油品编码
@@ -345,12 +348,13 @@ public class TransacServiceImpl implements ITransacService {
 
     private void getVouchStock(OilVouch oilVouch,List<atg_stock_data_out_t> ret,VouchStock vouchStock)throws Exception{
         SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        SimpleDateFormat sd3 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         SimpleDateFormat sd2 = new SimpleDateFormat("yyyyMMddHHmmss");
         if(ret!=null&&ret.size()>0) {
             for (atg_stock_data_out_t out : ret) {
                 vouchStock.setMacno(oilVouch.getMacno());//油机编号
                 vouchStock.setTtc(oilVouch.getTtc());//交易序号
-                vouchStock.setTakedate(sd.parse(oilVouch.getTakedate()));//交易时间
+                vouchStock.setTakedate(sd3.parse(oilVouch.getTakedate()));//交易时间
                 vouchStock.setOilgunno(oilVouch.getOilgunno());//油枪编号
                 vouchStock.setOilcanno(out.uOilCanNo);//油罐编号
                 vouchStock.setOilno(oilVouch.getOilno());//油品编码
