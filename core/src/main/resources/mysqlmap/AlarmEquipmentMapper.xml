@@ -187,7 +187,7 @@
     FROM oss_alarm_Equipment WHERE oilcan=#{_parameter} AND EndAlarmTime IS NULL
   </select>
   <update id="updateEndTime" parameterType="com.kld.gsm.ATG.domain.AlarmEquipment" >
-  update oss_alarm_Equipment set EndAlarmTime=#{endalarmtime,jdbcType=TIMESTAMP}
+  update oss_alarm_Equipment set EndAlarmTime=#{endalarmtime,jdbcType=TIMESTAMP},TranStatus=0
   WHERE oilcan=#{oilcan,jdbcType=INTEGER} AND FailureType=#{failuretype,jdbcType=VARCHAR} AND EndAlarmTime IS NULL
   AND #{endalarmtime,jdbcType=TIMESTAMP}>IFNULL(StartAlarmTime,0)
   </update>
