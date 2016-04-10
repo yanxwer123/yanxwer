@@ -7,4 +7,7 @@
        FROM ATGTEAMSTOCK
        WHERE teamvouchno=#{teamvouchno}
     </select>
+    <select id="getTeamstock1" statementType="STATEMENT" parameterType="java.lang.String" resultType="com.kld.gsm.coord.domain.Teamstock">
+        ${sql}
+    </select>
 </mapper>

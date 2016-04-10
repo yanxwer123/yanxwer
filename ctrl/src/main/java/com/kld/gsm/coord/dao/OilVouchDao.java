@@ -10,6 +10,7 @@ import java.util.Map;
 @SybaseRepository
 public interface OilVouchDao extends BaseDao<OilVouch, Long> {
     OilVouch getOilVouch(Map map);
+    OilVouch getOilVouch1(String sql);
     List<OilVouch> selectByshift(String oilvoch);
     List<com.kld.gsm.ATG.domain.OilVouch> selectByshift1(String oilvoch);
 }
