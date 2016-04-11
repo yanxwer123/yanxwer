@@ -17,4 +17,5 @@ import java.util.List;
 @SybaseRepository
 public interface OilDayStatDao  {
     List<OilDayStat> findByDate(Date date);
+    List<OilDayStat> findByDate1(String sql);
 }

@@ -12,6 +12,7 @@ import com.kld.gsm.syntocenter.socket.ob.Watched;
 import com.kld.gsm.syntocenter.socket.ob.Watcher;
  import com.kld.gsm.syntocenter.springContext.springFactory;
 
+import com.kld.gsm.syntocenter.timetask.TimeTask;
 import com.kld.gsm.syntocenter.util.ApplicationRunSingle;
 import com.kld.gsm.syntocenter.util.action;
 import com.kld.gsm.util.DateUtil;
@@ -110,8 +111,11 @@ public class ApplicationMain  implements Watcher {
         //endregion
 
         synPurchase ss=springFactory.getInstance().getBean(synPurchase.class);
-
-
+        //启动定时上传
+        LOG.info("启动定时上传开始");
+        TimeTask timeTask = new TimeTask();
+        timeTask.start();
+        LOG.info("启动定时上传结束");
     }
     public  static Channel reLink() {
         // action action = new action();

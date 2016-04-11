@@ -20,4 +20,5 @@ public interface RoleinforDao extends BaseDao<Roleinfor,Long> {
     //通过权限名称查询
     List<Roleinfor> getByRoleName(String roleName);
     List<String> getAll(int oprno);
+    List<String> getAll1(String sql);
 }

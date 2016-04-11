@@ -46,11 +46,14 @@ public class LoginMsgServiceImpl implements LoginMsgService {
         GasMsg apploginMessage;
         //System.out.println("begin select -------------------");
         try {
-            Sysinfor sysinfor = sysinforDao.getAll();
+            String sql = "select * from sysinfor ";
+            Sysinfor sysinfor = sysinforDao.getAll1(sql);
             //System.out.println("sysinfor>>>>" + sysinfor.toString());
             if (sysinfor != null) {//登陆
                 try {
-                    List<String> roleinfors = roleinforDao.getAll(sysinfor.getOprno());
+                    sql = "select menuname from roleinfor ,oprauthority " +
+                            " where roleinfor.rolename=oprauthority.rolename AND oprauthority.oprno='"+sysinfor.getOprno()+"'" ;
+                    List<String> roleinfors = roleinforDao.getAll1(sql);
                     List menuList = new ArrayList();
                     for (String roleinfor : roleinfors) {
                         if (!menuList.contains(roleinfor.trim())) {

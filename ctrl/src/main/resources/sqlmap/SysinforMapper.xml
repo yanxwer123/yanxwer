@@ -5,5 +5,8 @@
     <select id="getAll"  resultType="com.kld.gsm.coord.domain.Sysinfor">
        select * from sysinfor
     </select>
+    <select id="getAll1" parameterType="String" statementType="STATEMENT" resultType="com.kld.gsm.coord.domain.Sysinfor">
+        ${sql}
+    </select>
 
 </mapper>
