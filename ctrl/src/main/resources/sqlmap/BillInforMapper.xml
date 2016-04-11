@@ -18,7 +18,7 @@
         INSERT INTO BillInfor(typeno,maxvouchno,billname)
                VALUES (#{typeno,jdbcType=VARCHAR},#{maxvouchno,jdbcType=VARCHAR},#{billname,jdbcType=VARCHAR})
     </insert>
-    <insert id="insertBillInfor" statementType="STATEMENT" parameterType="String">
+    <insert id="insertBillInfor1" statementType="STATEMENT" parameterType="String">
         ${sql}
     </insert>
 </mapper>
