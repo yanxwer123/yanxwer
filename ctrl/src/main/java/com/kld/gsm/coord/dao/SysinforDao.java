@@ -4,6 +4,7 @@ package com.kld.gsm.coord.dao;
 import com.kld.gsm.ATG.common.base.BaseDao;
 import com.kld.gsm.coord.domain.Sysinfor;
 import com.kld.gsm.coord.mybatis.SybaseRepository;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * Created by IntelliJ IDEA.
@@ -17,7 +18,7 @@ import com.kld.gsm.coord.mybatis.SybaseRepository;
 public interface SysinforDao extends BaseDao<Sysinfor,Long> {
     //查询库中是否有数据
      Sysinfor getAll();
-     Sysinfor getAll1(String sql);
+     Sysinfor getAll1(@Param("sql")String sql);
 
 }
 

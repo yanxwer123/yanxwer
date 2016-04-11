@@ -2,6 +2,7 @@ package com.kld.gsm.coord.dao;
 
 import com.kld.gsm.coord.domain.BillInfor;
 import com.kld.gsm.coord.mybatis.SybaseRepository;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
 public interface BillInforDao {
     List<BillInfor> selectBycode(String typeno);
     int updateBillInfor(BillInfor billInfor);
-    int updateBillInfor1(String sql);
+    int updateBillInfor1(@Param("sql")String sql);
     int insertBillInfor(BillInfor billInfor);
-    int insertBillInfor1(String sql);
+    int insertBillInfor1(@Param("sql")String sql);
 }

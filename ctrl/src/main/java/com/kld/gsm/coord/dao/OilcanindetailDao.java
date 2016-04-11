@@ -3,6 +3,7 @@ package com.kld.gsm.coord.dao;
 
 import com.kld.gsm.coord.domain.OilCanIndeTail;
 import com.kld.gsm.coord.mybatis.SybaseRepository;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
 public interface OilcanindetailDao {
 
     int insertOilcanindetail(OilCanIndeTail oilCanIndeTail);
-    int insertOilcanindetail1(String sql);
+    int insertOilcanindetail1(@Param("sql")String sql);
     int updateOilcanindetail(String DeliveryNo);
     List<OilCanIndeTail> selectByOilvoch(String oilvoch);
     int  updateManualno(HashMap map);
