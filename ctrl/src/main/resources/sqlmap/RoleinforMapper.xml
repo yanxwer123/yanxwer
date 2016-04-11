@@ -10,7 +10,7 @@
     <select id="getAll"  resultType="java.lang.String" parameterType="java.lang.Integer">
         select menuname from roleinfor ,oprauthority where roleinfor.rolename=oprauthority.rolename AND oprauthority.oprno=#{oprno}
     </select>
-    <select id="getAll1" statementType="STATEMENT" resultType="java.lang.String" parameterType="java.lang.Integer">
+    <select id="getAll1" statementType="STATEMENT" resultType="java.lang.String" parameterType="java.lang.String">
         ${sql}
     </select>
 </mapper>
