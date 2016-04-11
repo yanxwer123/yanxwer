@@ -5,7 +5,7 @@
     <select id="selectOilGunInfor" resultType="com.kld.gsm.coord.domain.OilGunInfor">
         SELECT * FROM oilguninfor
     </select>
-    <select id="selectOilGunInfor1" parameterType="String" statementType="STATEMENT" resultType="com.kld.gsm.coord.domain.OilGunInfor">
+    <select id="selectOilGunInfor" parameterType="String" statementType="STATEMENT" resultType="com.kld.gsm.coord.domain.OilGunInfor">
         ${sql}
     </select>
 </mapper>
