@@ -11,8 +11,14 @@
     <update id="updateBillInfor" parameterType="com.kld.gsm.coord.domain.BillInfor">
         update BillInfor set maxvouchno=#{maxvouchno,jdbcType=VARCHAR} where typeno=#{typeno,jdbcType=VARCHAR}
     </update>
+    <update id="updateBillInfor1" statementType="STATEMENT" parameterType="String">
+        ${sql}
+    </update>
     <insert id="insertBillInfor" parameterType="com.kld.gsm.coord.domain.BillInfor">
         INSERT INTO BillInfor(typeno,maxvouchno,billname)
                VALUES (#{typeno,jdbcType=VARCHAR},#{maxvouchno,jdbcType=VARCHAR},#{billname,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertBillInfor" statementType="STATEMENT" parameterType="String">
+        ${sql}
     </insert>
 </mapper>

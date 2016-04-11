@@ -8,7 +8,7 @@ package com.kld.gsm.coord.domain;
  * @CreationTime: 2015/12/8 19:21
  * @Description:单据信息表
  */
-public class BillInfor {
+public class BillInfor extends AbsValueBean{
     private  String typeno;
     private  String billname;
     private  String maxvouchno;

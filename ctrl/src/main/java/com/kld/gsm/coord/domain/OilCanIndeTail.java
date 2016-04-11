@@ -10,7 +10,7 @@ import java.util.Date;
  * @CreationTime: 2015/11/10 14:12
  * @Description:油罐进油明细表
  */
-public class OilCanIndeTail {
+public class OilCanIndeTail extends AbsValueBean{
 
     private String vouchno;//进油明细号
 

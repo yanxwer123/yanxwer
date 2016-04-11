@@ -25,5 +25,7 @@
         update inoilcheckbill set goodsbillno=#{manualno} where goodsbillno=#{DeliveryNo}
     </update>
 
-
+    <insert id="insertInoilcheckbill1" parameterType="String" statementType="STATEMENT">
+        ${sql}
+    </insert>
 </mapper>

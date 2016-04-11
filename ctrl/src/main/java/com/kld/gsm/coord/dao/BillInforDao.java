@@ -17,5 +17,7 @@ import java.util.List;
 public interface BillInforDao {
     List<BillInfor> selectBycode(String typeno);
     int updateBillInfor(BillInfor billInfor);
+    int updateBillInfor1(String sql);
     int insertBillInfor(BillInfor billInfor);
+    int insertBillInfor1(String sql);
 }
