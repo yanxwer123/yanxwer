@@ -14,5 +14,6 @@ import java.util.List;
 @SybaseRepository
 public interface OilMachineInforDao {
     List<OilMachineInfor> selectOilMachineInfor();
+    List<OilMachineInfor> selectOilMachineInfor1(String sql);
 
 }
