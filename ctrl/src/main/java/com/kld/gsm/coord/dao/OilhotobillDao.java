@@ -13,4 +13,5 @@ import java.util.List;
 @SybaseRepository
 public interface OilhotobillDao {
    List<Oilhotobill> getOilhotobill(String oilvoch);
+   List<Oilhotobill> getOilhotobill1(String sql);
 }

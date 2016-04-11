@@ -8,4 +8,7 @@
        FROM payoilstat
        WHERE teamvouchno=#{oilvoch}
     </select>
+    <select id="getPayoilstat1" statementType="STATEMENT" parameterType="java.lang.String" resultType="com.kld.gsm.coord.domain.Payoilstat">
+        ${sql}
+    </select>
 </mapper>

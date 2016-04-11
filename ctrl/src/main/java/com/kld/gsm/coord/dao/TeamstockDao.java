@@ -13,4 +13,5 @@ import java.util.List;
 @SybaseRepository
 public interface TeamstockDao {
     List<Teamstock> getTeamstock(String oilvoch);
+    List<Teamstock> getTeamstock1(String sql);
 }

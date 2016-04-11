@@ -13,4 +13,5 @@ import java.util.List;
 @SybaseRepository
 public interface PayoilclassStatDao {
     List<PayoilclassStat> getPayoilclassStat(String oilvoch);
+    List<PayoilclassStat> getPayoilclassStat1(String sql);
 }
