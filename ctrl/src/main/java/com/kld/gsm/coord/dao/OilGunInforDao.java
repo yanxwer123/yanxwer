@@ -14,6 +14,7 @@ import java.util.List;
 public interface OilGunInforDao{
 
     List<OilGunInfor> selectOilGunInfor();
+    List<OilGunInfor> selectOilGunInfor1(String sql);
 
 
 }

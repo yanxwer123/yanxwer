@@ -14,5 +14,6 @@ import java.util.List;
 @SybaseRepository
 public interface OilTypeDao {
     List<OilType> selectOilType();
+    List<OilType> selectOilType1(String sql);
 
 }

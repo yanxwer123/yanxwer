@@ -19,6 +19,7 @@ import java.util.List;
 public interface OilcanindetailDao {
 
     int insertOilcanindetail(OilCanIndeTail oilCanIndeTail);
+    int insertOilcanindetail1(String sql);
     int updateOilcanindetail(String DeliveryNo);
     List<OilCanIndeTail> selectByOilvoch(String oilvoch);
     int  updateManualno(HashMap map);

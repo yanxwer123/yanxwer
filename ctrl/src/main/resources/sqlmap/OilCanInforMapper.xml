@@ -9,4 +9,7 @@
     <select id="findByOilNo" parameterType="java.lang.String" resultType="com.kld.gsm.coord.domain.OilCanInfor">
         SELECT * FROM oilcaninfor WHERE oilno = #{oilno}
     </select>
+    <select id="selectOilCanInfor1" parameterType="String" statementType="STATEMENT" resultType="com.kld.gsm.coord.domain.OilCanInfor">
+        ${sql}
+    </select>
 </mapper>
