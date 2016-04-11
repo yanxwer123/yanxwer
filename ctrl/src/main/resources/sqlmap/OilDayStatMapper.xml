@@ -6,5 +6,7 @@
        select *
             from oildaystat where accountdate LIKE #{accountdate}
     </select>
-
+    <select id="findByDate1" parameterType="String" statementType="STATEMENT" resultType="com.kld.gsm.coord.domain.OilDayStat">
+        ${sql}
+    </select>
 </mapper>

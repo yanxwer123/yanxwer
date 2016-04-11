@@ -75,7 +75,9 @@ public class OilDayStatImpl implements OilDayStatService {
         //TODO 存放日平衡表对象
         List<DailyDailyBalance> dailyList = new ArrayList<DailyDailyBalance>();
         // TODO 查询到其中一个表的数据遍历放入
-        List<OilDayStat> oilDayStat = oilDayStatDao.findByDate(date);
+        String sql = "select * from oildaystat where accountdate LIKE '"+date+"'";
+        log.info("oilDayStatDao.findByDate1的sql="+sql);
+        List<OilDayStat> oilDayStat = oilDayStatDao.findByDate1(sql);
         //System.out.println("select :" + oilDayStat);
         log.info("select :" + oilDayStat);
         //List<DailyOilTankRegister> oilCanlEdgerList =oilCanlEdgerService.findByDate(accountDate);

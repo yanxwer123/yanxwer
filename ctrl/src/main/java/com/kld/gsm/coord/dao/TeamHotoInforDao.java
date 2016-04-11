@@ -23,5 +23,6 @@ public interface TeamHotoInforDao {
      * @return
      */
     List<TeamHotoInfor> findByDayTime(Date date);
+    List<TeamHotoInfor> findByDayTime1(String sql);
 
 }
