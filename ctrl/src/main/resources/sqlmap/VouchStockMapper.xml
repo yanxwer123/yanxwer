@@ -16,6 +16,9 @@
     #{emptycubage},#{totalheight},#{waterheight},#{oiltemp},#{waterbulk},
     #{apparentdensity},#{standdensity},#{teamvouchno},#{tranflag},#{remark})
   </insert>
+  <insert id="insert1" parameterType="String" statementType="STATEMENT">
+    ${sql}
+  </insert>
 </mapper>
 
 

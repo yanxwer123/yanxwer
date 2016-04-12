@@ -165,7 +165,7 @@ public class TransacServiceImpl implements ITransacService {
                getVouchStock(oilVouch, ret, vouchStock);
                log.info("vouchStock:"+vouchStock);
                 //sybase实时库存保存操作
-                int ret_vouchStock = vouchStockDao.insert(vouchStock);
+               int ret_vouchStock = vouchStockDao.insert1(vouchStock.getInsertSql("atgvouchstock"));
                log.info("ret_vouchStock :"+ret_vouchStock );
             }
             //2)通知app 交易数据

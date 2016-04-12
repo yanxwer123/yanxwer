@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by yinzhiguang on 2015/11/5.
  */
-public class VouchStock {
+public class VouchStock extends AbsValueBean{
     private int macno;
     private int ttc;
     private Date takedate;
