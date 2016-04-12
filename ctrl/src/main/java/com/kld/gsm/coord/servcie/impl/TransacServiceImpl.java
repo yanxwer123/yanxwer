@@ -163,7 +163,11 @@ public class TransacServiceImpl implements ITransacService {
                 //把读取液位仪的实时库存赋值到sybase的实时库存vouchStock
                 VouchStock vouchStock = new VouchStock();
                 //给sybase交易库存表赋值
-               getVouchStock(oilVouch, ret, vouchStock);
+               if(ret!=null&&ret.size()>0) {
+                   getVouchStock(oilVouch, ret, vouchStock);
+               }else{
+                   getVouchStock(oilVouch, ret, vouchStock,oilCanNo.get(0));
+               }
                log.info("vouchStock:"+vouchStock);
                 //
                sql = vouchStock.getInsertSql("atgvouchstock");
@@ -397,5 +401,36 @@ public class TransacServiceImpl implements ITransacService {
                 vouchStock.setRemark("");
             }
         }
+    }
+    private void getVouchStock(OilVouch oilVouch,List<atg_stock_data_out_t> ret,VouchStock vouchStock,int oilcanno)throws Exception{
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        SimpleDateFormat sd3 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        SimpleDateFormat sd2 = new SimpleDateFormat("yyyyMMddHHmmss");
+        Date date = new Date();
+        SimpleDateFormat sdDate = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat sdMinute = new SimpleDateFormat("HHmmss");
+        String d = sdDate.format(date);
+        String m = sdMinute.format(date);
+        vouchStock.setMacno(oilVouch.getMacno());//油机编号
+        vouchStock.setTtc(oilVouch.getTtc());//交易序号
+        vouchStock.setTakedate(sd3.parse(oilVouch.getTakedate()));//交易时间
+        vouchStock.setOilgunno(leftPad(oilVouch.getOilgunno()));//油枪编号
+        vouchStock.setOilcanno(oilcanno);//油罐编号
+        vouchStock.setOilno(oilVouch.getOilno());//油品编码
+        vouchStock.setOpetime(date);//采集时间
+        vouchStock.setStockdate(d);//日期
+        vouchStock.setStocktime(m);//时间
+        vouchStock.setOilcubage(0.0);//净油体积
+        vouchStock.setOilstandcubage(0.0);//标准体积
+        vouchStock.setEmptycubage(0.0);//空体积
+        vouchStock.setTotalheight(0.0);//油水总高
+        vouchStock.setWaterheight(0.0);//水高
+        vouchStock.setOiltemp(0.0);//油温
+        vouchStock.setWaterbulk(0.0);//水体积
+        vouchStock.setApparentdensity(0.0);//视密度
+        vouchStock.setStanddensity(0.0);//标准密度
+        vouchStock.setTeamvouchno((null == oilVouch.getTeamvouchno() || "".equals(oilVouch.getTeamvouchno())) ? "" : oilVouch.getTeamvouchno());//班次号
+        vouchStock.setTranflag("");
+        vouchStock.setRemark("");
     }
 }
