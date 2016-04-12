@@ -73,7 +73,7 @@
     </if>
   </select>
   <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_alarm_DailyLost" >
-    insert into oss_alarm_DailyLost (AccountDate, OilNo, NodeNo,
+    replace into oss_alarm_DailyLost (AccountDate, OilNo, NodeNo,
       DarlyankStock, DeliveryNo, ReceiveL,
       TodayOut, TodayEndStock, RealStock,
       Cost, CostSent, CreateTime,

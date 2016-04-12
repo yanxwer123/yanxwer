@@ -10,6 +10,7 @@ import com.kld.gsm.ATG.utils.httpClient;
 import com.kld.gsm.ATG.utils.param;
 import com.kld.gsm.ATGDevice.atg_stock_data_out_t;
 import com.kld.gsm.MacLog.MacLogInfo;
+import com.kld.gsm.util.JsonMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,6 +162,10 @@ public class DailyRunningImpl implements  DailyRunning {
         String path=ac.getUri(host,"resource.services.RCYX.AddDailyBalance");
         //获取站级数据
         List<DailyDailyBalance> DailyDailyBalances= dailyDailyBalanceDao.selectByTrans("0");
+        if (DailyDailyBalances!=null) {
+            log.info("DailyDailyBalances:" + DailyDailyBalances.size());
+            log.info(DailyDailyBalances.toString());
+        }
         List<SysManageDepartment> sysManageDepartments=sysManageDepartmentDao.selectfirst();
         Map<String,String> hm=new param().getparam();
         if (sysManageDepartments.size()>0){
@@ -168,15 +173,18 @@ public class DailyRunningImpl implements  DailyRunning {
         }
         //发送站级数据
         httpClient client=new httpClient();
+        Result result=new Result();
         try {
-            client.request(path,DailyDailyBalances,hm);
-            for (DailyDailyBalance item:DailyDailyBalances){
-                item.setTranstatus("1");
-                dailyDailyBalanceDao.updateByPrimaryKey(item);
+           String js= client.request(path,DailyDailyBalances,hm);
+            result=new JsonMapper().fromJson(js,Result.class);
+            if (result!=null&&result.isResult()) {
+                for (DailyDailyBalance item : DailyDailyBalances) {
+                    item.setTranstatus("1");
+                    dailyDailyBalanceDao.updateByPrimaryKey(item);
+                }
             }
         } catch (Exception e) {
-            log.error(e.getMessage(),e);
-            e.printStackTrace();
+            log.error("DailyBalanceLost:" + e.getMessage(),e);
             return 0;
         }
         return 1;
@@ -365,33 +373,36 @@ public class DailyRunningImpl implements  DailyRunning {
        // hm.put("NodeNo","124");
         //发送站级数据
         httpClient client=new httpClient();
+        Result result=new Result();
         try {
             String sRet=client.request(ClassKnotDataPath, dailyMain, hm);
-            log.error(sRet);
+            log.info(sRet);
+            result=new JsonMapper().fromJson(sRet,Result.class);
+            if (result!=null&&result.isResult()) {
+                for (DailyStationShiftInfo item : DailyStationShiftInfos) {
+                    item.setTranstatus("1");
+                    dailyStationShiftInfoDao.updateByPrimaryKey(item);
+                }
 
-            for (DailyStationShiftInfo item:DailyStationShiftInfos){
-                item.setTranstatus("1");
-                dailyStationShiftInfoDao.updateByPrimaryKey(item);
-            }
+                for (DailyOpotCount item : DailyOpotCounts) {
+                    item.setTranstatus("1");
+                    dailyOpotCountDao.updateByPrimaryKey(item);
+                }
 
-            for (DailyOpotCount item:DailyOpotCounts){
-                item.setTranstatus("1");
-                dailyOpotCountDao.updateByPrimaryKey(item);
-            }
+                for (DailyPumpDigitShift item : DailyPumpDigitShifts) {
+                    item.setTranstatus("1");
+                    dailyPumpDigitShiftDao.updateByPrimaryKey(item);
+                }
 
-            for (DailyPumpDigitShift item:DailyPumpDigitShifts){
-                item.setTranstatus("1");
-                dailyPumpDigitShiftDao.updateByPrimaryKey(item);
-            }
+                for (DailyTankShift item : DailyTankShifts) {
+                    item.setTranstatus("1");
+                    dailyTankShiftDao.updateByPrimaryKey(item);
+                }
 
-            for (DailyTankShift item:DailyTankShifts){
-                item.setTranstatus("1");
-                dailyTankShiftDao.updateByPrimaryKey(item);
-            }
-
-            for (DailyOpoCount item:DailyOpoCounts){
-                item.setTranstatus("1");
-                dailyOpoCountDao.updateByPrimaryKey(item);
+                for (DailyOpoCount item : DailyOpoCounts) {
+                    item.setTranstatus("1");
+                    dailyOpoCountDao.updateByPrimaryKey(item);
+                }
             }
 
         } catch (Exception e) {

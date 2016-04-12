@@ -854,7 +854,7 @@ public class JhysTank  extends JPanel{
                     try {
                         transfor(acceptanceOdRegisterInfo.getDeliveryno(), acceptanceOdRegisterInfo.getOilcan().toString(), "2");
                     } catch (Exception es) {
-                        System.out.println("notice hn");
+                        LOG.error("notice hn"+es.getMessage(),es);
                     }
                     //endregion
                 } else {

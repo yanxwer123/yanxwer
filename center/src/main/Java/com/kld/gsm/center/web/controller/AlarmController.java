@@ -180,9 +180,7 @@ public class AlarmController {
             }
             int num = InventoryService.AddInventory(inventories);
             if (num > 0) {
-
-                result.setResult(true);
-                PassHn_Inventory(inventories);//调用传输方式
+                return PassHn_Inventory(inventories);//调用传输方式
             } else {
                 result.setResult(false);
             }
@@ -197,15 +195,14 @@ public class AlarmController {
         }
     }
     //将库存预警抛给湖南
-    private void PassHn_Inventory(List<oss_alarm_Inventory> inventories)
+    private Result PassHn_Inventory(List<oss_alarm_Inventory> inventories)
     {
         //获取action地址
         action ac=new action();
         String path=ac.getUri("resource.hn.Alarm.PassInventory");
         httpClient client=new httpClient();
         Map<String,String> hm=new HashMap<String, String>();
-        //hm.put("list", URLEncoder.encode(new JsonMapper().toJson(inventories)));
-        Result result=new Result();
+        Result result;
         try {
             String jsonResult= client.request(path, inventories, hm);
             result=new JsonMapper().fromJson(jsonResult,Result.class);
@@ -215,11 +212,15 @@ public class AlarmController {
                 {
                     item.setTranstatus("1");
                 }
+                InventoryService.AddInventory(inventories);
             }
-        }
-        catch(Exception e)
+            return result;
+        }catch(Exception e)
         {
-
+            result=new Result();
+            result.setMsg(e.getMessage());
+            result.setResult(false);
+            return result;
         }
     }
 
@@ -242,8 +243,8 @@ public class AlarmController {
             }
             int num = GaTContrastService.AddGaTContrastService(gaTContrasts);
             if (num > 0) {
-                result.setResult(true);
-                PassHn_GaTContrast(gaTContrasts);
+                /*result.setResult(true);*/
+                return PassHn_GaTContrast(gaTContrasts);
             } else {
                 result.setResult(false);
             }
@@ -258,7 +259,7 @@ public class AlarmController {
         }
     }
     //将枪出罐出对比数据抛给湖南
-    private void PassHn_GaTContrast(List<oss_alarm_GaTContrast> gaTContrasts)
+    private Result PassHn_GaTContrast(List<oss_alarm_GaTContrast> gaTContrasts)
     {
         //获取action地址
         action ac=new action();
@@ -269,18 +270,20 @@ public class AlarmController {
         try {
             String jsonResult= client.request(path, gaTContrasts, hm);
             result=new JsonMapper().fromJson(jsonResult,Result.class);
-            if (result.isResult())
+          /*  if (result.isResult())
             {
                 for (oss_alarm_GaTContrast item:gaTContrasts)
                 {
                     item.setTranstatus("1");
                 }
-            }
+            }*/
         }
         catch(Exception e)
         {
-
+            result.setMsg(e.getMessage());
+            result.setResult(false);
         }
+        return result;
     }
     /**
      * 测漏表
@@ -301,7 +304,6 @@ public class AlarmController {
             }
             int num = MeasureLeakService.AddMeasureLeak(measureLeaks);
             if (num > 0) {
-
                 result.setResult(true);
                 //PassHn_MeasureLeak(measureLeaks);//调用数据传输
             } else {
@@ -379,7 +381,7 @@ public class AlarmController {
         }
     }
    //脱销预警数据抛给湖南
-    private void PassSaleOut( List<oss_alarm_SaleOut> saleOuts)
+    private Result PassSaleOut( List<oss_alarm_SaleOut> saleOuts)
     {
         //获取action地址
         action ac=new action();
@@ -402,6 +404,7 @@ public class AlarmController {
         {
 
         }
+        return result;
     }
 
     /**
@@ -426,13 +429,12 @@ public class AlarmController {
 
                 result.setResult(true);
                 //调用传输数据
-                PassHn_Equipment(equipments);
+                return PassHn_Equipment(equipments);
             } else {
                 result.setResult(false);
             }
             return result;
         }
-
         catch (Exception e)
         {
             result.setMsg(e.getMessage());
@@ -441,7 +443,7 @@ public class AlarmController {
         }
     }
     //设备故障抛给湖南
-    private void PassHn_Equipment(List<oss_alarm_Equipment> equipments)
+    private Result PassHn_Equipment(List<oss_alarm_Equipment> equipments)
     {
         //获取action地址
         action ac=new action();
@@ -452,18 +454,13 @@ public class AlarmController {
         try {
             String jsonResult= client.request(path, equipments, hm);
             result=new JsonMapper().fromJson(jsonResult,Result.class);
-            if (result.isResult())
-            {
-                for (oss_alarm_Equipment item:equipments)
-                {
-                    item.setTranstatus("1");
-                }
-            }
         }
         catch(Exception e)
         {
-
+            result.setMsg(e.getMessage());
+            result.setResult(false);
         }
+        return result;
     }
 
     /**

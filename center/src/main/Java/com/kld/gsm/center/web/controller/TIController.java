@@ -10,6 +10,7 @@ import com.kld.gsm.center.util.sysOrgUnit;
 import com.kld.gsm.center.util.JsonMapper;
 import com.mangofactory.swagger.annotations.ApiIgnore;
 import com.wordnik.swagger.annotations.ApiOperation;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +32,8 @@ public class TIController {
 
     @Resource
     private TimeInventoryService timeInventoryService;
+
+    private static final Logger LOG = Logger.getLogger(TIController.class);
 
     @RequestMapping(value = "GetHello")
     @ApiIgnore
@@ -96,50 +99,50 @@ public class TIController {
                 item.setNodeno(NodeNo);
             }
             int num = timeInventoryService.InsertInventory(monitorInventories);
-
             if (num > 0) {
-
-                result.setResult(true);
                 //调用数据传输
-                PassHn_Inventory(monitorInventories);
+                return PassHn_Inventory(monitorInventories);
+
             } else {
                 result.setResult(false);
             }
             return result;
-        }
-
-        catch (Exception e)
+        }catch (Exception e)
         {
-            //System.out.println(e.getMessage());
             result.setMsg(e.getMessage());
             result.setResult(false);
             return result;
         }
     }
     //将整点库存抛给湖南
-    private void PassHn_Inventory(List<oss_monitor_Inventory> monitorInventories)
+    private Result PassHn_Inventory(List<oss_monitor_Inventory> monitorInventories)
     {
         //获取action地址
         action ac=new action();
         String path=ac.getUri("resource.hn.TI.DeliveryInventory");
         httpClient client=new httpClient();
         Map<String,String> hm=new HashMap<String, String>();
-        Result result=new Result();
+        Result result;
         try {
             String jsonResult= client.request(path, monitorInventories, hm);
             result=new JsonMapper().fromJson(jsonResult,Result.class);
-            if (result.isResult())
+            if (result!=null&&result.isResult())
             {
                 for (oss_monitor_Inventory item:monitorInventories)
                 {
                     item.setTranstatus("1");
                 }
+                timeInventoryService.InsertInventory(monitorInventories);
+                return  result;
             }
         }
         catch(Exception e)
         {
-
+            result=new Result();
+            result.setResult(false);
+            result.setMsg(e.getMessage());
         }
+        return  result;
     }
     /**
      *时点库存表
@@ -158,9 +161,8 @@ public class TIController {
             int num = timeInventoryService.AddTimeInventory(monitorTimeInventories);
             //int num=1;
             if (num > 0) {
-
                 result.setResult(true);
-                PassHn_TimeInventory(monitorTimeInventories);//调用数据传输
+               return PassHn_TimeInventory(monitorTimeInventories);//调用数据传输
             } else {
                 result.setResult(false);
             }
@@ -175,29 +177,33 @@ public class TIController {
         }
     }
     //将时点库存抛给湖南
-    private void PassHn_TimeInventory(List<oss_monitor_TimeInventory> monitorTimeInventories)
+    private Result PassHn_TimeInventory(List<oss_monitor_TimeInventory> monitorTimeInventories)
     {
         //获取action地址
         action ac=new action();
         String path=ac.getUri("resource.hn.TI.PassTimeInventory");
         httpClient client=new httpClient();
         Map<String,String> hm=new HashMap<String, String>();
-        Result result=new Result();
+        Result result;
         try {
             String jsonResult= client.request(path, monitorTimeInventories, hm);
             result=new JsonMapper().fromJson(jsonResult,Result.class);
-            if (result.isResult())
+            if (result!=null&&result.isResult())
             {
                 for (oss_monitor_TimeInventory item:monitorTimeInventories)
                 {
                     item.setTranstatus("1");
+                    //timeInventoryService
                 }
             }
         }
         catch(Exception e)
         {
-
+            result=new Result();
+            result.setResult(false);
+            result.setMsg(e.getMessage());
         }
+        return result;
     }
 
     /**

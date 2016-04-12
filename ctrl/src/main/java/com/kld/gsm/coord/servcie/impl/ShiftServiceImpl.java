@@ -201,7 +201,7 @@ public class ShiftServiceImpl implements IShiftService {
 
         } catch (Exception e) {
             e.printStackTrace();
-            log.error("此…………………………………………………………………………………………………………………………：" + e.getStackTrace().toString());
+            log.error("此…………………………………………………………………………………………………………………………：" + e.getMessage().toString());
         }
     }
 

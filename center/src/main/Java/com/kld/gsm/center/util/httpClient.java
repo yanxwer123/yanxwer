@@ -40,6 +40,7 @@ public class httpClient {
         String encoding="UTF-8";
         //String encoding="GBK";
         String params =new JsonMapper().toJson(json);
+
         params= URLEncoder.encode(params,"UTF-8");
         params="params="+params;
         //System.out.println(path);

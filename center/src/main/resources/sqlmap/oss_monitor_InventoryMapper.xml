@@ -80,7 +80,7 @@ DATE_FORMAT( CONCAT(Date,Time,''), '%Y-%c-%d %h:%i:%s')  as alltime
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_monitor_Inventory" >
-    insert into oss_monitor_Inventory (OilCanNo, Date, OilNo,Time,
+    replace into oss_monitor_Inventory (OilCanNo, Date, OilNo,Time,
       NodeNo, OilCubage, StandCubage,
       EmptyCubage, TotalHeight, WaterHeight, 
       Temp, Temp1, Temp2, Temp3, 

@@ -46,7 +46,7 @@
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_monitor_TimeInventory" >
-    insert into oss_monitor_TimeInventory (OilCan, StoreTime, NodeNo, 
+    replace into oss_monitor_TimeInventory (OilCan, StoreTime, NodeNo,
       OilNo, StandardL, HeightTotal, 
       OilL, HeightWater, WaterL, 
       Temperature, VolumeEmpty, Temp1, 
@@ -64,150 +64,150 @@
       #{version,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.kld.gsm.center.domain.oss_monitor_TimeInventory" >
-    insert into oss_monitor_TimeInventory
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="oilcan != null" >
-        OilCan,
-      </if>
-      <if test="storetime != null" >
-        StoreTime,
-      </if>
-      <if test="nodeno != null" >
-        NodeNo,
-      </if>
-      <if test="oilno != null" >
-        OilNo,
-      </if>
-      <if test="standardl != null" >
-        StandardL,
-      </if>
-      <if test="heighttotal != null" >
-        HeightTotal,
-      </if>
-      <if test="oill != null" >
-        OilL,
-      </if>
-      <if test="heightwater != null" >
-        HeightWater,
-      </if>
-      <if test="waterl != null" >
-        WaterL,
-      </if>
-      <if test="temperature != null" >
-        Temperature,
-      </if>
-      <if test="volumeempty != null" >
-        VolumeEmpty,
-      </if>
-      <if test="temp1 != null" >
-        Temp1,
-      </if>
-      <if test="temp2 != null" >
-        Temp2,
-      </if>
-      <if test="temp3 != null" >
-        Temp3,
-      </if>
-      <if test="temp4 != null" >
-        Temp4,
-      </if>
-      <if test="temp5 != null" >
-        Temp5,
-      </if>
-      <if test="densities != null" >
-        Densities,
-      </if>
-      <if test="densitiesstandard != null" >
-        DensitiesStandard,
-      </if>
-      <if test="transtatus != null" >
-        TranStatus,
-      </if>
-      <if test="createtime != null" >
-        CreateTime,
-      </if>
-      <if test="shift != null" >
-        Shift,
-      </if>
-      <if test="oucode != null" >
-        OUCode,
-      </if>
-      <if test="version != null" >
-        Version,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="oilcan != null" >
-        #{oilcan,jdbcType=INTEGER},
-      </if>
-      <if test="storetime != null" >
-        #{storetime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="nodeno != null" >
-        #{nodeno,jdbcType=VARCHAR},
-      </if>
-      <if test="oilno != null" >
-        #{oilno,jdbcType=VARCHAR},
-      </if>
-      <if test="standardl != null" >
-        #{standardl,jdbcType=DOUBLE},
-      </if>
-      <if test="heighttotal != null" >
-        #{heighttotal,jdbcType=DOUBLE},
-      </if>
-      <if test="oill != null" >
-        #{oill,jdbcType=DOUBLE},
-      </if>
-      <if test="heightwater != null" >
-        #{heightwater,jdbcType=DOUBLE},
-      </if>
-      <if test="waterl != null" >
-        #{waterl,jdbcType=DOUBLE},
-      </if>
-      <if test="temperature != null" >
-        #{temperature,jdbcType=DOUBLE},
-      </if>
-      <if test="volumeempty != null" >
-        #{volumeempty,jdbcType=DOUBLE},
-      </if>
-      <if test="temp1 != null" >
-        #{temp1,jdbcType=DOUBLE},
-      </if>
-      <if test="temp2 != null" >
-        #{temp2,jdbcType=DOUBLE},
-      </if>
-      <if test="temp3 != null" >
-        #{temp3,jdbcType=DOUBLE},
-      </if>
-      <if test="temp4 != null" >
-        #{temp4,jdbcType=DOUBLE},
-      </if>
-      <if test="temp5 != null" >
-        #{temp5,jdbcType=DOUBLE},
-      </if>
-      <if test="densities != null" >
-        #{densities,jdbcType=DOUBLE},
-      </if>
-      <if test="densitiesstandard != null" >
-        #{densitiesstandard,jdbcType=DOUBLE},
-      </if>
-      <if test="transtatus != null" >
-        #{transtatus,jdbcType=VARCHAR},
-      </if>
-      <if test="createtime != null" >
-        #{createtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="shift != null" >
-        #{shift,jdbcType=VARCHAR},
-      </if>
-      <if test="oucode != null" >
-        #{oucode,jdbcType=VARCHAR},
-      </if>
-      <if test="version != null" >
-        #{version,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
+  insert into oss_monitor_TimeInventory
+  <trim prefix="(" suffix=")" suffixOverrides="," >
+    <if test="oilcan != null" >
+      OilCan,
+    </if>
+    <if test="storetime != null" >
+      StoreTime,
+    </if>
+    <if test="nodeno != null" >
+      NodeNo,
+    </if>
+    <if test="oilno != null" >
+      OilNo,
+    </if>
+    <if test="standardl != null" >
+      StandardL,
+    </if>
+    <if test="heighttotal != null" >
+      HeightTotal,
+    </if>
+    <if test="oill != null" >
+      OilL,
+    </if>
+    <if test="heightwater != null" >
+      HeightWater,
+    </if>
+    <if test="waterl != null" >
+      WaterL,
+    </if>
+    <if test="temperature != null" >
+      Temperature,
+    </if>
+    <if test="volumeempty != null" >
+      VolumeEmpty,
+    </if>
+    <if test="temp1 != null" >
+      Temp1,
+    </if>
+    <if test="temp2 != null" >
+      Temp2,
+    </if>
+    <if test="temp3 != null" >
+      Temp3,
+    </if>
+    <if test="temp4 != null" >
+      Temp4,
+    </if>
+    <if test="temp5 != null" >
+      Temp5,
+    </if>
+    <if test="densities != null" >
+      Densities,
+    </if>
+    <if test="densitiesstandard != null" >
+      DensitiesStandard,
+    </if>
+    <if test="transtatus != null" >
+      TranStatus,
+    </if>
+    <if test="createtime != null" >
+      CreateTime,
+    </if>
+    <if test="shift != null" >
+      Shift,
+    </if>
+    <if test="oucode != null" >
+      OUCode,
+    </if>
+    <if test="version != null" >
+      Version,
+    </if>
+  </trim>
+  <trim prefix="values (" suffix=")" suffixOverrides="," >
+    <if test="oilcan != null" >
+      #{oilcan,jdbcType=INTEGER},
+    </if>
+    <if test="storetime != null" >
+      #{storetime,jdbcType=TIMESTAMP},
+    </if>
+    <if test="nodeno != null" >
+      #{nodeno,jdbcType=VARCHAR},
+    </if>
+    <if test="oilno != null" >
+      #{oilno,jdbcType=VARCHAR},
+    </if>
+    <if test="standardl != null" >
+      #{standardl,jdbcType=DOUBLE},
+    </if>
+    <if test="heighttotal != null" >
+      #{heighttotal,jdbcType=DOUBLE},
+    </if>
+    <if test="oill != null" >
+      #{oill,jdbcType=DOUBLE},
+    </if>
+    <if test="heightwater != null" >
+      #{heightwater,jdbcType=DOUBLE},
+    </if>
+    <if test="waterl != null" >
+      #{waterl,jdbcType=DOUBLE},
+    </if>
+    <if test="temperature != null" >
+      #{temperature,jdbcType=DOUBLE},
+    </if>
+    <if test="volumeempty != null" >
+      #{volumeempty,jdbcType=DOUBLE},
+    </if>
+    <if test="temp1 != null" >
+      #{temp1,jdbcType=DOUBLE},
+    </if>
+    <if test="temp2 != null" >
+      #{temp2,jdbcType=DOUBLE},
+    </if>
+    <if test="temp3 != null" >
+      #{temp3,jdbcType=DOUBLE},
+    </if>
+    <if test="temp4 != null" >
+      #{temp4,jdbcType=DOUBLE},
+    </if>
+    <if test="temp5 != null" >
+      #{temp5,jdbcType=DOUBLE},
+    </if>
+    <if test="densities != null" >
+      #{densities,jdbcType=DOUBLE},
+    </if>
+    <if test="densitiesstandard != null" >
+      #{densitiesstandard,jdbcType=DOUBLE},
+    </if>
+    <if test="transtatus != null" >
+      #{transtatus,jdbcType=VARCHAR},
+    </if>
+    <if test="createtime != null" >
+      #{createtime,jdbcType=TIMESTAMP},
+    </if>
+    <if test="shift != null" >
+      #{shift,jdbcType=VARCHAR},
+    </if>
+    <if test="oucode != null" >
+      #{oucode,jdbcType=VARCHAR},
+    </if>
+    <if test="version != null" >
+      #{version,jdbcType=VARCHAR},
+    </if>
+  </trim>
+</insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_monitor_TimeInventory" >
     update oss_monitor_TimeInventory
     <set >

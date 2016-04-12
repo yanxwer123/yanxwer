@@ -100,8 +100,8 @@ public class ApplicationMain  implements Watcher {
         //region link ctrl
             CC = reLink();
             System.out.println("Main-------------");
-            System.out.println("cc:"+CC);
-            System.out.println("watch:"+watch);
+            System.out.println("cc:" + CC);
+            System.out.println("watch:" + watch);
 
 
             //System.out.println("send sck");

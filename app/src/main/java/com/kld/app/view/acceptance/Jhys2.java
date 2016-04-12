@@ -73,6 +73,7 @@ public class Jhys2 extends JPanel {
     private JPanel canpanel;
     private boolean isdg=true;
     private boolean com=true;
+    private int sywd=0;
     private String signs;
     private List<Map<String,?>> candata;
     private List<HashMap<String,Object>> gundata;
@@ -306,7 +307,7 @@ public class Jhys2 extends JPanel {
                 acceptanceOdRegister.setBackbankno(btnhkqf.getText().trim());
                 acceptanceOdRegister.setPlumbunbankoperator(btnckqf.getText().trim());
 
-
+                acceptanceOdRegister.setIsfulldose(sywd);
                 acceptanceOdRegister.setOilno(tableModel.getValueAt(0, 1).toString());
                 odRegisterService.updateByPrimaryKeySelective(acceptanceOdRegister);
                 //endregion
@@ -394,6 +395,7 @@ public class Jhys2 extends JPanel {
                         realgiveoil=acceptSevices.getsjfyl(SysConfig.regmoteIp(), cbill.getDeliveryno());
                     }
                     if (realgiveoil!=null&&realgiveoil.getWd()!=null&&realgiveoil.getSjfyl()!=null) {
+                        sywd=1;
                         cbill.setDeliverytemp(realgiveoil.getWd());
                         cbill.setDensity(realgiveoil.getMd());
                         cbill.setPlanl(Double.parseDouble(realgiveoil.getSjfyl()));

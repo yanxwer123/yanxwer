@@ -85,12 +85,8 @@ public class MacLogConsumer implements Runnable {
                 return;
             }
 
-            if (linedata.length < 6) {
-                return;
-            }
-
             if (!linedata[2].equals("Recv:")) {
-                ////System.out.println("No Recv:  data is" + linedata[2]);
+               System.out.println("No Recv:  data is" + linedata[2]);
                 return;
             }
             //取出prot
@@ -102,7 +98,7 @@ public class MacLogConsumer implements Runnable {
             String[] dataArray = data.split(" ");
 
             if (dataArray.length != len) {
-                //System.out.println("length is not equal continue" + dataArray.length + "|" + len);
+                System.out.println("length is not equal continue" + dataArray.length + "|" + len);
                 return;
             }
 

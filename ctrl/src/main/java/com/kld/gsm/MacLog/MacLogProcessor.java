@@ -69,7 +69,7 @@ public class MacLogProcessor {
             file.createNewFile();
             */
 
-        String sourcefilePath = "G:\\20160110.log";
+        String sourcefilePath = "f:\\20160309.log";
         File datafile = new File(sourcefilePath);
 
         FileReader in = new FileReader(datafile);

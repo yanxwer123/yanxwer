@@ -35,7 +35,7 @@
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_alarm_Equipment" >
-    insert into oss_alarm_Equipment (OilCan, StartAlarmTime, NodeNo, 
+    replace into oss_alarm_Equipment (OilCan, StartAlarmTime, NodeNo,
       EndAlarmTime, FailureType, EquipCode, 
       MalfunctionCode, EquipBrand, ProbeModel, 
       Remark, TranStatus, Shift, 

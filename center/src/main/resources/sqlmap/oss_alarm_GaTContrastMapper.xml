@@ -34,7 +34,7 @@
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_alarm_GaTContrast">
-    insert into oss_alarm_GaTContrast (OilCan, FristMeasureTime, NodeNo, 
+    replace into oss_alarm_GaTContrast (OilCan, FristMeasureTime, NodeNo,
       FristMeasureStore, SecodeMeasureTime, 
       SecodeMeasureStore, IntervalSales, IntervalTime, 
       Difference, TranStatus, Shift, 
