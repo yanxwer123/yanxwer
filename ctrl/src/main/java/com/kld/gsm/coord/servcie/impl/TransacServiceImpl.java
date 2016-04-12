@@ -75,7 +75,16 @@ public class TransacServiceImpl implements ITransacService {
             sql_map.put("TTC",TTC);
             sql_map.put("TakeDate", TakeDate);
             log.info("oilVouchDao is null? " + oilVouchDao);
-            OilVouch oilVouch = oilVouchDao.getOilVouch(sql_map);
+            String sql = "SELECT macno,ttc,cardno,machineoilno,oilno,takedate, " +
+                    "       ctc,oilgunno,openo,liter,price,amount,balance,pumpno,tac,gmac,psam_tac, " +
+                    "       psam_asn,terminalno,psam_ttc,moneysou,paymode,payunit,t_mac,accountdate, " +
+                    "       tracode,gettime,key_version,key_index,compmatchflag,compno,backmatchflag, " +
+                    "       paymatchflag,teamvouchno,transflag,teamhotoflag,billstatus " +
+                    "       FROM oilvouch vouch " +
+                    "       WHERE macno = '"+MacNo+"' AND oilgunno = '"+GunNo+
+                    "' AND ttc='"+TTC+"' " +
+                    "       AND takedate =  '"+TakeDate+"'";
+            OilVouch oilVouch = oilVouchDao.getOilVouch1(sql);
             if(oilVouch==null)
             {
                 log.error("获取交易数据失败.交易对象为空");
