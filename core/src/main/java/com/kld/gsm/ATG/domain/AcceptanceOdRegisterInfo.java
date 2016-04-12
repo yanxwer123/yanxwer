@@ -55,6 +55,16 @@ public class AcceptanceOdRegisterInfo extends AcceptanceOdRegisterInfoKey {
 
     private Double endwaterheight;
 
+    private String canversion;
+
+    public String getCanversion() {
+        return canversion;
+    }
+
+    public void setCanversion(String canversion) {
+        this.canversion = canversion;
+    }
+
     public String getDeliveryno() {
         return deliveryno;
     }

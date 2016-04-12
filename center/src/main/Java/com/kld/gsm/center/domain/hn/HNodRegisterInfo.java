@@ -51,7 +51,7 @@ public class HNodRegisterInfo {
 
     private Integer endentertype;
 
-    private String version;
+    private String canversion;
 
     public String getManualno() {
         return manualno;
@@ -85,12 +85,12 @@ public class HNodRegisterInfo {
         this.endentertype = endentertype;
     }
 
-    public String getVersion() {
-        return version;
+    public String getCanversion() {
+        return canversion;
     }
 
-    public void setVersion(String version) {
-        this.version = version;
+    public void setCanversion(String canversion) {
+        this.canversion = canversion;
     }
 
     public String getOilno() {

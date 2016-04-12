@@ -58,6 +58,30 @@ public class HNodRegister {
 
     private Double cantrucktemp;
 
+    private Integer usetemp;
+
+    private String outseals;
+
+
+    public String getOutseals() {
+        return outseals;
+    }
+
+    public void setOutseals(String outseals) {
+        this.outseals = outseals;
+    }
+
+
+
+
+    public Integer getUsetemp() {
+        return usetemp;
+    }
+
+    public void setUsetemp(Integer usetemp) {
+        this.usetemp = usetemp;
+    }
+
     public String getPlumbunbankoperator() {
         return plumbunbankoperator;
     }

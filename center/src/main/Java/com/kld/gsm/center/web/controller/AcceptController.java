@@ -244,8 +244,8 @@ catch (Exception e){
                 oucode=oss.getOucode();
             }
             acceptanceService.addOdregAndregInfo(acceptOdRegMains,NodeNo,oucode);
-            addOdReg(acceptOdRegMains);
-            result.setResult(true);
+            return addOdReg(acceptOdRegMains);
+            //result.setResult(true);
         }catch (Exception e){
             result.setMsg(e.getMessage());
             result.setResult(false);
@@ -265,6 +265,7 @@ catch (Exception e){
             HNodRegister register=new HNodRegister();
             register.setIndemnityloss(odr.getIndemnityloss());
             register.setInstationtime(odr.getInstationtime());
+            //出库铅封
             register.setBackbankno(odr.getBackbankno());
             register.setPlanl(odr.getPlanl());
             register.setBegintime(odr.getBegintime());
@@ -287,7 +288,9 @@ catch (Exception e){
             register.setRealgetlv20(odr.getRealgetlv20());
             register.setShift(odr.getShift());
             register.setOilno(odr.getOilno());
-            register.setPlumbunbankoperator(odr.getPlumbunbankoperator());
+            //回空铅封
+            register.setOutseals(odr.getPlumbunbankoperator());
+
             //endregion
             main.setOdRegister(register);
             //region for info
@@ -316,6 +319,7 @@ catch (Exception e){
                 info1.setForcecancelstable(info.getForcecancelstable());
                 info1.setOilcan(info.getOilcan());
                 info1.setBeginwaterheight(info.getBeginwaterheight());
+                info1.setCanversion(info.getCanverison());
                 registerInfos.add(info1);
             }
             //endregion
@@ -327,7 +331,7 @@ catch (Exception e){
     }
 
     //发送数据到湖南
-    private void addOdReg(List<AcceptOdRegMain> acceptOdRegMains){
+    private Result addOdReg(List<AcceptOdRegMain> acceptOdRegMains){
         List<HNodRegMain>  hnmains=TransToHn(acceptOdRegMains);
         action ac=new action();
         String path=ac.getUri("resources.hn.accept.sendodreg");
@@ -344,13 +348,13 @@ catch (Exception e){
                     item.getAcceptanceOdRegister().setTranstatus("1");
                     acceptanceService.updateByPrimaryKeySelective(item.getAcceptanceOdRegister());
                 }
-
             }
         }
         catch(Exception e)
         {
 
         }
+        return result;
     }
 
 

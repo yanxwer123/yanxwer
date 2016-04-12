@@ -77,7 +77,7 @@ public class OilDayStatImpl implements OilDayStatService {
         // TODO 查询到其中一个表的数据遍历放入
         OilDayStat o = new OilDayStat();
         String s = o.getSelectAllSql("oildaystat");
-        String sql = s+" where accountdate LIKE '"+date+"'";
+        String sql = s+" where accountdate = '"+date+"'";
         log.info("oilDayStatDao.findByDate1的sql="+sql);
         List<OilDayStat> oilDayStat = oilDayStatDao.findByDate1(sql);
         //System.out.println("select :" + oilDayStat);

@@ -31,12 +31,13 @@
     <result column="StableEndTime" property="stableendtime" jdbcType="TIMESTAMP" />
     <result column="BeginWaterHeight" property="beginwaterheight" jdbcType="DOUBLE" />
     <result column="EndWaterHeight" property="endwaterheight" jdbcType="DOUBLE" />
+    <result column="CanVersion" property="canversion" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     ManualNo, OilCan, NodeNo, OilNo, Shift, DeliveryNo, BeginTime, EndTime, DischargeL, 
     BeginOilHeight, BeginOilL, BeginV20L, BeginTemperature, EndOilHeight, EndOilL, EndV20L, 
     EndTemperature, CreateTime, IsDel, EnterType, DuringSales, TranStatus, OUCode, ForceCancelStable, 
-    IsBeforeStable,StableBeginTime,StableEndTime,BeginWaterHeight,EndWaterHeight
+    IsBeforeStable,StableBeginTime,StableEndTime,BeginWaterHeight,EndWaterHeight,CanVersion
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.center.domain.oss_acceptance_odRegisterInfoKey" >
     select 'true' as QUERYID,
@@ -61,7 +62,7 @@
       EndV20L, EndTemperature, CreateTime, 
       IsDel, EnterType, DuringSales, 
       TranStatus, OUCode, ForceCancelStable, 
-      IsBeforeStable,StableBeginTime,StableEndTime,BeginWaterHeight,EndWaterHeight)
+      IsBeforeStable,StableBeginTime,StableEndTime,BeginWaterHeight,EndWaterHeight,CanVersion)
     values (#{manualno,jdbcType=VARCHAR}, #{oilcan,jdbcType=INTEGER}, #{nodeno,jdbcType=VARCHAR}, 
       #{oilno,jdbcType=VARCHAR}, #{shift,jdbcType=VARCHAR}, #{deliveryno,jdbcType=VARCHAR}, 
       #{begintime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{dischargel,jdbcType=DOUBLE}, 
@@ -71,7 +72,7 @@
       #{isdel,jdbcType=INTEGER}, #{entertype,jdbcType=INTEGER}, #{duringsales,jdbcType=DOUBLE}, 
       #{transtatus,jdbcType=VARCHAR}, #{oucode,jdbcType=VARCHAR}, #{forcecancelstable,jdbcType=INTEGER}, 
       #{isbeforestable,jdbcType=INTEGER},#{stablebegintime,jdbcType=TIMESTAMP},#{stableendtime,jdbcType=TIMESTAMP},
-      #{beginwaterheight,jdbcType=DOUBLE},#{endwaterheight,jdbcType=DOUBLE})
+      #{beginwaterheight,jdbcType=DOUBLE},#{endwaterheight,jdbcType=DOUBLE},#{canversion,jdbcType=VARCHAR})
   </insert>
   <insert id="merge" parameterType="com.kld.gsm.center.domain.oss_acceptance_odRegisterInfo" >
     replace into oss_acceptance_odRegisterInfo
@@ -163,6 +164,9 @@
       <if test="endwaterheight != null" >
         EndWaterHeight,
       </if>
+      <if test="canversion != null" >
+        CanVersion,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="manualno != null" >
@@ -251,6 +255,9 @@
       </if>
       <if test="endwaterheight != null" >
         endwaterheight,
+      </if>
+      <if test="canversion != null" >
+        canversion,
       </if>
     </trim>
   </insert>
@@ -344,6 +351,9 @@
       <if test="endwaterheight != null" >
         EndWaterHeight,
       </if>
+      <if test="canversion != null" >
+        CanVersion,,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="manualno != null" >
@@ -433,6 +443,9 @@
       <if test="endwaterheight != null" >
         #{endwaterheight,jdbcType=DOUBLE},
       </if>
+      <if test="canversion != null" >
+        #{canversion,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.center.domain.oss_acceptance_odRegisterInfo" >
@@ -516,6 +529,9 @@
       <if test="endwaterheight != null" >
         EndWaterHeight = #{endwaterheight,jdbcType=DOUBLE},
       </if>
+      <if test="canversion != null" >
+        CanVersion = #{canversion,jdbcType=VARCHAR},
+      </if>
     </set>
     where ManualNo = #{manualno,jdbcType=VARCHAR}
       and OilCan = #{oilcan,jdbcType=INTEGER}
@@ -548,7 +564,8 @@
       StableBeginTime = #{stablebegintime,jdbcType=INTEGER},
       StableEndTime = #{stableendtime,jdbcType=INTEGER},
       BeginWaterHeight = #{beginwaterheight,jdbcType=DOUBLE},
-      EndWaterHeight = #{endwaterheight,jdbcType=DOUBLE}
+      EndWaterHeight = #{endwaterheight,jdbcType=DOUBLE},
+      CanVersion = #{canversion,jdbcType=VARCHAR}
     where ManualNo = #{manualno,jdbcType=VARCHAR}
       and OilCan = #{oilcan,jdbcType=INTEGER}
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
@@ -568,8 +585,4 @@
   <select id="selectAllAcceptanceServicePage" parameterType="String" resultType="hashmap">
     select * from oss_acceptance_odRegisterInfo  where ManualNo = #{deliveryno,jdbcType=VARCHAR}
   </select>
-
-
-
-
 </mapper>

@@ -81,8 +81,8 @@ public class TransacServiceImpl implements ITransacService {
                     "       tracode,gettime,key_version,key_index,compmatchflag,compno,backmatchflag, " +
                     "       paymatchflag,teamvouchno,transflag,teamhotoflag,billstatus " +
                     "       FROM oilvouch vouch " +
-                    "       WHERE macno = '"+MacNo+"' AND oilgunno = '"+GunNo+
-                    "' AND ttc='"+TTC+"' " +
+                    "       WHERE macno = '"+MacNo+"' AND oilgunno ="+GunNo+
+                    " AND ttc='"+TTC+"' " +
                     "       AND takedate =  '"+TakeDate+"'";
             log.info("oilVouchDao.getOilVouch1:"+sql);
             OilVouch oilVouch = oilVouchDao.getOilVouch1(sql);
