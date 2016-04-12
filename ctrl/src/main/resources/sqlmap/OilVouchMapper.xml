@@ -13,15 +13,12 @@
        AND takedate =  #{TakeDate,jdbcType=VARCHAR}
     </select>
     <select id="selectByshift" parameterType="String" resultType="com.kld.gsm.ATG.domain.OilVouch">
-
         SELECT macno,ttc,takedate,oilgunno,teamvouchno,oilno
         FROM oilvouch
         WHERE teamvouchno = #{oilvoch,jdbcType=VARCHAR}
     </select>
-    <select id="selectByshift1" parameterType="String" resultType="com.kld.gsm.ATG.domain.OilVouch">
-        SELECT macno,ttc,takedate,oilgunno,teamvouchno
-        FROM oilvouch
-        WHERE teamvouchno = #{oilvoch,jdbcType=VARCHAR}
+    <select id="selectByshift1" statementType="STATEMENT" parameterType="String" resultType="com.kld.gsm.ATG.domain.OilVouch">
+        ${sql}
     </select>
     <select id="getOilVouch1" parameterType="String" resultType="com.kld.gsm.ATG.domain.OilVouch"
         statementType="STATEMENT">

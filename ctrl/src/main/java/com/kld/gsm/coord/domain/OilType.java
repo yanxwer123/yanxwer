@@ -9,7 +9,7 @@ import java.util.Date;
  * @CreationTime: 2015.11.8
  * @Description:机走油品编码
  */
-public class OilType {
+public class OilType extends AbsValueBean{
     private String oilno;
     private String oilname;
     private String machineoilno;

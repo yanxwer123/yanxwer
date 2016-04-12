@@ -46,7 +46,7 @@ public class LoginMsgServiceImpl implements LoginMsgService {
         GasMsg apploginMessage;
         //System.out.println("begin select -------------------");
         try {
-            String sql = "select * from sysinfor ";
+            String sql = "select sysdate,oprno,oprname,teamvouchno,runappname from sysinfor ";
             Sysinfor sysinfor = sysinforDao.getAll1(sql);
             //System.out.println("sysinfor>>>>" + sysinfor.toString());
             if (sysinfor != null) {//登陆

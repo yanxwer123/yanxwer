@@ -8,7 +8,7 @@ import java.util.Date;
  * @CreationTime: 2015.11.8
  * @Description:单位信息表
  */
-public class NodeInfor {
+public class NodeInfor extends AbsValueBean{
     private String physicalnodeno;
     private String nodeno;
     private String sinopecnodeno;

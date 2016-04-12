@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by yinzhiguang on 2015/11/9.
  */
-public class Teamstock {
+public class Teamstock extends AbsValueBean{
     private int oilcanno;
     private String teamvouchno;
     private Date opetime;

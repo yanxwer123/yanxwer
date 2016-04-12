@@ -133,7 +133,9 @@ public class TankGunBasedDataServiceImpl implements TankGunBasedDataService {
 
         //油枪信息表
         //System.out.println("开始油枪信息表");
-        sql = "SELECT * FROM oilguninfor";
+        OilGunInfor oilGunInfor1 = new OilGunInfor();
+        String s =  oilGunInfor1.getSelectAllSql("oilguninfor");
+        sql = s;
         LOGGER.info("oilguninforDao.selectOilGunInfor1=="+sql);
         List<OilGunInfor> oilGunInforList = oilguninforDao.selectOilGunInfor1(sql);
         LOGGER.info("oilGunInforList.size:" + oilGunInforList.size());
@@ -158,7 +160,8 @@ public class TankGunBasedDataServiceImpl implements TankGunBasedDataService {
 
         //机走油品编码表
         //System.out.println("开始机走油品编码表");
-        sql = "SELECT * FROM oiltype";
+        OilType oilType1 = new OilType();
+        sql = oilType1.getSelectAllSql("oiltype");
         LOGGER.info("oilTypeDao.selectOilType1=="+sql);
         List<OilType> oilTypeList = oilTypeDao.selectOilType1(sql);
         LOGGER.info("oilTypeList.size:" + oilTypeList.size());
@@ -193,7 +196,8 @@ public class TankGunBasedDataServiceImpl implements TankGunBasedDataService {
        //单位信息表
         //System.out.println("开始单位信息表");
         String nodeno=null;
-        sql = "SELECT * FROM NodeInfor";
+        NodeInfor n = new NodeInfor();
+        sql = n.getSelectAllSql("NodeInfor");
         LOGGER.info("nodeInforDao.selectNodeInfor1=="+sql);
         List<NodeInfor> NodeInforList=nodeInforDao.selectNodeInfor1(sql);
         LOGGER.info("NodeInforList.size:" + NodeInforList.size());

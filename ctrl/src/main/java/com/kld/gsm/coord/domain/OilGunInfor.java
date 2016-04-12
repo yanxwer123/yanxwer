@@ -7,7 +7,7 @@ package com.kld.gsm.coord.domain;
  * @CreationTime: 2015.11.8
  * @Description:油枪信息表
  */
-public class OilGunInfor {
+public class OilGunInfor extends AbsValueBean{
 
     private int	oilgunno;
     private int	machineno;

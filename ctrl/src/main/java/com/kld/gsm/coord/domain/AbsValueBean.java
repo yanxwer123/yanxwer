@@ -48,6 +48,29 @@ public class AbsValueBean {
         }
         return sql;
     }
+    public String getSelectAllSql(String tableName){
+        String sql = "";
+        try {
+            StringBuffer fieldStr = new StringBuffer();
+            Field[] fields = this.getClass().getDeclaredFields();
+            if (fields != null && fields.length > 0) {
+                for (int i = 0; i < fields.length; i++) {
+                    fields[i].setAccessible(true);
+                    fieldStr.append(fields[i].getName());
+                    //如果不是最后一个字段，则加逗号
+                    if (i != (fields.length - 1)) {
+                        fieldStr.append(",");
+                    }
+                }
+            }
+            sql = " SELECT "+fieldStr+" FROM "+tableName;
+            LOGGER.info("AbsValueBean的selectAllSql语句:" + sql);
+        }catch (Exception e){
+            e.printStackTrace();
+            LOGGER.error(e.getMessage());
+        }
+        return sql;
+    }
     //首字母转小写
     public static String toLowerCaseFirstOne(String s){
         if(Character.isLowerCase(s.charAt(0)))
@@ -67,6 +90,6 @@ public class AbsValueBean {
         BillInfor billInfor = new BillInfor();
         billInfor.setBillname("111111");
         billInfor.setMaxvouchno("");
-        System.out.println(billInfor.getInsertSql("3333"));
+        System.out.println(billInfor.getSelectAllSql("3333"));
     }
 }

@@ -10,7 +10,7 @@ import java.util.Date;
  * @CreationTime: 2015-11-13 10:53
  * @Description: 成品油日结存报表  ( 记录成品油的日结信息  )
  */
-public class OilDayStat {
+public class OilDayStat extends AbsValueBean{
     private Date accountdate;//结帐日
     private String Oilno;//油品编码
     private String Oilname;//油品名称

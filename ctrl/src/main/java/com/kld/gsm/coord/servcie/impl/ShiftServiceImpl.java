@@ -88,7 +88,9 @@ public class ShiftServiceImpl implements IShiftService {
             log.info("start to save ATGTEAMSTOCK~~~||||||||||||||||||||`");
             //班结库存表(ATGTEAMSTOCK)
             //System.out.println("shiftno:" + shiftno);
-            sql ="SELECT * FROM ATGTEAMSTOCK "+
+            Teamstock t = new Teamstock();
+            String s = t.getSelectAllSql("ATGTEAMSTOCK");
+            sql =s +
                     " WHERE teamvouchno='"+shiftno+"'";
             log.info("getTeamstock1的sql:"+sql);
             List<Teamstock> teamstockList = (List<Teamstock>) teamstockDao.getTeamstock1(sql);
@@ -157,7 +159,10 @@ public class ShiftServiceImpl implements IShiftService {
             log.info("此处开始更新oss_daily_TradeAccount");
             //endregion
             //交易明细表（oilvouch）
-            List<OilVouch> oilVouchList = oilVouchDao.selectByshift1(shiftno);
+            sql = "SELECT macno,ttc,takedate,oilgunno,teamvouchno " +
+                    "        FROM oilvouch " +
+                    "        WHERE teamvouchno = '"+shiftno+"'";
+            List<OilVouch> oilVouchList = oilVouchDao.selectByshift1(sql);
             for (OilVouch oilVouch : oilVouchList) {
                 //更新Mysql交易加油流水表（oss_daily_TradeAccount）
                 if (!"".equals(oilVouch.getCardno()) && null != oilVouch.getCardno()&&oilVouch.getCardno().length()>=5) {
