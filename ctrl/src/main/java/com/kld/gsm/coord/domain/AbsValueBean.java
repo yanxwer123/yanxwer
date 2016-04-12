@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.
@@ -28,7 +30,15 @@ public class AbsValueBean {
                     Method method = this.getClass().getMethod("get" + toUpperCaseFirstOne(fields[i].getName()));
                     Object obj = method.invoke(this);
                     if (obj != null && !"".equals(obj)) {
-                        valueStr.append(obj);
+                        Class fieldClass = fields[i].getType();
+                        if( fieldClass == Date.class){
+                            Date date = (java.util.Date)obj;
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            String datestr = sdf.format(date);
+                            valueStr.append("'"+datestr+"'");
+                        }else {
+                            valueStr.append(obj);
+                        }
                     } else {
                         valueStr.append("''");
                     }
@@ -87,9 +97,11 @@ public class AbsValueBean {
     }
 
     public  static void main(String args[]) throws Exception{
-        BillInfor billInfor = new BillInfor();
-        billInfor.setBillname("111111");
-        billInfor.setMaxvouchno("");
-        System.out.println(billInfor.getSelectAllSql("3333"));
+        VouchStock v = new VouchStock();
+        v.setTtc(111111);
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        v.setTakedate(date);
+        System.out.println(v.getInsertSql("3333"));
     }
 }
