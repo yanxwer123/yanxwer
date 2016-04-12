@@ -99,8 +99,6 @@ public class DailyPolling {
         ftpupload();
         //日平衡
         //DayBalance();
-
-
         LOG.info("ten end"+ DateUtil.getDate(new Date(),"yyyy-MM-dd HH:mm:ss"));
     }
 

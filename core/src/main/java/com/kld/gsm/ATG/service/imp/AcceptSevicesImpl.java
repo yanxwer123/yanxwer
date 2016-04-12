@@ -10,6 +10,7 @@ import com.kld.gsm.ATG.utils.httpClient;
 import com.kld.gsm.ATG.utils.param;
 import com.kld.gsm.Socket.protocol.ResultMsg;
 import com.kld.gsm.util.JsonMapper;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +40,7 @@ public class AcceptSevicesImpl implements AcceptSevices {
     @Resource
     private AcceptanceDeliveryBillDao deliveryBillDao;
 
+    private static final Logger LOG = Logger.getLogger("AcceptSevicesImpl");
 
     public SysmanageRealgiveoil getsjfyl(String host, String ckdId) {
         action ac = new action();
@@ -207,15 +209,15 @@ public class AcceptSevicesImpl implements AcceptSevices {
         try {
             //System.out.println(new JsonMapper().toJson(acceptOdRegMains));
             String js = client.request(path, acceptOdRegMains, hm);
-            ResultMsg r = new JsonMapper().fromJson(js, ResultMsg.class);
-
-            for (AcceptanceOdRegister item : acceptanceOdRegisters) {
-                item.setTranstatus("1");
-                acceptanceOdRegisterDao.updateByPrimaryKey(item);
+            Result r = new JsonMapper().fromJson(js, Result.class);
+            if (r!=null&&r.isResult()) {
+                for (AcceptanceOdRegister item : acceptanceOdRegisters) {
+                    item.setTranstatus("1");
+                    acceptanceOdRegisterDao.updateByPrimaryKey(item);
+                }
             }
         } catch (Exception e) {
-            e.printStackTrace();
-
+            LOG.error("sendOdreg:"+e.getMessage(),e);
         }
 
         return 0;

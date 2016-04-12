@@ -113,9 +113,9 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
         try {
             //更新油罐进油明细表(OILCANINDETAIL)
             int update_Oilanindetail = oilcanindetailDao.updateOilcanindetail(DeliveryNo);
-            System.err.println("更新油罐进油明细表成功");
+            logger.info("更新油罐进油明细表成功");
         }catch (Exception e){
-            System.err.println("更新油罐进油明细表失败………………");
+           logger.error("更新油罐进油明细表失败………………", e);
             error(id);
         }
         try {
@@ -138,7 +138,7 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
             //更新油罐进油明细表(OILCANINDETAIL)
             int update_Oilanindetail = oilcanindetailDao.updateManualno(map);
         }catch (Exception e){
-            System.err.println("更新油罐进油明细表出库单号失败………………");
+            logger.error("更新油罐进油明细表出库单号失败………………", e);
 
         }
         try {
@@ -148,7 +148,7 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
             //更新进油核对表(INOILCHECKBILL)
             int update_Inoilcheckbill = inoilcheckbillDao.updateManualno(map1);
         }catch (Exception e){
-            System.err.println("更新进油核对表出库单号失败………………");
+            logger.error("更新进油核对表出库单号失败………………", e);
         }
         return 0;
 
@@ -178,6 +178,11 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
                         uBillInfor.setTypeno(typeno);
                         billInfor.setBillname("");
                         uBillInfor.setMaxvouchno(vouchno);
+                    }
+                    try {
+                        logger.info(uBillInfor.getTypeno()+uBillInfor.getMaxvouchno()+uBillInfor.getBillname());
+                    }catch (Exception e){
+                        logger.error(e.getMessage(),e);
                     }
                     billInforDao.updateBillInfor(uBillInfor);
                 }
@@ -295,7 +300,7 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
             int insert_Oilanindetail = oilcanindetailDao.insertOilcanindetail(oilCanIndeTail);
             //System.out.println("插入到油罐进油明细表成功");
         }catch (Exception e){
-            System.err.println("插入到油罐进油明细表失败………………");
+           logger.error("插入到油罐进油明细表失败………………",e);
             error(id);
         }
     }

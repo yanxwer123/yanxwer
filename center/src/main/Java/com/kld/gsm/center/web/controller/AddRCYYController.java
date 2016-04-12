@@ -577,7 +577,7 @@ public class AddRCYYController {
                     }
                     StationShiftInfoService.AddStationShiftInfo(classknotdata.getStationShiftInfoLst());
                     result.setResult(true);
-                    PassHn_SJSJ(classknotdata);
+                    return PassHn_SJSJ(classknotdata);
             }
         }
         catch(Exception ex) {
@@ -594,36 +594,44 @@ public class AddRCYYController {
     油罐交接表
     油站班报表名
     * */
-    private  void PassHn_SJSJ(oss_daily_ClassKnotData classknotdata) throws Exception {
+    private  Result PassHn_SJSJ(oss_daily_ClassKnotData classknotdata) throws Exception {
         action ac=new action();
         String ClassKnotDataPath=ac.getUri("resources.hn.RCYX.BJSJ");
         Map<String,String> hm=new HashMap<String, String>();
         //发送到湖南
         httpClient client=new httpClient();
-        String JsonReault=client.request(ClassKnotDataPath, classknotdata, hm);
-        Result pResult=new JsonMapper().fromJson(JsonReault,Result.class);
-        if(pResult.isResult()) {
-            //付油量分类统计表名
-            for (oss_daily_opoCount item : classknotdata.getOpoCountLost()) {
-                item.setTranstatus("1");
-            }
-            //付油数量统计交接表
-            for (oss_daily_opotCount item : classknotdata.getOpotCountLst()) {
-                item.setTranstatus("1");
-            }
-            //泵码交接表名
-            for (oss_daily_pumpDigitShift item : classknotdata.getPumpDigitShiftLost()) {
-                item.setTranstatus("1");
-            }
-            //油罐交接表
-            for (oss_daily_tankshift item : classknotdata.getTankShiftLost()) {
-                item.setTranstatus("1");
-            }
-            //油站班报表名
-            for (oss_daily_StationShiftInfo item : classknotdata.getStationShiftInfoLst()) {
-                item.setTranstatus("1");
-            }
+        Result pResult=new Result();
+        try {
+            String JsonReault=client.request(ClassKnotDataPath, classknotdata, hm);
+            pResult=new JsonMapper().fromJson(JsonReault,Result.class);
+          /*  if(pResult!=null&&pResult.isResult()) {
+                //付油量分类统计表名
+                for (oss_daily_opoCount item : classknotdata.getOpoCountLost()) {
+                    item.setTranstatus("1");
+                }
+                //付油数量统计交接表
+                for (oss_daily_opotCount item : classknotdata.getOpotCountLst()) {
+                    item.setTranstatus("1");
+                }
+                //泵码交接表名
+                for (oss_daily_pumpDigitShift item : classknotdata.getPumpDigitShiftLost()) {
+                    item.setTranstatus("1");
+                }
+                //油罐交接表
+                for (oss_daily_tankshift item : classknotdata.getTankShiftLost()) {
+                    item.setTranstatus("1");
+                }
+                //油站班报表名
+                for (oss_daily_StationShiftInfo item : classknotdata.getStationShiftInfoLst()) {
+                    item.setTranstatus("1");
+                }
+            }*/
+        }catch (Exception e){
+            pResult.setMsg(e.getMessage());
+            pResult.setResult(false);
+
         }
 
+        return pResult;
     }
 }

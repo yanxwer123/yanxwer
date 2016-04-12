@@ -40,6 +40,7 @@ public class CanAndGunStatus implements Watcher {
     }
 
     public void send() {
+        ApplicationMain.count+=2;
         GasMsg gasMsg = ResultUtils.getInstance().sendSUCCESS(ApplicationMain.sign, new ArrayList(), Constants.PID_Code.A15_10002.toString());
         ApplicationMain.CC.writeAndFlush(gasMsg);
         gasMsg = ResultUtils.getInstance().sendSUCCESS(ApplicationMain.sign, new ArrayList(), Constants.PID_Code.A15_10004.toString());
@@ -55,6 +56,7 @@ public class CanAndGunStatus implements Watcher {
         if (gasMsg.getPid().equals("A15_10002")) {
             //油枪状态
             LOG.info("5秒同步枪状态 into");
+            ApplicationMain.count--;
             List<GunInfo> gunInfos = new ArrayList<GunInfo>();
             try {
                 ResultMsg resultMsg = new JsonMapper().fromJson(gasMsg.getMessage(), ResultMsg.class);

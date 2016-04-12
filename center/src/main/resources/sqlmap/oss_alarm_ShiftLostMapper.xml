@@ -103,7 +103,7 @@
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_alarm_ShiftLost" >
-    insert into oss_alarm_ShiftLost (Shift, OilCanNo, NodeNo, 
+    replace into oss_alarm_ShiftLost (Shift, OilCanNo, NodeNo,
       StartOilHeight, StartOilL, EndOilHeight, 
       EndOilL, AcutalEndOilL, EndWaterHeight, 
       EndWaterL, EndTemperature, OilDischarge, 

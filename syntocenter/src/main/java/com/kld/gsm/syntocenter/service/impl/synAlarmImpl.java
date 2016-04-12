@@ -6,6 +6,8 @@ import com.kld.gsm.syntocenter.util.Station;
 import com.kld.gsm.syntocenter.util.action;
 import com.kld.gsm.syntocenter.util.httpClient;
 import com.kld.gsm.syntocenter.util.param;
+import com.kld.gsm.util.JsonMapper;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +24,8 @@ Created Date 2015/11/18
 @SuppressWarnings("all")
 @Service
 public class synAlarmImpl implements synAlarm {
-  @Autowired
+    private static final Logger LOG = Logger.getLogger("synAlarmImpl");
+    @Autowired
     private com.kld.gsm.ATG.dao.AlarmDailyLostDao alarmDailyLostDao;
 
     @Override
@@ -61,11 +64,15 @@ public class synAlarmImpl implements synAlarm {
         Map<String,String> hm=new param().getparam();
         //发送站级数据
         httpClient client=new httpClient();
+        Result result;
         try {
-            client.request(path,alarmShiftLosts,hm);
-            for (AlarmShiftLost item:alarmShiftLosts){
-                item.setTranstatus("1");
-                alarmShiftLostDao.updateByPrimaryKey(item);
+            String js=client.request(path,alarmShiftLosts,hm);
+            result=new JsonMapper().fromJson(js,Result.class);
+            if (result!=null&&result.isResult()) {
+                for (AlarmShiftLost item : alarmShiftLosts) {
+                    item.setTranstatus("1");
+                    alarmShiftLostDao.updateByPrimaryKey(item);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -87,14 +94,19 @@ public class synAlarmImpl implements synAlarm {
         Map<String,String> hm=new param().getparam();
         //发送站级数据
         httpClient client=new httpClient();
+        Result result;
         try {
-            client.request(path,alarmInventory,hm);
-            for (AlarmInventory item:alarmInventory){
-                item.setTranstatus("1");
-                alarmInventoryDao.updateByPrimaryKey(item);
+            String js=client.request(path, alarmInventory, hm);
+            LOG.info(js);
+            result=new JsonMapper().fromJson(js,Result.class);
+            if(result!=null&&result.isResult()) {
+                for (AlarmInventory item : alarmInventory) {
+                    item.setTranstatus("1");
+                    alarmInventoryDao.updateByPrimaryKey(item);
+                }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+           LOG.error(e.getMessage());
             return 0;
         }
         return 1;
@@ -113,14 +125,18 @@ public class synAlarmImpl implements synAlarm {
         Map<String,String> hm=new param().getparam();
         //发送站级数据
         httpClient client=new httpClient();
+        Result result;
         try {
-            client.request(path,alarmInventory,hm);
-            for (AlarmGaTContrast item:alarmInventory){
-                item.setTranstatus("1");
-                alarmGaTContrastDao.updateByPrimaryKey(item);
+            String js=client.request(path,alarmInventory,hm);
+            result=new JsonMapper().fromJson(js,Result.class);
+            if (result!=null&&result.isResult()) {
+                for (AlarmGaTContrast item : alarmInventory) {
+                    item.setTranstatus("1");
+                    alarmGaTContrastDao.updateByPrimaryKey(item);
+                }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+           LOG.error("枪出罐出"+e.getMessage(),e);
             return 0;
         }
         return 1;
@@ -165,14 +181,19 @@ public class synAlarmImpl implements synAlarm {
         Map<String,String> hm=new param().getparam();
         //发送站级数据
         httpClient client=new httpClient();
+        Result result;
         try {
-            client.request(path,alarmSaleOuts,hm);
-            for (AlarmSaleOut item:alarmSaleOuts){
-                item.setTranstatus("1");
-                alarmSaleOutDao.updateByPrimaryKey(item);
+            String js=client.request(path,alarmSaleOuts,hm);
+            LOG.info(js);
+            result=new JsonMapper().fromJson(js,Result.class);
+            if (result!=null&&result.isResult()) {
+                for (AlarmSaleOut item : alarmSaleOuts) {
+                    item.setTranstatus("1");
+                    alarmSaleOutDao.updateByPrimaryKey(item);
+                }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("脱销报警："+e.getMessage(),e);
             return 0;
         }
         return 1;
@@ -191,14 +212,18 @@ public class synAlarmImpl implements synAlarm {
         Map<String,String> hm=new param().getparam();
         //发送站级数据
         httpClient client=new httpClient();
+        Result result;
         try {
-            client.request(path,alarmEquipments,hm);
-            for (AlarmEquipment item:alarmEquipments){
-                item.setTranstatus("1");
-                alarmEquipmentDao.updateByPrimaryKey(item);
+            String js=client.request(path,alarmEquipments,hm);
+            result=new JsonMapper().fromJson(js,Result.class);
+            if (result!=null&&result.isResult()) {
+                for (AlarmEquipment item : alarmEquipments) {
+                    item.setTranstatus("1");
+                    alarmEquipmentDao.updateByPrimaryKey(item);
+                }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("设备故障:"+e.getMessage(),e);
             return 0;
         }
         return 1;
@@ -217,14 +242,18 @@ public class synAlarmImpl implements synAlarm {
         Map<String,String> hm=new param().getparam();
         //发送站级数据
         httpClient client=new httpClient();
+        Result result;
         try {
-            client.request(path,alarmEquipments,hm);
-            for (AlarmOilInContrast item:alarmEquipments){
-                item.setTranstatus("1");
-                alarmOilInContrastDao.updateByPrimaryKey(item);
+            String js=client.request(path,alarmEquipments,hm);
+            result=new JsonMapper().fromJson(js,Result.class);
+            if (result!=null&&result.isResult()) {
+                for (AlarmOilInContrast item : alarmEquipments) {
+                    item.setTranstatus("1");
+                    alarmOilInContrastDao.updateByPrimaryKey(item);
+                }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("synOilInContrast:"+e.getMessage(),e);
             return 0;
         }
         return 1;

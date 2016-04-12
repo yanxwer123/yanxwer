@@ -5,8 +5,11 @@ import com.kld.gsm.syntocenter.service.synDailyRunning;
 import com.kld.gsm.syntocenter.util.action;
 import com.kld.gsm.syntocenter.util.httpClient;
 import com.kld.gsm.syntocenter.util.param;
+import com.kld.gsm.util.JsonMapper;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.awt.datatransfer.DataTransferer;
 
 import java.util.List;
 import java.util.Map;
@@ -18,6 +21,8 @@ Created Date 2015/11/19
 @SuppressWarnings("all")
 @Service
 public class synDailyRunningImpl implements synDailyRunning {
+    private static final Logger LOG = Logger.getLogger("synDailyRunning");
+
     @Autowired
     private com.kld.gsm.ATG.dao.DailyTradeAccountDao dailyTradeAccountDao;
     @Autowired
@@ -51,16 +56,21 @@ public class synDailyRunningImpl implements synDailyRunning {
         }
         //发送站级数据
         httpClient client=new httpClient();
+        Result result;
         try {
-            client.request(path,DailyTradeAccounts,hm);
-            for (DailyTradeAccount item:DailyTradeAccounts){
-                item.setTransFlag("1");
-                dailyTradeAccountDao.updateByPrimaryKey(item);
-            }
+            String js=client.request(path,DailyTradeAccounts,hm);
+            LOG.info(js);
+            result=new JsonMapper().fromJson(js,Result.class);
         } catch (Exception e) {
             e.printStackTrace();
             //System.out.println(e.getMessage());
             return 0;
+        }
+        if (result!=null&&result.isResult()){
+            for (DailyTradeAccount item:DailyTradeAccounts){
+                item.setTransFlag("1");
+                dailyTradeAccountDao.updateByPrimaryKey(item);
+            }
         }
         return 1;
     }
@@ -78,16 +88,23 @@ public class synDailyRunningImpl implements synDailyRunning {
         }
         //发送站级数据
         httpClient client=new httpClient();
+        Result result;
         try {
-            client.request(path,DailyTradeInventorys,hm);
-            for (DailyTradeInventory item:DailyTradeInventorys){
-                item.setTranstatus("1");
-                dailyTradeInventoryDao.updateByPrimaryKey(item);
-            }
+            String js=client.request(path,DailyTradeInventorys,hm);
+            LOG.info(js);
+            result=new JsonMapper().fromJson(js,Result.class);
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
+        if (result!=null&&result.isResult())
+        {
+            for (DailyTradeInventory item:DailyTradeInventorys){
+                item.setTranstatus("1");
+                dailyTradeInventoryDao.updateByPrimaryKey(item);
+            }
+        }
+
         return 1;
     }
 
@@ -105,15 +122,20 @@ public class synDailyRunningImpl implements synDailyRunning {
         }
         //发送站级数据
         httpClient client=new httpClient();
+        Result result;
         try {
-            client.request(path,DailyOilDailyRecords,hm);
+            String js=client.request(path,DailyOilDailyRecords,hm);
+            LOG.info(js);
+            result=new JsonMapper().fromJson(js,Result.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+        if (result!=null&&result.isResult()){
             for (DailyOilDailyRecord item:DailyOilDailyRecords){
                 item.setTranstatus("1");
                 dailyOilDailyRecordDao.updateByPrimaryKey(item);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
         }
         return 1;
     }
@@ -131,15 +153,20 @@ public class synDailyRunningImpl implements synDailyRunning {
         }
         //发送站级数据
         httpClient client=new httpClient();
+        Result result;
         try {
-            client.request(path,DailyShiftStocks,hm);
+            String js=client.request(path,DailyShiftStocks,hm);
+            LOG.info(js);
+            result=new JsonMapper().fromJson(js,Result.class);
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+            return 0;
+        }
+        if (result!=null&&result.isResult()){
             for (DailyShiftStock item:DailyShiftStocks){
                 item.setTranflag("1");
                 dailyShiftStockDao.updateByPrimaryKey(item);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
         }
         return 1;
     }
@@ -174,37 +201,37 @@ public class synDailyRunningImpl implements synDailyRunning {
         Map<String,String> hm=new param().getparam();
         //发送站级数据
         httpClient client=new httpClient();
+        Result result;
         try {
-            client.request(ClassKnotDataPath, dailyMain, hm);
+            String js=client.request(ClassKnotDataPath, dailyMain, hm);
+            LOG.info(js);
+            result=new JsonMapper().fromJson(js,Result.class);
+        } catch (Exception e) {
+           LOG.error(e.getMessage());
+            return 0;
+        }
 
+        if (result!=null&&result.isResult()){
             for (DailyStationShiftInfo item:DailyStationShiftInfos){
                 item.setTranstatus("1");
                 dailyStationShiftInfoDao.updateByPrimaryKey(item);
             }
-
             for (DailyOpotCount item:DailyOpotCounts){
                 item.setTranstatus("1");
                 dailyOpotCountDao.updateByPrimaryKey(item);
             }
-
             for (DailyPumpDigitShift item:DailyPumpDigitShifts){
                 item.setTranstatus("1");
                 dailyPumpDigitShiftDao.updateByPrimaryKey(item);
             }
-
             for (DailyTankShift item:DailyTankShifts){
                 item.setTranstatus("1");
                 dailyTankShiftDao.updateByPrimaryKey(item);
             }
-
             for (DailyOpoCount item:DailyOpoCounts){
                 item.setTranstatus("1");
                 dailyOpoCountDao.updateByPrimaryKey(item);
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
         }
         return 1;
     }
