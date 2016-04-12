@@ -84,6 +84,7 @@ public class TransacServiceImpl implements ITransacService {
                     "       WHERE macno = '"+MacNo+"' AND oilgunno = '"+GunNo+
                     "' AND ttc='"+TTC+"' " +
                     "       AND takedate =  '"+TakeDate+"'";
+            log.info("oilVouchDao.getOilVouch1:"+sql);
             OilVouch oilVouch = oilVouchDao.getOilVouch1(sql);
             if(oilVouch==null)
             {
@@ -164,8 +165,10 @@ public class TransacServiceImpl implements ITransacService {
                 //给sybase交易库存表赋值
                getVouchStock(oilVouch, ret, vouchStock);
                log.info("vouchStock:"+vouchStock);
-                //sybase实时库存保存操作
-               int ret_vouchStock = vouchStockDao.insert1(vouchStock.getInsertSql("atgvouchstock"));
+                //
+               sql = vouchStock.getInsertSql("atgvouchstock");
+               log.info("vouchStockDao.insert1"+sql);
+               int ret_vouchStock = vouchStockDao.insert1(sql);
                log.info("ret_vouchStock :"+ret_vouchStock );
             }
             //2)通知app 交易数据
