@@ -5,7 +5,7 @@
     <select id="selectNodeInfor" resultType="com.kld.gsm.coord.domain.NodeInfor">
         SELECT * FROM NodeInfor
     </select>
-    <select id="selectNodeInfor" statementType="STATEMENT" parameterType="String" resultType="com.kld.gsm.coord.domain.NodeInfor">
+    <select id="selectNodeInfor1" statementType="STATEMENT" parameterType="String" resultType="com.kld.gsm.coord.domain.NodeInfor">
         ${sql}
     </select>
 </mapper>

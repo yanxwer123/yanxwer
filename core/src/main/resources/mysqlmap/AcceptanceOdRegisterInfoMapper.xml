@@ -29,12 +29,13 @@
     <result column="IsBeforeStable" property="isbeforestable" jdbcType="INTEGER" />
     <result column="BeginWaterHeight" property="beginwaterheight" jdbcType="DOUBLE" />
     <result column="EndWaterHeight" property="endwaterheight" jdbcType="DOUBLE" />
+    <result column="CanVerison" property="canverison" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     DeliveryNo,ManualNo, OilCan, OilNo, Shift, BeginTime, EndTime, DischargeL, BeginOilHeight, 
     BeginOilL, BeginV20L, BeginTemperature, EndOilHeight, EndOilL, EndV20L, EndTemperature, 
     CreateTime, IsDel, EnterType, DuringSales, TranStatus,StableBeginTime,StableEndTime,ForceCancelStable,IsBeforeStable
-    ,BeginWaterHeight,EndWaterHeight
+    ,BeginWaterHeight,EndWaterHeight,CanVerison
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.kld.gsm.ATG.domain.AcceptanceOdRegisterInfoKey" >
     select 'true' as QUERYID,
@@ -80,7 +81,7 @@
       EndOilL, EndV20L, EndTemperature, 
       CreateTime, IsDel, EnterType, 
       DuringSales, TranStatus,StableBeginTime,StableEndTime,ForceCancelStable,IsBeforeStable
-      ,BeginWaterHeight,EndWaterHeight)
+      ,BeginWaterHeight,EndWaterHeight,CanVerison)
     values (#{deliveryno,jdbcType=VARCHAR},#{manualNo, jdbcType=VARCHAR}, #{oilcan,jdbcType=INTEGER}, #{oilno,jdbcType=VARCHAR}, 
       #{shift,jdbcType=VARCHAR}, #{begintime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, 
       #{dischargel,jdbcType=DOUBLE}, #{beginoilheight,jdbcType=DOUBLE}, #{beginoill,jdbcType=DOUBLE}, 
@@ -88,7 +89,7 @@
       #{endoill,jdbcType=DOUBLE}, #{endv20l,jdbcType=DOUBLE}, #{endtemperature,jdbcType=DOUBLE}, 
       #{createtime,jdbcType=TIMESTAMP}, #{isdel,jdbcType=INTEGER}, #{entertype,jdbcType=INTEGER}, 
       #{duringsales,jdbcType=DOUBLE}, #{transtatus,jdbcType=VARCHAR},#{stablebegintime,jdbcType=TIMESTAMP},#{stableendtime,jdbcType=TIMESTAMP},
-     #{forcecancelstable,jdbcType=INTEGER},#{isbeforestable,jdbcType=INTEGER},#{beginwaterheight,jdbcType=DOUBLE},#{endwaterheight,jdbcType=DOUBLE} )
+     #{forcecancelstable,jdbcType=INTEGER},#{isbeforestable,jdbcType=INTEGER},#{beginwaterheight,jdbcType=DOUBLE},#{endwaterheight,jdbcType=DOUBLE},#{canversion,jdbcType=VARCHAR} )
   </insert>
   <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.AcceptanceOdRegisterInfo" >
     insert into oss_acceptance_odRegisterInfo
@@ -174,6 +175,9 @@
       <if test="endwaterheight != null" >
         EndWaterHeight,
       </if>
+      <if test="canverison != null" >
+        CanVersion,,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="deliveryno != null" >
@@ -256,6 +260,9 @@
       </if>
       <if test="endwaterheight != null" >
         endwaterheight,
+      </if>
+      <if test="canversion != null" >
+        canversion,
       </if>
     </trim>
   </insert>
@@ -343,6 +350,9 @@
       <if test="endwaterheight != null" >
         EndWaterHeight,
       </if>
+      <if test="canverison != null" >
+        CanVersion,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="deliveryno != null" >
@@ -426,6 +436,9 @@
       <if test="endwaterheight != null" >
         #{endwaterheight,jdbcType=DOUBLE},
       </if>
+      <if test="canversion != null" >
+        #{canversion,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.kld.gsm.ATG.domain.AcceptanceOdRegisterInfo" >
@@ -506,6 +519,9 @@
       <if test="endwaterheight != null" >
         EndWaterHeight = #{endwaterheight,jdbcType=DOUBLE},
       </if>
+      <if test="canversion != null" >
+        CanVersion = #{canversion,jdbcType=VARCHAR},
+      </if>
     </set>
     where ManualNo = #{manualNo,jdbcType=VARCHAR}
       and OilCan = #{oilcan,jdbcType=INTEGER}
@@ -534,7 +550,8 @@
       StableBeginTime = #{stablebegintime,jdbcType=TIMESTAMP},
       StableEndTime = #{stableendtime,jdbcType=TIMESTAMP},
       BeginWaterHeight = #{beginwaterheight,jdbcType=DOUBLE},
-      EndWaterHeight = #{endwaterheight,jdbcType=DOUBLE}
+      EndWaterHeight = #{endwaterheight,jdbcType=DOUBLE},
+      CanVerison = #{canversion,jdbcType=VARCHAR}
     where ManualNo = #{manualNo,jdbcType=VARCHAR}
       and OilCan = #{oilcan,jdbcType=INTEGER}
   </update>

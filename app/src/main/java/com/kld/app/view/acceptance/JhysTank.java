@@ -915,7 +915,7 @@ public class JhysTank  extends JPanel{
                         }
                         //todo
                         //fyssField.setText(duringSales+"");
-                        System.out.println("卸油中销售" + duringSales);
+                        LOG.info("卸油中销售" + duringSales);
                     } catch (Exception e1) {
                         e1.printStackTrace();
                     }
@@ -926,6 +926,18 @@ public class JhysTank  extends JPanel{
                     bcxyssField.setText(Double.parseDouble(df2.format(bcsy)) + "");
                     acceptanceOdRegisterInfo.setDischargel("".equals(bcxyssField.getText().trim()) ? 0d : Double.parseDouble(bcxyssField.getText().trim()));
                     acceptanceOdRegisterInfo.setTranstatus("0");
+                    //region
+                    if (sysmanageService!=null){
+                        sysmanageService=Context.getInstance().getBean(SysmanageService.class);
+                    }
+                    List<SysManageCubage>sysManageCubages=sysmanageService.selectCubageInused();
+                    for(SysManageCubage item:sysManageCubages){
+                        if (item.getOilcan()==acceptanceOdRegisterInfo.getOilcan()){
+                            acceptanceOdRegisterInfo.setCanversion(item.getVersion());
+                            break;
+                        }
+                    }
+                    //endregion
                     // 更新卸油明细表
                     odRegisterInfoService.updateByPrimaryKeySelective(acceptanceOdRegisterInfo);
                     //region 更新完成卸油状态

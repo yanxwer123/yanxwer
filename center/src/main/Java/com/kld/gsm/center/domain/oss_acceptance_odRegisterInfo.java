@@ -55,6 +55,15 @@ public class oss_acceptance_odRegisterInfo extends oss_acceptance_odRegisterInfo
 
     private Double endwaterheight;
 
+    private String canverison;
+
+    public String getCanverison() {
+        return canverison;
+    }
+
+    public void setCanverison(String canverison) {
+        this.canverison = canverison;
+    }
 
     public Double getBeginwaterheight() {
         return beginwaterheight;
