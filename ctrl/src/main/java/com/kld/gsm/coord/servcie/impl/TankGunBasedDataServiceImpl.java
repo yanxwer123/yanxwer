@@ -79,6 +79,7 @@ public class TankGunBasedDataServiceImpl implements TankGunBasedDataService {
         String sql = "SELECT * FROM oilcaninfor";
         LOGGER.info("oilCanInforDao.selectOilCanInfor1=="+sql);
         List<OilCanInfor> OilCanInforList =  oilCanInforDao.selectOilCanInfor1(sql);
+        LOGGER.info("OilCanInforList.size:" + OilCanInforList.size());
         SysManageCanInfo SysManageCanInfo =new SysManageCanInfo();
         //更新mysql库 油罐信息表(先删除再插入)
         //System.out.println("执行删除");
@@ -106,6 +107,7 @@ public class TankGunBasedDataServiceImpl implements TankGunBasedDataService {
         sql = "SELECT * FROM oilmachineinfor";
         LOGGER.info("oilMachineInforDao.selectOilMachineInfor1=="+sql);
         List<OilMachineInfor> oilMachineInforList = oilMachineInforDao.selectOilMachineInfor1(sql);
+        LOGGER.info("oilMachineInforList.size:" + oilMachineInforList.size());
         SysManageOilMachineInfo sysManageOilMachineInfo = new SysManageOilMachineInfo();
         //更新mysql库 油机信息表(先删除再插入)
         //System.out.println("开始删除油机信息表");
@@ -134,6 +136,7 @@ public class TankGunBasedDataServiceImpl implements TankGunBasedDataService {
         sql = "SELECT * FROM oilguninfor";
         LOGGER.info("oilguninforDao.selectOilGunInfor1=="+sql);
         List<OilGunInfor> oilGunInforList = oilguninforDao.selectOilGunInfor1(sql);
+        LOGGER.info("oilGunInforList.size:" + oilGunInforList.size());
         SysManageOilGunInfo sysManageOilGunInfo =new SysManageOilGunInfo();
         //更新mysql库 库油枪信息表(先删除再插入)
         //System.out.println("开始删除油枪信息表");
@@ -158,6 +161,7 @@ public class TankGunBasedDataServiceImpl implements TankGunBasedDataService {
         sql = "SELECT * FROM oiltype";
         LOGGER.info("oilTypeDao.selectOilType1=="+sql);
         List<OilType> oilTypeList = oilTypeDao.selectOilType1(sql);
+        LOGGER.info("oilTypeList.size:" + oilTypeList.size());
         //更新mysql库 机走油品编码(先删除再插入)
         //System.out.println("开始删除机走油品编码表"+new Date());
         int deleteSysManageOilType=sysManageOilTypeDao.deleteAll();
@@ -192,6 +196,7 @@ public class TankGunBasedDataServiceImpl implements TankGunBasedDataService {
         sql = "SELECT * FROM NodeInfor";
         LOGGER.info("nodeInforDao.selectNodeInfor1=="+sql);
         List<NodeInfor> NodeInforList=nodeInforDao.selectNodeInfor1(sql);
+        LOGGER.info("NodeInforList.size:" + NodeInforList.size());
         SysManageDepartment sysManageDepartment=new SysManageDepartment();
         //更新mysql库  单位信息表(先删除，再插入)
         //System.out.println("开始删除单位信息表");
