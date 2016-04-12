@@ -133,13 +133,7 @@ public class TankGunBasedDataServiceImpl implements TankGunBasedDataService {
 
         //油枪信息表
         //System.out.println("开始油枪信息表");
-<<<<<<< HEAD
-        OilGunInfor oilGunInfor1 = new OilGunInfor();
-        String s =  oilGunInfor1.getSelectAllSql("oilguninfor");
-        sql = s;
-=======
         sql = "SELECT oilgunno,machineno, oilcanno, oilgunname, ctrlunitnum, linkadr, gunstatus, transflag, initpump FROM oilguninfor";
->>>>>>> b5532579347288499c042f2b252b69a42bc4f4d8
         LOGGER.info("oilguninforDao.selectOilGunInfor1=="+sql);
         List<OilGunInfor> oilGunInforList = oilguninforDao.selectOilGunInfor1(sql);
         LOGGER.info("oilGunInforList.size:" + oilGunInforList.size());
@@ -164,12 +158,7 @@ public class TankGunBasedDataServiceImpl implements TankGunBasedDataService {
 
         //机走油品编码表
         //System.out.println("开始机走油品编码表");
-<<<<<<< HEAD
-        OilType oilType1 = new OilType();
-        sql = oilType1.getSelectAllSql("oiltype");
-=======
         sql = "SELECT oilno,oilname, machineoilno, oilattribute, control, validflag,validtime,modifytime,modifynodeno,modifyope,levelcode,lastoilflag, oillevel,validflag as validfalg, inuseflag FROM oiltype";
->>>>>>> b5532579347288499c042f2b252b69a42bc4f4d8
         LOGGER.info("oilTypeDao.selectOilType1=="+sql);
         List<OilType> oilTypeList = oilTypeDao.selectOilType1(sql);
         LOGGER.info("oilTypeList.size:" + oilTypeList.size());
