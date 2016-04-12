@@ -16,8 +16,14 @@
     <update id="updateOilcanindetail" parameterType="java.lang.String">
         UPDATE oilcanindetail set billstatus=1 where goodsbillno=#{DeliveryNo}
     </update>
+    <update id="updateOilcanindetail1" statementType="STATEMENT" parameterType="java.lang.String">
+        ${sql}
+    </update>
     <update id="updateManualno" parameterType="hashmap">
         UPDATE oilcanindetail set goodsbillno=#{manualno} where goodsbillno=#{DeliveryNo}
+    </update>
+    <update id="updateManualno1" parameterType="String" statementType="STATEMENT">
+        ${sql}
     </update>
     <select id="selectByOilvoch"  resultType="com.kld.gsm.coord.domain.OilCanIndeTail" parameterType="java.lang.String">
         select * from oilcanindetail where teamvouchno=#{oilvoch}

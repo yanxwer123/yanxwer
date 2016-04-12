@@ -22,6 +22,8 @@ public interface OilcanindetailDao {
     int insertOilcanindetail(OilCanIndeTail oilCanIndeTail);
     int insertOilcanindetail1(@Param("sql")String sql);
     int updateOilcanindetail(String DeliveryNo);
+    int updateOilcanindetail1(@Param("sql")String sql);
     List<OilCanIndeTail> selectByOilvoch(String oilvoch);
     int  updateManualno(HashMap map);
+    int  updateManualno1(@Param("sql")String sql);
 }

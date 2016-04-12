@@ -112,7 +112,9 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
     public int update(String DeliveryNo, int Oilcan,String id) {
         try {
             //更新油罐进油明细表(OILCANINDETAIL)
-            int update_Oilanindetail = oilcanindetailDao.updateOilcanindetail(DeliveryNo);
+            String sql = "UPDATE oilcanindetail set billstatus=1 where goodsbillno='"+DeliveryNo+"' ";
+            logger.info("oilcanindetailDao.updateOilcanindetail1的sql:"+sql);
+            int update_Oilanindetail = oilcanindetailDao.updateOilcanindetail1(sql);
             System.err.println("更新油罐进油明细表成功");
         }catch (Exception e){
             System.err.println("更新油罐进油明细表失败………………");
@@ -136,7 +138,9 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
             map.put("DeliveryNo", DeliveryNo);
             map.put("manualno", manualno);
             //更新油罐进油明细表(OILCANINDETAIL)
-            int update_Oilanindetail = oilcanindetailDao.updateManualno(map);
+            String sql = " UPDATE oilcanindetail set goodsbillno='"+manualno+"' where goodsbillno='"+DeliveryNo+"' ";
+            logger.info("oilcanindetailDao.updateManualno的sql="+sql);
+            int update_Oilanindetail = oilcanindetailDao.updateManualno1(sql);
         }catch (Exception e){
             System.err.println("更新油罐进油明细表出库单号失败………………");
 
