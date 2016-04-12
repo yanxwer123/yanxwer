@@ -76,7 +76,7 @@ public class TankGunBasedDataServiceImpl implements TankGunBasedDataService {
     public void updateTankGunBasedData(String id) throws Exception{
         //油罐信息表
         //System.out.println("进入油罐信息表");
-        String sql = "SELECT * FROM oilcaninfor";
+        String sql = "SELECT oilcanno,oilcantype, outfactoryno, factoryname, outfacorytime,installdate,useyears,oilno,cubage,oilcanstatus,transflag,lederliter,canfactliter FROM oilcaninfor";
         LOGGER.info("oilCanInforDao.selectOilCanInfor1=="+sql);
         List<OilCanInfor> OilCanInforList =  oilCanInforDao.selectOilCanInfor1(sql);
         LOGGER.info("OilCanInforList.size:" + OilCanInforList.size());
@@ -104,7 +104,7 @@ public class TankGunBasedDataServiceImpl implements TankGunBasedDataService {
             }
         //油机信息表
         //System.out.println("进入油机信息表");
-        sql = "SELECT * FROM oilmachineinfor";
+        sql = "SELECT oilmachineno,  oilmachinemodel, outfactoryno,  factoryname,  outfacorytime, installdate,  useyears,  oilgunnum, oilunitnum, oilmachinestatus,transflag,machinetype,\n FROM oilmachineinfor";
         LOGGER.info("oilMachineInforDao.selectOilMachineInfor1=="+sql);
         List<OilMachineInfor> oilMachineInforList = oilMachineInforDao.selectOilMachineInfor1(sql);
         LOGGER.info("oilMachineInforList.size:" + oilMachineInforList.size());

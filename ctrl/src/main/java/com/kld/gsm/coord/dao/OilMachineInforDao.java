@@ -2,6 +2,7 @@ package com.kld.gsm.coord.dao;
 
 import com.kld.gsm.coord.domain.OilMachineInfor;
 import com.kld.gsm.coord.mybatis.SybaseRepository;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,6 +15,6 @@ import java.util.List;
 @SybaseRepository
 public interface OilMachineInforDao {
     List<OilMachineInfor> selectOilMachineInfor();
-    List<OilMachineInfor> selectOilMachineInfor1(String sql);
+    List<OilMachineInfor> selectOilMachineInfor1(@Param("sql")String sql);
 
 }
