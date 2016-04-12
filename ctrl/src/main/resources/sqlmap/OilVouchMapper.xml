@@ -23,4 +23,8 @@
         FROM oilvouch
         WHERE teamvouchno = #{oilvoch,jdbcType=VARCHAR}
     </select>
+    <select id="getOilVouch1" parameterType="String" resultType="com.kld.gsm.ATG.domain.OilVouch"
+        statementType="STATEMENT">
+        ${sql}
+    </select>
 </mapper>

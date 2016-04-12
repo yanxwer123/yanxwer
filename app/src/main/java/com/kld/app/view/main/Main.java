@@ -16,7 +16,6 @@ import com.kld.gsm.util.JsonMapper;
 import com.kld.gsm.util.SybaseUtils;
 import io.netty.channel.Channel;
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
-import org.junit.Test;
 import org.slf4j.Logger;
 
 import javax.swing.*;
@@ -25,8 +24,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;

@@ -2,6 +2,7 @@ package com.kld.gsm.coord.dao;
 
 import com.kld.gsm.coord.domain.Oilhotobill;
 import com.kld.gsm.coord.mybatis.SybaseRepository;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,4 +14,5 @@ import java.util.List;
 @SybaseRepository
 public interface OilhotobillDao {
    List<Oilhotobill> getOilhotobill(String oilvoch);
+   List<Oilhotobill> getOilhotobill1(@Param("sql")String sql);
 }

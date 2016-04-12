@@ -2,6 +2,7 @@ package com.kld.gsm.coord.dao;
 
 import com.kld.gsm.coord.domain.OilDayStat;
 import com.kld.gsm.coord.mybatis.SybaseRepository;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
@@ -17,4 +18,5 @@ import java.util.List;
 @SybaseRepository
 public interface OilDayStatDao  {
     List<OilDayStat> findByDate(Date date);
+    List<OilDayStat> findByDate1(@Param("sql")String sql);
 }

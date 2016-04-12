@@ -15,6 +15,7 @@ import com.kld.gsm.coord.server.handler.ConnectionSession;
 import com.kld.gsm.coord.server.handler.ProtocolProcessor;
 import com.kld.gsm.util.JsonMapper;
 import com.kld.gsm.util.SybaseUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -33,6 +34,7 @@ import java.util.*;
 @Service
 @Transactional(propagation = Propagation.SUPPORTS)
 public class TankGunBasedDataServiceImpl implements TankGunBasedDataService {
+    Logger LOGGER = Logger.getLogger(this.getClass());
     @Autowired
     private OilCanInforDao oilCanInforDao;
     @Autowired
@@ -74,7 +76,9 @@ public class TankGunBasedDataServiceImpl implements TankGunBasedDataService {
     public void updateTankGunBasedData(String id) throws Exception{
         //油罐信息表
         //System.out.println("进入油罐信息表");
-        List<OilCanInfor> OilCanInforList =  oilCanInforDao.selectOilCanInfor();
+        String sql = "SELECT * FROM oilcaninfor";
+        LOGGER.info("oilCanInforDao.selectOilCanInfor1=="+sql);
+        List<OilCanInfor> OilCanInforList =  oilCanInforDao.selectOilCanInfor1(sql);
         SysManageCanInfo SysManageCanInfo =new SysManageCanInfo();
         //更新mysql库 油罐信息表(先删除再插入)
         //System.out.println("执行删除");
@@ -99,7 +103,9 @@ public class TankGunBasedDataServiceImpl implements TankGunBasedDataService {
             }
         //油机信息表
         //System.out.println("进入油机信息表");
-        List<OilMachineInfor> oilMachineInforList = oilMachineInforDao.selectOilMachineInfor();
+        sql = "SELECT * FROM oilmachineinfor";
+        LOGGER.info("oilMachineInforDao.selectOilMachineInfor1=="+sql);
+        List<OilMachineInfor> oilMachineInforList = oilMachineInforDao.selectOilMachineInfor1(sql);
         SysManageOilMachineInfo sysManageOilMachineInfo = new SysManageOilMachineInfo();
         //更新mysql库 油机信息表(先删除再插入)
         //System.out.println("开始删除油机信息表");
@@ -125,7 +131,9 @@ public class TankGunBasedDataServiceImpl implements TankGunBasedDataService {
 
         //油枪信息表
         //System.out.println("开始油枪信息表");
-        List<OilGunInfor> oilGunInforList = oilguninforDao.selectOilGunInfor();
+        sql = "SELECT * FROM oilguninfor";
+        LOGGER.info("oilguninforDao.selectOilGunInfor1=="+sql);
+        List<OilGunInfor> oilGunInforList = oilguninforDao.selectOilGunInfor1(sql);
         SysManageOilGunInfo sysManageOilGunInfo =new SysManageOilGunInfo();
         //更新mysql库 库油枪信息表(先删除再插入)
         //System.out.println("开始删除油枪信息表");
@@ -147,7 +155,9 @@ public class TankGunBasedDataServiceImpl implements TankGunBasedDataService {
 
         //机走油品编码表
         //System.out.println("开始机走油品编码表");
-        List<OilType> oilTypeList =oilTypeDao.selectOilType();
+        sql = "SELECT * FROM oiltype";
+        LOGGER.info("oilTypeDao.selectOilType1=="+sql);
+        List<OilType> oilTypeList = oilTypeDao.selectOilType1(sql);
         //更新mysql库 机走油品编码(先删除再插入)
         //System.out.println("开始删除机走油品编码表"+new Date());
         int deleteSysManageOilType=sysManageOilTypeDao.deleteAll();
@@ -179,7 +189,9 @@ public class TankGunBasedDataServiceImpl implements TankGunBasedDataService {
        //单位信息表
         //System.out.println("开始单位信息表");
         String nodeno=null;
-        List<NodeInfor> NodeInforList=nodeInforDao.selectNodeInfor();
+        sql = "SELECT * FROM NodeInfor";
+        LOGGER.info("nodeInforDao.selectNodeInfor1=="+sql);
+        List<NodeInfor> NodeInforList=nodeInforDao.selectNodeInfor1(sql);
         SysManageDepartment sysManageDepartment=new SysManageDepartment();
         //更新mysql库  单位信息表(先删除，再插入)
         //System.out.println("开始删除单位信息表");

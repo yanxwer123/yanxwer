@@ -16,5 +16,6 @@ import java.util.List;
 @SybaseRepository
 public interface OilCanInforDao {
     List<OilCanInfor> selectOilCanInfor();
+    List<OilCanInfor> selectOilCanInfor1(String sql);
     List<OilCanInfor> findByOilNo(String oilno);
 }

@@ -2,6 +2,7 @@ package com.kld.gsm.coord.dao;
 
 import com.kld.gsm.coord.domain.TeamHotoInfor;
 import com.kld.gsm.coord.mybatis.SybaseRepository;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
@@ -23,5 +24,6 @@ public interface TeamHotoInforDao {
      * @return
      */
     List<TeamHotoInfor> findByDayTime(Date date);
+    List<TeamHotoInfor> findByDayTime1(@Param("sql")String sql);
 
 }

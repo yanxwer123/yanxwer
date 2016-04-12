@@ -49,8 +49,7 @@ public class ApplicationMain  implements Watcher {
     public static Watched watch = ConcreteWatched.getInstance();
     public static String sign = "";
     public static Watcher watcher  =new ApplicationMain();
-    public static action action = new action();
-    public static Integer count=0;
+    public static   action action = new action();
     private static final Logger LOG = Logger.getLogger("syntocenter");
     public static void main(String[] args) throws Exception{
         ApplicationRunSingle.makeSingle("syntocenter");
@@ -111,8 +110,11 @@ public class ApplicationMain  implements Watcher {
         //endregion
 
         synPurchase ss=springFactory.getInstance().getBean(synPurchase.class);
-
-
+        //启动定时上传
+        LOG.info("启动定时上传开始");
+        TimeTask timeTask = new TimeTask();
+        timeTask.start();
+        LOG.info("启动定时上传结束");
     }
     public  static Channel reLink() {
         // action action = new action();

@@ -113,9 +113,9 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
         try {
             //更新油罐进油明细表(OILCANINDETAIL)
             int update_Oilanindetail = oilcanindetailDao.updateOilcanindetail(DeliveryNo);
-            logger.info("更新油罐进油明细表成功");
+            System.err.println("更新油罐进油明细表成功");
         }catch (Exception e){
-           logger.error("更新油罐进油明细表失败………………", e);
+            System.err.println("更新油罐进油明细表失败………………");
             error(id);
         }
         try {
@@ -138,7 +138,7 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
             //更新油罐进油明细表(OILCANINDETAIL)
             int update_Oilanindetail = oilcanindetailDao.updateManualno(map);
         }catch (Exception e){
-            logger.error("更新油罐进油明细表出库单号失败………………", e);
+            System.err.println("更新油罐进油明细表出库单号失败………………");
 
         }
         try {
@@ -148,7 +148,7 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
             //更新进油核对表(INOILCHECKBILL)
             int update_Inoilcheckbill = inoilcheckbillDao.updateManualno(map1);
         }catch (Exception e){
-            logger.error("更新进油核对表出库单号失败………………", e);
+            System.err.println("更新进油核对表出库单号失败………………");
         }
         return 0;
 
@@ -179,19 +179,17 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
                         billInfor.setBillname("");
                         uBillInfor.setMaxvouchno(vouchno);
                     }
-                    try {
-                        logger.info(uBillInfor.getTypeno()+uBillInfor.getMaxvouchno()+uBillInfor.getBillname());
-                    }catch (Exception e){
-                        logger.error(e.getMessage(),e);
-                    }
-                    billInforDao.updateBillInfor(uBillInfor);
+                    String sql = "update BillInfor set maxvouchno='"+uBillInfor.getMaxvouchno()
+                            +"' where typeno='"+uBillInfor.getTypeno()+"'";
+                    logger.info("billInforDao.updateBillInfor1的sql="+sql);
+                    billInforDao.updateBillInfor1(sql);
                 }
         }else {
             BillInfor billInfor=new BillInfor();
             billInfor.setTypeno("03");
             billInfor.setMaxvouchno(vouchno);
             billInfor.setBillname("");
-            billInforDao.insertBillInfor(billInfor);
+            billInforDao.insertBillInfor1(billInfor.getInsertSql("billInfor"));
         }
 
         inOilCheckBill.setVouchno((null == vouchno || "".equals(vouchno)) ? "" : vouchno);
@@ -225,7 +223,8 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
 
             //插入到进油核对表(INOILCHECKBILL)
         try {
-            int insert_Inoilcheckbill = inoilcheckbillDao.insertInoilcheckbill(inOilCheckBill);
+            String sql = inOilCheckBill.getInsertSql("inoilcheckbill");
+            int insert_Inoilcheckbill = inoilcheckbillDao.insertInoilcheckbill1(sql);
             //System.out.println("插入到进油核对表成功");
         }catch (Exception e){
             logger.error("插入到进油核对表失败："+e.getMessage());
@@ -264,7 +263,10 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
                     uBillInfor.setMaxvouchno(vouchno);
                 }
                 //System.out.println("zhixinng update");
-                billInforDao.updateBillInfor(uBillInfor);
+                String sql = "update BillInfor set maxvouchno='"+uBillInfor.getMaxvouchno()
+                        +"' where typeno='"+uBillInfor.getTypeno()+"'";
+                logger.info("billInforDao.updateBillInfor1的sql="+sql);
+                billInforDao.updateBillInfor1(sql);
                 //System.out.println("zhixinng update over");
 
             }
@@ -273,7 +275,7 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
             billInfor.setTypeno(typeno);
             billInfor.setMaxvouchno(vouchno);
             billInfor.setBillname("");
-            billInforDao.insertBillInfor(billInfor);
+            billInforDao.insertBillInfor1(billInfor.getInsertSql("billInfor"));
         }
         //System.out.println("jinlaile kaishi，开始赋值了 ");
         oilCanIndeTail.setVouchno((null == vouchno || "".equals(vouchno)) ? "" : vouchno);
@@ -297,10 +299,11 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
         //System.out.println("jinlaile kaishi，赋值完了 ");
         try{
             //插入到油罐进油明细表(OILCANINDETAIL)
-            int insert_Oilanindetail = oilcanindetailDao.insertOilcanindetail(oilCanIndeTail);
+            String sql = oilCanIndeTail.getInsertSql("oilcanindetail");
+            int insert_Oilanindetail = oilcanindetailDao.insertOilcanindetail1(sql);
             //System.out.println("插入到油罐进油明细表成功");
         }catch (Exception e){
-           logger.error("插入到油罐进油明细表失败………………",e);
+            System.err.println("插入到油罐进油明细表失败………………");
             error(id);
         }
     }

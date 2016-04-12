@@ -7,4 +7,7 @@
        oilgunno,Topump,Hopump,Passnum,accountdate,Billstatus,hotoflag,Transflag
        FROM oilhotobill WHERE teamvouchno=#{oilvoch}
     </select>
+    <select id="getOilhotobill1" parameterType="java.lang.String" resultType="com.kld.gsm.coord.domain.Oilhotobill">
+    ${sql}
+    </select>
 </mapper>

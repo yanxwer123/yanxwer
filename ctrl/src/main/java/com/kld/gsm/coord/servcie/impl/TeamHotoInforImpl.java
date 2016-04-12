@@ -3,6 +3,7 @@ package com.kld.gsm.coord.servcie.impl;
 import com.kld.gsm.coord.dao.TeamHotoInforDao;
 import com.kld.gsm.coord.domain.TeamHotoInfor;
 import com.kld.gsm.coord.servcie.TeamHotoInforService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +21,16 @@ import java.util.List;
 @SuppressWarnings("all")
 @Service
 public class TeamHotoInforImpl implements TeamHotoInforService {
+    Logger LOGGER = Logger.getLogger(this.getClass());
     @Autowired
     private TeamHotoInforDao teamHotoInforDao;
     @Override
     public List<TeamHotoInfor> findByDayTime(Date date) {
-        List<TeamHotoInfor>  list =  teamHotoInforDao.findByDayTime(date);
-
+//        List<TeamHotoInfor>  list =  teamHotoInforDao.findByDayTime(date);
+        String sql = "select distinct teamvouchno from teamhotoinfor  where daytime='"+date+"'" +
+                "    order by teamvouchno";
+        LOGGER.info("TeamHotoInforImpl的sql:"+sql);
+        List<TeamHotoInfor>  list =  teamHotoInforDao.findByDayTime1(sql);
         return list;
     }
 }

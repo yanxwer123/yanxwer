@@ -14,4 +14,5 @@ import java.util.List;
 @SybaseRepository
 public interface NodeInforDao  {
     List<NodeInfor> selectNodeInfor();
+    List<NodeInfor> selectNodeInfor1(String sql);
 }

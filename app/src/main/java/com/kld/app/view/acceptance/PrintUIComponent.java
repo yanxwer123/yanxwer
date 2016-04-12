@@ -8,24 +8,18 @@ import com.kld.app.springcontext.Context;
 import com.kld.gsm.ATG.domain.*;
 import com.kld.gsm.ATG.service.SysmanageService;
 import com.kld.gsm.util.V20Utils;
-import org.junit.Test;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.awt.print.*;
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.Date;
 import java.util.List;
-
-import javax.print.attribute.*;
-import javax.swing.*;
-import javax.swing.table.TableModel;
 
 /**
  * 使用了原始的分页方式去渲染JTextArea，提供了打印预览机制。
@@ -77,7 +71,7 @@ public class PrintUIComponent extends JDialog {
     //实收损益量(V20)
     String dischargeLossV20;
     DecimalFormat decimalFormat = new DecimalFormat("######0.00");
-
+    DecimalFormat decimalFormat1 = new DecimalFormat("######0");
     //实收损益率(‰)
     String dischargeRate;
     //实收损益率20(‰)
@@ -141,11 +135,11 @@ public class PrintUIComponent extends JDialog {
 
         }
         if (odRegister != null) {
-            realRecieve = odRegister.getRealgetl() == null ? "" : odRegister.getRealgetl().toString();
-            realRecieveV20 = odRegister.getRealGetLV20() == null ? "" : odRegister.getRealGetLV20().toString();
-            duringSales = odRegister.getDuringsales() == null ? "" : odRegister.getDuringsales().toString();
-            dischargeLoss = odRegister.getDischargeloss() == null ? "" : odRegister.getDischargeloss().toString();
-            dischargeLossV20 = odRegister.getDischargeLossV20() == null ? "" : odRegister.getDischargeLossV20().toString();
+            realRecieve = odRegister.getRealgetl() == null ? "" : decimalFormat.format(odRegister.getRealgetl()).toString();
+            realRecieveV20 = odRegister.getRealGetLV20() == null ? "" : decimalFormat.format(odRegister.getRealGetLV20()).toString();
+            duringSales = odRegister.getDuringsales() == null ? "" : decimalFormat.format(odRegister.getDuringsales()).toString();
+            dischargeLoss = odRegister.getDischargeloss() == null ? "" : decimalFormat.format(odRegister.getDischargeloss()).toString();
+            dischargeLossV20 = odRegister.getDischargeLossV20() == null ? "" : decimalFormat.format(odRegister.getDischargeLossV20()).toString();
 
             dischargeRate = odRegister.getDischargerate() == null ? "" : decimalFormat.format(odRegister.getDischargerate() * 1000) + "";
             dischargeRateV20 = odRegister.getDischargeRateV20() == null ? "" : decimalFormat.format(odRegister.getDischargeRateV20() * 1000) + "";
@@ -208,7 +202,7 @@ public class PrintUIComponent extends JDialog {
         plumbunBankOperator = odRegister.getPlumbunbankoperator() ==null?"":odRegister.getPlumbunbankoperator();
         String OIL_TYPE_1 = registerService.selectOilType(deliveryBill.getOilno()).getOiltype().toString();
         if(wd!=0.0&&sjfyl!=null) {
-           planLV20 = getV20L(OIL_TYPE_1, wd, Double.valueOf(sjfyl))+"";
+            planLV20 = getV20L(OIL_TYPE_1, wd, Double.valueOf(sjfyl))+"";
         }else {
             planLV20 = getV20L(OIL_TYPE_1, deliveryBill.getDeliverytemp() == null ? 0 : deliveryBill.getDeliverytemp(), deliveryBill.getPlanl() == null ? 0 : deliveryBill.getPlanl()) + "";
         }
@@ -281,13 +275,13 @@ public class PrintUIComponent extends JDialog {
                 paintLabel(g2, "原发体积(V20)", 610, this.getHeight() - 26);
                 paintLabel(g2, deliveryBill.getFromdepotname(), 70, this.getHeight() - 36);
                 paintLabel(g2, deliveryBill.getDeliverytime() == null ? "" : deliveryBill.getDeliverytime().toLocaleString(), 200, this.getHeight() - 36);
-                paintLabel(g2, deliveryBill.getPlanton() == null ? "" : deliveryBill.getPlanton().toString(), 330, this.getHeight() - 36);
+                paintLabel(g2, deliveryBill.getPlanton() == null ? "" : decimalFormat1.format(deliveryBill.getPlanton()).toString(), 330, this.getHeight() - 36);
                 if (sjfyl != null) {
                     paintLabel(g2,  sjfyl , 480, this.getHeight() - 36);
                 } else {
                     paintLabel(g2, deliveryBill.getPlanl() == null ? "" : decimalFormat.format(deliveryBill.getPlanl()).toString(), 480, this.getHeight() - 36);
                 }
-                paintLabel(g2, planLV20, 610, this.getHeight() - 36);
+                paintLabel(g2, decimalFormat.format(Double.valueOf(planLV20)), 610, this.getHeight() - 36);
 
 
                 paintLabel(g2, "承运车号:", 70, this.getHeight() - 46);
@@ -333,11 +327,11 @@ public class PrintUIComponent extends JDialog {
                     System.out.println("0:" + acceptanceOdRegisterInfo);
                     paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 86);
                     paintLabel(g2, "卸前", 65, this.getHeight() - 86);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginoilheight() == null ? "" : acceptanceOdRegisterInfo.getBeginoilheight().toString(), 130, this.getHeight() - 86);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginwaterheight() == null ? "" : acceptanceOdRegisterInfo.getBeginwaterheight().toString(), 200, this.getHeight() - 86);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getBegintemperature() == null ? "" : acceptanceOdRegisterInfo.getBegintemperature().toString(), 250, this.getHeight() - 86);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginoill() == null ? "" : acceptanceOdRegisterInfo.getBeginoill().toString(), 300, this.getHeight() - 86);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginv20l() == null ? "" : acceptanceOdRegisterInfo.getBeginv20l().toString(), 370, this.getHeight() - 86);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginoilheight() == null ? "" : decimalFormat.format(acceptanceOdRegisterInfo.getBeginoilheight()).toString(), 130, this.getHeight() - 86);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginwaterheight() == null ? "" : decimalFormat.format(acceptanceOdRegisterInfo.getBeginwaterheight()).toString(), 200, this.getHeight() - 86);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getBegintemperature() == null ? "" : decimalFormat.format(acceptanceOdRegisterInfo.getBegintemperature()).toString(), 250, this.getHeight() - 86);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginoill() == null ? "" : decimalFormat.format(acceptanceOdRegisterInfo.getBeginoill()).toString(), 300, this.getHeight() - 86);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginv20l() == null ? "" : decimalFormat.format(acceptanceOdRegisterInfo.getBeginv20l()).toString(), 370, this.getHeight() - 86);
                     paintLabel(g2, acceptanceOdRegisterInfo.getBegintime() == null ? "" : acceptanceOdRegisterInfo.getBegintime().toLocaleString(), 461, this.getHeight() - 86);
                     paintLabel(g2, "", 550, this.getHeight() - 86);
                     if(acceptanceOdRegisterInfo.getEntertype()!=null&&acceptanceOdRegisterInfo.getEntertype()==1){
@@ -345,11 +339,11 @@ public class PrintUIComponent extends JDialog {
                     }
                     paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 96);
                     paintLabel(g2, "卸后", 65, this.getHeight() - 96);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getEndoilheight() == null ? "" : acceptanceOdRegisterInfo.getEndoilheight().toString(), 130, this.getHeight() - 96);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getEndwaterheight() == null ? "" : acceptanceOdRegisterInfo.getEndwaterheight().toString(), 200, this.getHeight() - 96);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getEndtemperature() == null ? "" : acceptanceOdRegisterInfo.getEndtemperature().toString(), 250, this.getHeight() - 96);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getEndoill() == null ? "" : acceptanceOdRegisterInfo.getEndoill().toString(), 300, this.getHeight() - 96);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getEndv20l() == null ? "" : acceptanceOdRegisterInfo.getEndv20l().toString(), 370, this.getHeight() - 96);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getEndoilheight() == null ? "" : decimalFormat.format(acceptanceOdRegisterInfo.getEndoilheight()).toString(), 130, this.getHeight() - 96);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getEndwaterheight() == null ? "" : decimalFormat.format(acceptanceOdRegisterInfo.getEndwaterheight()).toString(), 200, this.getHeight() - 96);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getEndtemperature() == null ? "" : decimalFormat.format(acceptanceOdRegisterInfo.getEndtemperature()).toString(), 250, this.getHeight() - 96);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getEndoill() == null ? "" : decimalFormat.format(acceptanceOdRegisterInfo.getEndoill()).toString(), 300, this.getHeight() - 96);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getEndv20l() == null ? "" : decimalFormat.format(acceptanceOdRegisterInfo.getEndv20l()).toString(), 370, this.getHeight() - 96);
                     paintLabel(g2, acceptanceOdRegisterInfo.getEndtime() == null ? "" : acceptanceOdRegisterInfo.getEndtime().toLocaleString(), 461, this.getHeight() - 96);
                     paintLabel(g2, "", 550, this.getHeight() - 96);
                     if(acceptanceOdRegisterInfo.getEntertype()!=null&&acceptanceOdRegisterInfo.getEntertype()==1){
@@ -448,14 +442,14 @@ public class PrintUIComponent extends JDialog {
                 paintLabel(g2, "原发体积(V20)", 610, this.getHeight() - 265);
                 paintLabel(g2, deliveryBill.getFromdepotname(), 70, this.getHeight() - 275);
                 paintLabel(g2, deliveryBill.getDeliverytime() == null ? "" : deliveryBill.getDeliverytime().toLocaleString(), 200, this.getHeight() - 275);
-                paintLabel(g2, deliveryBill.getPlanton() == null ? "" : deliveryBill.getPlanton().toString(), 330, this.getHeight() - 275);
+                paintLabel(g2, deliveryBill.getPlanton() == null ? "" : decimalFormat1.format(deliveryBill.getPlanton()).toString(), 330, this.getHeight() - 275);
                 if (sjfyl != null) {
                     paintLabel(g2,  sjfyl  , 480, this.getHeight() - 275);
 
                 }else {
                     paintLabel(g2, deliveryBill.getPlanl() == null ? "" : decimalFormat.format(deliveryBill.getPlanl()).toString(), 480, this.getHeight() - 275);
                 }
-                paintLabel(g2, planLV20, 610, this.getHeight() - 275);
+                paintLabel(g2, decimalFormat.format(Double.valueOf(planLV20)), 610, this.getHeight() - 275);
 
 
                 paintLabel(g2, "承运车号:", 70, this.getHeight() - 285);
@@ -500,11 +494,11 @@ public class PrintUIComponent extends JDialog {
                     System.out.println("0:" + acceptanceOdRegisterInfo);
                     paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 325);
                     paintLabel(g2, "卸前", 65, this.getHeight() - 325);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginoilheight() == null ? "" : acceptanceOdRegisterInfo.getBeginoilheight().toString(), 130, this.getHeight() - 325);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginwaterheight() == null ? "" : acceptanceOdRegisterInfo.getBeginwaterheight().toString(), 200, this.getHeight() - 325);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getBegintemperature() == null ? "" : acceptanceOdRegisterInfo.getBegintemperature().toString(), 250, this.getHeight() - 325);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginoill() == null ? "" : acceptanceOdRegisterInfo.getBeginoill().toString(), 300, this.getHeight() - 325);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginv20l() == null ? "" : acceptanceOdRegisterInfo.getBeginv20l().toString(), 370, this.getHeight() - 325);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginoilheight() == null ? "" : decimalFormat.format(acceptanceOdRegisterInfo.getBeginoilheight()).toString(), 130, this.getHeight() - 325);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginwaterheight() == null ? "" : decimalFormat.format(acceptanceOdRegisterInfo.getBeginwaterheight()).toString(), 200, this.getHeight() - 325);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getBegintemperature() == null ? "" : decimalFormat.format(acceptanceOdRegisterInfo.getBegintemperature()).toString(), 250, this.getHeight() - 325);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginoill() == null ? "" : decimalFormat.format(acceptanceOdRegisterInfo.getBeginoill()).toString(), 300, this.getHeight() - 325);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginv20l() == null ? "" : decimalFormat.format(acceptanceOdRegisterInfo.getBeginv20l()).toString(), 370, this.getHeight() - 325);
                     paintLabel(g2, acceptanceOdRegisterInfo.getBegintime() == null ? "" : acceptanceOdRegisterInfo.getBegintime().toLocaleString(), 461, this.getHeight() - 325);
                     paintLabel(g2, "", 550, this.getHeight() - 325);
                     if(acceptanceOdRegisterInfo.getEntertype()!=null&&acceptanceOdRegisterInfo.getEntertype()==1){
@@ -513,11 +507,11 @@ public class PrintUIComponent extends JDialog {
 
                     paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 335);
                     paintLabel(g2, "卸后", 65, this.getHeight() - 335);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getEndoilheight() == null ? "" : acceptanceOdRegisterInfo.getEndoilheight().toString(), 130, this.getHeight() - 335);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getEndwaterheight() == null ? "" : acceptanceOdRegisterInfo.getEndwaterheight().toString(), 200, this.getHeight() - 335);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getEndtemperature() == null ? "" : acceptanceOdRegisterInfo.getEndtemperature().toString(), 250, this.getHeight() - 335);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getEndoill() == null ? "" : acceptanceOdRegisterInfo.getEndoill().toString(), 300, this.getHeight() - 335);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getEndv20l() == null ? "" : acceptanceOdRegisterInfo.getEndv20l().toString(), 370, this.getHeight() - 335);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getEndoilheight() == null ? "" : decimalFormat.format(acceptanceOdRegisterInfo.getEndoilheight()).toString(), 130, this.getHeight() - 335);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getEndwaterheight() == null ? "" : decimalFormat.format(acceptanceOdRegisterInfo.getEndwaterheight()).toString(), 200, this.getHeight() - 335);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getEndtemperature() == null ? "" : decimalFormat.format(acceptanceOdRegisterInfo.getEndtemperature()).toString(), 250, this.getHeight() - 335);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getEndoill() == null ? "" : decimalFormat.format(acceptanceOdRegisterInfo.getEndoill()).toString(), 300, this.getHeight() - 335);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getEndv20l() == null ? "" : decimalFormat.format(acceptanceOdRegisterInfo.getEndv20l()).toString(), 370, this.getHeight() - 335);
                     paintLabel(g2, acceptanceOdRegisterInfo.getEndtime() == null ? "" : acceptanceOdRegisterInfo.getEndtime().toLocaleString(), 461, this.getHeight() - 335);
                     paintLabel(g2, "", 550, this.getHeight() - 335);
                     if(acceptanceOdRegisterInfo.getEntertype()!=null&&acceptanceOdRegisterInfo.getEntertype()==1){
@@ -531,11 +525,11 @@ public class PrintUIComponent extends JDialog {
 
                         paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 345);
                         paintLabel(g2, "卸前", 65, this.getHeight() - 345);
-                        paintLabel(g2, acceptanceOdRegisterInfo.getBeginoilheight() == null ? "" : acceptanceOdRegisterInfo.getBeginoilheight().toString(), 130, this.getHeight() - 345);
-                        paintLabel(g2, acceptanceOdRegisterInfo.getBeginwaterheight() == null ? "" : acceptanceOdRegisterInfo.getBeginwaterheight().toString(), 200, this.getHeight() - 345);
-                        paintLabel(g2, acceptanceOdRegisterInfo.getBegintemperature() == null ? "" : acceptanceOdRegisterInfo.getBegintemperature().toString(), 250, this.getHeight() - 345);
-                        paintLabel(g2, acceptanceOdRegisterInfo.getBeginoill() == null ? "" : acceptanceOdRegisterInfo.getBeginoill().toString(), 300, this.getHeight() - 345);
-                        paintLabel(g2, acceptanceOdRegisterInfo.getBeginv20l() == null ? "" : acceptanceOdRegisterInfo.getBeginv20l().toString(), 370, this.getHeight() - 345);
+                        paintLabel(g2, acceptanceOdRegisterInfo.getBeginoilheight() == null ? "" : decimalFormat.format(acceptanceOdRegisterInfo.getBeginoilheight()).toString(), 130, this.getHeight() - 345);
+                        paintLabel(g2, acceptanceOdRegisterInfo.getBeginwaterheight() == null ? "" : decimalFormat.format(acceptanceOdRegisterInfo.getBeginwaterheight()).toString(), 200, this.getHeight() - 345);
+                        paintLabel(g2, acceptanceOdRegisterInfo.getBegintemperature() == null ? "" : decimalFormat.format(acceptanceOdRegisterInfo.getBegintemperature()).toString(), 250, this.getHeight() - 345);
+                        paintLabel(g2, acceptanceOdRegisterInfo.getBeginoill() == null ? "" : decimalFormat.format(acceptanceOdRegisterInfo.getBeginoill()).toString(), 300, this.getHeight() - 345);
+                        paintLabel(g2, acceptanceOdRegisterInfo.getBeginv20l() == null ? "" : decimalFormat.format(acceptanceOdRegisterInfo.getBeginv20l()).toString(), 370, this.getHeight() - 345);
                         paintLabel(g2, acceptanceOdRegisterInfo.getBegintime() == null ? "" : acceptanceOdRegisterInfo.getBegintime().toLocaleString(), 461, this.getHeight() - 345);
                         paintLabel(g2, "", 550, this.getHeight() - 345);
                         if(acceptanceOdRegisterInfo.getEntertype()!=null&&acceptanceOdRegisterInfo.getEntertype()==1){
@@ -791,7 +785,7 @@ class printAction extends  JPanel implements ActionListener {
 
             } catch (Exception PrinterExeption) {
                 JOptionPane.showMessageDialog(this, "打印机连接异常!", "信息提示", JOptionPane.INFORMATION_MESSAGE);
-             }
+            }
         }
     }
 }

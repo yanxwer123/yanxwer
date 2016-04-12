@@ -5,4 +5,7 @@
     <select id="selectOilMachineInfor" resultType="com.kld.gsm.coord.domain.OilMachineInfor">
         SELECT * FROM oilmachineinfor
     </select>
+    <select id="selectOilMachineInfor1" parameterType="String" statementType="STATEMENT" resultType="com.kld.gsm.coord.domain.OilMachineInfor">
+        ${sql}
+    </select>
 </mapper>

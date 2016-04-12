@@ -10,7 +10,7 @@ import java.util.Date;
  * @CreationTime: 2015/11/10 18:12
  * @Description:进油核对单
  */
-public class InOilCheckBill {
+public class InOilCheckBill extends AbsValueBean{
     private String vouchno;      //进油核对单号
     private String inoilcompno;    //进油客户编码
     private String oilno;          //油品编码

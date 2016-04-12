@@ -76,29 +76,43 @@ public class ShiftServiceImpl implements IShiftService {
         try {
             log.info("start to save payoilstat~~~||||||||||||||||~`");
             //付油数量统计交接表(payoilstat)
-            List<Payoilstat> payoilstatList = payoilstatDao.getPayoilstat(shiftno);
+            String sql  ="SELECT teamvouchno,takedate,oilno,oilname,backcanliter,oilcanno," +
+                    " passnum,oiltotal,moneytotal,accountdate,hotoflag,transflag" +
+                    " FROM payoilstat" +
+                    " WHERE teamvouchno='"+shiftno+"'";
+            log.info("getPayoilstat1的sql:"+sql);
+            List<Payoilstat> payoilstatList = payoilstatDao.getPayoilstat1(sql);
             DailyOpoCount dailyOpoCount = new DailyOpoCount();
             payoilstat2dailyOpoCount(payoilstatList, dailyOpoCount);
 
             log.info("start to save ATGTEAMSTOCK~~~||||||||||||||||||||`");
             //班结库存表(ATGTEAMSTOCK)
             //System.out.println("shiftno:" + shiftno);
-            List<Teamstock> teamstockList = (List<Teamstock>) teamstockDao.getTeamstock(shiftno);
+            sql ="SELECT * FROM ATGTEAMSTOCK "+
+                    " WHERE teamvouchno='"+shiftno+"'";
+            log.info("getTeamstock1的sql:"+sql);
+            List<Teamstock> teamstockList = (List<Teamstock>) teamstockDao.getTeamstock1(sql);
             DailyShiftStock dailyShiftStock = new DailyShiftStock();
             teamstock2dailyShiftStock(teamstockList, dailyShiftStock);
 
             log.info("start to save oilhotobill~~|||||||||||||||~`");
             //泵码交接表(oilhotobill)
-            List<Oilhotobill> oilhotobillList = oilhotobillDao.getOilhotobill(shiftno);
+            sql ="SELECT vouchno,teamvouchno,takeDate,oilno,oilname, " +
+                    " oilgunno,Topump,Hopump,Passnum,accountdate,Billstatus,hotoflag,Transflag " +
+                    " FROM oilhotobill WHERE teamvouchno='"+shiftno+"' ";
+            log.info("getOilhotobill1的sql:"+sql);
+            List<Oilhotobill> oilhotobillList = oilhotobillDao.getOilhotobill1(sql);
             DailyPumpDigitShift dailyPumpDigitShift = new DailyPumpDigitShift();
             oilhotobill2dailyPumpDigitShift(oilhotobillList, dailyPumpDigitShift);
 
-
-
-
             log.info("start to save PAYOILCLASS_STAT~~~~||||||||||||||||||");
             //付油量分类统计表（按付油类型）(PAYOILCLASS_STAT)
-            List<PayoilclassStat> payoilclassStatList = payoilclassStatDao.getPayoilclassStat(shiftno);
+            sql ="SELECT teamvouchno,takedate,oilno,oilname,payoiltype, " +
+                    " oilamount,unitprice,amount,transflag,hotoflag,dayflag,accountdate " +
+                    " FROM payoilclass_stat " +
+                    " WHERE teamvouchno='"+shiftno+"'";
+            log.info("getPayoilclassStat1的sql:"+sql);
+            List<PayoilclassStat> payoilclassStatList = payoilclassStatDao.getPayoilclassStat1(sql);
             log.info("reslut payoilclassStat:" + payoilclassStatList);
             DailyOpotCount dailyOpotCount = new DailyOpotCount();
             payoilclassStat2dailyOpotCount(payoilclassStatList, dailyOpotCount);
@@ -107,6 +121,11 @@ public class ShiftServiceImpl implements IShiftService {
             teamHotoService = Context.getInstance().getBean(TeamHotoService.class);
             dailyStationShiftInfoDao = Context.getInstance().getBean(DailyStationShiftInfoDao.class);
 
+            sql ="SELECT teamvouchno,takedate,oilno,oilname,payoiltype, " +
+                    " oilamount,unitprice,amount,transflag,hotoflag,dayflag,accountdate " +
+                    " FROM payoilclass_stat " +
+                    " WHERE teamvouchno='"+shiftno+"'";
+            log.info("getPayoilclassStat1的sql:"+sql);
             TeamHoto teamHoto = teamHotoService.findByTeamVouchNo(shiftno);
 
 
