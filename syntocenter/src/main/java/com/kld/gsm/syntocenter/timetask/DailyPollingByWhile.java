@@ -61,21 +61,21 @@ public class DailyPollingByWhile extends Thread {
 
     @Override
     public void run() {
+        SysManageDic sysManageDic = springFactory.getInstance().getBean(SysManageDic.class);
         while(true){
-            int i = 0;
             try {
-                LOG.info("每10分钟执行一次，开始睡眠十分钟");
-                sleep(10 * 3600 * 1000);
-                LOG.info("开始执行10分钟一次的上传i="+i);
-                ten();
-                LOG.info("结束执行10分钟一次的上传i="+i);
-                i ++;
-                if(i==3) {
-                    LOG.info("开始执行30分钟一次的上传i=" + i);
-                    thirty();
-                    i = 0;
-                    LOG.info("结束执行30分钟一次的上传i="+i);
+                int sleepTime = 10;
+                LOG.info("sleepTime:"+sleepTime);
+                if(null!=sysManageDic.GetByCode("thirty")) {
+                    sleepTime = Integer.parseInt(sysManageDic.GetByCode("ten").getValue());
+                    LOG.info("sleepTime:"+sleepTime);
                 }
+                LOG.info("sleepTime:"+sleepTime);
+                LOG.info("每10分钟执行一次，开始睡眠十分钟");
+                sleep(sleepTime * 3600 * 1000);
+                LOG.info("开始执行10分钟一次的上传");
+                ten();
+                LOG.info("结束执行10分钟一次的上传");
             }catch(Exception e){
                 e.printStackTrace();
                 LOG.error(e.getMessage());
