@@ -158,6 +158,7 @@ public class TransacServiceImpl implements ITransacService {
                    getDailyTradeInventory(oilVouch, ret, dailyTradeInventory,oilCanNo.get(0));
                }
                 //保存mysql交易库存表
+                log.info("dailyTradeInventory:"+dailyTradeInventory.toString());
                 dailyTradeInventoryDao.insert(dailyTradeInventory);
 
                 //把读取液位仪的实时库存赋值到sybase的实时库存vouchStock
