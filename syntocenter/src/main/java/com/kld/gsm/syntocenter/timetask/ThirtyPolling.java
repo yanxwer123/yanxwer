@@ -23,7 +23,7 @@ public class ThirtyPolling extends Thread {
         dailyPollingByWhile = new DailyPollingByWhile();
         while(true){
             try {
-                int sleepTime = 30;
+                int sleepTime = 1800;
                 LOG.info("sleepTime:"+sleepTime);
                 if(null!=sysManageDic.GetByCode("thirty")) {
                     sleepTime = Integer.parseInt(sysManageDic.GetByCode("thirty").getValue());
