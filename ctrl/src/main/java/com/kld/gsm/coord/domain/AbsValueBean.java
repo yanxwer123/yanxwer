@@ -39,11 +39,12 @@ public class AbsValueBean {
                         }else {
                             valueStr.append("'"+obj+"'");
                         }
-                    }
-                    //如果不是最后一个字段，则加逗号
-                    if (i != (fields.length - 1)) {
-                        fieldStr.append(",");
-                        valueStr.append(",");
+
+                        //如果不是最后一个字段，则加逗号
+                        if (i != (fields.length - 1)) {
+                            fieldStr.append(",");
+                            valueStr.append(",");
+                        }
                     }
                 }
             }
