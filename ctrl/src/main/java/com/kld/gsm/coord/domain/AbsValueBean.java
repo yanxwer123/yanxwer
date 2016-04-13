@@ -20,6 +20,8 @@ public class AbsValueBean {
     public String getInsertSql(String tableName){
         String sql = "";
         try {
+            String fieldst = "";
+            String valuest = "";
             StringBuffer fieldStr = new StringBuffer();
             StringBuffer valueStr = new StringBuffer();
             Field[] fields = this.getClass().getDeclaredFields();
@@ -39,17 +41,16 @@ public class AbsValueBean {
                         }else {
                             valueStr.append("'"+obj+"'");
                         }
-
                         //如果不是最后一个字段，则加逗号
-                        if (i != (fields.length - 1)) {
-                            fieldStr.append(",");
-                            valueStr.append(",");
-                        }
+                        fieldStr.append(",");
+                        valueStr.append(",");
                     }
+                    fieldst = fieldStr.substring(0, fieldStr.length()-1);
+                    valuest = valueStr.substring(0,valueStr.length()-1);
                 }
             }
             sql = " insert into " + tableName
-                    + " (" + fieldStr + ") values (" + valueStr + ")";
+                    + " (" + fieldst + ") values (" + valuest + ")";
             LOGGER.info("AbsValueBean的insert语句:" + sql);
         }catch (Exception e){
             e.printStackTrace();
