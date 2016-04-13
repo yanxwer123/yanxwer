@@ -63,13 +63,14 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
             //油罐进油明细表(OILCANINDETAIL)数据 查询Mysql的卸油登记明细表
             //可能会卸入多个罐，卸油明细有多条。
             List<AcceptanceOdRegisterInfo> selectAcceptanceOdRegisterInfo =acceptanceOdRegisterInfoDao.selectById(DeliveryNo);
+
             if(null!=selectAcceptanceOdRegisterInfo&&selectAcceptanceOdRegisterInfo.size()>0){
-                //System.out.println("插入卸油登记明细表开始");
+                logger.info("插入卸油登记明细表开始");
                 OilCanIndeTail oilCanIndeTail = new OilCanIndeTail();
                 for(AcceptanceOdRegisterInfo item:selectAcceptanceOdRegisterInfo) {
                     selectAcceptanceOdRegisterInfo2oilCanIndeTail(id, item, oilCanIndeTail, oprno);
                 }
-                //System.out.println("插入卸油登记明细表成功结束");
+                logger.info("插入卸油登记明细表成功结束");
             }else{
                 //System.out.println("Mysql 卸油登记明细表中无此记录请核对或者忽略……DeliveryNo=" + DeliveryNo);
             }
@@ -139,7 +140,7 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
             map.put("manualno", manualno);
             //更新油罐进油明细表(OILCANINDETAIL)
             String sql = " UPDATE oilcanindetail set goodsbillno='"+manualno+"' where goodsbillno='"+DeliveryNo+"' ";
-            logger.info("oilcanindetailDao.updateManualno的sql="+sql);
+            logger.info("oilcanindetailDao.updateManualno的sql=" + sql);
             int update_Oilanindetail = oilcanindetailDao.updateManualno1(sql);
         }catch (Exception e){
             System.err.println("更新油罐进油明细表出库单号失败………………");
@@ -162,9 +163,12 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
         String typeno="03";
         SimpleDateFormat date = new SimpleDateFormat("yyyyMMdd");
         String nowdate=date.format(new Date());//截取时间的年月日，以yyyyMMdd输出
-        String nowdate1=nowdate.substring(0,6);
+        String nowdate1=nowdate.substring(0, 6);
         String vouchno=nowdate+"0001";
-        List<BillInfor> billInforList=billInforDao.selectBycode(typeno);
+        String sqltype="select * FROM BillInfor where typeno="+typeno;
+        logger.info("sqltype:"+sqltype);
+        List<BillInfor> billInforList=billInforDao.selectBycode1(sqltype);
+        logger.info("03billInforList.size:"+billInforList.size());
         if(billInforList.size()!=0){
                 for(BillInfor  billInfor:billInforList){
                     BillInfor uBillInfor=new BillInfor();
@@ -245,12 +249,15 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
         String nowdate=date.format(new Date());//截取时间的年月日，以yyyyMMdd输出
         String nowdate1=nowdate.substring(0, 6);
         String vouchno=nowdate+"0001";
-        List<BillInfor> billInforList=billInforDao.selectBycode(typeno);
+        String sqltype="select * FROM BillInfor where typeno="+typeno;
+        logger.info("sqltype:"+sqltype);
+        List<BillInfor> billInforList=billInforDao.selectBycode1(sqltype);
+        logger.info("billInforList.size:"+billInforList.size());
         if(billInforList.size()!=0){
             for(BillInfor  billInfor:billInforList){
                 BillInfor uBillInfor=new BillInfor();
-                if(billInfor.getMaxvouchno().substring(0,8).equals(nowdate)){
-                    //System.out.println("打印出数据为"+billInfor.getMaxvouchno().toString());
+                if(billInfor.getMaxvouchno().substring(0,8).equals(nowdate)) {
+                    logger.info("打印出数据为" +billInfor.getMaxvouchno().toString());
                     if(Integer.parseInt(billInfor.getMaxvouchno().substring(6,12))>100000){
                         vouchno=nowdate1+String.valueOf((Integer.parseInt(billInfor.getMaxvouchno().substring(6,12))+1));
                     }else{

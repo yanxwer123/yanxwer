@@ -926,8 +926,8 @@ public class JhysTank  extends JPanel{
                     bcxyssField.setText(Double.parseDouble(df2.format(bcsy)) + "");
                     acceptanceOdRegisterInfo.setDischargel("".equals(bcxyssField.getText().trim()) ? 0d : Double.parseDouble(bcxyssField.getText().trim()));
                     acceptanceOdRegisterInfo.setTranstatus("0");
-                    //region
-                    if (sysmanageService!=null){
+                    //region 取容积表版本号
+                    if (sysmanageService==null){
                         sysmanageService=Context.getInstance().getBean(SysmanageService.class);
                     }
                     List<SysManageCubage>sysManageCubages=sysmanageService.selectCubageInused();

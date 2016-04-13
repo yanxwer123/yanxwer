@@ -586,7 +586,7 @@ public class Jhys2 extends JPanel {
                 Map<String,?> map=(Map) (resultMsg.getData().get(m));
                 String canno=map.get("uOilCanNo").toString();
                 HashMap<String,JhysTank> canlist=Main.jhys2Map.get(signs).getCanlist();
-                LOG.info("tank canlist:"+canlist==null?"0":canlist.size());
+
                 if (canlist!=null&&canlist.size()>0) {
                     JhysTank tank = canlist.get(canno);
                     if (tank != null) {
