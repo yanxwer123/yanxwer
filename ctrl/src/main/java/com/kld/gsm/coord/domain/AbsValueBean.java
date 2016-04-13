@@ -25,11 +25,11 @@ public class AbsValueBean {
             Field[] fields = this.getClass().getDeclaredFields();
             if (fields != null && fields.length > 0) {
                 for (int i = 0; i < fields.length; i++) {
-                    fields[i].setAccessible(true);
-                    fieldStr.append(fields[i].getName());
                     Method method = this.getClass().getMethod("get" + toUpperCaseFirstOne(fields[i].getName()));
                     Object obj = method.invoke(this);
                     if (obj != null && !"".equals(obj)) {
+                        fields[i].setAccessible(true);
+                        fieldStr.append(fields[i].getName());
                         Class fieldClass = fields[i].getType();
                         if( fieldClass == Date.class){
                             Date date = (java.util.Date)obj;
@@ -37,10 +37,8 @@ public class AbsValueBean {
                             String datestr = sdf.format(date);
                             valueStr.append("'"+datestr+"'");
                         }else {
-                            valueStr.append(obj);
+                            valueStr.append("'"+obj+"'");
                         }
-                    } else {
-                        valueStr.append("''");
                     }
                     //如果不是最后一个字段，则加逗号
                     if (i != (fields.length - 1)) {
