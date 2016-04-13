@@ -17,6 +17,7 @@ import java.util.List;
 @SybaseRepository
 public interface BillInforDao {
     List<BillInfor> selectBycode(String typeno);
+    List<BillInfor> selectBycode1(@Param("sql")String sql);
     int updateBillInfor(BillInfor billInfor);
     int updateBillInfor1(@Param("sql")String sql);
     int insertBillInfor(BillInfor billInfor);

@@ -64,7 +64,7 @@ public class DailyPollingByWhile extends Thread {
         SysManageDic sysManageDic = springFactory.getInstance().getBean(SysManageDic.class);
         while(true){
             try {
-                int sleepTime = 10;
+                int sleepTime = 600;
                 LOG.info("sleepTime:"+sleepTime);
                 if(null!=sysManageDic.GetByCode("thirty")) {
                     sleepTime = Integer.parseInt(sysManageDic.GetByCode("ten").getValue());
@@ -72,7 +72,7 @@ public class DailyPollingByWhile extends Thread {
                 }
                 LOG.info("sleepTime:"+sleepTime);
                 LOG.info("每10分钟执行一次，开始睡眠十分钟");
-                sleep(sleepTime * 3600 * 1000);
+                sleep(sleepTime  * 1000);
                 LOG.info("开始执行10分钟一次的上传");
                 ten();
                 LOG.info("结束执行10分钟一次的上传");
@@ -121,6 +121,10 @@ public class DailyPollingByWhile extends Thread {
         //日平衡
         //DayBalance();
 
+        //出库单同步
+        deliveybill();
+        //卸油登记
+        delivery();
 
         LOG.info("ten end"+ DateUtil.getDate(new Date(),"yyyy-MM-dd HH:mm:ss"));
     }
@@ -132,14 +136,11 @@ public class DailyPollingByWhile extends Thread {
         getoilcanmap();
         if (ApplicationMain.NodeNo==null||"".equals(ApplicationMain.NodeNo)||ApplicationMain.canversion==null
                 ||ApplicationMain.canversion.size()==0||ApplicationMain.oilcanmap==null||ApplicationMain.oilcanmap.size()==0) return;
-       //班报数据
+        //班报数据
         shiftData();
         //日平衡
         DayBalance();
-        //出库单同步
-        deliveybill();
-        //卸油登记
-        delivery();
+
         //容积表下载
         cuage();
         //报警参数下载
@@ -217,8 +218,8 @@ public class DailyPollingByWhile extends Thread {
         //todo
         try{
             LOG.info("tradInvo begin");
-            /*synDailyRunning syn=springFactory.getInstance().getBean(synDailyRunning.class);*/
-            syndailyrunning.TradeInventoryLost();
+            synDailyRunning syn=springFactory.getInstance().getBean(synDailyRunning.class);
+            syn.TradeInventoryLost();
             LOG.info("tradInvo end");
         }
         catch (Exception ex)
@@ -234,8 +235,8 @@ public class DailyPollingByWhile extends Thread {
         //todo
         try{
             LOG.info("InvoAlram begin");
-            /*synAlarm syn= springFactory.getInstance().getBean(synAlarm.class);*/
-            synalarm.synInventory();
+            synAlarm syn= springFactory.getInstance().getBean(synAlarm.class);
+            syn.synInventory();
             LOG.info("InvoAlram end");
         }
         catch (Exception ex)
@@ -252,8 +253,8 @@ public class DailyPollingByWhile extends Thread {
         //todo
         try{
             LOG.info("EquipmentAlram begin");
-            /*synAlarm syn= springFactory.getInstance().getBean(synAlarm.class);*/
-            synalarm.synEquipment();
+            synAlarm syn= springFactory.getInstance().getBean(synAlarm.class);
+            syn.synEquipment();
             LOG.info("EquipmentAlram end");
         }
         catch (Exception ex)
@@ -266,8 +267,8 @@ public class DailyPollingByWhile extends Thread {
     public void Reg(){
         try{
             LOG.info("Reg begin");
-            /*StationRegServices syn= springFactory.getInstance().getBean(StationRegServices.class);*/
-            stationRegServices.synsys(ApplicationMain.Host);
+            StationRegServices syn= springFactory.getInstance().getBean(StationRegServices.class);
+            syn.synsys(ApplicationMain.Host);
             LOG.info("Reg end");
         }catch (Exception e){
             LOG.error(e.getMessage());
@@ -282,8 +283,8 @@ public class DailyPollingByWhile extends Thread {
         //todo
         try{
             LOG.info("SaleOutAlarm begin");
-            /*synAlarm syn= springFactory.getInstance().getBean(synAlarm.class);*/
-            synalarm.synSaleOut();
+            synAlarm syn= springFactory.getInstance().getBean(synAlarm.class);
+            syn.synSaleOut();
             LOG.info("SaleOutAlarm end");
         }
         catch (Exception ex)
@@ -300,8 +301,8 @@ public class DailyPollingByWhile extends Thread {
         //todo
         try{
             LOG.info("GaT begin");
-            /*synAlarm syn= springFactory.getInstance().getBean(synAlarm.class);*/
-            synalarm.synGaTContrast();
+            synAlarm syn= springFactory.getInstance().getBean(synAlarm.class);
+            syn.synGaTContrast();
             LOG.info("GaT end");
         }
         catch (Exception ex)
@@ -319,8 +320,8 @@ public class DailyPollingByWhile extends Thread {
         //todo
         try{
             LOG.info("OilInContrast begin");
-            //synAlarm syn= springFactory.getInstance().getBean(synAlarm.class);
-            synalarm.synOilInContrast();
+            synAlarm syn= springFactory.getInstance().getBean(synAlarm.class);
+            syn.synOilInContrast();
             LOG.info("OilInContrast end");
         }
         catch (Exception ex)
@@ -335,8 +336,8 @@ public class DailyPollingByWhile extends Thread {
         //todo
         try{
             LOG.info("shift begin");
-            //synAlarm syn= springFactory.getInstance().getBean(synAlarm.class);
-            synalarm.synShiftLost();
+            synAlarm syn= springFactory.getInstance().getBean(synAlarm.class);
+            syn.synShiftLost();
             LOG.info("shift end");
         }
         catch (Exception ex)
@@ -350,8 +351,8 @@ public class DailyPollingByWhile extends Thread {
     public void DailyLoss(){
         try {
             LOG.info("DailyLoss begin");
-            //synAlarm syn = springFactory.getInstance().getBean(synAlarm.class);
-            synalarm.synDailyLost();
+            synAlarm syn = springFactory.getInstance().getBean(synAlarm.class);
+            syn.synDailyLost();
             LOG.info("DailyLoss end");
         }catch (Exception ex){
             LOG.info("DailyLoss failed"+ex.getMessage());
@@ -362,8 +363,8 @@ public class DailyPollingByWhile extends Thread {
    public void measureLeak(){
        try {
            LOG.info("measureLeak begin");
-           //synAlarm syn = springFactory.getInstance().getBean(synAlarm.class);
-           synalarm.synMeasureLeak();
+           synAlarm syn = springFactory.getInstance().getBean(synAlarm.class);
+           syn.synMeasureLeak();
            LOG.info("measureLeak end");
        }
        catch (Exception ex){
@@ -379,8 +380,8 @@ public class DailyPollingByWhile extends Thread {
         try
         {
             LOG.info("TradeAccount begin");
-            /*synDailyRunning sd= springFactory.getInstance().getBean(synDailyRunning.class);*/
-            syndailyrunning.synTradeAccountLost();
+            synDailyRunning sd= springFactory.getInstance().getBean(synDailyRunning.class);
+            sd.synTradeAccountLost();
             LOG.info("TradeAccount end");
         }
         catch (Exception ex)
@@ -396,7 +397,7 @@ public class DailyPollingByWhile extends Thread {
     public void shiftData(){
         try {
             LOG.info("shiftData begin");
-            /*DailyRunning dailyRunning = springFactory.getInstance().getBean(DailyRunning.class);*/
+            DailyRunning dailyRunning = springFactory.getInstance().getBean(DailyRunning.class);
             dailyRunning.AddClassKnotData(ApplicationMain.Host);
             LOG.info("shiftData end");
         }
@@ -412,7 +413,7 @@ public class DailyPollingByWhile extends Thread {
     public void DayBalance(){
         try {
             LOG.info("DayBalance begin");
-            /*DailyRunning dailyRunning = springFactory.getInstance().getBean(DailyRunning.class);*/
+            DailyRunning dailyRunning = springFactory.getInstance().getBean(DailyRunning.class);
             dailyRunning.DailyBalanceLost(ApplicationMain.Host);
             LOG.info("DayBalance end");
         }
@@ -514,7 +515,7 @@ public class DailyPollingByWhile extends Thread {
     public void cuage(){
         try{
             LOG.info("cuage begin");
-           /* SysmanageService sysmanageService=springFactory.getInstance().getBean(SysmanageService.class);*/
+           SysmanageService sysmanageService=springFactory.getInstance().getBean(SysmanageService.class);
             sysmanageService.GetCubgeByNodeNobackInt(ApplicationMain.Host, ApplicationMain.NodeNo);
             LOG.info("cuage end");
         }catch (Exception e){
@@ -529,8 +530,8 @@ public class DailyPollingByWhile extends Thread {
         try
         {
             LOG.info("delivery begin");
-            /*AcceptSevices syn=springFactory.getInstance().getBean(AcceptSevices.class);*/
-            acceptSevices.sendOdreg(ApplicationMain.Host, ApplicationMain.NodeNo);
+            AcceptSevices syn=springFactory.getInstance().getBean(AcceptSevices.class);
+            syn.sendOdreg(ApplicationMain.Host, ApplicationMain.NodeNo);
             LOG.info("delivery end");
         }
         catch (Exception ex)
@@ -545,8 +546,8 @@ public class DailyPollingByWhile extends Thread {
     public void deliveybill(){
         try{
             LOG.info("deliverybill begin");
-            /*AcceptSevices syn=springFactory.getInstance().getBean(AcceptSevices.class);*/
-            acceptSevices.getbillsfromcenter(ApplicationMain.Host, ApplicationMain.NodeNo);
+            AcceptSevices syn=springFactory.getInstance().getBean(AcceptSevices.class);
+            syn.getbillsfromcenter(ApplicationMain.Host, ApplicationMain.NodeNo);
             LOG.info("deliverybill end");
 
         }catch (Exception e){
@@ -560,7 +561,7 @@ public class DailyPollingByWhile extends Thread {
     public void staticTankandGun(){
         try{
             LOG.info("staticTankandGun begin");
-            /*DailyRunning dailyRunning=springFactory.getInstance().getBean(DailyRunning.class);*/
+            DailyRunning dailyRunning=springFactory.getInstance().getBean(DailyRunning.class);
             dailyRunning.tankoilLost(ApplicationMain.Host);
             LOG.info("staticTankandGun end");
         }catch (Exception e){
@@ -574,7 +575,7 @@ public class DailyPollingByWhile extends Thread {
     public void iqalarm(){
         try{
             LOG.info("iqalarm begin");
-            /*SysmanageService sysmanageService=springFactory.getInstance().getBean(SysmanageService.class);*/
+            SysmanageService sysmanageService=springFactory.getInstance().getBean(SysmanageService.class);
             sysmanageService.GetAlarmPar(ApplicationMain.Host, ApplicationMain.NodeNo);
             LOG.info("iqalarm end");
         }catch (Exception e){
@@ -614,7 +615,7 @@ public class DailyPollingByWhile extends Thread {
     public void Dict(){
         try{
             LOG.info("dict begin");
-            /*SysManageDic sysManageDic=springFactory.getInstance().getBean(SysManageDic.class);*/
+            SysManageDic sysManageDic=springFactory.getInstance().getBean(SysManageDic.class);
             sysManageDic.synDicFromCenter(ApplicationMain.Host);
             LOG.info("dict end");
         }catch (Exception e){
@@ -646,13 +647,13 @@ public class DailyPollingByWhile extends Thread {
                 ApplicationMain.UpLoadDate=new Date(date.getTime()+s);
             }
             if (new Date().getTime() > ApplicationMain.UpLoadDate.getTime()) {
-                /*synMaclog sml = springFactory.getInstance().getBean(synMaclog.class);*/
+                synMaclog sml = springFactory.getInstance().getBean(synMaclog.class);
                 sml.synMacLogAuto();
             }
             LOG.info("-------------FTP end-------------");
-            /*synSysManage sm=springFactory.getInstance().getBean(synSysManage.class);*/
+            synSysManage sm=springFactory.getInstance().getBean(synSysManage.class);
             LOG.info("list begin");
-            synsysmanage.synuplist();
+            sm.synuplist();
             LOG.info("list end");
         }
         catch (Exception ex)
@@ -667,7 +668,7 @@ public class DailyPollingByWhile extends Thread {
     public void getnodeno(){
         if (ApplicationMain.NodeNo==null||"".equals(ApplicationMain.NodeNo)){
         try {
-            /*SysmanageService sysmanageService=springFactory.getInstance().getBean(SysmanageService.class);*/
+            SysmanageService sysmanageService=springFactory.getInstance().getBean(SysmanageService.class);
             LOG.info("get nodeno begin");
             SysManageDepartment department=sysmanageService.getdeptinfo();
             ApplicationMain.NodeNo=department.getSinopecnodeno();
@@ -692,10 +693,10 @@ public class DailyPollingByWhile extends Thread {
     public void getoilcanmap(){
         if (ApplicationMain.oilcanmap==null||ApplicationMain.oilcanmap.size()==0){
             //region load oilcan and oilno to map
-            /*synSysManage sys=springFactory.getInstance().getBean(synSysManage.class);*/
+            synSysManage sys=springFactory.getInstance().getBean(synSysManage.class);
             try{
                 LOG.info("load can and oilno mapping begin");
-                List<SysManageCanInfo> canInfos=synsysmanage.getCaninfos();
+                List<SysManageCanInfo> canInfos=sys.getCaninfos();
                 if (ApplicationMain.oilcanmap==null)ApplicationMain.oilcanmap=new HashMap<String,Integer>();
 
                 for (SysManageCanInfo item:canInfos){
@@ -716,7 +717,7 @@ public class DailyPollingByWhile extends Thread {
     public void getcanversion(){
         if (ApplicationMain.canversion==null||ApplicationMain.canversion.size()==0){
             //region load can and version to map
-           /* SysmanageService sysmanageService=springFactory.getInstance().getBean(SysmanageService.class);*/
+            SysmanageService sysmanageService=springFactory.getInstance().getBean(SysmanageService.class);
             try{
                 LOG.info("load can and version mapping begin");
                 List<SysManageCubage> sysManageCubages=sysmanageService.selectCubageInused();

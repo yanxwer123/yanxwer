@@ -259,9 +259,9 @@ public class StationRegServicesImpl implements StationRegServices {
             }else  {
                // nothing
             }
-
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+
             return false;
         }
         return true;

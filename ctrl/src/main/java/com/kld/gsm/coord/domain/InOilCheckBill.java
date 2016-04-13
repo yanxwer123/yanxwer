@@ -29,7 +29,7 @@ public class InOilCheckBill extends AbsValueBean{
     private Double origlitramout;  //原发升数
     private String pickupplace;	  //提货地点
     private Double checamount;	    //验收数量
-    private Double checvidedens;	  //验收视密度
+    private Double ckecvidedens;	  //验收视密度
     private Double chectemper;	    //验收试验温度
     private Double checcnttemper;	//验收计量温度
     private Double checstandens;	  //验收标准密度
@@ -202,12 +202,12 @@ public class InOilCheckBill extends AbsValueBean{
         this.checamount = checamount;
     }
 
-    public Double getChecvidedens() {
-        return checvidedens;
+    public Double getCkecvidedens() {
+        return ckecvidedens;
     }
 
-    public void setChecvidedens(Double checvidedens) {
-        this.checvidedens = checvidedens;
+    public void setCkecvidedens(Double ckecvidedens) {
+        this.ckecvidedens = ckecvidedens;
     }
 
     public Double getChectemper() {
@@ -447,7 +447,7 @@ public class InOilCheckBill extends AbsValueBean{
                 ", origlitramout='" + origlitramout + '\'' +"\r\n"+
                 ", pickupplace='" + pickupplace + '\'' +"\r\n"+
                 ", checamount='" + checamount + '\'' +"\r\n"+
-                ", checvidedens='" + checvidedens + '\'' +"\r\n"+
+                ", checvidedens='" + ckecvidedens + '\'' +"\r\n"+
                 ", chectemper='" + chectemper + '\'' +"\r\n"+
                 ", checcnttemper='" + checcnttemper + '\'' +"\r\n"+
                 ", checstandens='" + checstandens + '\'' +"\r\n"+

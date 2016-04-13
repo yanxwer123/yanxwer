@@ -16,6 +16,8 @@ import com.kld.app.util.*;
 import com.kld.app.view.main.Main;
 import com.kld.gsm.ATG.domain.AcceptanceDeliveryBills;
 import com.kld.gsm.ATG.domain.AcceptanceOdRegister;
+import com.kld.gsm.ATG.domain.SysManageCubage;
+import com.kld.gsm.ATG.service.SysmanageService;
 import com.kld.gsm.Socket.Constants;
 import com.kld.gsm.Socket.protocol.GasMsg;
 import com.kld.gsm.Socket.protocol.ResultMsg;
@@ -69,6 +71,7 @@ public class JhysPageShlrFrame extends JOptionPane implements Watcher {
     private IAcceptanceOdRegisterService odRegisterService;
     private IAcceptanceOdRegisterInfoService odRegisterInfoService;
     private AcceptanceOdRegisterInfo acceptanceOdRegisterInfo;
+    private SysmanageService sysmanageService;
     private CkdcxPage ckdcxPage;
     private String qchcflag = "";
 
@@ -393,6 +396,19 @@ public class JhysPageShlrFrame extends JOptionPane implements Watcher {
                 acceptanceOdRegisterInfo.setDischargel(realGetL);
                 acceptanceOdRegisterInfo.setCreatetime(new Date());
                 acceptanceOdRegisterInfo.setIsdel(0);
+
+                //region 取容积表版本号
+                if (sysmanageService==null){
+                    sysmanageService=Context.getInstance().getBean(SysmanageService.class);
+                }
+                List<SysManageCubage>sysManageCubages=sysmanageService.selectCubageInused();
+                for(SysManageCubage item:sysManageCubages){
+                    if (item.getOilcan()==acceptanceOdRegisterInfo.getOilcan()){
+                        acceptanceOdRegisterInfo.setCanversion(item.getVersion());
+                        break;
+                    }
+                }
+                //endregion
 
                 odRegisterInfoService.merge(acceptanceOdRegisterInfo);
                 frame.setVisible(false);
