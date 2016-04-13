@@ -47,7 +47,7 @@ public class ApplicationMain  implements Watcher {
     public static String gunaddr;
     public static String canaddr;
     public static Channel CC =null ;
-    public static  Integer count;
+    public static  Integer count=0;
     public static Watched watch = ConcreteWatched.getInstance();
     public static String sign = "";
     public static Watcher watcher  =new ApplicationMain();

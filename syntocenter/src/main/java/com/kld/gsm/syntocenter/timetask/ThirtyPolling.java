@@ -30,7 +30,7 @@ public class ThirtyPolling extends Thread {
                     LOG.info("sleepTime:"+sleepTime);
                 }
                 LOG.info("sleepTime:"+sleepTime);
-                sleep(sleepTime * 3600 * 1000);
+                sleep(sleepTime * 1000);
                 LOG.info("开始执行30分钟一次的上传");
                 dailyPollingByWhile.thirty();
                 LOG.info("结束执行30分钟一次的上传");
