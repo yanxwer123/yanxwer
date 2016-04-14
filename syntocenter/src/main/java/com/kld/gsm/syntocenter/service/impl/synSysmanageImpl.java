@@ -338,6 +338,9 @@ public class synSysmanageImpl implements synSysManage {
         String path=ac.getUri("resource.services.sys.synuplist");
         //获取站级数据
         List<SysManageDataUploadList> sysManageAlarmParameters= sysManageDataUploadListDao.selectByTrans("0");
+        if (sysManageAlarmParameters==null||sysManageAlarmParameters.size()==0){
+            return false;
+        }
         Map<String,String> hm=new param().getparam();
         //发送站级数据
         httpClient client=new httpClient();

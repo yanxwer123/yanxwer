@@ -49,6 +49,9 @@ public class synDailyRunningImpl implements synDailyRunning {
         String path=ac.getUri("resource.services.RCYX.AddTradeAccount");
         //获取站级数据
         List<DailyTradeAccount> DailyTradeAccounts= dailyTradeAccountDao.selectByTrans("0");
+        if (DailyTradeAccounts==null||DailyTradeAccounts.size()==0){
+            return 0;
+        }
         List<SysManageDepartment> sysManageDepartments=sysManageDepartmentDao.selectfirst();
         Map<String,String> hm=new com.kld.gsm.ATG.utils.param().getparam();
         if (sysManageDepartments.size()>0){
@@ -81,6 +84,9 @@ public class synDailyRunningImpl implements synDailyRunning {
         String path=ac.getUri("resource.services.RCYX.AddTradeInventory");
         //获取站级数据
         List<DailyTradeInventory> DailyTradeInventorys= dailyTradeInventoryDao.selectByTrans("0");
+        if (DailyTradeInventorys==null||DailyTradeInventorys.size()==0){
+            return 0;
+        }
         List<SysManageDepartment> sysManageDepartments=sysManageDepartmentDao.selectfirst();
         Map<String,String> hm=new com.kld.gsm.ATG.utils.param().getparam();
         if (sysManageDepartments.size()>0){

@@ -64,7 +64,7 @@ public class DailyPollingByWhile extends Thread {
         SysManageDic sysManageDic = springFactory.getInstance().getBean(SysManageDic.class);
         while(true){
             try {
-                int sleepTime = 600;
+                int sleepTime = 10;
                 LOG.info("sleepTime:"+sleepTime);
                 if(null!=sysManageDic.GetByCode("thirty")) {
                     sleepTime = Integer.parseInt(sysManageDic.GetByCode("ten").getValue());
@@ -118,8 +118,7 @@ public class DailyPollingByWhile extends Thread {
         tradInvo();
         //ftp上传
         ftpupload();
-        //日平衡
-        //DayBalance();
+
 
         //出库单同步
         deliveybill();
