@@ -232,6 +232,8 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
             //插入到进油核对表(INOILCHECKBILL)
         try {
 //            String sql = inOilCheckBill.getInsertSql("inoilcheckbill");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String datestr = sdf.format(inOilCheckBill.getArrivetime ());
             String sql = "INSERT INTO  inoilcheckbill( " +
                     " vouchno,oilno ,goodsbillno,origamount,origstdliter, " +
                     " origlitramout,pickupplace,checamount,checcnttemper, " +
@@ -258,7 +260,7 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
                     "','"+inOilCheckBill.getChiptrucno()+
                     "','"+inOilCheckBill.getVittaperson()+
                     "','"+inOilCheckBill.getDriver()+
-                    "','"+inOilCheckBill.getArrivetime ()+
+                    "','"+datestr+
                     "','"+inOilCheckBill.getAcceptflag()+
                     "','"+inOilCheckBill.getOperatorcode()+
                     "','"+inOilCheckBill.getBillstatus()+
