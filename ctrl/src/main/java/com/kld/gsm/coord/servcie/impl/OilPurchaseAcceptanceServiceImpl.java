@@ -264,6 +264,7 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
                     "','"+inOilCheckBill.getBillstatus()+
                     "','"+inOilCheckBill.getTransflag()+
                     "','"+inOilCheckBill.getOilcanno()+"')";
+            logger.info("inoilcheckbillDao.insertInoilcheckbill1:"+sql);
             int insert_Inoilcheckbill = inoilcheckbillDao.insertInoilcheckbill1(sql);
             //System.out.println("插入到进油核对表成功");
         }catch (Exception e){
