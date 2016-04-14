@@ -231,7 +231,39 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
 
             //插入到进油核对表(INOILCHECKBILL)
         try {
-            String sql = inOilCheckBill.getInsertSql("inoilcheckbill");
+//            String sql = inOilCheckBill.getInsertSql("inoilcheckbill");
+            String sql = "INSERT INTO  inoilcheckbill( " +
+                    " vouchno,oilno ,goodsbillno,origamount,origstdliter, " +
+                    " origlitramout,pickupplace,checamount,checcnttemper, " +
+                    " checoiwahigh,checairhigh,checwatehigh,checlitramount,checstdliter, " +
+                    " deinvolu,deinanalyse,shipdept,chiptrucno,vittaperson,driver,arrivetime, " +
+                    " acceptflag,operatorcode,billstatus,transflag,oilcanno " +
+                    ") values ('"+inOilCheckBill.getVouchno()+
+                    "','"+inOilCheckBill.getOilno()+
+                    "','"+inOilCheckBill.getGoodsbillno()+
+                    "','"+inOilCheckBill.getOrigamount()+
+                    "','"+inOilCheckBill.getOrigstdliter()+
+                    "','"+inOilCheckBill.getOriglitramout()+
+                    "','"+inOilCheckBill.getPickupplace()+
+                    "','"+inOilCheckBill.getChecamount()+
+                    "','"+inOilCheckBill.getCheccnttemper()+
+                    "','"+inOilCheckBill.getChecoiwahigh()+
+                    "','"+inOilCheckBill.getChecairhigh()+
+                    "','"+inOilCheckBill.getChecwatehigh()+
+                    "','"+inOilCheckBill.getCheclitramount()+
+                    "','"+inOilCheckBill.getChecstdliter()+
+                    "','"+inOilCheckBill.getDeinvolu()+
+                    "','"+inOilCheckBill.getDeinanalyse()+
+                    "','"+inOilCheckBill.getShipdept()+
+                    "','"+inOilCheckBill.getChiptrucno()+
+                    "','"+inOilCheckBill.getVittaperson()+
+                    "','"+inOilCheckBill.getDriver()+
+                    "','"+inOilCheckBill.getArrivetime ()+
+                    "','"+inOilCheckBill.getAcceptflag()+
+                    "','"+inOilCheckBill.getOperatorcode()+
+                    "','"+inOilCheckBill.getBillstatus()+
+                    "','"+inOilCheckBill.getTransflag()+
+                    "','"+inOilCheckBill.getOilcanno()+"')";
             int insert_Inoilcheckbill = inoilcheckbillDao.insertInoilcheckbill1(sql);
             //System.out.println("插入到进油核对表成功");
         }catch (Exception e){

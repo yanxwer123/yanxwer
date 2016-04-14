@@ -20,18 +20,16 @@ public class AbsValueBean {
     public String getInsertSql(String tableName){
         String sql = "";
         try {
-            String fieldst = "";
-            String valuest = "";
             StringBuffer fieldStr = new StringBuffer();
             StringBuffer valueStr = new StringBuffer();
             Field[] fields = this.getClass().getDeclaredFields();
             if (fields != null && fields.length > 0) {
                 for (int i = 0; i < fields.length; i++) {
+                    fields[i].setAccessible(true);
+                    fieldStr.append(fields[i].getName());
                     Method method = this.getClass().getMethod("get" + toUpperCaseFirstOne(fields[i].getName()));
                     Object obj = method.invoke(this);
                     if (obj != null && !"".equals(obj)) {
-                        fields[i].setAccessible(true);
-                        fieldStr.append(fields[i].getName());
                         Class fieldClass = fields[i].getType();
                         if( fieldClass == Date.class){
                             Date date = (java.util.Date)obj;
@@ -39,18 +37,20 @@ public class AbsValueBean {
                             String datestr = sdf.format(date);
                             valueStr.append("'"+datestr+"'");
                         }else {
-                            valueStr.append("'"+obj+"'");
+                            valueStr.append(obj);
                         }
-                        //如果不是最后一个字段，则加逗号
+                    } else {
+                        valueStr.append("''");
+                    }
+                    //如果不是最后一个字段，则加逗号
+                    if (i != (fields.length - 1)) {
                         fieldStr.append(",");
                         valueStr.append(",");
                     }
-                    fieldst = fieldStr.substring(0, fieldStr.length()-1);
-                    valuest = valueStr.substring(0,valueStr.length()-1);
                 }
             }
             sql = " insert into " + tableName
-                    + " (" + fieldst + ") values (" + valuest + ")";
+                    + " (" + fieldStr + ") values (" + valueStr + ")";
             LOGGER.info("AbsValueBean的insert语句:" + sql);
         }catch (Exception e){
             e.printStackTrace();
