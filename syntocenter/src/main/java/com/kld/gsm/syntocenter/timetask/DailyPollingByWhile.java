@@ -596,11 +596,13 @@ public class DailyPollingByWhile extends Thread {
                 ||ApplicationMain.canversion.size()==0||ApplicationMain.Host==null||"".equals(ApplicationMain.Host)
                 ||ApplicationMain.oilcanmap==null||ApplicationMain.oilcanmap.size()==0) return;
         try {
-            if (canAndGunStatus == null||ApplicationMain.CC==null) {
+            if (canAndGunStatus == null||ApplicationMain.CC==null||ApplicationMain.count>=20) {
+                LOG.info("count:"+ApplicationMain.count);
                 canAndGunStatus = new CanAndGunStatus();
                 canAndGunStatus.reg();
             }
             if (!"".equals(ApplicationMain.NodeNo) && ApplicationMain.canversion != null && ApplicationMain.oilcanmap != null) {
+                LOG.info("send begin");
                 canAndGunStatus.send();
             }
             LOG.info("TankandGunRealStatus begin");

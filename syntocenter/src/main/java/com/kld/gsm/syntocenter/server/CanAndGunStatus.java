@@ -40,11 +40,17 @@ public class CanAndGunStatus implements Watcher {
     }
 
     public void send() {
+        LOG.info("send");
         ApplicationMain.count+=2;
-        GasMsg gasMsg = ResultUtils.getInstance().sendSUCCESS(ApplicationMain.sign, new ArrayList(), Constants.PID_Code.A15_10002.toString());
-        ApplicationMain.CC.writeAndFlush(gasMsg);
-        gasMsg = ResultUtils.getInstance().sendSUCCESS(ApplicationMain.sign, new ArrayList(), Constants.PID_Code.A15_10004.toString());
-        ApplicationMain.CC.writeAndFlush(gasMsg);
+        try {
+            GasMsg gasMsg = ResultUtils.getInstance().sendSUCCESS(ApplicationMain.sign, new ArrayList(), Constants.PID_Code.A15_10002.toString());
+            ApplicationMain.CC.writeAndFlush(gasMsg);
+            gasMsg = ResultUtils.getInstance().sendSUCCESS(ApplicationMain.sign, new ArrayList(), Constants.PID_Code.A15_10004.toString());
+            ApplicationMain.CC.writeAndFlush(gasMsg);
+        }catch (Exception e){
+            LOG.error("send error:"+e.getMessage(),e);
+        }
+
     }
 
     @Override
