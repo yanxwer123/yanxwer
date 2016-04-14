@@ -118,8 +118,7 @@ public class DailyPollingByWhile extends Thread {
         tradInvo();
         //ftp上传
         ftpupload();
-        //日平衡
-        //DayBalance();
+
 
         //出库单同步
         deliveybill();

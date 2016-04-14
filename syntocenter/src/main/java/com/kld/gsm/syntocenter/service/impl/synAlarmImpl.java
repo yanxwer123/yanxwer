@@ -35,6 +35,9 @@ public class synAlarmImpl implements synAlarm {
         String path=ac.getUri("resource.services.Alarm.AddDayLost");
         //获取站级数据
         List<AlarmDailyLost>  alarmDailyLosts= alarmDailyLostDao.selectByTrans("0");
+        if (alarmDailyLosts==null||alarmDailyLosts.size()==0){
+            return 0;
+        }
         Map<String,String> hm=new param().getparam();
         //发送站级数据
         httpClient client=new httpClient();
@@ -60,7 +63,9 @@ public class synAlarmImpl implements synAlarm {
         String path=ac.getUri("resource.services.Alarm.AddShiftLost");
         //获取站级数据
         List<AlarmShiftLost>  alarmShiftLosts= alarmShiftLostDao.selectByTrans("0");
-
+        if (alarmShiftLosts==null||alarmShiftLosts.size()==0){
+            return 0;
+        }
         Map<String,String> hm=new param().getparam();
         //发送站级数据
         httpClient client=new httpClient();
@@ -90,7 +95,9 @@ public class synAlarmImpl implements synAlarm {
         String path=ac.getUri("resource.services.Alarm.AddInventory");
         //获取站级数据
         List<AlarmInventory>  alarmInventory= alarmInventoryDao.selectByTrans("0");
-
+        if(alarmInventory==null||alarmInventory.size()==0){
+            return 0;
+        }
         Map<String,String> hm=new param().getparam();
         //发送站级数据
         httpClient client=new httpClient();
@@ -121,7 +128,9 @@ public class synAlarmImpl implements synAlarm {
         String path=ac.getUri("resource.services.Alarm.AddGaTContrast");
         //获取站级数据
         List<AlarmGaTContrast>  alarmInventory= alarmGaTContrastDao.selectByTrans("0");
-
+        if (alarmInventory==null||alarmInventory.size()==0){
+            return 0;
+        }
         Map<String,String> hm=new param().getparam();
         //发送站级数据
         httpClient client=new httpClient();
@@ -151,7 +160,9 @@ public class synAlarmImpl implements synAlarm {
         String path=ac.getUri("resource.services.Alarm.AddMeasureLeak");
         //获取站级数据
         List<AlarmMeasureLeak>  alarmMeasureLeaks= alarmMeasureLeakDao.selectByTrans("0");
-
+        if (alarmMeasureLeaks==null||alarmMeasureLeaks.size()==0){
+            return 0;
+        }
         Map<String,String> hm=new param().getparam();
         //发送站级数据
         httpClient client=new httpClient();
@@ -177,7 +188,9 @@ public class synAlarmImpl implements synAlarm {
         String path=ac.getUri("resource.services.Alarm.AddSaleOut");
         //获取站级数据
         List<AlarmSaleOut>  alarmSaleOuts= alarmSaleOutDao.selectByTrans("0");
-
+        if (alarmSaleOuts==null||alarmSaleOuts.size()==0){
+            return 0;
+        }
         Map<String,String> hm=new param().getparam();
         //发送站级数据
         httpClient client=new httpClient();
@@ -209,6 +222,9 @@ public class synAlarmImpl implements synAlarm {
         //获取站级数据
         List<AlarmEquipment>  alarmEquipments= alarmEquipmentDao.selectByTrans("0");
 
+        if (alarmEquipments==null||alarmEquipments.size()==0){
+            return 0;
+        }
         Map<String,String> hm=new param().getparam();
         //发送站级数据
         httpClient client=new httpClient();
@@ -238,7 +254,9 @@ public class synAlarmImpl implements synAlarm {
         String path=ac.getUri("resource.services.Alarm.AddOilInContrast");
         //获取站级数据
         List<AlarmOilInContrast>  alarmEquipments= alarmOilInContrastDao.selectByTrans("0");
-
+        if(alarmEquipments==null||alarmEquipments.size()==0){
+            return 0;
+        }
         Map<String,String> hm=new param().getparam();
         //发送站级数据
         httpClient client=new httpClient();

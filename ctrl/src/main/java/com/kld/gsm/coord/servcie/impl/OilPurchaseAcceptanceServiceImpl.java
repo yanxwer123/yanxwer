@@ -345,7 +345,28 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
         //System.out.println("jinlaile kaishi，赋值完了 ");
         try{
             //插入到油罐进油明细表(OILCANINDETAIL)
-            String sql = oilCanIndeTail.getInsertSql("oilcanindetail");
+            //String sql = oilCanIndeTail.getInsertSql("oilcanindetail");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String datestr = sdf.format(oilCanIndeTail.getIngoodsdate());
+            String datestr2=sdf.format(oilCanIndeTail.getAccountdate());
+            String sql="insert into  oilcanindetail(" +
+                    "        Vouchno,Oilno,Oilcanno,Ingoodsdate,Ingoodsperson,Goodsbillno," +
+                    "        Inbefofootage,Inbefoliter,Inaftefootage,Inafteliter,Accountdate,Billstatus,Transflag" +
+                    "        ) values(" +
+                    " "+oilCanIndeTail.getVouchno()+
+                    " ,"+oilCanIndeTail.getOilno()+
+                    "," +oilCanIndeTail.getOilcanno()+
+                    ",'" +datestr+"'"+
+                    "," +oilCanIndeTail.getIngoodsperson()+
+                    ",'" +oilCanIndeTail.getGoodsbillno()+"'"+
+                    "," +oilCanIndeTail.getInbefofootage()+
+                    ","+oilCanIndeTail.getInbefoliter()+
+                    ","+oilCanIndeTail.getInaftefootage()+
+                    ","+oilCanIndeTail.getInafteliter()+
+                    ",'"+datestr2+"'"+
+                    "," +oilCanIndeTail.getBillstatus()+
+                    "," +oilCanIndeTail.getTransflag()+")";
+            logger.info("oilcanindetail:"+sql);
             int insert_Oilanindetail = oilcanindetailDao.insertOilcanindetail1(sql);
             //System.out.println("插入到油罐进油明细表成功");
         }catch (Exception e){

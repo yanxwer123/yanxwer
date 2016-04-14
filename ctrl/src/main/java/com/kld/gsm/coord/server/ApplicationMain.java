@@ -49,8 +49,18 @@ public class ApplicationMain {
         logger.warn("ctrl.main方法启动................");
 
         final NettyServer nettyServer = new NettyServer();
+
         ProtocolProcessor protocolProcessor = ProtocolProcessor.getInstance();
         CloudServerHandler handler = new CloudServerHandler(protocolProcessor);
+
+        //   region com.kld.gsm.syntocenter.socket
+        List<String> list = getLocalIPList();
+        for (String ip : list) {
+            nettyServer.start(ip, 8992, handler);
+            logger.warn("开始监控 --------server " + ip+":8992" );
+        }
+        //endregion
+
         logger.warn("开始加载液位仪~~~~~~~~~~~~~~~~start");
        boolean atgresult= init();
         if(!atgresult)
@@ -112,13 +122,7 @@ public class ApplicationMain {
 
         //endregion
 
-        //   region com.kld.gsm.syntocenter.socket
-        List<String> list = getLocalIPList();
-        for (String ip : list) {
-            nettyServer.start(ip, 8992, handler);
-            logger.warn("开始监控 --------server " + ip+":8992" );
-        }
-        //endregion
+
 
         //region钩子，优雅的关闭
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
