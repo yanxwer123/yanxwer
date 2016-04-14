@@ -598,6 +598,7 @@ public class DailyPollingByWhile extends Thread {
         try {
             if (canAndGunStatus == null||ApplicationMain.CC==null||ApplicationMain.count>=20) {
                 LOG.info("count:"+ApplicationMain.count);
+                ApplicationMain.count=0;
                 canAndGunStatus = new CanAndGunStatus();
                 canAndGunStatus.reg();
             }
