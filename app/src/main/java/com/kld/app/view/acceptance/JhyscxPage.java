@@ -397,7 +397,7 @@ public class JhyscxPage extends  JPanel implements Watcher {
                 }
                 billArray[i][3] = bill.get("OilCan");
                 SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                billArray[i][4] = isNotEmpty(bill.get("ArrivalTime"))?sd.format(bill.get("ArrivalTime")):"";
+                //billArray[i][4] = isNotEmpty(bill.get("ArrivalTime"))?sd.format(bill.get("ArrivalTime")):"";
                 billArray[i][5] = "1".equals(bill.get("ServiceLevel")+"")?"罐车交接":"地罐交接";
                 if(!isNotEmpty(bill.get("BeginTime"))) {
                     billArray[i][6] ="未验收";
@@ -429,6 +429,7 @@ public class JhyscxPage extends  JPanel implements Watcher {
                     registerService = Context.getInstance().getBean(IAcceptanceOdRegisterService.class);
                 }
                 AcceptanceOdRegister odRegister=registerService.selectByPrimaryKey(bill.get("DeliveryNo").toString());
+                billArray[i][4]=isNotEmpty(odRegister.getInstationtime())?sd.format(odRegister.getInstationtime()):"";
                 billArray[i][17]=odRegister.getShift()==null?"":odRegister.getShift().toString();
                 //endregion
             }
