@@ -40,9 +40,16 @@ public class StockThead extends Thread {
         String pid = rt.getName();
         MDC.put("PID", pid);
         sysManageCanInfodao = Context.getInstance().getBean(SysManageCanInfoDao.class);
+        boolean firstflag = true;
         while(true){
+            //启动先睡眠十秒钟
             try {
-                sleep(TimeTaskPar.get("sdkjgsj") * 1000);
+                if(firstflag) {
+                    logger.info("时点库存第一次进入睡眠十秒开始");
+                    sleep(10 * 1000);
+                    logger.info("时点库存第一次进入睡眠十秒结束");
+                    firstflag = false;
+                }
             } catch (InterruptedException e) {
                 logger.error("时点库存sleep:" + e);
                 e.printStackTrace();
@@ -78,6 +85,12 @@ public class StockThead extends Thread {
                     }
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
+            }
+            try {
+                sleep(TimeTaskPar.get("sdkjgsj") * 1000);
+            } catch (InterruptedException e) {
+                logger.error("时点库存sleep:" + e);
+                e.printStackTrace();
             }
             //endregion
         }
