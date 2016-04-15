@@ -53,7 +53,7 @@
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_daily_TradeInventory" >
-    insert into oss_daily_TradeInventory (MacNo, TTC, TakeDate, 
+    replace into oss_daily_TradeInventory (MacNo, TTC, TakeDate,
       OilGun, NodeNo, OilCan, 
       OilNo, OpeTime, StockDate, 
       StockTime, OilL, StandardL, 
