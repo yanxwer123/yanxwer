@@ -25,7 +25,7 @@ Created Date 2015/11/19
 */
 
 public class DailyPollingByWhile extends Thread {
-    private static CanAndGunStatus canAndGunStatus;
+
 
     @Autowired
     private synMonitor sys;
@@ -596,15 +596,15 @@ public class DailyPollingByWhile extends Thread {
                 ||ApplicationMain.canversion.size()==0||ApplicationMain.Host==null||"".equals(ApplicationMain.Host)
                 ||ApplicationMain.oilcanmap==null||ApplicationMain.oilcanmap.size()==0) return;
         try {
-            if (canAndGunStatus == null||ApplicationMain.CC==null||ApplicationMain.count>=20) {
+            if (ApplicationMain.canAndGunStatus == null||ApplicationMain.CC==null||ApplicationMain.count>=20) {
                 LOG.info("count:"+ApplicationMain.count);
                 ApplicationMain.count=0;
-                canAndGunStatus = new CanAndGunStatus();
-                canAndGunStatus.reg();
+                ApplicationMain.canAndGunStatus = new CanAndGunStatus();
+                ApplicationMain.canAndGunStatus.reg();
             }
             if (!"".equals(ApplicationMain.NodeNo) && ApplicationMain.canversion != null && ApplicationMain.oilcanmap != null) {
                 LOG.info("send begin");
-                canAndGunStatus.send();
+                ApplicationMain.canAndGunStatus.send();
             }
             LOG.info("TankandGunRealStatus begin");
         }

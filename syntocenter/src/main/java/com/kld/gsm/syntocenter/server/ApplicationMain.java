@@ -52,6 +52,7 @@ public class ApplicationMain  implements Watcher {
     public static String sign = "";
     public static Watcher watcher  =new ApplicationMain();
     public static   action action = new action();
+    public static CanAndGunStatus canAndGunStatus;
     private static final Logger LOG = Logger.getLogger("syntocenter");
     public static void main(String[] args) throws Exception{
         ApplicationRunSingle.makeSingle("syntocenter");
