@@ -2,6 +2,7 @@ package com.kld.gsm.ATG.utils;
 
 
 import com.kld.gsm.util.JsonMapper;
+import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -14,6 +15,7 @@ Created BY niyang
 Created Date 2015/11/18
 */
 public class httpClient {
+    Logger logger = Logger.getLogger(httpClient.class);
     private String result;
 
     public String GetResult(){return result;}
@@ -29,6 +31,8 @@ public class httpClient {
         String params=mapper.writeValueAsString(json);*/
 
         String params = new JsonMapper().toJson(json);
+        logger.info("params:"+params);
+        logger.info("path:"+path);
         //System.out.println(path);
         byte[] data = params.getBytes(encoding);
         URL url =new URL(path);
