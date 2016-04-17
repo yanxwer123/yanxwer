@@ -149,12 +149,13 @@ public class synCanAndGunInfo extends Thread {
                     Element element = (Element) entry.getValue();
                     macLogInfo = (MacLogInfo) element.getObjectValue();
                     logger.info("list add cache："+macLogInfo.toString());
+                    macLogInfos.add(macLogInfo);
                 } catch (Exception e) {
-                    logger.error(e.getMessage());
+                    logger.error("add error:"+e.getMessage());
                 }
-                macLogInfos.add(macLogInfo);
-            }
 
+            }
+        logger.info("macLogInfos.size"+macLogInfos.size());
         for (int i = 0; i < macLogInfos.size(); i++) {
             // region获取罐号
             GunInfo gunInfo = new GunInfo();

@@ -34,7 +34,7 @@
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_daily_pumpDigitShift" >
-    insert into oss_daily_pumpDigitShift (Shift, OilGun, NodeNo, 
+    replace into oss_daily_pumpDigitShift (Shift, OilGun, NodeNo,
       TakeDate, OilNo, OilName, 
       ToPump, HoPump, PumpNum, 
       PayDate, TranStatus, OUCode

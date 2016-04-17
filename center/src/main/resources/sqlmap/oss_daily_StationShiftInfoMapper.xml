@@ -53,7 +53,7 @@
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_daily_StationShiftInfo" >
-    insert into oss_daily_StationShiftInfo (Shift, NodeNo, Successor, 
+    replace into oss_daily_StationShiftInfo (Shift, NodeNo, Successor,
       SucceedTIme, ShiftOperator, ShiftTime, 
       TranStatus, OUCode)
     values (#{shift,jdbcType=INTEGER}, #{nodeno,jdbcType=VARCHAR}, #{successor,jdbcType=VARCHAR}, 

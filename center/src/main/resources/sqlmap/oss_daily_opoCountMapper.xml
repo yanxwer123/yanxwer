@@ -35,7 +35,7 @@
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_daily_opoCount" >
-    insert into oss_daily_opoCount (Shift, OilNo, NodeNo, 
+    replace into oss_daily_opoCount (Shift, OilNo, NodeNo,
       TakeDate, OilName, BackCanL, 
       OilCan, PumpNum, OilTotal, 
       Amount, AccountDate, TranStatus, 
