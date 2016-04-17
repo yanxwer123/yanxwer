@@ -159,6 +159,7 @@ public class synCanAndGunInfo extends Thread {
             // region获取罐号
             GunInfo gunInfo = new GunInfo();
             MacLogInfo map = macLogInfos.get(i);
+            logger.info("map:"+map.toString());
             //枪map
             gunInfo.setOilGun((int)map.getGunNum());
             if (map.getGunStatus()!= null) {
@@ -171,10 +172,14 @@ public class synCanAndGunInfo extends Thread {
         }
     }catch( Exception e)
     {
-        logger.error("同步枪状态:" + e.getMessage());
+        logger.error("同步枪状态:" + e.getMessage(),e);
     }
 
     try{
+        if (gunInfos==null||gunInfos.size()<1){
+            logger.info("枪数据为空");
+            return;
+        }
         logger.info("枪地址："+gunpath);
         Map<String, String> hm = new HashMap<String, String>();
         hm.put("NodeNo",nodeno);
