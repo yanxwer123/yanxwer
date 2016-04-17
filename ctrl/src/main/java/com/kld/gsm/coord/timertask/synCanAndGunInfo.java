@@ -140,7 +140,7 @@ public class synCanAndGunInfo extends Thread {
             logger.info("macLogMap.size():" + macLogMap.size());
             List<MacLogInfo> macLogInfos = new ArrayList<MacLogInfo>();
             Iterator<Map.Entry> it = macLogMap.entrySet().iterator();
-            List list = new ArrayList();
+            /*List list = new ArrayList();*/
             logger.info("macLogMap.entrySet().size():" + macLogMap.entrySet().size());
             while (it.hasNext()) {
                 MacLogInfo macLogInfo = new MacLogInfo();
@@ -152,7 +152,7 @@ public class synCanAndGunInfo extends Thread {
                 } catch (Exception e) {
                     logger.error(e.getMessage());
                 }
-                list.add(macLogInfo);
+                macLogInfos.add(macLogInfo);
             }
 
         for (int i = 0; i < macLogInfos.size(); i++) {
