@@ -158,14 +158,14 @@ public class synCanAndGunInfo extends Thread {
         for (int i = 0; i < macLogInfos.size(); i++) {
             // region获取罐号
             GunInfo gunInfo = new GunInfo();
-            Map<String, ?> map = (Map) (macLogInfos.get(i));
+            MacLogInfo map = macLogInfos.get(i);
             //枪map
-            gunInfo.setOilGun(Integer.parseInt(map.get("GunNum").toString()));
-            if (map.get("GunStatus") != null) {
-                gunInfo.setOilGunStatus(GunStatusEnum.valueOf(map.get("GunStatus").toString()).value());
+            gunInfo.setOilGun((int)map.getGunNum());
+            if (map.getGunStatus()!= null) {
+                gunInfo.setOilGunStatus(map.GunStatus.value());
             }
             gunInfo.setGetTime(new Date());
-            gunInfo.setPumpUp(map.get("PumpReadout") == null ? null : map.get("PumpReadout").toString());
+            gunInfo.setPumpUp(map.PumpReadout == null ? "" : map.PumpReadout.toString());
             gunInfo.setNodeno(nodeno);
             gunInfos.add(gunInfo);
         }
