@@ -145,7 +145,7 @@ public class CanAndGunStatus implements Watcher {
             }
             try {
                 //获取action地址
-               // action ac = new action();
+                // action ac = new action();
                 String path =ApplicationMain.canaddr;
                 //System.out.println("TankandGunRealStatus:"+path);
                 Map<String, String> hm = new param().getparam();

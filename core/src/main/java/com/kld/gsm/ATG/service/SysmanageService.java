@@ -22,4 +22,6 @@ public interface SysmanageService {
     SysManageDepartment getdeptinfo();
 
     List<SysManageCubage> selectCubageInused();
+
+    List<SysManageCanInfo> getCaninfos();
 }

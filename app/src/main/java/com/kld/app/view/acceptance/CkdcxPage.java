@@ -159,7 +159,7 @@ public class CkdcxPage  extends  JPanel{
             AcceptanceOdRegister odRegister= odRegisterService.selectByPrimaryKey(bill.getDeliveryno());
             if (odRegister==null){
                 Object[] options = {"确定","取消"};
-                int response=JOptionPane.showOptionDialog(null, "请确认罐车是否进站", "进货验收", JOptionPane.YES_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                int response=JOptionPane.showOptionDialog(null, "请确认罐车是否进站（关联出库单，请点击取消）", "进货验收", JOptionPane.YES_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
                 if (response!=0){
                     return;
                 }
@@ -167,8 +167,6 @@ public class CkdcxPage  extends  JPanel{
         }catch (Exception e){
             LOG.error(this.getClass()+"jhys:"+e.getMessage());
         }
-
-
         if (bill==null)return;
        /* boolean iswhd=false;
         if (deliveryService==null){

@@ -10,14 +10,14 @@ package com.kld.gsm.syntocenter.timetask;
  */
 public class TimeTask {
     DailyPollingByWhile dailyPollingByWhile;
-    TransCanAndGunStatusPolling transCanAndGunStatusPolling;
+   // TransCanAndGunStatusPolling transCanAndGunStatusPolling;
     ThirtyPolling thirtyPolling;
     public void start(){
         //开始执行上传
         dailyPollingByWhile = new DailyPollingByWhile();
         dailyPollingByWhile.start();
-        transCanAndGunStatusPolling = new TransCanAndGunStatusPolling();
-        transCanAndGunStatusPolling.start();
+      /*  transCanAndGunStatusPolling = new TransCanAndGunStatusPolling();
+        transCanAndGunStatusPolling.start();*/
         thirtyPolling = new ThirtyPolling();
         thirtyPolling.start();
     }

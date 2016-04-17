@@ -100,7 +100,7 @@ public class ApplicationMain  implements Watcher {
         //endregion
 
         //region link ctrl
-            CC = reLink();
+           /* CC = reLink();
             System.out.println("Main-------------");
             System.out.println("cc:" + CC);
             System.out.println("watch:" + watch);
@@ -109,7 +109,7 @@ public class ApplicationMain  implements Watcher {
             //System.out.println("send sck");
             watch.addWetcher("A", watcher);
             GasMsg idel = ResultUtils.getInstance().sendSUCCESS(sign, new ArrayList(), Constants.PID_Code.A15_10000.toString());
-            CC.writeAndFlush(idel);
+            CC.writeAndFlush(idel);*/
         //endregion
 
         synPurchase ss=springFactory.getInstance().getBean(synPurchase.class);

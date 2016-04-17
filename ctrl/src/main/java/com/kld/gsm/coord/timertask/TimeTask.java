@@ -40,6 +40,9 @@ public class TimeTask {
     //文件库存
     static FileStockThread fileStockThread;
 
+    //罐枪同步
+    static synCanAndGunInfo synCanAndGunInfoThread;
+
     /**
      * 开始线程
      */
@@ -134,6 +137,10 @@ public class TimeTask {
             //文件库存
             fileStockThread=new FileStockThread();
             fileStockThread.start();
+
+            //罐枪同步
+            synCanAndGunInfoThread=new synCanAndGunInfo();
+            synCanAndGunInfoThread.start();
         }catch(Exception e){
             logger.error(e);
         }

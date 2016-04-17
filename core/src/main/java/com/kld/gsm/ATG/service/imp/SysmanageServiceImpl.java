@@ -1,15 +1,13 @@
 package com.kld.gsm.ATG.service.imp;
 
 import com.fasterxml.jackson.databind.JavaType;
-import com.kld.gsm.ATG.dao.SysManageAlarmParameterDao;
-import com.kld.gsm.ATG.dao.SysManageCubageDao;
-import com.kld.gsm.ATG.dao.SysManageCubageInfoDao;
-import com.kld.gsm.ATG.dao.SysManageDepartmentDao;
+import com.kld.gsm.ATG.dao.*;
 import com.kld.gsm.ATG.domain.*;
 import com.kld.gsm.ATG.service.SysmanageService;
 import com.kld.gsm.ATG.utils.action;
 import com.kld.gsm.ATG.utils.httpClient;
 import com.kld.gsm.ATG.utils.param;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +36,8 @@ public class SysmanageServiceImpl implements SysmanageService {
     @Resource
     private SysManageDepartmentDao sysManageDepartmentDao;
 
+    @Autowired
+    private SysManageCanInfoDao sysManageCanInfoDao;
     /*
     * 站级系统接口 实现 更新容积表主表 明细表
     * */
@@ -219,5 +219,10 @@ public class SysmanageServiceImpl implements SysmanageService {
             e.printStackTrace();
             return 0;
         }
+    }
+
+    @Override
+    public List<SysManageCanInfo> getCaninfos() {
+        return  sysManageCanInfoDao.selectAll();
     }
 }

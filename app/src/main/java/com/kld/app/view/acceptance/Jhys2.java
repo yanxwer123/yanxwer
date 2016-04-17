@@ -299,6 +299,7 @@ public class Jhys2 extends JPanel {
                     acceptanceOdRegister.setDeliveryno(tableModel.getValueAt(0, 0).toString());
                 }
                 acceptanceOdRegister.setPlanl(cbill.getPlanl());
+                LOG.error("cill_planL_info:"+cbill.getPlanl());
                 acceptanceOdRegister.setManualNo(tableModel.getValueAt(0, 0).toString());
                 acceptanceOdRegister.setCreatetime(new Date());
                 acceptanceOdRegister.setTranstatus("0");

@@ -183,6 +183,7 @@ public class JhysNewPage extends JOptionPane implements Watcher  {
     }
 
     public void addbill(AcceptanceDeliveryBills  bill){
+        LOG.error("bill_plal_info:"+bill.getPlanl());
         for (int i=0;i<tabbedPane.getTabCount();i++){
              if(tabbedPane.getTitleAt(i).toString().equals(bill.getDeliveryno()))
              {

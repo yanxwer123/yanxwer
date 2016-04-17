@@ -24,6 +24,7 @@ public class ATGManager {
     static Logger logger = Logger.getLogger(ATGManager.class);
     static ISaleOutAlarmService saleOutAlarmService = Context.getInstance().getBean(ISaleOutAlarmService.class);
     static int is_init = 1;//是否已经初始化液位仪，初始化成功以后改为0
+    static atg_init_in_t inputdata;//参数
 
     /**
      * 加载配置信息
@@ -33,6 +34,7 @@ public class ATGManager {
      */
     public static int init(atg_init_in_t inputData) {
         ///smc20/gsm/logs/ATG/
+        inputdata=inputData;
         File file = new File(inputData.strLogPath);
         if(!file.exists()){
             logger.info("如果日志路径不存在，则创建");
@@ -76,6 +78,14 @@ public class ATGManager {
      */
     private static List<atg_stock_data_out_t> getAllStock() {
         if(is_init!=0) {
+            try {
+                clear();
+                init(inputdata);
+                logger.info("液位仪重新初始化结束。");
+            }catch (Exception e){
+                logger.error("液位仪重新初始化失败！");
+            }
+
             return null;
         }
         //查询到所有油罐编号

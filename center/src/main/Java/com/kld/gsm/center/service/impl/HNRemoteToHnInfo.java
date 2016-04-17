@@ -6,6 +6,9 @@ import com.kld.gsm.center.domain.hn.*;
 import com.kld.gsm.center.domain.hn.HNGunInfo;
 import com.kld.gsm.center.service.HNGunInfoService;
 import com.kld.gsm.center.service.HNRemoteToHnService;
+import com.kld.gsm.center.util.JsonMapper;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,6 +19,8 @@ import java.util.*;
  */
 @Service
 public class HNRemoteToHnInfo implements HNRemoteToHnService {
+    private final static Log logger = LogFactory.getLog(HNRemoteToHnInfo.class);
+
     @Resource
     private HNRemoteToHnMapper hnRemoteToHnMapper;
     public List<HNRemote> GetRemotetoHnInfo(String nodeno) {
@@ -30,6 +35,12 @@ public class HNRemoteToHnInfo implements HNRemoteToHnService {
             hnRemote.setNodeno(array[i]);
             hnRemote.setPdinfos(info);
             remotes.add(hnRemote);
+        }
+        try {
+            String js = new JsonMapper().toJson(remotes);
+            logger.info(js);
+        }catch (Exception e){
+            logger.error(e.getMessage(),e);
         }
         return remotes;
     }
