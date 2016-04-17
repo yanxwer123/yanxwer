@@ -170,7 +170,7 @@ public class OilDayStatImpl implements OilDayStatService {
 
                         if (dailyDailyBalance.getOilno().equals(findByShiftList.get(i).get("OilNo"))) {
                             log.info("Get Shift Receivel:" + findByShiftList.get(i).get("RealGetL"));
-                            dailyDailyBalance.setReceivel(BigDecimal.valueOf((Double) findByShiftList.get(i).get("RealGetL")));//期间进货_进货数量L
+                            dailyDailyBalance.setReceivel(BigDecimal.valueOf((Double) (findByShiftList.get(i).get("RealGetL")==null?"0":findByShiftList.get(i).get("RealGetL"))));//期间进货_进货数量L
                             break;
                         }
                     }
