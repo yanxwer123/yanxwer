@@ -71,6 +71,10 @@ public class synCanAndGunInfo extends Thread {
         //todo nodeno
         try {
             logger.info("get nodeno begin");
+            if (sysmanageService==null){
+                logger.info("sysmanageService is null");
+                sysmanageService= Context.getInstance().getBean(SysmanageService.class);
+            }
             SysManageDepartment department=sysmanageService.getdeptinfo();
             nodeno=department.getSinopecnodeno();
             logger.info("get nodeno end");
@@ -79,6 +83,10 @@ public class synCanAndGunInfo extends Thread {
         }
         //todo canverison
         try{
+            if (sysmanageService==null){
+                logger.info("sysmanageService is null");
+                sysmanageService= Context.getInstance().getBean(SysmanageService.class);
+            }
             logger.info("load can and version mapping begin");
             List<SysManageCubage> sysManageCubages=sysmanageService.selectCubageInused();
             if (canversion==null)canversion=new HashMap<String, String>();
@@ -92,6 +100,10 @@ public class synCanAndGunInfo extends Thread {
         }
         //todo oilcanmap
         try{
+            if (sysmanageService==null){
+                logger.info("sysmanageService is null");
+                sysmanageService= Context.getInstance().getBean(SysmanageService.class);
+            }
             logger.info("load can and oilno mapping begin");
             List<SysManageCanInfo> canInfos= sysmanageService.getCaninfos();
             oilcanmap=new HashMap<String,Integer>();
@@ -112,10 +124,10 @@ public class synCanAndGunInfo extends Thread {
         List<SysManageCanInfo> oilCanInforList = sysManageCanInfodao.selectAll();
         logger.info("get all can" + oilCanInforList);
         tankNo = new ArrayList();
-        logger.info("can no：" + tankNo);
         for (SysManageCanInfo oilcan : oilCanInforList) {
             tankNo.add(oilcan.getOilcan());
         }
+        logger.info("can no：" + tankNo);
     }
 
     void synguninfo() {
