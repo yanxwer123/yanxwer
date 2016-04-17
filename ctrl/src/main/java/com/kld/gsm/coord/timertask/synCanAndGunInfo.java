@@ -176,7 +176,8 @@ public class synCanAndGunInfo extends Thread {
 
     try{
         logger.info("枪地址："+gunpath);
-        Map<String, String> hm = new param().getparam();
+        Map<String, String> hm = new HashMap<String, String>();
+        hm.put("NodeNo",nodeno);
         //发送站级数据
         httpClient client = new httpClient();
         client.request(gunpath, gunInfos, hm);
@@ -228,7 +229,8 @@ public class synCanAndGunInfo extends Thread {
         }
         try {
             //获取action地址
-            Map<String, String> hm = new param().getparam();
+            Map<String, String> hm = new HashMap<String, String>();
+            hm.put("NodeNo",nodeno);
             //发送站级数据
             httpClient client = new httpClient();
             client.request(canpath, canInfos, hm);
