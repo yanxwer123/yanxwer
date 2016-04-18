@@ -170,7 +170,7 @@
   <!--根据班次号更新Account-->
   <update id="updateByShift"  parameterType="java.util.Map"  >
     <![CDATA[ update oss_daily_opoCount
-    set AccountDate = #{accountdate}
+    set AccountDate = #{accountdate},TranStatus=0
     WHERE Shift>=#{minshift} AND Shift <=#{maxshift}]]>
   </update>
 

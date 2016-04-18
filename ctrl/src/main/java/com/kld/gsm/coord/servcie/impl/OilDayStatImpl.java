@@ -38,6 +38,8 @@ public class OilDayStatImpl implements OilDayStatService {
     @Autowired
     DailyDailyBalanceDao dailyDailyBalanceDao;
     @Autowired
+    DailyPumpDigitShiftDao dailyPumpDigitShiftDao;
+    @Autowired
     DailyTankShiftDao dailyTankShiftDao;
     @Autowired
     DailyTradeAccountDao dailyTradeAccountDao;
@@ -297,6 +299,7 @@ public class OilDayStatImpl implements OilDayStatService {
             dailyTankShiftDao.updateByShift(map);
             dailyTradeAccountDao.updateByShift(map);
             dailyOpoCountDao.updateByShift(map);
+            dailyPumpDigitShiftDao.updateByShift(map);
         }catch (Exception e)
         {
             log.error("Update Shift Error！"+e.getMessage());
