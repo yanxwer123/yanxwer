@@ -286,7 +286,7 @@ public class Main extends JFrame implements Watcher {
         Icon.setBounds(730, 20, 20, 20);
         titlePanel.add(Icon);
 
-        //退出z
+        //退出
         JLabel closeLabel = new JLabel("退出");
         closeLabel.setFont(Constant.TITLE_CONTENT_FONT);
         closeLabel.setBounds(750, 24, 40, 12);
@@ -344,8 +344,6 @@ public class Main extends JFrame implements Watcher {
             } else {
                 JOptionPane.showMessageDialog(null, "操作员未登录,请登录后操作", "信息提示", JOptionPane.INFORMATION_MESSAGE);
             }
-
-
         }
 
     }
@@ -398,19 +396,19 @@ public class Main extends JFrame implements Watcher {
                  System.out.println("Main.ReLink[" + i + "]....");
                 //如果未成功连接，则20秒左右弹出一次提示
                 if (i == 8) {
-                    JOptionPane.showMessageDialog(null, "与主调度未能成功建立连接,正在尝试重连...", "错误提示", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "与后台服务未能成功建立连接，点击确定重连...", "错误提示", JOptionPane.ERROR_MESSAGE);
                     //i = 0;
                     // System.exit(0);
                 }
                 //尝试60秒后，未能成功连接，系统退出
                 if (i == 16) {
-                    JOptionPane.showMessageDialog(null, "与主调度未能成功建立连接,请尝试重启...", "错误提示", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "与后台服务未能成功建立连接,点击确定尝试重启...", "错误提示", JOptionPane.ERROR_MESSAGE);
                     //i = 0;
                     System.exit(0);
                 }
             } catch (InterruptedException e) {
                 logger.info("重连出错.......");
-                JOptionPane.showMessageDialog(null, "与主调度未能成功建立连接,请尝试重启...", "错误提示", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "未能与后台服务建立连接,点击确定尝试重启...", "错误提示", JOptionPane.ERROR_MESSAGE);
                 System.exit(0);
             }
             i++;
