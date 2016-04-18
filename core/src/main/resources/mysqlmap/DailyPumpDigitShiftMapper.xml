@@ -160,4 +160,9 @@
     <include refid="Base_Column_List"/>
     FROM oss_daily_pumpDigitShift WHERE TranStatus=#{trans,jdbcType=VARCHAR}
   </select>
+  <update id="updateByShift"  parameterType="java.util.Map"  >
+    <![CDATA[ update oss_daily_pumpDigitShift
+    set PayDate = #{accountdate},TranStatus=0
+    WHERE Shift>=#{minshift} AND Shift <=#{maxshift}]]>
+  </update>
 </mapper>

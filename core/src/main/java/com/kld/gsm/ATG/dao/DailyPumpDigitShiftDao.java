@@ -1,6 +1,7 @@
 package com.kld.gsm.ATG.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kld.gsm.ATG.common.Repository.MySqlRepository;
 import com.kld.gsm.ATG.domain.DailyOilDailyRecord;
@@ -22,4 +23,6 @@ public interface DailyPumpDigitShiftDao {
     
     List<com.kld.gsm.ATG.domain.DailyPumpDigitShift> selectByShift(String shift);
     List<DailyPumpDigitShift> selectByTrans(String stauts);
+
+    int updateByShift(Map<String,String> map);
 }
