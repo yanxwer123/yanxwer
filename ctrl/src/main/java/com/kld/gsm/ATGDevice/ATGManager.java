@@ -78,15 +78,8 @@ public class ATGManager {
      */
     private static List<atg_stock_data_out_t> getAllStock() {
         if(is_init!=0) {
-            try {
-                clear();
-                init(inputdata);
-                logger.info("液位仪重新初始化结束。");
-            }catch (Exception e){
-                logger.error("液位仪重新初始化失败！");
-            }
-
-            return null;
+          logger.info("液位仪初始化失败！");
+          return null;
         }
         //查询到所有油罐编号
         List<Integer> oilCanNo = new ArrayList<Integer>();
