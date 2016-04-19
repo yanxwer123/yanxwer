@@ -80,8 +80,8 @@ public class RTTimeStockThead extends Thread{
             public Integer call() throws Exception {
                 try {
                     logger.info("获取实时罐存"+new Date().toString());
-                    ATGManager.getStockByThread();
-                    return 1;
+                    boolean res=ATGManager.getStockByThread();
+                    return res==true?1:0;
                 }catch (Exception e){
                     return 0;
                 }

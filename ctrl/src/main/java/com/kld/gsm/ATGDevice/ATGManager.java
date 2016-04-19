@@ -222,6 +222,10 @@ public class ATGManager {
     }
 
     public static boolean getStockByThread(){
+        if(is_init!=0) {
+            logger.info("液位仪初始化失败");
+            return false;
+        }
         List<atg_stock_data_out_t> outList = null;
         try{
             logger.info("从液位仪获取油水体积...");
