@@ -113,16 +113,16 @@
       and funccode = #{funccode,jdbcType=VARCHAR}
   </update>
   <delete id="deleteRoleFuncByRolecode" parameterType="java.lang.String">
-    delete from sys_rolefuncrel where rolecode=#{rolecode}
+    delete from Sys_rolefuncrel where rolecode=#{rolecode}
   </delete>
   <insert id="insertList" parameterType="java.util.List">
-    INSERT into sys_rolefuncrel (rolecode,funccode)VALUES
+    INSERT into Sys_rolefuncrel (rolecode,funccode)VALUES
     <foreach collection="list" item="item" index="index" separator="," >
       (#{item.rolecode},#{item.funccode})
     </foreach>
   </insert>
 <select id="selectRCBylist" parameterType="java.util.List" resultType="com.kld.gsm.center.domain.Sys_rolefuncrel" >
-  select * from sys_rolefuncrel where  rolecode in (
+  select * from Sys_rolefuncrel where  rolecode in (
   <foreach collection="list" item="item" index="index" separator="," >
     #{item.rolecode}
   </foreach>

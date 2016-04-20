@@ -18,7 +18,7 @@
 <div id="toolbar">
     <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" onclick="addDict()" plain="true">新增</a>
     <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-edit" onclick="editDict()" plain="true">修改</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove" onclick="dellDict()" plain="true">删除</a>
+##    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove" onclick="dellDict()" plain="true">删除</a>
 </div>
 <div id="result" class="easyui-panel"  >
     <table id="tt" class="easyui-datagrid">
@@ -41,10 +41,16 @@
                 <td style="padding-top:10px">Value值</td>
                 <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="addValue" name="value" data-options="precision:2"/></td>
             </tr>
-            <tr>
                 <td style="padding-top:10px">code值</td>
                 <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="addCode" name="code" data-options="precision:2" /></td>
+                <td style="padding-top:10px">状态</td>
+                <td style="padding-top:10px">
+                    <select id="dictAddstate" name="IsDel" class="easyui-comboBox"  data-options="required:true,precision:2" style="width:136px;">
+                        <option value="0">生效</option>
+                        <option value="1">无效</option>
+                    </select></td>
             </tr>
+
         </table>
         <div style="padding:5px;text-align:center;">
             <a  class="easyui-linkbutton" onclick="submitForm()">添加</a>
@@ -74,6 +80,19 @@
             <tr>
                 <td style="padding-top:10px">code值</td>
                 <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="editCode" name="code" data-options="precision:2" /></td>
+                <td style="padding-top:10px">状态</td>
+                <td style="padding-top:10px">
+                    <input id="dictEditstate" name="IsDel" class="easyui-combobox"  data-options="
+                        valueField: 'id',editable:false,
+                        textField: 'text',
+                        data: [{
+                                    id: '0',
+                                    text: '有效'
+                                },{
+                                    id: '1',
+                                    text: '无效'
+                                }]"  style="width:136px;" />
+                </td>
             </tr>
         </table>
         <div style="padding:5px;text-align:center;">
@@ -91,7 +110,8 @@
         {field:'ParentID',title:'父级编码',width:5,align:'center'},
         {field:'Name',title:'名称',width:5,align:'center'},
         {field:'Value',title:'Value值',width:5,align:'center'},
-        {field:'Code',title:'code值',width:5,align:'center'}
+        {field:'Code',title:'code值',width:5,align:'center'},
+        {field:'IsDel',title:'状态',width:5,align:'center'}
     ]]
     var dictID;
     var parentID;
@@ -114,6 +134,7 @@
     }
     function addDict () {
         $('#windict').window('open');
+
     }
     function editDict() {
         var row = $('#tt').datagrid('getSelected');
@@ -125,6 +146,7 @@
             $("#editName").textbox("setValue",row.Name);
             $("#editValue").textbox("setValue",row.Value);
             $("#editCode").textbox("setValue",row.Code);
+            $("#dictEditstate").combobox('setValue', row.IsDel);
         } else {
             $.messager.alert("提示", "请选择要修改的行！", "info");
         }
@@ -165,7 +187,7 @@
             }
         });
     }
-    function dellDict() {
+   /* function dellDict() {
         var delrow = $('#tt').datagrid('getSelected');
         if (delrow == null) {
             $.messager.alert("提示", "请选择要删除的行！", "info");
@@ -194,5 +216,5 @@
                 });
             });
         }
-    }
+    }*/
 </script>

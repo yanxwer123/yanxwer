@@ -28,7 +28,7 @@
     SELECT a.*,b.OUName,c.OilName from
     oss_alarm_ShiftLost a
     inner join oss_sys_OrgUnit b on a.OUCode=b.OUCode
-    left outer JOIN oss_sysmanage_oiltype c on a.OilNo=c.OilNo
+    left outer JOIN oss_sysmanage_oilType c on a.OilNo=c.OilNo
     WHERE 1=1
     <if test="start != null">
     <![CDATA[ AND  a.ShiftTime>=#{start,jdbcType=VARCHAR}]]>
@@ -45,7 +45,7 @@
     SELECT a.*,b.OUName,c.OilName from
     oss_alarm_ShiftLost a
     inner join oss_sys_OrgUnit b on a.OUCode=b.OUCode
-    left outer JOIN oss_sysmanage_oiltype c on a.OilNo=c.OilNo
+    left outer JOIN oss_sysmanage_oilType c on a.OilNo=c.OilNo
     WHERE 1=1
   <if test="start != null">
     <![CDATA[ AND  ShiftTime>=#{start,jdbcType=VARCHAR}]]>

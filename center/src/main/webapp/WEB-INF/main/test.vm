@@ -1,0 +1,114 @@
+#set($layout="layout/emptylayout.vm")
+#set($menuTitle="油站")
+<div id="map" style="height:500px; width: 100%"></div>
+<script src="/resources/js/build/dist/echarts.js"></script>
+<script type="text/javascript">
+    require.config({
+        paths: {
+            echarts: '/resources/js/build/dist'
+        }
+    });
+    // 使用
+    require(
+            [
+                'echarts',
+                'echarts/chart/map'
+            ],
+            function (ec) {
+                // --- 地图 ---
+                var myChart = ec.init(document.getElementById('map'));
+                var cityMap = {
+                    "长沙市": "430100",
+                    "株洲市": "430200",
+                    "湘潭市": "430300",
+                    "衡阳市": "430400",
+                    "邵阳市": "430500",
+                    "岳阳市": "430600",
+                    "常德市": "430700",
+                    "张家界市": "430800",
+                    "益阳市": "430900",
+                    "郴州市": "431000",
+                    "永州市": "431100",
+                    "怀化市": "431200",
+                    "娄底市": "431300",
+                    "湘西土家族苗族自治州": "433100"
+
+                };
+                var curIndx = 0;
+                var mapType = [];
+                var mapGeoData = require('echarts/util/mapData/params');
+                for (var city in cityMap) {
+                    mapType.push(city);
+                    // 自定义扩展图表类型
+                    mapGeoData.params[city] = {
+                        getGeoJson: (function (c) {
+                            var geoJsonName = cityMap[c];
+                            return function (callback) {
+                                $.getJSON('/resources/js/geoJson/china-main-city/' + geoJsonName + '.json', callback);
+                            }
+                        })(city)
+                    }
+                }
+
+                var ecConfig = require('echarts/config');
+                var zrEvent = require('zrender/tool/event');
+                document.getElementById('map').onmousewheel = function (e){
+                    var event = e || window.event;
+                    curIndx += zrEvent.getDelta(event) > 0 ? (-1) : 1;
+                    if (curIndx < 0) {
+                        curIndx = mapType.length - 1;
+                    }
+                    var mt = mapType[curIndx % mapType.length];
+                    option.series[0].mapType = mt;
+                    option.title.subtext = mt + ' （滚轮或点击切换）';
+                    myChart.setOption(option, true);
+                    zrEvent.stop(event);
+                };
+                myChart.on(ecConfig.EVENT.MAP_SELECTED, function (param){
+                    var mt = param.target;
+                    var len = mapType.length;
+                    var f= false;
+                    for(var i=0;i<len;i++){
+                        if(mt == mapType[i]){
+                            f =true;
+                            mt=mapType[i];
+                        }
+                    }
+                    if(!f){
+                        mt='湖南';
+                    }
+                    option.series[0].mapType = mt;
+
+                    option.title.subtext = mt + ' （滚轮或点击切换）';
+                    myChart.setOption(option, true);
+                });
+                option = {
+                    title: {
+                        text : '全国344个主要城市（县）地图 by Pactera 陈然',
+                        link : 'http://www.pactera.com/',
+                        subtext : '长沙市 （滚轮或点击切换）'
+                    },
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: '滚轮或点击切换<br/>{b}'
+                    },
+                    series : [
+                        {
+                            name: '全国344个主要城市（县）地图',
+                            type: 'map',
+                            mapType: '湖南',
+                            selectedMode : 'single',
+                            itemStyle:{
+                                normal:{label:{show:true}},
+                                emphasis:{label:{show:true}}
+                            },
+                            data:[
+
+                            ]
+                        }
+                    ]
+                };
+                myChart.setOption(option, true);
+            }
+    );
+</script>

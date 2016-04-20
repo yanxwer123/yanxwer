@@ -309,7 +309,7 @@
     (select * from oss_monitor_TimeInventory ORDER BY storetime DESC) as temp
     GROUP BY oucode,OilCan ORDER BY storetime DESC
     ) a  inner join oss_sys_OrgUnit b on a.OUCode=b.OUCode
-    left outer JOIN oss_sysmanage_oiltype c on a.OilNo=c.OilNo
+    left outer JOIN oss_sysmanage_oilType c on a.OilNo=c.OilNo
     WHERE 1=1
     <if test="start != null">
       <![CDATA[ AND StoreTime>=#{start,jdbcType=VARCHAR}]]>

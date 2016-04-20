@@ -159,14 +159,20 @@
   <select id="getCubages" parameterType="java.util.Map" resultType="com.kld.gsm.center.domain.oss_sysmanage_cubage">
     SELECT  <include refid="Base_Column_List" />
     FROM oss_sysmanage_cubage
-    WHERE OUCode LIKE #{oucode,jdbcType=VARCHAR}
+    WHERE 1=1
+    <if test="oucode != null and oucode != '' ">
+      and OUCode LIKE #{oucode,jdbcType=VARCHAR}
+    </if>
     <if test="firstRow != null and  pageSize!= null">
       <![CDATA[ LIMIT #{intPage},#{intPageSize}]]>
     </if>
   </select>
   <!--查询总条数-->
   <select id="getCubageCounts" parameterType="java.util.Map" resultType="java.lang.Integer">
-    SELECT COUNT(OilCan) FROM oss_sysmanage_cubage WHERE OUCode LIKE #{oucode,jdbcType=VARCHAR}
+    SELECT COUNT(OilCan) FROM oss_sysmanage_cubage WHERE 1=1
+    <if test="oucode != null and oucode != '' ">
+      and OUCode LIKE #{oucode,jdbcType=VARCHAR}
+    </if>
   </select>
   <!--查询版本信息-->
   <select id="getCubageVersions" parameterType="java.util.Map" resultType="com.kld.gsm.center.domain.oss_sysmanage_cubage">

@@ -20,7 +20,7 @@
        SELECT a.*,b.OUName,c.OilName from
       oss_alarm_OilInContrast a
       inner join oss_sys_OrgUnit b on a.OUCode=b.OUCode
-      left outer JOIN oss_sysmanage_oiltype c on a.OilNo=c.OilNo
+      left outer JOIN oss_sysmanage_oilType c on a.OilNo=c.OilNo
       WHERE CreatTime>=#{start,jdbcType=VARCHAR} And CreatTime<=#{end,jdbcType=VARCHAR}
     ]]>
     <if test="oucode != null and  oucode!= ''">
@@ -33,7 +33,7 @@
       SELECT a.*,b.OUName,c.OilName from
       oss_alarm_OilInContrast a
       inner join oss_sys_OrgUnit b on a.OUCode=b.OUCode
-      left outer JOIN oss_sysmanage_oiltype c on a.OilNo=c.OilNo
+      left outer JOIN oss_sysmanage_oilType c on a.OilNo=c.OilNo
       WHERE CreatTime>=#{start,jdbcType=VARCHAR} And CreatTime<=#{end,jdbcType=VARCHAR}
   ]]>
     <if test="oucode != null and  oucode!= ''">

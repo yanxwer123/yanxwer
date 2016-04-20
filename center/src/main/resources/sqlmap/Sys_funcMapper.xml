@@ -189,19 +189,19 @@
     where funccode = #{funccode,jdbcType=VARCHAR}
   </update>
   <select id="selectAll" resultType="com.kld.gsm.center.domain.Sys_func">
-    select * from sys_func
+    select * from Sys_func
   </select>
   <select id="getFuncList" parameterType="java.util.Map" resultMap="BaseResultMap">
-    select * from sys_func
+    select * from Sys_func
   </select>
   <select id="getCatalogList" parameterType="hashmap" resultType="hashmap">
-    select * from sys_func
+    select * from Sys_func
     where 1=1
     <if test="firstRow != null and  pageSize!= null">
       <![CDATA[ LIMIT #{firstRow},#{pageSize}]]>
     </if>
   </select>
   <select id="getCatalogAllList" resultType="hashmap">
-    select * from sys_func
+    select * from Sys_func
   </select>
 </mapper>

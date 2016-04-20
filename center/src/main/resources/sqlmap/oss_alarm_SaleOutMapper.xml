@@ -220,7 +220,7 @@
     SELECT sot.*,b.OUName,c.OilName from
     oss_alarm_SaleOut sot
     inner join oss_sys_OrgUnit b on sot.OUCode=b.OUCode
-    left outer JOIN oss_sysmanage_oiltype c on sot.OilNo=c.OilNo
+    left outer JOIN oss_sysmanage_oilType c on sot.OilNo=c.OilNo
     where 1=1
     <if test="start != null" >
       and  sot.StartAlarmTime  &gt; #{start,jdbcType=TIMESTAMP}

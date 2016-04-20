@@ -16,16 +16,6 @@
             <th width="20%">
                 <input id="ss" name="ss"  class="easyui-combobox textbox" type="text" style="width:150px" data-options="prompt:'--请选择--'"></input>
             </th>
-            <th width="13%">
-                是否需要更新：
-            </th>
-            <th width="20%">
-                <select id="sfxygx" class="easyui-combobox">
-                    <option selected value="">全部</option>
-                    <option value="1">是</option>
-                    <option value="0">否</option>
-                </select>
-            </th>
         </tr>
         <tr>
             <th></th>
@@ -78,7 +68,6 @@
     ];
     var oucode;
     var paras;
-    var sfgx;//是否需要更新
     function inittext(){
         var ss=$('#ss').combobox('getValue');
         var aa=$('#aa').combobox('getValue');
@@ -87,7 +76,7 @@
         if(cc!="") {oucode=cc;}
         if(aa!="") {oucode=aa;}
         if(ss!="") {oucode=ss;}
-        paras={"sfgx":sfgx,"oucode":oucode};
+        paras={"oucode":oucode};
     }
 
     $(function(){

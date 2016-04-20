@@ -39,7 +39,7 @@
     SELECT a.*,b.OUName,c.OilName from
     oss_alarm_DailyLost a
     inner join oss_sys_OrgUnit b on a.OUCode=b.OUCode
-    left outer JOIN oss_sysmanage_oiltype c on a.OilNo=c.OilNo
+    left outer JOIN oss_sysmanage_oilType c on a.OilNo=c.OilNo
     WHERE 1=1
     <if test="begin != null">
       <![CDATA[ AND a.AccountDate>=#{begin,jdbcType=TIMESTAMP}]]>
@@ -56,7 +56,7 @@
     SELECT a.*,b.OUName,c.OilName from
     oss_alarm_DailyLost a
     inner join oss_sys_OrgUnit b on a.OUCode=b.OUCode
-    left outer JOIN oss_sysmanage_oiltype c on a.OilNo=c.OilNo
+    left outer JOIN oss_sysmanage_oilType c on a.OilNo=c.OilNo
     WHERE 1=1
     <if test="begin != null">
       <![CDATA[ AND a.AccountDate>=#{begin,jdbcType=TIMESTAMP}]]>

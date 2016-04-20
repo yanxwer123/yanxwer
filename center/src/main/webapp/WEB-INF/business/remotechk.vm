@@ -118,7 +118,6 @@
         {
             stationNo=sss;
         }
-        alert(stationNo);
         $("#fm").form("submit", {
             url:"/web/alarm/remote?oucode="+stationNo,
             success: function(data){
@@ -127,7 +126,7 @@
                     $.messager.alert("提示","操作成功！","info");
                     $("#dlg").dialog("close");
                 }else{
-                    $.messager.alert("提示","操作失败","error");
+                    $.messager.alert(" 提示","操作失败","error");
                 }
             }
 

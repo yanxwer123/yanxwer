@@ -93,12 +93,12 @@ public class WebSysmanageController extends WebBaseController{
         int intPage=page==null||page<=0?1:page;
         //设置每页显示的数量
         int intPageSize=rows==null||rows<=0?10:rows;
-        List<HashMap<String,Object>> list=sysDictService.getDictList(intPage, intPageSize,dictID,parentID,name);
+        List<HashMap<String,Object>> list=sysDictService.getDictList(intPage, intPageSize, dictID, parentID, name);
         if(list!=null){
             ResultMsg result = new ResultMsg();
             result.setData(list);
             result.setRows(list);
-            result.setTotal(sysDictService.getDictAllList(dictID,parentID,name).size());
+            result.setTotal(sysDictService.getDictAllList(dictID, parentID, name).size());
             return result;
         }
         else {
@@ -171,7 +171,7 @@ public class WebSysmanageController extends WebBaseController{
         List<Children> RoleCatalogtwoe = new ArrayList<Children>();
         List<Sys_func> RoleCatalogsecondLevel = sys_funcService.selectBycode(id);
         for (Sys_func sysfunc : RoleCatalogsecondLevel) {
-            RoleCatalogtwoe.add(second(Integer.parseInt(sysfunc.getFunccode()), sysfunc.getName(),String.valueOf(sysfunc.getOrderno())));
+            RoleCatalogtwoe.add(second(Integer.parseInt(sysfunc.getFunccode()), sysfunc.getName(), String.valueOf(sysfunc.getOrderno())));
         }
         tree.setChildren(RoleCatalogtwoe);
         return tree;
@@ -361,7 +361,8 @@ public class WebSysmanageController extends WebBaseController{
                        @RequestParam(value = "parentID", required = false) Integer parentID,
                        @RequestParam(value = "name", required = false) String name,
                        @RequestParam(value = "value", required = false) String value,
-                       @RequestParam(value = "code", required = false) String code){
+                       @RequestParam(value = "code", required = false) String code,
+                       @RequestParam(value = "IsDel", required = false) String IsDel){
         HashMap hashMap = new HashMap();
         hashMap.put("dictID", dictID);
         hashMap.put("parentID", parentID);
@@ -500,12 +501,12 @@ public class WebSysmanageController extends WebBaseController{
         int delte=sys_funcService.delRow(funccode);
         return delte;
     }
-    @RequestMapping("/delDict")
+   /* @RequestMapping("/delDict")
     @ResponseBody
     public int delDict(@RequestParam(value = "delDictID", required = false) Integer delDictID) {
         int delte=sysDictService.deleteByPrimaryKey(delDictID);
         return delte;
-    }
+    }*/
 
     /**
      * 二级

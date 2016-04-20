@@ -275,7 +275,7 @@
     where username = #{username,jdbcType=VARCHAR}
   </update>
   <select id="getSysUserList" parameterType="map" resultType="com.kld.gsm.center.domain.Sys_user">
-    SELECT  u.*,r.name rolename,ou.ouname ouname FROM SYS_USER u left join sys_role r on u.rolecode=r.rolecode
+    SELECT  u.*,r.name rolename,ou.ouname ouname FROM Sys_user u left join sys_role r on u.rolecode=r.rolecode
     left join sys_orgunit ou on ou.oucode=u.oucode
     <where>
       <if test="oucode!=null  &amp;&amp;  oucode!=''">
@@ -289,11 +289,11 @@
   </select>
 
   <select id="getSysUserListByRolecode" parameterType="java.lang.String" resultType="com.kld.gsm.center.domain.Sys_user">
-    select * from sys_user where rolecode=#{rolecode}
+    select * from Sys_user where rolecode=#{rolecode}
   </select>
 
   <select id="getSysUserPageList" parameterType="hashmap" resultType="hashmap">
-    select * from sys_user
+    select * from Sys_user
     where 1=1
     <if test="username != null and username != ''">
       AND username= #{username}
@@ -309,7 +309,7 @@
   </select>
 
   <select id="getUserPageList" parameterType="hashmap" resultType="hashmap">
-    select * from sys_user
+    select * from Sys_user
     where 1=1
     <if test="username != null and username != ''">
       AND username= #{username}
@@ -323,12 +323,12 @@
   </select>
 
   <select id="selectUserMoreInfo" parameterType="java.lang.String" resultType="com.kld.gsm.center.domain.Sys_user">
-    select u.*,o.oulevel,o.ouname from sys_user u
+    select u.*,o.oulevel,o.ouname from Sys_user u
     left join oss_sys_orgunit o on u.oucode=o.oucode
     where u.username=#{0} and u.state>=0
   </select>
   <select id="getApprovalUserList" resultType="com.kld.gsm.center.domain.Sys_user">
-    SELECT  u.*,r.name rolename,ou.ouname ouname,a.opinion opinion FROM SYS_USER u
+    SELECT  u.*,r.name rolename,ou.ouname ouname,a.opinion opinion FROM Sys_user u
     left join sys_role r on u.rolecode=r.rolecode
     left join oss_sys_orgunit ou on ou.oucode=u.oucode
     left join (select * from approval where  APPROVETYPE=2) a on a.bsnsId=u.username
@@ -336,6 +336,6 @@
     ORDER  BY u.createtime DESC
   </select>
   <select id="selectUserIdByRealname" resultType="java.lang.String" parameterType="java.lang.String">
-    select username from sys_user where realname= #{realname}
+    select username from Sys_user where realname= #{realname}
   </select>
 </mapper>

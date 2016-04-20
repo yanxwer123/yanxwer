@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -63,13 +62,14 @@ public class WebCubageController  extends WebBaseController {
      *
      * @param page
      * @param rows
-     * @param sfgx
      * @param oucode
      * @return
      */
     @RequestMapping(value = "/getCubages", method = RequestMethod.GET)
     @ResponseBody
-    public ResultMsg getCubages(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "rows", required = false) Integer rows, @RequestParam(value = "sfgx", required = false) String sfgx, @RequestParam(value = "oucode", required = false) String oucode) {
+    public ResultMsg getCubages(@RequestParam(value = "page", required = false) Integer page,
+                                @RequestParam(value = "rows", required = false) Integer rows,
+                                @RequestParam(value = "oucode", required = false) String oucode) {
         //设置当前页
         int intPage = page == null || page <= 0 ? 1 : page;
         //设置每页显示的数量
@@ -77,8 +77,11 @@ public class WebCubageController  extends WebBaseController {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("intPage", intPage);
         map.put("intPageSize", intPageSize);
-        map.put("sfgx", sfgx);
-        map.put("oucode", oucode + "%");
+        if("".equals(oucode)||null==oucode){
+            map.put("oucode", oucode);
+        }else {
+            map.put("oucode", oucode+"%");
+        }
         int count = sysmanageCubageService.getCubageCounts(map);
         List<oss_sysmanage_cubage> list = sysmanageCubageService.getCubages(map);
         if (list != null) {
@@ -135,8 +138,7 @@ public class WebCubageController  extends WebBaseController {
             List<Map<String, Object>> list = sysmanageCubageService.getCubageInfos(map);
             sysmanageCubageService.ExportCubageInfos(list, titles, outputStream);
         } catch (Exception e) {
-            e.printStackTrace();
-        }
+            e.printStackTrace();        }
     }
     //endregion
 

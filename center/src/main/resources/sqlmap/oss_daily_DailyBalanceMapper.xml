@@ -201,7 +201,7 @@
       SELECT a.*,b.OUName,c.OilName from
     oss_daily_DailyBalance a
     inner join oss_sys_OrgUnit b on a.OUCode=b.OUCode
-    left outer JOIN oss_sysmanage_oiltype c on a.OilNo=c.OilNo
+    left outer JOIN oss_sysmanage_oilType c on a.OilNo=c.OilNo
       WHERE AccountDate>=#{start,jdbcType=TIMESTAMP} And AccountDate<#{end,jdbcType=TIMESTAMP}
     ]]>
     <if test="oucode != null and oucode != '' ">
@@ -214,7 +214,7 @@
       SELECT a.*,b.OUName,c.OilName from
     oss_daily_DailyBalance a
     inner join oss_sys_OrgUnit b on a.OUCode=b.OUCode
-    left outer JOIN oss_sysmanage_oiltype c on a.OilNo=c.OilNo
+    left outer JOIN oss_sysmanage_oilType c on a.OilNo=c.OilNo
       WHERE AccountDate>=#{start,jdbcType=TIMESTAMP} And AccountDate<#{end,jdbcType=TIMESTAMP}
     ]]>
     <if test="oucode != null and oucode != '' ">
@@ -227,7 +227,7 @@
       SELECT a.*,b.OUName,c.OilName from
     oss_daily_DailyBalance a
     inner join oss_sys_OrgUnit b on a.OUCode=b.OUCode
-    left outer JOIN oss_sysmanage_oiltype c on a.OilNo=c.OilNo
+    left outer JOIN oss_sysmanage_oilType c on a.OilNo=c.OilNo
       WHERE AccountDate>=#{start,jdbcType=TIMESTAMP} And AccountDate<#{end,jdbcType=TIMESTAMP}
     ]]>
     <if test="oucode != null and oucode != '' ">

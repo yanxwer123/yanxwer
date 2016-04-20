@@ -16,16 +16,6 @@
             <th width="20%">
                 <input id="ss" name="ss"  class="easyui-combobox textbox" type="text" style="width:150px" data-options="prompt:'--请选择--'"></input>
             </th>
-            <th width="13%">
-                是否需要更新：
-            </th>
-            <th width="20%">
-                <select id="sfxygx" class="easyui-combobox">
-                    <option selected value="">全部</option>
-                    <option value="1">是</option>
-                    <option value="0">否</option>
-                </select>
-            </th>
         </tr>
         <tr>
             <th></th>
@@ -48,7 +38,7 @@
         [
             {field:'ouname',title:'建议更新容积表的油站',width:'20%',align:'center',colspan:5}],
         [
-            {field:'ouname',title:'油站名称',width:'20%',align:'center'},
+            {field:'oucode',title:'油站编号',width:'20%',align:'center'},
             {field:'oilcan',title:'油罐编号',width:'20%',align:'center'},
             {field:'version',title:'当前版本',width:'20%',align:'center'},
             {field:'updatetime',title:'更新时间',width:'20%',align:'center',
@@ -70,7 +60,6 @@
     ];
     var oucode;
     var paras;
-    var sfgx;//是否需要更新
     function inittext(){
         var ss=$('#ss').combobox('getValue');
         var aa=$('#aa').combobox('getValue');
@@ -88,7 +77,7 @@
         {
             oucode=ss;
         }
-        paras={"sfgx":sfgx,"oucode":1};
+        paras={"oucode":oucode};
     }
 
     $(function(){

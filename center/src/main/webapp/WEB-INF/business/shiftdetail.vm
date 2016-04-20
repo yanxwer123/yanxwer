@@ -109,7 +109,7 @@ var paras;
     }
 
     var cols1=[[
-        {field:'oilname',title:'油品',width:100},
+        {field:'oilname',title:'油品',width:150},
         {field:'total',title:'合计',width:100,formatter:formatDigit},
         {field:'money',title:'现金',width:100,formatter:formatDigit},
         {field:'ic',title:'IC卡',width:100,formatter:formatDigit},
