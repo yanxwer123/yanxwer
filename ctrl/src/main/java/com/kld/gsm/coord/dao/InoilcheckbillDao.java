@@ -17,8 +17,10 @@ public interface InoilcheckbillDao {
 
     int insertInoilcheckbill1(@Param("sql")String sql);
     int updateInoilcheckbill(String DeliveryNo);
-
+    int delInoilcheckbill(@Param("sql")String sql);
     int updateManualno(HashMap map);
+    int updateManualno1(@Param("sql")String sql);
+
 
     }
 

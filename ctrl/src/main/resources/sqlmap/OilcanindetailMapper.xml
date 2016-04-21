@@ -19,6 +19,9 @@
     <update id="updateOilcanindetail1" statementType="STATEMENT" parameterType="java.lang.String">
         ${sql}
     </update>
+    <delete id="delOilcanindetail1" statementType="STATEMENT" parameterType="java.lang.String">
+        ${sql}
+    </delete>
     <update id="updateManualno" parameterType="hashmap">
         UPDATE oilcanindetail set goodsbillno=#{manualno} where goodsbillno=#{DeliveryNo}
     </update>

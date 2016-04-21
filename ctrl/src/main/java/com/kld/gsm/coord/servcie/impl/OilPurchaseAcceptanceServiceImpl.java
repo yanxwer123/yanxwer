@@ -113,9 +113,10 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
     public int update(String DeliveryNo, int Oilcan,String id) {
         try {
             //更新油罐进油明细表(OILCANINDETAIL)
-            String sql = "UPDATE oilcanindetail set billstatus=1 where goodsbillno='"+DeliveryNo+"' ";
+//            String sql = "UPDATE oilcanindetail set billstatus=1 where goodsbillno='"+DeliveryNo+"' ";
+            String sql = "DELETE FROM oilcanindetail where goodsbillno='"+DeliveryNo+"' ";
             logger.info("oilcanindetailDao.updateOilcanindetail1的sql:"+sql);
-            int update_Oilanindetail = oilcanindetailDao.updateOilcanindetail1(sql);
+            int update_Oilanindetail = oilcanindetailDao.delOilcanindetail1(sql);
             System.err.println("更新油罐进油明细表成功");
         }catch (Exception e){
             System.err.println("更新油罐进油明细表失败………………");
@@ -123,7 +124,8 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
         }
         try {
             //更新进油核对表(INOILCHECKBILL)
-            int update_Inoilcheckbill = inoilcheckbillDao.updateInoilcheckbill(DeliveryNo);
+            String sql = "DELETE FROM inoilcheckbill where goodsbillno='"+DeliveryNo+"' ";
+            int update_Inoilcheckbill = inoilcheckbillDao.delInoilcheckbill(sql);
             System.err.println("更新油罐进油明细表成功");
         }catch (Exception e){
             System.err.println("更新进油核对表失败………………");
@@ -151,7 +153,8 @@ public class OilPurchaseAcceptanceServiceImpl implements OilPurchaseAcceptanceSe
             map1.put("DeliveryNo", DeliveryNo);
             map1.put("manualno", manualno);
             //更新进油核对表(INOILCHECKBILL)
-            int update_Inoilcheckbill = inoilcheckbillDao.updateManualno(map1);
+            String sql = "update inoilcheckbill set goodsbillno='"+manualno+"' where goodsbillno='"+DeliveryNo+"'";
+            int update_Inoilcheckbill = inoilcheckbillDao.updateManualno1(sql);
         }catch (Exception e){
             System.err.println("更新进油核对表出库单号失败………………");
         }

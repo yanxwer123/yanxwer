@@ -21,8 +21,15 @@
     <update id="updateInoilcheckbill" parameterType="java.lang.String">
         update inoilcheckbill set billstatus=1 where goodsbillno=#{DeliveryNo}
     </update>
+
+    <delete id="delInoilcheckbill" statementType="STATEMENT" parameterType="java.lang.String">
+        ${sql}
+    </delete>
     <update id="updateManualno" parameterType="hashmap">
         update inoilcheckbill set goodsbillno=#{manualno} where goodsbillno=#{DeliveryNo}
+    </update>
+    <update id="updateManualno1" parameterType="hashmap" statementType="STATEMENT">
+        ${sql}
     </update>
 
     <insert id="insertInoilcheckbill1" parameterType="String" statementType="STATEMENT">

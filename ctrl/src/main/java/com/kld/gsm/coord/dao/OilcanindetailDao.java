@@ -25,5 +25,6 @@ public interface OilcanindetailDao {
     int updateOilcanindetail1(@Param("sql")String sql);
     List<OilCanIndeTail> selectByOilvoch(String oilvoch);
     int  updateManualno(HashMap map);
+    int delOilcanindetail1(@Param("sql")String sql);
     int  updateManualno1(@Param("sql")String sql);
 }
