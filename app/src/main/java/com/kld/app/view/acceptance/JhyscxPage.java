@@ -423,12 +423,15 @@ public class JhyscxPage extends  JPanel implements Watcher {
                     billArray[i][14]=DateUtil.getDate(ShipmentTime, "yyyy-MM-dd HH:mm:ss");
                 }
                 billArray[i][15] = bill.get("CarNo");
-                billArray[i][16] = bill.get("OutSealNo");
+               // billArray[i][16] = bill.get("OutSealNo");
                 //region 获取班次号
                 if (registerService == null) {
                     registerService = Context.getInstance().getBean(IAcceptanceOdRegisterService.class);
                 }
                 AcceptanceOdRegister odRegister=registerService.selectByPrimaryKey(bill.get("DeliveryNo").toString());
+                if (odRegister!=null){
+                    billArray[i][16]=odRegister.getPlumbunbankoperator();
+                }
                 billArray[i][4]=isNotEmpty(odRegister.getInstationtime())?sd.format(odRegister.getInstationtime()):"";
                 billArray[i][17]=odRegister.getShift()==null?"":odRegister.getShift().toString();
                 //endregion
