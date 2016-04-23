@@ -288,6 +288,7 @@ catch (Exception e){
             register.setRealgetlv20(odr.getRealgetlv20());
             register.setShift(odr.getShift());
             register.setOilno(odr.getOilno());
+            register.setUsetemp(odr.getIsfulldose());
             //回空铅封
             register.setOutseals(odr.getPlumbunbankoperator());
 

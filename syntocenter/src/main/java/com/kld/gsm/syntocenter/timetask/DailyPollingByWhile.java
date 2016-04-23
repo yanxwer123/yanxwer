@@ -93,7 +93,7 @@ public class DailyPollingByWhile extends Thread {
                 ||ApplicationMain.canversion.size()==0
                 ||ApplicationMain.oilcanmap==null||ApplicationMain.oilcanmap.size()==0) return;
        //时点库存
-       timeInvo();
+        timeInvo();
         //整点库存
         zdtimeInvo();
        //库存报警
@@ -119,6 +119,8 @@ public class DailyPollingByWhile extends Thread {
         //ftp上传
         ftpupload();
 
+        //班报数据
+        shiftData();
 
         //出库单同步
         deliveybill();
@@ -135,8 +137,7 @@ public class DailyPollingByWhile extends Thread {
         getoilcanmap();
         if (ApplicationMain.NodeNo==null||"".equals(ApplicationMain.NodeNo)||ApplicationMain.canversion==null
                 ||ApplicationMain.canversion.size()==0||ApplicationMain.oilcanmap==null||ApplicationMain.oilcanmap.size()==0) return;
-        //班报数据
-        shiftData();
+
         //日平衡
         DayBalance();
 
@@ -178,9 +179,9 @@ public class DailyPollingByWhile extends Thread {
     public void timeInvo(){
         try {
             LOG.info("timeInvo begin");
-            /*if (sys==null) {
+            if (sys==null) {
                 sys = springFactory.getInstance().getBean(synMonitor.class);
-            }*/
+            }
             sys.synTimeInventory();
             LOG.info("timeInvo end");
         }
