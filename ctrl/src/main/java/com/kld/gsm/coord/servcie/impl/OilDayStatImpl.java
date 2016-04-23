@@ -209,7 +209,7 @@ public class OilDayStatImpl implements OilDayStatService {
 
             //region 损耗率  v 损耗率=损耗量/期间付出        百分比乘以100，2位小数
             if (ods.getDaysaleliter() < 0.000001) {
-                dailyDailyBalance.setLosssent(BigDecimal.valueOf(100));
+                dailyDailyBalance.setLosssent(BigDecimal.valueOf(0));
             } else {
                 dailyDailyBalance.setLosssent(BigDecimal.valueOf(round(loss, ods.getDaysaleliter(), 4) * 100));
             }
@@ -253,7 +253,7 @@ public class OilDayStatImpl implements OilDayStatService {
                 }
                 else
                 {
-                    alarmDailyLost.setCostsent(Double.valueOf(100));
+                    alarmDailyLost.setCostsent(Double.valueOf(0));
                 }
                 alarmDailyLost.setCreatetime(new Date());
                 alarmDailyLost.setTranstatus("0");
