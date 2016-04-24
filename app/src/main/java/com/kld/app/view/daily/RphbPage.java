@@ -6,6 +6,7 @@ import com.kld.app.springcontext.Context;
 import com.kld.app.util.Constant;
 import com.kld.app.view.acceptance.MyTable;
 import com.kld.gsm.ATG.domain.DailyDailyBalance;
+import org.apache.log4j.Logger;
 import org.jdesktop.swingx.JXDatePicker;
 
 import javax.swing.*;
@@ -29,6 +30,7 @@ import java.util.List;
  *
  */
 public class RphbPage {
+	Logger log = Logger.getLogger(this.getClass());
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	private JScrollPane scrollPane = new JScrollPane();
 	List<DailyDailyBalance> list = new ArrayList();
@@ -160,8 +162,11 @@ public class RphbPage {
 					data[i][6] = df.format(info.getRealstock());//实测库存
 					String loss=decimalFormat.format(info.getLoss());
 					data[i][7] =Double.parseDouble(loss) ;//损耗量
+					log.error("info.getLosssent():"+info.getLosssent());
 					String losssent=decimalFormat.format(info.getLosssent())+"%";
+					log.error("losssent:"+losssent);
 					data[i][8] = losssent;//损耗率
+
 				}
 				getTable(tableHeads, data);
 				/*probePartable = getTable(tableHeads, data);
@@ -225,7 +230,7 @@ public class RphbPage {
 					model.setRealstock(minModel.getRealstock());//实测库存 查询里最后一天的实际库存
 					BigDecimal lossSum = BigDecimal.valueOf(Double.parseDouble(minModel.getDarlyankstock().toString()) + Double.parseDouble(minModel.getReceivel().toString()) - Double.parseDouble(minModel.getTodayout().toString()) - Double.parseDouble(minModel.getRealstock().toString()));
 					model.setLoss(lossSum);//耗损量  期末罐存－实测库存
-					BigDecimal lsSum=BigDecimal.valueOf(100);
+					BigDecimal lsSum=BigDecimal.valueOf(0);
 					if(Double.parseDouble(minModel.getTodayout().toString())>1) {
 						lsSum = BigDecimal.valueOf(100 * Double.parseDouble(lossSum.toString()) / Double.parseDouble(minModel.getTodayout().toString()));
 					}
