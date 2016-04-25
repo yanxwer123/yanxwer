@@ -12,7 +12,7 @@ import java.util.Properties;
     private static Properties map=new Properties();
     static{
         try {
-            InputStream is=SysConfig.class.getResourceAsStream("/core.properties");
+            InputStream is=SysConfig.class.getResourceAsStream("/config/core.properties");
             map.load(is);
             is.close();
 
