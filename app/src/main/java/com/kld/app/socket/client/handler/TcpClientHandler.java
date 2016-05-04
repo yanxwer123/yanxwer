@@ -69,13 +69,13 @@ public class TcpClientHandler extends SimpleChannelInboundHandler {
                 System.out.println("[Netty]ReLink[" + i + "]....");
                 //如果未成功连接，则20秒左右弹出一次提示
                 if (i == 8) {
-                    JOptionPane.showMessageDialog(null, "与主调度未能成功建立连接,正在尝试重连...", "错误提示", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "与后台服务未能成功建立连接,正在尝试重连...", "错误提示", JOptionPane.WARNING_MESSAGE);
                     //i = 0;
                     // System.exit(0);
                 }
                 //尝试60秒后，未能成功连接，系统退出
                 if (i == 16) {
-                    JOptionPane.showMessageDialog(null, "与主调度未能成功建立连接,请尝试重启...", "错误提示", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "与后台服务未能成功建立连接,请尝试重启...", "错误提示", JOptionPane.ERROR_MESSAGE);
                     //i = 0;
                     System.exit(0);
                 }
