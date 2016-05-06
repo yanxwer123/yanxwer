@@ -185,7 +185,7 @@ public class AcceptanceOdRegister {
     }
 
     public void setDischargerate(Double dischargerate) {
-        DecimalFormat df=new DecimalFormat("#####.0000");
+        DecimalFormat df=new DecimalFormat("#####.000000");
         if (dischargerate==null)
         {
             dischargerate=0.0;
@@ -394,7 +394,7 @@ public class AcceptanceOdRegister {
     }
 
     public void setDischargeRateV20(Double dischargeRateV20) {
-        DecimalFormat df=new DecimalFormat("#####.0000");
+        DecimalFormat df=new DecimalFormat("#####.000000");
         if (dischargeRateV20==null||dischargeRateV20==0.0)
         {
             dischargeRateV20=0.0;

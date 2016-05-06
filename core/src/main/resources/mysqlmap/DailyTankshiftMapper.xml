@@ -284,11 +284,15 @@
     -->
 
     <select id="findByOilcan"  resultType="java.lang.String" parameterType="java.util.HashMap">
-         SELECT ToOilL FROM oss_daily_tankshift WHERE Shift=#{shift} AND OilCan =#{oilcan}
+         SELECT HoOilL FROM oss_daily_tankshift WHERE Shift=#{shift} AND OilCan =#{oilcan}
     </select>
 
     <select id="findToOilLByOilNo"  resultType="java.lang.String" parameterType="java.util.HashMap">
-        SELECT SUM(ToOilL) FROM oss_daily_tankshift WHERE Shift=#{shift} AND OilNo = #{oilno}
+        SELECT SUM(HoOilL) FROM oss_daily_tankshift WHERE Shift=#{shift} AND OilNo = #{oilno}
+    </select>
+
+    <select id="selectLastshiftbyaccountDate" parameterType="java.util.Date" resultType="java.lang.String">
+        SELECT shift FROM oss_daily_tankshift WHERE AccountDate=#{accdate,jdbcType=TIMESTAMP} ORDER BY Shift DESC LIMIT 1
     </select>
 
 </mapper>

@@ -4,6 +4,7 @@ import com.kld.gsm.ATG.common.Repository.MySqlRepository;
 import com.kld.gsm.ATG.domain.DailyTankShift;
 import com.kld.gsm.ATG.domain.DailyTankShiftKey;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,4 +43,6 @@ public interface DailyTankShiftDao {
     String findByOilcan(Map map);
 
     String findToOilLByOilNo(Map map);
+
+    String selectLastshiftbyaccountDate(Date accdate);
 }

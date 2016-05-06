@@ -165,4 +165,7 @@
     set PayDate = #{accountdate},TranStatus=0
     WHERE Shift>=#{minshift} AND Shift <=#{maxshift}]]>
   </update>
+  <select id="selectlast" parameterType="hashmap" resultMap="BaseResultMap">
+    SELECT * FROM (SELECT *  FROM oss_daily_pumpDigitShift WHERE  #{begindate,jdbcType=TIMESTAMP}> TakeDate ORDER BY TakeDate DESC) a GROUP BY OilGun
+  </select>
 </mapper>

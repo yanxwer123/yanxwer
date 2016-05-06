@@ -17,9 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 /**
  * Created by fangzhun on 2015/11/21.
  */
@@ -444,5 +443,33 @@ public class DailyRunningImpl implements  DailyRunning {
             return 0;
         }
         return 1;
+    }
+
+    @Override
+    public List<DailyPumpDigitShift> selectPumpshitLast(Date begindate) {
+       return dailyPumpDigitShiftDao.selectlast(begindate);
+    }
+
+    @Override
+    public Date selectLastAccDate() {
+        return dailyDailyBalanceDao.selectLastDate();
+    }
+
+    @Override
+    public Date selectAccDateByDate(Date begindate) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(begindate);
+        int day = c.get(Calendar.DATE);
+        c.set(Calendar.DATE, day + 1);
+        Date enddate=c.getTime();
+        HashMap<String,Date> hm=new HashMap<String, Date>();
+        hm.put("begintime",begindate);
+        hm.put("endtime",enddate);
+        return dailyDailyBalanceDao.selectAccountDatebyDate(hm);
+    }
+
+    @Override
+    public String selectshiftByAccDate(Date accDate) {
+        return dailyTankShiftDao.selectLastshiftbyaccountDate(accDate);
     }
 }

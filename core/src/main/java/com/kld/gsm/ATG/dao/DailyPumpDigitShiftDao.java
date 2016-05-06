@@ -1,5 +1,6 @@
 package com.kld.gsm.ATG.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -25,4 +26,6 @@ public interface DailyPumpDigitShiftDao {
     List<DailyPumpDigitShift> selectByTrans(String stauts);
 
     int updateByShift(Map<String,String> map);
+
+    List<DailyPumpDigitShift> selectlast(Date beginDate);
 }
