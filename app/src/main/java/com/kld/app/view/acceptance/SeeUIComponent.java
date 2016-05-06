@@ -6,6 +6,7 @@ import com.kld.gsm.ATG.domain.*;
 import com.kld.gsm.ATG.service.SysmanageService;
 import com.kld.gsm.util.V20Utils;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,12 +15,8 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.print.*;
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.Date;
 import java.util.List;
-
-import javax.print.attribute.*;
-import javax.swing.*;
-import javax.swing.table.TableModel;
 /**
  * Created by IntelliJ IDEA.
  *
@@ -61,8 +58,6 @@ public class SeeUIComponent extends JDialog  {
     String dischargeLoss;
     //实收损益量(V20)
     String dischargeLossV20;
-    DecimalFormat decimalFormat = new DecimalFormat("######0.00");
-
     //实收损益率(‰)
     String dischargeRate;
     //实收损益率20(‰)
@@ -87,6 +82,8 @@ public class SeeUIComponent extends JDialog  {
     JButton button;
     MyPanel panel;
     GridBagConstraints gridBagConstraints;
+    DecimalFormat decimalFormat1 = new DecimalFormat("######0");
+    DecimalFormat decimalFormat = new DecimalFormat("######0.00");
 
     public void init(String billno) {
         this.setTitle("验收单查看");
@@ -266,14 +263,14 @@ public class SeeUIComponent extends JDialog  {
                 paintLabel(g2, "原发体积(V20)", 610, this.getHeight() - 62);
                 paintLabel(g2, deliveryBill.getFromdepotname(), 70, this.getHeight() - 82);
                 paintLabel(g2, deliveryBill.getDeliverytime() == null ? "" : deliveryBill.getDeliverytime().toLocaleString(), 200, this.getHeight() - 82);
-                paintLabel(g2, deliveryBill.getPlanton() == null ? "" : deliveryBill.getPlanton().toString(), 330, this.getHeight() - 82);
+                paintLabel(g2, deliveryBill.getPlanton() == null ? "" : decimalFormat1.format(deliveryBill.getPlanton()).toString(), 330, this.getHeight() - 82);
                 if (sjfyl != null) {
-                    paintLabel(g2, sjfyl, 480, this.getHeight() - 82);
+                    paintLabel(g2, decimalFormat1.format(Double.parseDouble(sjfyl)).toString(), 480, this.getHeight() - 82);
 
                 } else {
-                    paintLabel(g2, deliveryBill.getPlanl() == null ? "" : decimalFormat.format(deliveryBill.getPlanl()).toString(), 480, this.getHeight() - 82);
+                    paintLabel(g2, deliveryBill.getPlanl() == null ? "" : decimalFormat1.format(deliveryBill.getPlanl()).toString(), 480, this.getHeight() - 82);
                 }
-                paintLabel(g2, planLV20, 610, this.getHeight() - 82);
+                paintLabel(g2, decimalFormat1.format(Double.parseDouble(planLV20)).toString(), 610, this.getHeight() - 82);
 
 
                 paintLabel(g2, "承运车号:", 70, this.getHeight() - 102);
@@ -321,11 +318,11 @@ public class SeeUIComponent extends JDialog  {
                     System.out.println("0:" + acceptanceOdRegisterInfo);
                     paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 182);
                     paintLabel(g2, "卸前", 65, this.getHeight() - 182);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginoilheight() == null ? "" : acceptanceOdRegisterInfo.getBeginoilheight().toString(), 130, this.getHeight() - 182);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginwaterheight() == null ? "" : acceptanceOdRegisterInfo.getBeginwaterheight().toString(), 200, this.getHeight() - 182);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginoilheight() == null ? "" : decimalFormat1.format(acceptanceOdRegisterInfo.getBeginoilheight()).toString(), 130, this.getHeight() - 182);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginwaterheight() == null ? "" : decimalFormat1.format(acceptanceOdRegisterInfo.getBeginwaterheight()).toString(), 200, this.getHeight() - 182);
                     paintLabel(g2, acceptanceOdRegisterInfo.getBegintemperature() == null ? "" : acceptanceOdRegisterInfo.getBegintemperature().toString(), 250, this.getHeight() - 182);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginoill() == null ? "" : acceptanceOdRegisterInfo.getBeginoill().toString(), 300, this.getHeight() - 182);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginv20l() == null ? "" : acceptanceOdRegisterInfo.getBeginv20l().toString(), 370, this.getHeight() - 182);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginoill() == null ? "" : decimalFormat1.format(acceptanceOdRegisterInfo.getBeginoill()).toString(), 300, this.getHeight() - 182);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getBeginv20l() == null ? "" : decimalFormat1.format(acceptanceOdRegisterInfo.getBeginv20l()).toString(), 370, this.getHeight() - 182);
                     paintLabel(g2, acceptanceOdRegisterInfo.getBegintime() == null ? "" : acceptanceOdRegisterInfo.getBegintime().toLocaleString(), 461, this.getHeight() - 182);
                     paintLabel(g2, "", 550, this.getHeight() - 182);
                     if(acceptanceOdRegisterInfo.getEntertype()!=null&&acceptanceOdRegisterInfo.getEntertype()==1){
@@ -333,11 +330,11 @@ public class SeeUIComponent extends JDialog  {
                     }
                     paintLabel(g2, acceptanceOdRegisterInfo.getOilcan() == null ? "" : acceptanceOdRegisterInfo.getOilcan().toString(), 25, this.getHeight() - 202);
                     paintLabel(g2, "卸后", 65, this.getHeight() - 202);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getEndoilheight() == null ? "" : acceptanceOdRegisterInfo.getEndoilheight().toString(), 130, this.getHeight() - 202);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getEndwaterheight() == null ? "" : acceptanceOdRegisterInfo.getEndwaterheight().toString(), 200, this.getHeight() - 202);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getEndoilheight() == null ? "" : decimalFormat1.format(acceptanceOdRegisterInfo.getEndoilheight()).toString(), 130, this.getHeight() - 202);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getEndwaterheight() == null ? "" : decimalFormat1.format(acceptanceOdRegisterInfo.getEndwaterheight()).toString(), 200, this.getHeight() - 202);
                     paintLabel(g2, acceptanceOdRegisterInfo.getEndtemperature() == null ? "" : acceptanceOdRegisterInfo.getEndtemperature().toString(), 250, this.getHeight() - 202);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getEndoill() == null ? "" : acceptanceOdRegisterInfo.getEndoill().toString(), 300, this.getHeight() - 202);
-                    paintLabel(g2, acceptanceOdRegisterInfo.getEndv20l() == null ? "" : acceptanceOdRegisterInfo.getEndv20l().toString(), 370, this.getHeight() - 202);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getEndoill() == null ? "" : decimalFormat1.format(acceptanceOdRegisterInfo.getEndoill()).toString(), 300, this.getHeight() - 202);
+                    paintLabel(g2, acceptanceOdRegisterInfo.getEndv20l() == null ? "" : decimalFormat1.format(acceptanceOdRegisterInfo.getEndv20l()).toString(), 370, this.getHeight() - 202);
                     paintLabel(g2, acceptanceOdRegisterInfo.getEndtime() == null ? "" : acceptanceOdRegisterInfo.getEndtime().toLocaleString(), 461, this.getHeight() - 202);
                     paintLabel(g2, "", 550, this.getHeight() - 202);
                     if(acceptanceOdRegisterInfo.getEntertype()!=null&&acceptanceOdRegisterInfo.getEntertype()==1){
@@ -391,14 +388,14 @@ public class SeeUIComponent extends JDialog  {
             paintLabel(g2, "实收损溢率V20(‰)", 520, this.getHeight() - 282);
             paintLabel(g2, "超耗索赔量(V20)", 620, this.getHeight() - 282);
 
-            paintLabel(g2, realRecieve, 45, this.getHeight() - 302);
-            paintLabel(g2, realRecieveV20, 115, this.getHeight() - 302);
-            paintLabel(g2, duringSales, 185, this.getHeight() - 302);
-            paintLabel(g2, dischargeLoss, 260, this.getHeight() - 302);
-            paintLabel(g2, dischargeLossV20, 345, this.getHeight() - 302);
+            paintLabel(g2, decimalFormat1.format(Double.parseDouble(realRecieve)), 45, this.getHeight() - 302);
+            paintLabel(g2, decimalFormat1.format(Double.parseDouble(realRecieveV20)), 115, this.getHeight() - 302);
+            paintLabel(g2, decimalFormat1.format(Double.parseDouble(duringSales)), 185, this.getHeight() - 302);
+            paintLabel(g2, decimalFormat1.format(Double.parseDouble(dischargeLoss)), 260, this.getHeight() - 302);
+            paintLabel(g2, decimalFormat1.format(Double.parseDouble(dischargeLossV20)), 345, this.getHeight() - 302);
             paintLabel(g2, dischargeRate, 430, this.getHeight() - 302);
             paintLabel(g2, dischargeRateV20, 520, this.getHeight() - 302);
-            paintLabel(g2, indemnityloss, 620, this.getHeight() - 302);
+            paintLabel(g2, decimalFormat1.format(Double.parseDouble(indemnityloss)), 620, this.getHeight() - 302);
 
 
             paintLabel(g2, "卸油员签字:", 45, this.getHeight() - 330);

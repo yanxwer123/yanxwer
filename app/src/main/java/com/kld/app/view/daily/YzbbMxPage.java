@@ -28,7 +28,7 @@ public class YzbbMxPage extends JFrame{
 	//汞码信息
 	private static final String[] GM_TITLES = new String[]{"枪号","接班泵码","交班泵码","走字数"};
 	//付油信息
-	private static final String[] FY_TITLES = new String[]{"油品","合计","升数","油票","记账","银行卡","其他1","其他2","IC卡","IC卡积分","已售未提","已提未售","代存代付","油票代管","自用油","非机走"};
+	private static final String[] FY_TITLES = new String[]{"油品","合计","现金","油票","记账","银行卡","其他1","其他2","IC卡","IC卡积分","已售未提","已提未售","代存代付","油票代管","自用油","非机走"};
 	//油罐信息	
 	private static final String[] YG_TITLES = new String[]{"油罐编号","油品","接班油量(L)","交班油高(mm)","交班升数(L)","交班水高(mm)","交班水量(L)","付油量(L)","卸油量(L)","损耗量(L)","损耗率(%)"};
    //,"卸油量","库存","损耗"
@@ -41,7 +41,7 @@ public class YzbbMxPage extends JFrame{
     
     private JScrollPane scrollPane1;
     private JTable table1;//付油信息
-    private Object[][] billArray1 = {{"油品","合计","升数","油票","记账","银行卡","其他1","其他2","IC卡","IC卡积分","已售未提","已提未售","代存代付","油票代管","自用油","非机走"}};
+    private Object[][] billArray1 = {{"油品","合计","现金","油票","记账","银行卡","其他1","其他2","IC卡","IC卡积分","已售未提","已提未售","代存代付","油票代管","自用油","非机走"}};
    
     private JScrollPane scrollPane2;
     private JTable table2;//油罐信息
@@ -207,7 +207,7 @@ public class YzbbMxPage extends JFrame{
 		非机走 07*/
 		private String oilno;//油品
         private Double total;//合计
-		private Double liter;//升数
+		private Double money;//现金
 		private Double yp;//邮票
 		private Double jz;//记账
 		private Double yhk;//银行卡
@@ -222,7 +222,6 @@ public class YzbbMxPage extends JFrame{
 		private Double zyy;//自用油
 		private Double fjz;//飞机走
 
-
 		public String getOilno() {
 			return oilno;
 		}
@@ -232,12 +231,8 @@ public class YzbbMxPage extends JFrame{
 			return Double.valueOf(df.format(total));
 		}
 
-		public Double getLiter() {
-			return  Double.valueOf(df.format(liter));
-		}
-
-		public void setLiter(Double liter) {
-			this.liter = liter;
+		public Double getMoney() {
+			return  Double.valueOf(df.format(money));
 		}
 
 		public Double getYp() {
@@ -298,6 +293,10 @@ public class YzbbMxPage extends JFrame{
 
 		public void setTotal(Double total) {
 			this.total = total;
+		}
+
+		public void setMoney(Double money) {
+			this.money = money;
 		}
 
 		public void setYp(Double yp) {
@@ -396,7 +395,7 @@ public class YzbbMxPage extends JFrame{
 				result info = list.get(i);
 				ob[i][0]=alarmDailyLostService.selectOilNo(info.getOilno());
 				ob[i][1]=info.getTotal();
-				ob[i][2]=info.getLiter();
+				ob[i][2]=info.getMoney();
 				ob[i][3]=info.getYp();
 				ob[i][4]=info.getJz();
 				ob[i][5]=info.getYhk();
@@ -445,13 +444,13 @@ public class YzbbMxPage extends JFrame{
 		minModel.setOilno(o.getOilno());
 		////System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~" + o.getType());
 		////System.out.println("!!!!!!!!!!!!!!!!!!!!"+GunStatusEnum.下班.value());
-		if (o.getType().equals(PayTypeEnum.升数.value()))//升数
+		if (o.getType().equals(PayTypeEnum.现金.value()))//现金
 		{
-			minModel.setLiter(o.getLiter());
+			minModel.setMoney(o.getLiter());
 		}
 		else
 		{
-			minModel.setLiter(0.00);
+			minModel.setMoney(0.00);
 		}
 
 		if (o.getType().equals(PayTypeEnum.邮票.value()))//邮票
@@ -590,9 +589,9 @@ public class YzbbMxPage extends JFrame{
 					{
 						if (minModel.getOilno().equals(o.getOilno()))
 						{
-							if (o.getType().equals(PayTypeEnum.升数.value()))
+							if (o.getType().equals(PayTypeEnum.现金.value()))
 							{
-								minModel.setLiter(o.getLiter());
+								minModel.setMoney(o.getLiter());
 							}
 							if (o.getType().equals(PayTypeEnum.邮票.value()))
 							{
@@ -657,10 +656,10 @@ public class YzbbMxPage extends JFrame{
 					minModel.setDeliveryno(minModel.getDeliveryno().toString() + "," + o.getDeliveryno().toString());*/
 					}
 				}
-				//todo
+
 				result model = new result();
 				model.setOilno(minModel.getOilno());//品种
-				model.setLiter(minModel.getLiter());//升数
+				model.setMoney(minModel.getMoney());//现金
 				model.setYp(minModel.getYp());//邮票
 				model.setJz(minModel.getJz());
 				model.setYhk(minModel.getYhk());
@@ -674,7 +673,7 @@ public class YzbbMxPage extends JFrame{
 				model.setDcdf(minModel.getDcdf());
 				model.setYpdg(minModel.getYpdg());
 				model.setFjz(minModel.getFjz());
-				model.setTotal(minModel.getLiter()+minModel.getZyy()+minModel.getIc());
+				model.setTotal(minModel.getMoney()+minModel.getZyy()+minModel.getIc());
 				list.add(model);
 
 				minModel=null;
