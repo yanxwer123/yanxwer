@@ -4,7 +4,7 @@ package com.kld.gsm.MacLog;
  * Created by Administrator on 2015/11/28.
  */
 public enum PayTypeEnum {
-    现金 ("00"),
+    升数 ("00"),
     邮票 ("01"),
     记账("02"),
     银行卡("03"),

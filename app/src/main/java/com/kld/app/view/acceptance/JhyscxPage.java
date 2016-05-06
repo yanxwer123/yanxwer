@@ -45,7 +45,7 @@ public class JhyscxPage extends  JPanel implements Watcher {
     SysManageCanInfoService tankInfoService=(SysManageCanInfoService) (Context.getInstance().getBean("SysManageTankInfoService"));
     private static final Logger LOG = Logger.getLogger(JhyscxPage.class);
     private static final String[] CKD_TITLES = new String[] { "序号", "出库单号","损溢率(‰)","卸入罐号","到站时间","验收模式","验收状态", "出库时间", "发油油库", "目的油站", "油品", "发货温度(℃)",
-            "原发升数(L)", "原发数量(t)", "交运时间", "车牌号码", "出库铅封号","班次" };
+            "原发升数(L)", "原发数量(kg)", "交运时间", "车牌号码", "出库铅封号","班次" };
     private JTextField ckdhField;
     private JTextField ghField;
     private JTextField sylField;
@@ -393,7 +393,8 @@ public class JhyscxPage extends  JPanel implements Watcher {
                 if(bill.get("Dischargerate")==null||"".equals(bill.get("Dischargerate"))){
                     billArray[i][2] = "";
                 }else {
-                    billArray[i][2] = Double.parseDouble(bill.get("Dischargerate").toString()) * 1000;
+                    //bill.get("Dischargerate").toString()
+                    billArray[i][2] = new DecimalFormat("######0.00").format(Double.parseDouble(bill.get("Dischargerate").toString()) * 1000);
                 }
                 billArray[i][3] = bill.get("OilCan");
                 SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -416,7 +417,7 @@ public class JhyscxPage extends  JPanel implements Watcher {
                 billArray[i][11] = bill.get("DeliveryTemp");
 
                 billArray[i][12] = new DecimalFormat("0").format(bill.get("PlanL"));
-                billArray[i][13] = new DecimalFormat("######0.000").format(bill.get("PlanTon"));
+                billArray[i][13] = new DecimalFormat("######0").format(bill.get("PlanTon"));
 
                 Date ShipmentTime =(Date)bill.get("ShipmentTime");
                 if (ShipmentTime!=null){
