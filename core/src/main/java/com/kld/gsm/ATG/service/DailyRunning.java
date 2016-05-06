@@ -1,9 +1,11 @@
 package com.kld.gsm.ATG.service;
 
+import com.kld.gsm.ATG.domain.DailyPumpDigitShift;
 import com.kld.gsm.ATG.domain.MonitorTimeInventory;
 import com.kld.gsm.ATGDevice.atg_stock_data_out_t;
 import com.kld.gsm.MacLog.MacLogInfo;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,4 +47,14 @@ public interface DailyRunning {
     int addMacLogInfo(String host,List<MacLogInfo> MacLogInfoLst);
     //灌实时状态
     int addMonitorTimeInventoryInfo(String host,List<atg_stock_data_out_t> stockdataLst);
+
+    //获取每杆枪最后泵码交接时间
+    List<DailyPumpDigitShift>selectPumpshitLast(Date begindate);
+
+    //最后一次日结时间
+    Date selectLastAccDate();
+    //获取某一天的第一个日结时间
+    Date selectAccDateByDate(Date begindate);
+    //根据日结时间获取，日结的最后一个班次号
+    String selectshiftByAccDate(Date accDate);
 }

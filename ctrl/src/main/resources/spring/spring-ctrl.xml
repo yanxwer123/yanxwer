@@ -50,6 +50,8 @@
         <property name="password" value="sql"/>
         <property name="idleConnectionTestPeriod" value="60"/>
         <property name="testConnectionOnCheckin" value="true"/>
+        <property name="acquireRetryAttempts" value="10"/>
+        <property name="acquireRetryDelay" value="1000"/>
         <property name="minPoolSize" value="1"/>
         <property name="maxPoolSize" value="10"/>
     </bean>

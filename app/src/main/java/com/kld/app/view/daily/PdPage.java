@@ -1,6 +1,7 @@
 package com.kld.app.view.daily;
 
 import com.kld.app.service.DailyOpoCountService;
+import com.kld.app.service.IAcceptanceOdRegisterService;
 import com.kld.app.service.SysManageCanInfoService;
 import com.kld.app.service.impl.*;
 import com.kld.app.socket.ob.Watcher;
@@ -9,10 +10,8 @@ import com.kld.app.util.Constant;
 import com.kld.app.view.acceptance.MyTable;
 import com.kld.app.view.main.Main;
 import com.kld.app.view.main.ZCTXFrame;
-import com.kld.gsm.ATG.domain.DailyDailyBalance;
-import com.kld.gsm.ATG.domain.DailyOpoCount;
-import com.kld.gsm.ATG.domain.SysManageCanInfo;
-import com.kld.gsm.ATG.domain.SysManageOilGunInfo;
+import com.kld.gsm.ATG.domain.*;
+import com.kld.gsm.ATG.service.DailyRunning;
 import com.kld.gsm.Socket.protocol.GasMsg;
 import com.kld.gsm.Socket.protocol.ResultMsg;
 import com.kld.gsm.util.JsonMapper;
@@ -49,7 +48,9 @@ public class PdPage implements Watcher {
     public static Map realtime = new HashMap();
     SysManageCanInfoService sysManageCanInfoService = Context.getInstance().getBean(SysManageCanInfoService.class);
     CheckSerivceImpl checkSerivce = Context.getInstance().getBean(CheckSerivceImpl.class);
-
+    DailyRunning dailyRunning=Context.getInstance().getBean(DailyRunning.class);
+    IAcceptanceOdRegisterService acceptanceOdRegister=Context.getInstance().getBean(IAcceptanceOdRegisterService.class);
+    Date accdate=null;
 
     ZCTXFrame zc = new ZCTXFrame();
 
@@ -66,6 +67,7 @@ public class PdPage implements Watcher {
     };
     // table的数据
     Object[][] data = new Object[0][tableHeads.length];
+    Object[][] data2 = new Object[0][tableHeads.length];
     private JPanel pdPagePanel;
     JComboBox ygbhJComboBox;
     private JTable probePartable;
@@ -152,10 +154,27 @@ public class PdPage implements Watcher {
                     return;
                 }
 
+                //获取日结时间
+                if (isSameDate(beginDate.getDate(),new Date())) {
+                    //if为当前日期获取最后一次日结
+                    accdate=dailyRunning.selectLastAccDate();
+                }else {
+                    //else查询选定日期的日结
+                    accdate=dailyRunning.selectAccDateByDate(beginDate.getDate());
+                }
+                if (accdate==null){
+                    JOptionPane.showMessageDialog(null, "指定日期未找到日结信息！", "", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+                //根据日结时间获取最后一个班次
+                String formatDate=dailyRunning.selectshiftByAccDate(accdate);
 
-                String formatDate = dateFormat.format(beginDate.getDate()).replaceAll("-", "") + "01";
+
+
+
+
+               // String formatDate = dateFormat.format(beginDate.getDate()).replaceAll("-", "") + "01";
                 DailyOpoCountService dailyOpoCountService = Context.getInstance().getBean(DailyOpoCountService.class);
-
                 beginTime = dailyOpoCountService.findByShift(formatDate);
                 System.out.println("根据班次号[" + formatDate + "]获取到的时间" + beginTime);
 
@@ -164,10 +183,9 @@ public class PdPage implements Watcher {
 
                 } else {
                     begin.setText("开始时间: " + beginTime.substring(0, 19));
-                    //begin.setText("开始时间:" + beginTime.substring(10, 19));
+
 
                 }
-//                end.setText("结束时间: " + new Date().toLocaleString().substring(9));
                 Date endDate = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 end.setText("结束时间: " + sdf.format(endDate));
@@ -209,6 +227,24 @@ public class PdPage implements Watcher {
         //zc.dispose();
     }
 
+    private  boolean isSameDate(Date date1, Date date2) {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(date1);
+
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(date2);
+
+        boolean isSameYear = cal1.get(Calendar.YEAR) == cal2
+                .get(Calendar.YEAR);
+        boolean isSameMonth = isSameYear
+                && cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH);
+        boolean isSameDate = isSameMonth
+                && cal1.get(Calendar.DAY_OF_MONTH) == cal2
+                .get(Calendar.DAY_OF_MONTH);
+
+        return isSameDate;
+    }
+
 
     private void findByOilCan(Date beginDate, String formatDate, String findType) {
         YgCheckSerivceImpl ygCheckSerivce = Context.getInstance().getBean(YgCheckSerivceImpl.class);
@@ -217,10 +253,7 @@ public class PdPage implements Watcher {
         DailyTradeAccountServiceImpl dailyTradeAccountService = Context.getInstance().getBean(DailyTradeAccountServiceImpl.class);
         DecimalFormat decimalFormat = new DecimalFormat("######0.00");
 
-        if (findType.equals("油罐")) {
 
-
-            tableHeads[0] = findType;
 
             List<SysManageCanInfo> oilCan = ygCheckSerivce.findOilCan();
             //System.out.println("chadundao ：" + oilCan.toString());
@@ -242,7 +275,7 @@ public class PdPage implements Watcher {
                     }
                     data[i][1] = decimalFormat.format(dStock);
                     qimo = dStock;
-                    String dischargel = odRegisterInfoService.findByOilCan(sysManageCanInfo.getOilcan().toString(), beginDate, new Date());
+                    String dischargel = odRegisterInfoService.findByOilCan(sysManageCanInfo.getOilcan().toString(), accdate, new Date());
                     if (dischargel == null) {
                         data[i][2] = "0.0";
                     } else {
@@ -252,14 +285,24 @@ public class PdPage implements Watcher {
                     //System.out.println("------------------");
                     //System.out.println("当前油罐：" + sysManageCanInfo.getOilcan());
 
+                    //最后一次泵码交接时间
+                    List<DailyPumpDigitShift> dailyPumpDigitShifts=dailyRunning.selectPumpshitLast(accdate);
                     List<SysManageOilGunInfo> oilGunList = sysManageOilGunInfo.findByOilCanNo(sysManageCanInfo.getOilcan() + "");
+
                     //System.out.println("oilgunList" + oilGunList.size());
                     if (oilGunList.size() > 0) {
                         for (SysManageOilGunInfo oilGunInfo : oilGunList) {
                             if (oilGunInfo.getOilcan().equals(sysManageCanInfo.getOilcan())) {
                                 //System.out.println("油罐:" + sysManageCanInfo.getOilcan() + "对应的油枪：" + oilGunInfo.getOilgun());
+                                Date pumpbeginDate=null;
                                 //油枪 开始时间 结束时间
-                                String str = dailyTradeAccountService.findByOilGun("00" + oilGunInfo.getOilgun() + "", beginDate, new Date());
+                                for (DailyPumpDigitShift pump:dailyPumpDigitShifts){
+                                    if (oilGunInfo.getOilcan().equals(pump.getOilgun())){
+                                        pumpbeginDate=pump.getTakedate();
+                                    }
+                                }
+                                if (pumpbeginDate==null) continue;
+                                String str = dailyTradeAccountService.findByOilGun("00" + oilGunInfo.getOilgun() + "", pumpbeginDate, new Date());
                                 SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
                                 //System.out.println("开始时间" + time.format(beginDate));
@@ -281,9 +324,6 @@ public class PdPage implements Watcher {
                     double kucun = 0.0;
                     //System.out.println("油罐号："+sysManageCanInfo.getOilcan());
                     if (Main.oilCanRealTime.size() > 0 && Main.oilCanRealTime.get(sysManageCanInfo.getOilcan() + "") != null) {
-                        //System.out.println(sysManageCanInfo.getOilcan().getClass());
-                        //System.out.println(sysManageCanInfo.getOilcan());
-
                         kucun += Double.parseDouble(String.valueOf(Main.oilCanRealTime.get(sysManageCanInfo.getOilcan() + "")));
                     }
                     if (Main.oilCanRealTime.size() > 0) {
@@ -293,7 +333,7 @@ public class PdPage implements Watcher {
                         if (liter > 1) {
                             data[i][7] = df.format((qimo - kucun) / liter * 100) + "%";
                         } else {
-                            data[i][7] = df.format(100) + "%";
+                            data[i][7] = df.format(0) + "%";
                         }
                     } else {
                         data[i][5] = "实测库存未能获取";
@@ -302,25 +342,86 @@ public class PdPage implements Watcher {
                     }
                 }
 
+                if (findType.equals("油罐")) {
+                    tableHeads[0] = findType;
+                    probePartable.removeAll();
+                    probePartable.repaint();
+                    probePartable = getTable(tableHeads, data);
+                    probePartable.setBounds(0, 0, 800, 300);
 
-                probePartable.removeAll();
-                probePartable.repaint();
-                probePartable = getTable(tableHeads, data);
-                probePartable.setBounds(0, 0, 800, 300);
+                    probePartable.updateUI();
+                    scrollPane.setViewportView(probePartable);
+                    return;
+                } else {
+                    tableHeads[0] = findType;
 
-                probePartable.updateUI();
-                scrollPane.setViewportView(probePartable);
-            }
-        } else {
-            tableHeads[0] = findType;
+                    List<SysManageOilType> types = acceptanceOdRegister.selectUseOilType();
+                    data2 = new Object[types.size()][tableHeads.length];
+                    int typei = 0;
+                    for (SysManageOilType type : types) {
+                        data2[typei][0] = type.getOilname();
+                        //期初
+                        data2[typei][1] = 0.0;
+                        //进油
+                        data2[typei][2] = 0.0;
+                        //付油
+                        data2[typei][3] = 0.0;
+                        //帐存
+                        data2[typei][4] = 0.0;
+                        //实时库存
+                        data2[typei][5] = 0.0;
+                        //损益
+                        data2[typei][6] = 0.0;
+                        //损益率
+                        data2[typei][7] = 0.0;
+
+                        for (SysManageCanInfo canInfo : oilCan) {
+                            if (canInfo.getOilno().equals(type.getOilno())) {
+                                //data数组查找索引
+                                int j;
+                                for (j = 0; j < data.length; j++) {
+                                    if (data[j][0].equals(canInfo.getOilcan())) {
+                                        break;
+                                    }
+                                }
+                                data2[typei][1] = Double.parseDouble(data2[typei][1].toString()) + Double.parseDouble(data[j][1].toString());
+                                data2[typei][2] = Double.parseDouble(data2[typei][2].toString()) + Double.parseDouble(data[j][2].toString());
+                                data2[typei][3] = Double.parseDouble(data2[typei][3].toString()) + Double.parseDouble(data[j][3].toString());
+                                data2[typei][4] = Double.parseDouble(data2[typei][4].toString()) + Double.parseDouble(data[j][4].toString());
+                                if (data2[typei][5].equals("实测库存未能获取") || data[j][5].equals("实测库存未能获取")) {
+                                    data2[typei][5] = "实测库存未能获取";
+                                }else{
+                                    data2[typei][5] =  df.format(Double.parseDouble(data2[typei][5].toString()) + Double.parseDouble(data[j][5].toString()));
+                                }
+
+                            }
+                        }
+                        if (data2[typei][5].equals("实测库存未能获取")) {
+                            //
+                        } else {
+                            data2[typei][6] = df.format(Double.parseDouble(data2[typei][4].toString()) - Double.parseDouble(data2[typei][5].toString()));
+                            if (Double.parseDouble(data2[typei][3].toString()) > 1) {
+                                data2[typei][7] = df.format((Double.parseDouble(data2[typei][6].toString()) / Double.parseDouble(data2[typei][3].toString()) * 100)) + "%";
+                            } else {
+                                data2[typei][7] = df.format(0) + "%";
+                            }
+                        }
+                        typei++;
+
+                    }
+                    //region old
+           /*
+            List<String> oilTypeList = checkSerivce.findUsedOilTypes();
+
 
             //查询油品编码
-            List<String> oilTypeList = checkSerivce.findUsedOilTypes();
+
             //最后一个日结的班次号
             String strShift = checkSerivce.findLastShift();
 
             //初始显示内容
             data = new Object[oilTypeList.size()][tableHeads.length];
+
 
             //初始化map中 油品对应的卸油量
             for (int i = 0; i < oilTypeList.size(); i++) {
@@ -415,18 +516,19 @@ public class PdPage implements Watcher {
                     }
                 }
 
-            }
+            }*/
+                    //endregion old
 
-            probePartable.removeAll();
-            probePartable.repaint();
-            probePartable = getTable(tableHeads, data);
-            probePartable.setBounds(0, 0, 800, 300);
+                    probePartable.removeAll();
+                    probePartable.repaint();
+                    probePartable = getTable(tableHeads, data2);
+                    probePartable.setBounds(0, 0, 800, 300);
 
-            probePartable.updateUI();
-            scrollPane.setViewportView(probePartable);
-        }
+                    probePartable.updateUI();
+                    scrollPane.setViewportView(probePartable);
+                }
 
-    }
+    }}
 
     private JTable getTable(String[] titles, Object[][] data) {
         DefaultTableModel model = new DefaultTableModel(data, titles);

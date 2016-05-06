@@ -584,7 +584,7 @@
     GROUP BY OilNo
   </select>
   <select id="findByOilCan" parameterType="hashmap" resultType="java.lang.String">
-    <![CDATA[SELECT SUM(DischargeL) FROM oss_acceptance_odRegisterInfo
+    <![CDATA[SELECT SUM(EndOilL-BeginOilL) FROM oss_acceptance_odRegisterInfo
     WHERE oilCan =#{oilcan} AND CreateTime>=#{begintime}
     AND  CreateTime<=#{endtime} ]]>
   </select>

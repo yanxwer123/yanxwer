@@ -4,6 +4,7 @@ import com.kld.gsm.ATG.common.Repository.MySqlRepository;
 import com.kld.gsm.ATG.domain.DailyDailyBalance;
 import com.kld.gsm.ATG.domain.DailyDailyBalanceKey;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,4 +28,8 @@ public interface DailyDailyBalanceDao {
 
     //查看创建时间最新的期初库存
     String findRealStock(String oilno);
+
+    Date selectLastDate();
+
+    Date selectAccountDatebyDate(HashMap map);
 }

@@ -55,6 +55,7 @@ public class ApplicationMain {
 
         //   region com.kld.gsm.syntocenter.socket
         List<String> list = getLocalIPList();
+        logger.info("ip.size:"+list.size());
         for (String ip : list) {
             nettyServer.start(ip, 8992, handler);
             logger.warn("开始监控 --------server " + ip+":8992" );
@@ -211,7 +212,9 @@ public class ApplicationMain {
                     inetAddress = inetAddresses.nextElement();
                     if (inetAddress != null && inetAddress instanceof Inet4Address) { // IPV4
                         ip = inetAddress.getHostAddress();
-                        ipList.add(ip);
+                        if (!ipList.contains(ip)) {
+                            ipList.add(ip);
+                        }
                     }
                 }
             }

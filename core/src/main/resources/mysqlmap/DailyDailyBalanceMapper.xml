@@ -201,4 +201,11 @@
       WHERE OilNo=#{oilno,jdbcType=VARCHAR}
       ORDER BY  CreateTime DESC LIMIT 1
     </select>
+    
+    <select id="selectLastDate" resultType="java.util.Date">
+      SELECT AccountDate from oss_daily_DailyBalance ORDER by AccountDate DESC limit 1
+    </select>
+    <select id="selectAccountDatebyDate" parameterType="java.util.Map" resultType="java.util.Date">
+        SELECT AccountDate FROM oss_daily_DailyBalance WHERE AccountDate &gt;=#{begintime,jdbcType=TIMESTAMP} AND AccountDate &lt; #{endtime,jdbcType=TIMESTAMP} ORDER BY AccountDate ASC LIMIT 1
+    </select>
 </mapper>
