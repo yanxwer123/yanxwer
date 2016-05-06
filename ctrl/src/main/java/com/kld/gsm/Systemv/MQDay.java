@@ -33,7 +33,7 @@ public class MQDay implements Runnable {
                     logger.info("Timestamp:"+timeDate2);
                     DailyInforHandler.getInformation(timeDate2);
                 }
-               // Thread.sleep(1000);
+               Thread.sleep(1);
             } catch (Exception e) {
                 String msg = ExceptionUtils.getMessage(e);
                 //logger.info("----failue to read sysv day data!-----" + msg);

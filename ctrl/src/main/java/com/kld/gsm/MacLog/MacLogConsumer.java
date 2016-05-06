@@ -84,7 +84,7 @@ public class MacLogConsumer implements Runnable {
             if (linedata.length < 6) {
                 return;
             }
-
+            System.out.println("new data:"+newdata);
             if (!linedata[2].equals("Recv:")) {
                System.out.println("No Recv:  data is" + linedata[2]);
                 return;
@@ -112,6 +112,7 @@ public class MacLogConsumer implements Runnable {
 
             if (cachedData != null && !dataArray[0].equals("FA")) {
                 String newData = cachedData + " " + data;
+                System.out.println("newdata32:"+newdata);
                 String[] allCachedDataArray = newData.split(" ");
                 if (allCachedDataArray.length < 104) {
                     cachedPortDataMap_32.put(port, newData);
@@ -130,14 +131,14 @@ public class MacLogConsumer implements Runnable {
             String cachedData_31 = cachedPortDataMap_31.get(port);
             if (cachedData_31 != null && !dataArray[0].equals("FA")) {
                 String newData = cachedData_31 + " " + data;
+                System.out.println("newdata31:"+newData);
                 String[] allCachedDataArray = newData.split(" ");
                 int datalength = Integer.parseInt(allCachedDataArray[4]+allCachedDataArray[5]);
+                System.out.println("datalength:"+datalength);
                 if (datalength > allCachedDataArray.length - 8) {
                     cachedPortDataMap_31.put(port, newData);
                 } else {
-
                     TransferState(newData);
-
                     //并且把数据清空
                     cachedPortDataMap_31.remove(port);
                 }

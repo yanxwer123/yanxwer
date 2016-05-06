@@ -69,7 +69,7 @@ public class MacLogProcessor {
             file.createNewFile();
             */
 
-        String sourcefilePath = "f:\\20160309.log";
+        String sourcefilePath = "f:\\20160503.log";
         File datafile = new File(sourcefilePath);
 
         FileReader in = new FileReader(datafile);
@@ -78,7 +78,7 @@ public class MacLogProcessor {
         MacLogConsumer macLogConsumer=new MacLogConsumer();
         while ((line = reader.readLine()) != null) {
             //
-             Thread.sleep(1);
+             //Thread.sleep(1);
             macLogConsumer.ConsumerLine(line);
             //  //System.out.println(String.format("读取行数据:%s", line));
             //FileUtils.write(file, line + IOUtils.LINE_SEPARATOR, true);

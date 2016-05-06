@@ -403,10 +403,13 @@ public class PrintUIComponent extends JDialog {
             paintLabel(g2, duringSales, 185, this.getHeight() - 146);
             paintLabel(g2, dischargeLoss, 260, this.getHeight() - 146);
             paintLabel(g2, dischargeLossV20, 345, this.getHeight() - 146);
-            paintLabel(g2, decimalFormat1.format(Double.parseDouble(dischargeRate)).toString() , 430, this.getHeight() - 146);
-            paintLabel(g2, decimalFormat1.format(Double.parseDouble(dischargeRateV20)).toString(), 520, this.getHeight() - 146);
-            paintLabel(g2, decimalFormat.format(Double.parseDouble(indemnityloss)).toString(), 620, this.getHeight() - 146);
+            try {
+                paintLabel(g2, decimalFormat1.format(Double.parseDouble(dischargeRate)).toString(), 430, this.getHeight() - 146);
+                paintLabel(g2, decimalFormat1.format(Double.parseDouble(dischargeRateV20)).toString(), 520, this.getHeight() - 146);
+                paintLabel(g2, decimalFormat.format(Double.parseDouble(indemnityloss)).toString(), 620, this.getHeight() - 146);
+            }catch (Exception e){
 
+            }
 
             paintLabel(g2, "卸油员签字:", 45, this.getHeight() - 156);
             paintLabel(g2, "驾驶员签字:", 260, this.getHeight() - 156);
@@ -572,10 +575,13 @@ public class PrintUIComponent extends JDialog {
             paintLabel(g2, duringSales, 185, this.getHeight() - 385);
             paintLabel(g2, dischargeLoss, 260, this.getHeight() - 385);
             paintLabel(g2, dischargeLossV20, 345, this.getHeight() - 385);
+            try {
             paintLabel(g2, decimalFormat1.format(Double.parseDouble(dischargeRate)).toString(), 430, this.getHeight() - 385);
             paintLabel(g2, decimalFormat1.format(Double.parseDouble(dischargeRateV20)).toString(), 520, this.getHeight() - 385);
             paintLabel(g2, decimalFormat.format(Double.parseDouble(indemnityloss)).toString(), 620, this.getHeight() - 385);
+            }catch (Exception e){
 
+            }
 
             paintLabel(g2, "卸油员签字:", 45, this.getHeight() - 395);
             paintLabel(g2, "驾驶员签字:", 260, this.getHeight() - 395);

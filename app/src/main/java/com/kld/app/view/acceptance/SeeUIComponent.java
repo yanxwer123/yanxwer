@@ -270,7 +270,7 @@ public class SeeUIComponent extends JDialog  {
                 } else {
                     paintLabel(g2, deliveryBill.getPlanl() == null ? "" : decimalFormat1.format(deliveryBill.getPlanl()).toString(), 480, this.getHeight() - 82);
                 }
-                paintLabel(g2, decimalFormat1.format(Double.parseDouble(planLV20)).toString(), 610, this.getHeight() - 82);
+                paintLabel(g2,planLV20==null?"": decimalFormat1.format(Double.parseDouble(planLV20)).toString(), 610, this.getHeight() - 82);
 
 
                 paintLabel(g2, "承运车号:", 70, this.getHeight() - 102);
@@ -388,14 +388,14 @@ public class SeeUIComponent extends JDialog  {
             paintLabel(g2, "实收损溢率V20(‰)", 520, this.getHeight() - 282);
             paintLabel(g2, "超耗索赔量(V20)", 620, this.getHeight() - 282);
 
-            paintLabel(g2, decimalFormat1.format(Double.parseDouble(realRecieve)), 45, this.getHeight() - 302);
-            paintLabel(g2, decimalFormat1.format(Double.parseDouble(realRecieveV20)), 115, this.getHeight() - 302);
-            paintLabel(g2, decimalFormat1.format(Double.parseDouble(duringSales)), 185, this.getHeight() - 302);
-            paintLabel(g2, decimalFormat1.format(Double.parseDouble(dischargeLoss)), 260, this.getHeight() - 302);
-            paintLabel(g2, decimalFormat1.format(Double.parseDouble(dischargeLossV20)), 345, this.getHeight() - 302);
+            paintLabel(g2, realRecieve==""?"":decimalFormat1.format(Double.parseDouble(realRecieve)), 45, this.getHeight() - 302);
+            paintLabel(g2, realRecieveV20==""?"":decimalFormat1.format(Double.parseDouble(realRecieveV20)), 115, this.getHeight() - 302);
+            paintLabel(g2, duringSales==""?"":decimalFormat1.format(Double.parseDouble(duringSales)), 185, this.getHeight() - 302);
+            paintLabel(g2, dischargeLoss==""?"":decimalFormat1.format(Double.parseDouble(dischargeLoss)), 260, this.getHeight() - 302);
+            paintLabel(g2, dischargeLossV20==""?"":decimalFormat1.format(Double.parseDouble(dischargeLossV20)), 345, this.getHeight() - 302);
             paintLabel(g2, dischargeRate, 430, this.getHeight() - 302);
             paintLabel(g2, dischargeRateV20, 520, this.getHeight() - 302);
-            paintLabel(g2, decimalFormat1.format(Double.parseDouble(indemnityloss)), 620, this.getHeight() - 302);
+            paintLabel(g2, indemnityloss==""?"":decimalFormat1.format(Double.parseDouble(indemnityloss)), 620, this.getHeight() - 302);
 
 
             paintLabel(g2, "卸油员签字:", 45, this.getHeight() - 330);
