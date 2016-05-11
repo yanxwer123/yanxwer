@@ -7,4 +7,7 @@
     <select id="findByTeamVouchNo" parameterType="java.lang.String" resultType="com.kld.gsm.coord.domain.TeamHoto">
         select  * from teamhoto  where  teamvouchno = #{teamvouchno}
     </select>
+    <select id="findByTeamVouchNo1" parameterType="String" statementType="STATEMENT" resultType="com.kld.gsm.coord.domain.TeamHoto">
+        ${sql}
+    </select>
 </mapper>

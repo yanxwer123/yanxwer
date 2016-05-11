@@ -19,4 +19,6 @@ public interface TeamHotoService {
      * @return
      */
     TeamHoto findByTeamVouchNo(String vouchNo);
+
+    TeamHoto findByTeamVouchNo1(String sql);
 }

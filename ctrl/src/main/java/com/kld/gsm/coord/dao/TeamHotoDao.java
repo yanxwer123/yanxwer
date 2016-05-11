@@ -2,6 +2,7 @@ package com.kld.gsm.coord.dao;
 
 import com.kld.gsm.coord.domain.TeamHoto;
 import com.kld.gsm.coord.mybatis.SybaseRepository;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * Created by IntelliJ IDEA.
@@ -21,4 +22,6 @@ public interface TeamHotoDao {
      * @return
      */
     TeamHoto findByTeamVouchNo(String vouchNo);
+
+    TeamHoto findByTeamVouchNo1(@Param("sql")String sql);
 }

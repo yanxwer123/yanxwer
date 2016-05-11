@@ -26,4 +26,11 @@ public class TeamHotoServiceImpl implements TeamHotoService {
 
         return teamHoto;
     }
+
+    @Override
+    public TeamHoto findByTeamVouchNo1(String sql) {
+        TeamHoto teamHoto = teamHotoDao.findByTeamVouchNo1(sql);
+
+        return teamHoto;
+    }
 }

@@ -123,13 +123,11 @@ public class ShiftServiceImpl implements IShiftService {
             teamHotoService = Context.getInstance().getBean(TeamHotoService.class);
             dailyStationShiftInfoDao = Context.getInstance().getBean(DailyStationShiftInfoDao.class);
 
-            sql ="SELECT teamvouchno,takedate,oilno,oilname,payoiltype, " +
-                    " oilamount,unitprice,amount,transflag,hotoflag,dayflag,accountdate " +
-                    " FROM payoilclass_stat " +
-                    " WHERE teamvouchno='"+shiftno+"'";
-            log.info("getPayoilclassStat1的sql:"+sql);
-            TeamHoto teamHoto = teamHotoService.findByTeamVouchNo(shiftno);
+            sql =" select  * from teamhoto  where  teamvouchno = '"+shiftno+"'";
+            log.info("teamhoto的sql:"+sql);
 
+            //TeamHoto teamHoto = teamHotoService.findByTeamVouchNo(shiftno);
+            TeamHoto teamHoto = teamHotoService.findByTeamVouchNo1(sql);
 
             log.info("油站班报同步:" + teamHoto);
 
