@@ -81,11 +81,13 @@ public class RphbPage {
 		panel1.add(beginDate);
 
 		JLabel a = new JLabel("至");
+		a.setVisible(false);
 		a.setBounds(220, 10, 20, 30);
 //		a.setForeground(Color.WHITE);
 		panel1.add(a);
 
 		final JXDatePicker endDate=new JXDatePicker();
+		endDate.setVisible(false);
 		endDate.getEditor().setEditable(false);
 		endDate.setPreferredSize(new Dimension(200, 30));
 		endDate.setBounds(246, 10, 150, 30);
@@ -97,7 +99,7 @@ public class RphbPage {
 
 		// 日期选择器
 		JButton cxbutton = new JButton("查询");
-		cxbutton.setBounds(410, 10, 60, 30);
+		cxbutton.setBounds(220, 10, 60, 30);
 		panel1.add(cxbutton);
 		selectDailyDailyBalance(beginDate.getDate(), endDate.getDate());
 
@@ -108,14 +110,8 @@ public class RphbPage {
 				if (null == beginDate.getDate() || "".equals(beginDate.getDate())) {
 					JOptionPane.showMessageDialog(null, "请输入开始时间！", "", JOptionPane.INFORMATION_MESSAGE);
 					return;
-				} else if (null == endDate.getDate() || "".equals(endDate.getDate())) {
-					JOptionPane.showMessageDialog(null, "请输入结束时间！", "", JOptionPane.INFORMATION_MESSAGE);
-					return;
 				}
-				if (endDate.getDate().compareTo(beginDate.getDate()) < 0) {
-					JOptionPane.showMessageDialog(null, "开始时间不能晚于结束时间,请重新选择", "", JOptionPane.INFORMATION_MESSAGE);
-					return;
-				}
+
 				selectDailyDailyBalance(beginDate.getDate(), endDate.getDate());
 
 
@@ -132,7 +128,7 @@ public class RphbPage {
 				AlarmDailyLostService alarmDailyLostService =
 						(AlarmDailyLostService) (Context.getInstance().getBean("alarmDailyLostService"));
 				Calendar calendar = new GregorianCalendar();
-				calendar.setTime(endDate);
+				calendar.setTime(beginDate);
 				calendar.add(calendar.DATE, 1);//
 				List<DailyDailyBalance> dailyDailyBalancesList = dailyDailyBalanceService.selectByDate(beginDate, calendar.getTime());
 				int j=0;
