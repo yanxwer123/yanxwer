@@ -9,4 +9,7 @@
        FROM oilcanhotobill
        WHERE teamvouchno=#{teamvouchno}
     </select>
+    <select id="getOilcanhotobill1" parameterType="String" statementType="STATEMENT" resultType="com.kld.gsm.coord.domain.Oilcanhotobill">
+        ${sql}
+    </select>
 </mapper>

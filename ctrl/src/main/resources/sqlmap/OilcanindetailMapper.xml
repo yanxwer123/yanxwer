@@ -31,6 +31,9 @@
     <select id="selectByOilvoch"  resultType="com.kld.gsm.coord.domain.OilCanIndeTail" parameterType="java.lang.String">
         select * from oilcanindetail where teamvouchno=#{oilvoch}
     </select>
+    <select id="selectByOilvoch1"  resultType="com.kld.gsm.coord.domain.OilCanIndeTail" statementType="STATEMENT" parameterType="String">
+        ${sql}
+    </select>
     <insert id="insertOilcanindetail1" statementType="STATEMENT" parameterType="String">
        ${sql}
     </insert>

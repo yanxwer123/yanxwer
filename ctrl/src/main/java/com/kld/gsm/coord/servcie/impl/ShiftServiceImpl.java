@@ -178,12 +178,20 @@ public class ShiftServiceImpl implements IShiftService {
 
             log.info("start to save oilcanhotobill~~~|||||||||||||`");
             //油罐交接表(oilcanhotobill)
-            List<Oilcanhotobill> oilcanhotobillList = oilcanhotobillDao.getOilcanhotobill(shiftno);
+            sql=" SELECT vouchno,teamvouchno,takedate,oilcanno,oilno,oilname,tooilhigh," +
+                    "       tooilliter,inoilliter,hooilhigh,hooilliter,saleliter,accountdate," +
+                    "       canfact,waterheight,pureheight,billstatus,hotoflag,transflag" +
+                    "       FROM oilcanhotobill" +
+                    "       WHERE teamvouchno='"+shiftno+"'";
+            log.info("oilcanhotobill的sql:"+sql);
+            List<Oilcanhotobill> oilcanhotobillList = oilcanhotobillDao.getOilcanhotobill1(sql);
             DailyTankShift dailyTankShift = new DailyTankShift();
             oilhotobill2dailyTankShift(oilcanhotobillList, dailyTankShift);
 
             //根据sybase的oilcanindetail更新Mysql
-            List<OilCanIndeTail> oilcanindetailList = oilcanindetailDao.selectByOilvoch(shiftno);
+            sql="select * from oilcanindetail where teamvouchno='"+shiftno+"'";
+            log.info("oilcanindetail的sql:"+sql);
+            List<OilCanIndeTail> oilcanindetailList =oilcanindetailDao.selectByOilvoch1(sql);
             for (OilCanIndeTail oilCanIndeTail : oilcanindetailList) {
                 HashMap map = new HashMap();
                 String manualno = oilCanIndeTail.getGoodsbillno();
