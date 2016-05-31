@@ -180,12 +180,12 @@ public class ProtocolProcessor {
 
         //region TODO 操作员登陆状态及权限信息
         if (gasMessage.getPid().equals(Constants.PID_Code.A15_10001.toString())) {
-            System.out.println("开始读权限");
+            log.info("开始读权限");
             ResultMsg resultMsg = new JsonMapper().fromJson(gasMessage.getMessage(), ResultMsg.class);
             System.out.println("---resultMsg--" + resultMsg.toString());
             LoginMsgService loginMsgService = Context.getInstance().getBean(LoginMsgService.class);
             GasMsg gasMsg = loginMsgService.setMsg(resultMsg.getId());
-            System.out.println(gasMsg);
+            log.info(gasMsg.toString());
 
 
             ctx.writeAndFlush(gasMsg);

@@ -36,7 +36,7 @@
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.kld.gsm.center.domain.oss_daily_DailyBalance" >
-    insert into oss_daily_DailyBalance (AccountDate, OilNo, NodeNo, 
+    replace into oss_daily_DailyBalance (AccountDate, OilNo, NodeNo,
       DarlyankStock, DeliveryNo, ReceiveL, 
       TodayOut, TodayStock, RealStock, 
       Loss, LossSent, CreateTime, 

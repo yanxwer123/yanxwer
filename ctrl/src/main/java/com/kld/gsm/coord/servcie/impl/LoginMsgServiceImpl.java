@@ -47,13 +47,23 @@ public class LoginMsgServiceImpl implements LoginMsgService {
         //System.out.println("begin select -------------------");
         try {
             String sql = "select sysdate,oprno,oprname,teamvouchno,runappname from sysinfor ";
+            logger.info("sql:"+sql);
             Sysinfor sysinfor = sysinforDao.getAll1(sql);
+            if (sysinfor!=null) {
+                logger.info("sysinfor:" + sysinfor.getOprno());
+            }else{
+                logger.info("sysinfor is null");
+            }
             //System.out.println("sysinfor>>>>" + sysinfor.toString());
             if (sysinfor != null) {//登陆
                 try {
                     sql = "select menuname from roleinfor ,oprauthority " +
                             " where roleinfor.rolename=oprauthority.rolename AND oprauthority.oprno='"+sysinfor.getOprno()+"'" ;
+                    logger.info("sql:"+sql);
                     List<String> roleinfors = roleinforDao.getAll1(sql);
+                    if (roleinfors!=null){
+                        logger.info("roleinfors.size"+roleinfors.size());
+                    }
                     List menuList = new ArrayList();
                     for (String roleinfor : roleinfors) {
                         if (!menuList.contains(roleinfor.trim())) {
