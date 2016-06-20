@@ -361,7 +361,7 @@ public class Jhys2 extends JPanel {
         //yfssField.setText(bill.getPlanl() == null ? "" : bill.getPlanl().toString());
 
         System.out.println(list);
-        DefaultTableModel model = new DefaultTableModel(list,new String[] { "出库单号", "油品编码","油品名称", "原发升数(L)", "发货温度(℃)", "原发数量(t)" });
+        DefaultTableModel model = new DefaultTableModel(list,new String[] { "出库单号", "油品编码","油品名称", "原发升数(L)", "发货温度(℃)", "原发数量(Kg)" });
         table = new MyTable(model);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 

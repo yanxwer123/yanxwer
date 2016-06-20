@@ -80,6 +80,7 @@ public class JhysTank  extends JPanel{
     private JRadioButton dgrbutton;
     private JRadioButton gcrbutton;
     private int tguncount;
+    private double heightL=0.0;
 
     private static final Logger LOG = Logger.getLogger(JhysTank.class);
     public static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

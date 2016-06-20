@@ -101,7 +101,7 @@ public class JhysPageWhdysFrame  extends JFrame{
         yfssLabel.setBounds(20, 147, 72, 20);
         panel.add(yfssLabel);
 
-        JLabel yfslLabel=new JLabel("原发数量(t):");
+        JLabel yfslLabel=new JLabel("原发数量(Kg):");
         yfslLabel.setBounds(20, 187, 72, 20);
         panel.add(yfslLabel);
 

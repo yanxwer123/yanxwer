@@ -297,12 +297,12 @@ public class PdPage implements Watcher {
                                 Date pumpbeginDate=null;
                                 //油枪 开始时间 结束时间
                                 for (DailyPumpDigitShift pump:dailyPumpDigitShifts){
-                                    if (oilGunInfo.getOilcan().equals(pump.getOilgun())){
+                                    if (oilGunInfo.getOilgun().equals(pump.getOilgun())){
                                         pumpbeginDate=pump.getTakedate();
                                     }
                                 }
                                 if (pumpbeginDate==null) continue;
-                                String str = dailyTradeAccountService.findByOilGun("00" + oilGunInfo.getOilgun() + "", pumpbeginDate, new Date());
+                                String str = dailyTradeAccountService.findByOilGun(leftPad(oilGunInfo.getOilgun() + ""), pumpbeginDate, new Date());
                                 SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
                                 //System.out.println("开始时间" + time.format(beginDate));
@@ -529,6 +529,16 @@ public class PdPage implements Watcher {
                 }
 
     }}
+
+    private String leftPad(String gunno){
+        String no=gunno;
+        if (no.length()<3){
+            for(int i=0;i<3-gunno.trim().length();i++){
+                no="0"+no;
+            }
+        }
+        return no;
+    }
 
     private JTable getTable(String[] titles, Object[][] data) {
         DefaultTableModel model = new DefaultTableModel(data, titles);
