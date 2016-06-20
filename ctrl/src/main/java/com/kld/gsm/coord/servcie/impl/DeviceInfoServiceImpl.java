@@ -133,7 +133,7 @@ public class DeviceInfoServiceImpl implements IDeviceInfoService {
             Future<atg_device_out_t> future = exec.submit(call);
             result=future.get(25000, TimeUnit.MILLISECONDS); //取得结果，同时设置超时执行时间为5秒。同样可以用future.get()，不设置执行超时时间取得结果
         } catch (TimeoutException ex) {
-            logger.error("=============== get devicelist time out=============== "+new Date().toString());
+            logger.error("================ get devicelist time out=============== "+new Date().toString());
         } catch (Exception e) {
             System.out.println("failed to handle.");
         }
