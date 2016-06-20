@@ -123,7 +123,7 @@ public class DeviceInfoServiceImpl implements IDeviceInfoService {
                     logger.info("=================== listmain:" + listmain + "=================");
                      return ATGManager.getDeviceInfo(listmain);
                 }catch (Exception e){
-                    logger.info("================Callable Failed===========");
+                    logger.info("=================Callable Failed===========");
                    return null;
                 }
             }
