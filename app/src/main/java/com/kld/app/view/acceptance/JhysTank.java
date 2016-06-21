@@ -5,6 +5,7 @@ import com.kld.app.springcontext.Context;
 import com.kld.app.util.Common;
 import com.kld.app.util.SysConfig;
 import com.kld.app.view.main.Main;
+import com.kld.gsm.ATG.dao.SysManageAlarmParameterDao;
 import com.kld.gsm.ATG.domain.*;
 import com.kld.gsm.ATG.service.AcceptSevices;
 import com.kld.gsm.ATG.service.SysmanageService;
@@ -61,6 +62,7 @@ public class JhysTank  extends JPanel{
     private AcceptanceOdRegisterInfo acceptanceOdRegisterInfo;
     private IAcceptanceOdRegisterInfoService odRegisterInfoService;
     private DailyTradeAccountService dailyTradeAccountService;
+    private SysManageAlarmParameterDao sysManageAlarmParameterDao;
     private SysmanageService sysmanageService;
     private IAcceptanceDeliveryService deliveryService;
     private AcceptSevices acceptSevices;
@@ -80,7 +82,7 @@ public class JhysTank  extends JPanel{
     private JRadioButton dgrbutton;
     private JRadioButton gcrbutton;
     private int tguncount;
-    private double heightL=0.0;
+    private Double heightL=null;
 
     private static final Logger LOG = Logger.getLogger(JhysTank.class);
     public static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -124,12 +126,28 @@ public class JhysTank  extends JPanel{
         this.setLayout(null);
         this.setBorder(new MatteBorder(1, 0, 0, 0, Color.lightGray));
         this.setBackground(UIManager.getColor("Button.light"));
+        getalarmprehigh();
         getoiltype();
         Addtank();
         Addgun();
         Addqchc();
         Addbtns();
         selectinfo();
+    }
+
+    /*
+    * 获取高液位预警
+    * */
+    private void getalarmprehigh() {
+        sysManageAlarmParameterDao = Context.getInstance().getBean(SysManageAlarmParameterDao.class);
+        List<SysManageAlarmParameter> alarmList=sysManageAlarmParameterDao.selectAll();
+        if(alarmList!=null&&alarmList.size()>0){
+            for(SysManageAlarmParameter item:alarmList){
+                if(item.getOilcan().toString().equals(canno)){
+                    heightL=item.getHighprealarm();
+                }
+            }
+        }
     }
 
     public void selectinfo(){
@@ -351,6 +369,13 @@ public class JhysTank  extends JPanel{
         //endregion
     }
 
+    private void preHightWaring(Double height){
+        if (heightL!=null&&heightL<height){
+            jytjLabel.setForeground(Color.red);
+            bztjLabel.setForeground(Color.red);
+        }
+    }
+
     public void UpdateTank(Map<String,?> map){
         LOG.info("Updatetank begin:"+new Date());
         try {
@@ -369,14 +394,13 @@ public class JhysTank  extends JPanel{
             bztjLabel.setText(String.valueOf(dbztj));
             Double dsg = Double.parseDouble(df.format(Double.parseDouble(map.get("fWaterHeight").toString())));
             sgLabel.setText(String.valueOf(dsg));
-
+            preHightWaring(dyszg);
 
             if (qcvt != null) {
                 Double dyxss = Double.parseDouble(df.format(djytj - qcvt));
                 yxyssLabel.setText(dyxss + "");
                 yxyssLabel.setVisible(true);
             }
-
 
             double wp = Double.parseDouble(map.get("fWaterBulk").toString());
             double ol = Double.parseDouble(map.get("fOilCubage").toString());

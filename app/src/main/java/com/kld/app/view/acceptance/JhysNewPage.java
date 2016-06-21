@@ -150,7 +150,12 @@ public class JhysNewPage extends JOptionPane implements Watcher  {
         List<AcceptanceDeliveryBills> bills=getAcceptanceDeliveryBill();
         for (AcceptanceDeliveryBills bill:bills){
             if (bill.getBegintime()!=null) {
-                addbill(bill);
+                try {
+                    addbill(bill);
+                }catch (Exception e){
+                    LOG.error("addbill error:"+e.getMessage());
+                }
+
             }
         }
     }
