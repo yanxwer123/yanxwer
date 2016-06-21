@@ -65,7 +65,7 @@ public class DeviceInfoServiceImpl implements IDeviceInfoService {
 
             if(deviceOutT==null){
                 logger.warn("ATGManager.getDeviceInfo can list:"+list);
-                return false;
+                continue;
             }
 
             result=true;
