@@ -708,8 +708,8 @@ public class ProtocolProcessor {
                 atg.fHighTempAlarm = sysManageAlarmParameter.getHightempalarm();//高温报警
                 atg.fLowTempAlarm = sysManageAlarmParameter.getLowtempalarm();//低温报警
                 atg.fThiefAlarm = sysManageAlarmParameter.getStealoilalarm();//盗油报警
-                atg.fLeakAlarm = sysManageAlarmParameter.getLeakageoilalarm();//漏油报警
-                atg.fPercolatingAlarm = sysManageAlarmParameter.getLeakoilalarm();//渗漏报警
+                atg.fLeakAlarm = sysManageAlarmParameter.getLeakoilalarm();//漏油报警
+                atg.fPercolatingAlarm = sysManageAlarmParameter.getLeakageoilalarm();//渗漏报警
                 //lastoptime;//上次设置时间
                 //optime;//操作时间
                 //transtatus;//传输状态
