@@ -101,9 +101,9 @@ public class ShiftStockThread extends Thread {
             try {
                 int iSleep=TimeTaskPar.get("bjrjtb");
                 if(iSleep>1){
-                    sleep(TimeTaskPar.get("bjrjtb")*100);
+                    sleep(TimeTaskPar.get("bjrjtb")*1000);
                 }else{
-                    sleep(9000*100);
+                    sleep(9000*1000);
                 }
             } catch (InterruptedException e) {
                 logger.error("sleep:" + e);
