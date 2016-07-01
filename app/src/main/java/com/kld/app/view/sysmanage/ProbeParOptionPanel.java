@@ -389,8 +389,7 @@ public class ProbeParOptionPanel extends JPanel implements Watcher {
 				try {
 
 					//此处判断探棒编号是否存在
-					SysManageProbePar smpp=probeOptionService.selectModelByProbemodel(tbbhTextField.getText());
-					if(smpp==null) {
+						SysManageProbePar smpp=probeOptionService.selectModelByProbemodel(tbbhTextField.getText());
 						int countOilCan=probeOptionService.ExisOilCan(Integer.parseInt(ygbhComboBox.getSelectedItem().toString()));
 						if(countOilCan==0) {
 							boolean bHaveNull=false;
@@ -705,10 +704,7 @@ public class ProbeParOptionPanel extends JPanel implements Watcher {
 
 						Currentframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 						Currentframe.dispose();*/
-					}
-					else {
-						JOptionPane.showMessageDialog(cpanel, "探棒号已存在！", "提示信息", JOptionPane.INFORMATION_MESSAGE);
-					}
+
 				}
 				catch (Exception ex)
 				{
