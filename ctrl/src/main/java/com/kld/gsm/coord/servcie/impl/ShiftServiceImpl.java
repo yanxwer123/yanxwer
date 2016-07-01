@@ -14,10 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by yinzhiguang on 2015/11/8.
@@ -214,6 +211,30 @@ public class ShiftServiceImpl implements IShiftService {
             e.printStackTrace();
             log.error("此…………………………………………………………………………………………………………………………：" + e.getMessage().toString());
         }
+    }
+
+    @Override
+    public  List<Payoilstat> selectDifferent() {
+        log.info("进入班结的sql查询");
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String nowDate=sd.format(new Date());
+        String shift = dailyOpoCountDao.selectbymax(nowDate);
+
+        log.info("打印sql"+shift);
+        List<Payoilstat> payoilstatList=new ArrayList<Payoilstat>();
+        if(null!=shift && !"".equals(shift)){
+            String sql1  ="SELECT teamvouchno FROM payoilstat" +
+                    " WHERE teamvouchno >'"+shift+"'";
+            log.info("打印sql1"+sql1.toString());
+
+            payoilstatList = payoilstatDao.getPayoilstat2(sql1);
+
+            return payoilstatList;
+        }else{
+            log.info("mysql库查询班结班次为空");
+
+        }
+        return payoilstatList;
     }
 
     private void payoilstat2dailyOpoCount(List<Payoilstat> payoilstatList, DailyOpoCount dailyOpoCount) throws Exception {

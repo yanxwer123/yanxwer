@@ -26,4 +26,7 @@ public interface DailyOpoCountDao {
 
     String findByShift(String shift);
 
+    String selectbymax(String nowDate);
+
+
 }

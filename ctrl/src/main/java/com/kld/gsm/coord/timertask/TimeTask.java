@@ -39,7 +39,8 @@ public class TimeTask {
     static TimeStockThread timeStockThread;
     //文件库存
     static FileStockThread fileStockThread;
-
+    //班结日结同步
+    static ShiftStockThread shiftStockThread;
     //罐枪同步
     static synCanAndGunInfo synCanAndGunInfoThread;
 
@@ -78,6 +79,13 @@ public class TimeTask {
             TimeTaskPar.put("rtstockjg",Integer.parseInt(sysManageDic.GetByCode("rtstockjg").getValue()));
             //实时库存超时
             TimeTaskPar.put("rtstockcs",Integer.parseInt(sysManageDic.GetByCode("rtstockcs").getValue()));
+            //同步班结，日结信息
+            if(null == sysManageDic.GetByCode("bjrjtb").getValue()){
+                TimeTaskPar.put("bjrjtb",0);
+            }else{
+                TimeTaskPar.put("bjrjtb",Integer.parseInt(sysManageDic.GetByCode("bjrjtb").getValue()));
+
+            }
 
             logger.error("开始计划任务调度配置");
             logger.error("ywydsjg液位仪对时:" + TimeTaskPar.get("ywydsjg"));
@@ -94,6 +102,7 @@ public class TimeTask {
             logger.error("sdkclxsj时点库存轮训时间:" + TimeTaskPar.get("sdkclxsj"));
             logger.error("实时库存间隔:" + TimeTaskPar.get("rtstockjg"));
             logger.error("实时库存超时:" + TimeTaskPar.get("rtstockcs"));
+            logger.error("同步班结日结:" + TimeTaskPar.get("bjrjtb"));
             logger.error("~~~~~~~~~~~~~~~~~~end~~~~~~~~~~~~");
             //液位仪对时
             checkTimePolling = new CheckTimePolling();
@@ -137,12 +146,14 @@ public class TimeTask {
             //文件库存
             fileStockThread=new FileStockThread();
             fileStockThread.start();
-
+            //班结日结同步
+            shiftStockThread=new ShiftStockThread();
+            shiftStockThread.start();
             //罐枪同步
             synCanAndGunInfoThread=new synCanAndGunInfo();
             synCanAndGunInfoThread.start();
         }catch(Exception e){
-            logger.error(e);
+            logger.error(e.getMessage());
         }
     }
 
@@ -174,5 +185,7 @@ public class TimeTask {
         timeStockThread.stop();
         //文件库存
         fileStockThread.stop();
+        //班结日结同步
+        shiftStockThread.stop();
     }
 }
