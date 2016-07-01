@@ -178,4 +178,8 @@
     SELECT DISTINCT TakeDate FROM oss_daily_opoCount WHERE Shift = #{shift,jdbcType=VARCHAR}
   </select>
 
+  <select id="selectbymax" parameterType="java.lang.String" resultType="java.lang.String"  >
+    <![CDATA[ select MAX(shift) FROM oss_daily_opoCount where TakeDate <= #{nowDate,jdbcType=VARCHAR}]]>
+  </select>
+
 </mapper>

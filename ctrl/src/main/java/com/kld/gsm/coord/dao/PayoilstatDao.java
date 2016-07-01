@@ -15,4 +15,6 @@ import java.util.List;
 public interface PayoilstatDao {
     List<Payoilstat> getPayoilstat(String oilvoch);
     List<Payoilstat> getPayoilstat1(@Param("sql")String sql);
+    List<Payoilstat> getPayoilstat2(@Param("sql1")String sql);
+
 }

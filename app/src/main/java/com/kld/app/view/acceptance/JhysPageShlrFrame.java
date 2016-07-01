@@ -205,7 +205,7 @@ public class JhysPageShlrFrame extends JOptionPane implements Watcher {
         final List<JTextField> txts=new ArrayList<JTextField>();
         sgField = new JTextField();
         sgField.setBounds(139, 30, text_width, text_height);
-        sgField.setDocument(new SuperDoubleDocument(6, 2));
+        sgField.setDocument(new NumberLenghtLimitedDmt(5));
         qcsj.add(sgField);
         sgField.setColumns(10);
         sgField.setText(acceptanceOdRegisterInfo.getBeginwaterheight()==null?"":acceptanceOdRegisterInfo.getBeginwaterheight().toString());
@@ -283,7 +283,7 @@ public class JhysPageShlrFrame extends JOptionPane implements Watcher {
 
         hcsgField = new JTextField();
         hcsgField.setColumns(10);
-        hcsgField.setDocument(new SuperDoubleDocument(6, 2));
+        hcsgField.setDocument(new NumberLenghtLimitedDmt(5));
         hcsgField.setBounds(139, 30, text_width, text_height);
         hcsj.add(hcsgField);
 
