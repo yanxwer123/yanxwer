@@ -274,7 +274,7 @@ public class synMaclogImpl implements synMaclog, Watcher {
                     LOG.info(item+" is not exist.");
                 }
             }
-
+            ftclient.disconnect();
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (Exception e) {
