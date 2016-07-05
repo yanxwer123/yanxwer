@@ -80,7 +80,7 @@ public class TimeTask {
             //实时库存超时
             TimeTaskPar.put("rtstockcs",Integer.parseInt(sysManageDic.GetByCode("rtstockcs").getValue()));
             //同步班结，日结信息
-            if(null == sysManageDic.GetByCode("bjrjtb").getValue()){
+            if(null == sysManageDic.GetByCode("bjrjtb")){
                 TimeTaskPar.put("bjrjtb",0);
             }else{
                 TimeTaskPar.put("bjrjtb",Integer.parseInt(sysManageDic.GetByCode("bjrjtb").getValue()));
