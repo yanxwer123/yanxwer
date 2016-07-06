@@ -410,8 +410,7 @@ public class ProbeParOptionPanel extends JPanel implements Watcher {
 								JOptionPane.showMessageDialog(cpanel, strIsNull, "提示信息", JOptionPane.INFORMATION_MESSAGE);
 								return;
 							}
-							int countProbePort=probeOptionService.ExisProbePort(Integer.parseInt(tbdkTextField.getText()));
-							if(countProbePort==0&&!bHaveNull) {
+							//int countProbePort=probeOptionService.ExisProbePort(Integer.parseInt(tbdkTextField.getText()));
 								//region 此处加上判断是否为空的语句
 								if(sbxhTextField.getText().trim().length()==0&&!bHaveNull) {
 									bHaveNull=true;
@@ -673,11 +672,8 @@ public class ProbeParOptionPanel extends JPanel implements Watcher {
 								smpp.setProbeport(Integer.parseInt(tbdkTextField.getText()));
 								smpp.setTranstatus("0");
 								//endregion
-							}
-							else {
-								JOptionPane.showMessageDialog(cpanel, "端口已被设置！", "提示信息", JOptionPane.INFORMATION_MESSAGE);
-								return;
-							}
+
+
 						}
 						else {
 							JOptionPane.showMessageDialog(cpanel, "油罐已被设置！", "提示信息", JOptionPane.INFORMATION_MESSAGE);
