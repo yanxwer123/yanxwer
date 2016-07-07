@@ -39,7 +39,7 @@ public class CkdcxPage  extends  JPanel{
     /*private static final String[] CKD_TITLES = new String[] { "序号", "出库单号", "出库时间", "发油油库", "目的油站", "油品", "发货温度",
             "原发数量（L）", "原发数量（吨）", "交运时间", "车牌号码", "出库铅封号","状态","备注" };*/
     private static final String[] CKD_TITLES = new String[] { "类型", "出库单号", "出库时间", "发油油库", "目的油站", "油品编码","油品名称", "发货温度(℃)",
-            "原发升数(L)", "原发数量(t)", "交运时间", "车牌号码", "出库铅封号","状态" };
+            "原发升数(L)", "原发数量(Kg)", "交运时间", "车牌号码", "出库铅封号","状态" };
     private IAcceptanceDeliveryService deliveryService;
     private com.kld.gsm.ATG.service.AcceptSevices coreAcceptSevices;
     private com.kld.gsm.ATG.service.SysManageDic coreSysdic;

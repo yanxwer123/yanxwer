@@ -118,7 +118,7 @@ public class JhyscxPageDetailFrame extends JOptionPane implements Watcher {
         tablePanel.setLayout(new BorderLayout());
         tablePanel.setBounds(0, 0, 660, 65);
         frame.getContentPane().add(tablePanel);
-        DefaultTableModel model = new DefaultTableModel(new Object[1][5], new String[]{"出库单号", "来油油品", "原发升数(L)", "发货温度(℃)", "原发数量(t)"});
+        DefaultTableModel model = new DefaultTableModel(new Object[1][5], new String[]{"出库单号", "来油油品", "原发升数(L)", "发货温度(℃)", "原发数量(Kg)"});
         table = new MyTable(model);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         Enumeration<TableColumn> columns = table.getColumnModel().getColumns();

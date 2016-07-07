@@ -19,11 +19,11 @@ public class CkdcxTableModelFrame {
 }  
 class JTableModelFrame extends JFrame  
 {  
-    public JTableModelFrame()  
-    {  
-        this.setTitle("出库单查询");  
+    public JTableModelFrame()
+    {
+        this.setTitle("出库单查询");
         this.setSize(400,300);  
-        TableModel model=new MyTableModel(new String[]{"序号","出库单号","出库时间","发油油库","目的油站","油品","发货温度","原发数量（L）","原发数量（吨）","交运时间","车牌号码","出库铅封号"},
+        TableModel model=new MyTableModel(new String[]{"序号","出库单号","出库时间","发油油库","目的油站","油品","发货温度","原发数量（L）","原发数量（Kg）","交运时间","车牌号码","出库铅封号"},
         		new Object[5][3]);  
         JTable table=new JTable(model);  
         table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);  

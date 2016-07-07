@@ -37,7 +37,7 @@ public class CkdcxOpen extends JOptionPane {
     private static final int COLUMN_COUNT = 14;
 
     private static final String[] CKD_TITLES = new String[] { "类型", "出库单号", "出库时间", "发油油库",
-            "目的油站", "油品编码","油品名称", "发货温度(℃)","原发升数(L)", "原发数量(t)", "交运时间",
+            "目的油站", "油品编码","油品名称", "发货温度(℃)","原发升数(L)", "原发数量(Kg)", "交运时间",
             "车牌号码", "出库铅封号","状态" };
     private IAcceptanceDeliveryService deliveryService;
     private com.kld.gsm.ATG.service.AcceptSevices coreAcceptSevices;
