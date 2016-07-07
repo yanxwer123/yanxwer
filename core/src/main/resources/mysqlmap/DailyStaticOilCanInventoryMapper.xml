@@ -145,5 +145,6 @@
   <select id="selectBytrans" resultMap="BaseResultMap">
     SELECT <include refid="Base_Column_List"/>
     FROM  oss_daily_StaticOilCanInventory WHERE TranStatus=0
+    ORDER BY measuretime DESC  LIMIT 500
   </select>
 </mapper>
