@@ -165,5 +165,6 @@
     SELECT
     <include refid="Base_Column_List"/>
     FROM oss_alarm_GaTContrast WHERE TranStatus=#{trans,jdbcType=VARCHAR}
+    ORDER BY FristMeasureTime DESC  LIMIT 500
   </select>
 </mapper>
