@@ -8,6 +8,7 @@
     <id column="OilGun" property="oilgun" jdbcType="VARCHAR" />
     <result column="OilCan" property="oilcan" jdbcType="INTEGER" />
     <result column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <result column="CardNo" property="cardno" jdbcType="VARCHAR"/>
     <result column="OpeTime" property="opetime" jdbcType="TIMESTAMP" />
     <result column="StockDate" property="stockdate" jdbcType="VARCHAR" />
     <result column="StockTime" property="stocktime" jdbcType="VARCHAR" />
@@ -28,7 +29,7 @@
     <result column="PumpNo" property="pumpno" jdbcType="DOUBLE" />
   </resultMap>
   <sql id="Base_Column_List" >
-    MacNo, TTC, TakeDate, OilGun, OilCan, OilNo, OpeTime, StockDate, StockTime, OilL, 
+    MacNo, TTC, TakeDate, OilGun, OilCan, OilNo, OpeTime, StockDate, StockTime, OilL,
     StandardL, EmptyL, HeightTotal, HeightWater, OilTemp, WaterL, Density, DensityStandard, 
     Shift, Remark, TranStatus
   </sql>
@@ -55,7 +56,7 @@
   </delete>
   <insert id="insert" parameterType="com.kld.gsm.ATG.domain.DailyTradeInventory" >
     insert into oss_daily_TradeInventory (MacNo, TTC, TakeDate, 
-      OilGun, OilCan, OilNo, 
+      OilGun, OilCan, OilNo,CardNo,
       OpeTime, StockDate, StockTime, 
       OilL, StandardL, EmptyL, 
       HeightTotal, HeightWater, OilTemp, 
@@ -63,7 +64,7 @@
       Shift, Remark, TranStatus
       )
     values (#{macno,jdbcType=INTEGER}, #{ttc,jdbcType=INTEGER}, #{takedate,jdbcType=TIMESTAMP}, 
-      #{oilgun,jdbcType=VARCHAR}, #{oilcan,jdbcType=INTEGER}, #{oilno,jdbcType=VARCHAR}, 
+      #{oilgun,jdbcType=VARCHAR}, #{oilcan,jdbcType=INTEGER}, #{oilno,jdbcType=VARCHAR}, #{cardno,jdbcType=VARCHAR},
       #{opetime,jdbcType=TIMESTAMP}, #{stockdate,jdbcType=VARCHAR}, #{stocktime,jdbcType=VARCHAR}, 
       #{oill,jdbcType=DOUBLE}, #{standardl,jdbcType=DOUBLE}, #{emptyl,jdbcType=DOUBLE}, 
       #{heighttotal,jdbcType=DOUBLE}, #{heightwater,jdbcType=DOUBLE}, #{oiltemp,jdbcType=DOUBLE}, 
