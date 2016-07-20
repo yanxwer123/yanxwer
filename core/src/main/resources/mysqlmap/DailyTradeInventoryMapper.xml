@@ -297,7 +297,7 @@
   </update>
   <select id="selectByTrans" parameterType="String" resultMap="BaseResultMap">
   SELECT
-    tdi.MacNo, tdi.TTC, tdi.TakeDate, tdi.OilGun, tdi.OilCan, tdi.OilNo, tdi.OpeTime, tdi.StockDate, tdi.StockTime, tdi.OilL,
+    tdi.MacNo, tdi.TTC, tdi.TakeDate, tdi.OilGun, tdi.OilCan, tdi.OilNo, tdi.CardNo,tdi.OpeTime, tdi.StockDate, tdi.StockTime, tdi.OilL,
     tdi.StandardL, tdi.EmptyL, tdi.HeightTotal, tdi.HeightWater, tdi.OilTemp, tdi.WaterL, tdi.Density, tdi.DensityStandard,
     tdi.Shift, tdi.Remark, tdi.TranStatus,tda.Liter,tda.PumpNo,IFNULL(tda.BackCanFlag,0) as BackMatchFlag
     FROM oss_daily_TradeInventory tdi  left join  oss_daily_TradeAccount tda on tdi.MacNo=tda.MacNo
