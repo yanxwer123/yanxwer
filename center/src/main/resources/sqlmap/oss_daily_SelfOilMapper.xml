@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kld.gsm.center.dao.oss_daily_SelfOilMapper">
+    <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_daily_SelfOil">
+        <id column="CardNo" property="cardno" jdbcType="VARCHAR" />
+        <result column="CreateDate" property="createdate" jdbcType="TIMESTAMP" />
+        <result column="CreateUser" property="createuser" jdbcType="VARCHAR" />
+        <result column="Updatedate" property="updatedate" jdbcType="TIMESTAMP" />
+        <result column="UpdateUser" property="updateuser" jdbcType="VARCHAR" />
+        <result column="Status" property="status" jdbcType="VARCHAR" />
+    </resultMap>
+<sql id="Base_Column_List" >
+    CardNo, CreateDate,CreateUser,Updatedate,UpdateUser,Status
+</sql>
+
+<select id="selectId" resultMap="BaseResultMap" >
+    select CardNo from oss_daily_SelfOil
+</select>
+</mapper>
