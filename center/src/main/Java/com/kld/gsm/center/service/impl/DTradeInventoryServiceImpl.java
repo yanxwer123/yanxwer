@@ -61,4 +61,14 @@ public class DTradeInventoryServiceImpl implements DTradeInventoryService {
         }
         return 1;
     }
+
+    @Override
+    public int updateTradeInventory(List<oss_daily_TradeInventory> oss_daily_tradeInventories) {
+
+        for (oss_daily_TradeInventory item:oss_daily_tradeInventories)
+        {
+            ossDailyTradeInventoryMapper.update(item);
+        }
+        return 1;
+    }
 }

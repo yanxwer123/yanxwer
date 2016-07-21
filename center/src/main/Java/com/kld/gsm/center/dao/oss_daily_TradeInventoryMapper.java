@@ -14,6 +14,8 @@ public interface oss_daily_TradeInventoryMapper {
 
     int insert(oss_daily_TradeInventory record);
 
+    int update(oss_daily_TradeInventory record);
+
     int insertSelective(oss_daily_TradeInventory record);
 
     oss_daily_TradeInventory selectByPrimaryKey(oss_daily_TradeInventoryKey key);

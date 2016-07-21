@@ -51,6 +51,8 @@ public class ShiftServiceImpl implements IShiftService {
     @Autowired
     DailyTradeAccountDao dailyTradeAccountDao;
     @Autowired
+    DailyTradeInventoryDao dailytradeinventorydao;
+    @Autowired
     TeamHotoService teamHotoService;
     @Autowired
     DailyStationShiftInfoDao dailyStationShiftInfoDao;
@@ -154,7 +156,7 @@ public class ShiftServiceImpl implements IShiftService {
             log.info("此处开始更新oss_daily_TradeAccount");
             //endregion
             //交易明细表（oilvouch）
-            sql = "SELECT macno,ttc,takedate,oilgunno,teamvouchno " +
+            sql = "SELECT macno,ttc,takedate,cardno,oilgunno,teamvouchno " +
                     "        FROM oilvouch " +
                     "        WHERE teamvouchno = '"+shiftno+"'";
             List<OilVouch> oilVouchList = oilVouchDao.selectByshift1(sql);
@@ -169,6 +171,8 @@ public class ShiftServiceImpl implements IShiftService {
                     }
                  }
                 dailyTradeAccountDao.updateByKey(oilVouch);
+                //更新交易库存表，shift字段
+                dailytradeinventorydao.updateByKey(oilVouch);
             }
             log.info("更新oss_daily_TradeAccount完毕");
             log.info("此处开始更新oss_acceptance_odRegisterInfo");

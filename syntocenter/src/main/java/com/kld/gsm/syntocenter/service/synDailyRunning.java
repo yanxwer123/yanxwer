@@ -9,6 +9,8 @@ public interface synDailyRunning {
     int synTradeAccountLost();
     //交易库存表
     int  TradeInventoryLost();
+    //交易库存（班结之后更新班次信息）
+    int AfterTradeInventoryLost();
     //成品油日结存报表
     int OilDailyRecordLost();
     //班结库存表
