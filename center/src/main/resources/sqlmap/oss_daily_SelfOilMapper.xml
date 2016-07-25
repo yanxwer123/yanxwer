@@ -16,4 +16,26 @@
 <select id="selectId" resultMap="BaseResultMap" >
     select CardNo from oss_daily_SelfOil
 </select>
+<select id="getSelfOilList" parameterType="hashmap" resultType="hashmap">
+    SELECT * FROM oss_daily_SelfOil where 1=1
+    <if test="cardNo !=null and cardNo!=''">
+        and CardNo=#{cardNo}
+    </if>
+    <if test="firstRow != null and  pageSize!= null">
+        <![CDATA[ LIMIT #{firstRow},#{pageSize}]]>
+    </if>
+</select>
+    <select id="getSelfOilAllList" parameterType="hashmap" resultType="hashmap">
+        SELECT  *  FROM oss_daily_SelfOil where 1=1
+        <if test="cardNo !=null and cardNo!=''">
+            and CardNo=#{cardNo}
+        </if>
+    </select>
+    <insert id="insert" parameterType="hashmap" >
+        insert into oss_daily_SelfOil (cardNo, createDate, createUser, updateDate,updateUser,status)
+        values (#{cardNo}, #{createDate},#{createUser}, #{updateDate},#{updateUser},#{status})
+    </insert>
+    <delete id="del" parameterType="String">
+        DELETE  from  oss_daily_SelfOil where CardNo=#{cardNo}
+    </delete>
 </mapper>

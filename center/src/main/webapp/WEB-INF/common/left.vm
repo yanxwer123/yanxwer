@@ -60,6 +60,8 @@
              <ul id="MessageUl" class="easyui-tree">
                 <li id="VolumeList"><a class="three-title " onclick=" javascript: addTab('油站信息', '/web/basicdata/loadpage');">油站信息</a>
                 </li>
+                 <li id="SelfOilList"><a class="three-title " onclick=" javascript: addTab('自用油卡管理', '/web/basicdata/selfOilpage');">自用油卡管理</a>
+                 </li>
             </ul>
         </div>
         <div id="sysManage" title="系统管理"   data-options="iconCls:'icon-search'"   >

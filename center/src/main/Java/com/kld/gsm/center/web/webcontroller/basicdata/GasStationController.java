@@ -52,8 +52,14 @@ public class GasStationController {
         return "basicdata/GasStationInfor";
     }
 
+    @RequestMapping("/selfOilpage")
+    public ModelAndView selfOilpage(){
+        return new ModelAndView("basicdata/selfOilpage");}
+
     @ResponseBody
     @RequestMapping("/findallstation")
+
+
     public List findbsasic() {
         //总集合
         List list = new ArrayList();

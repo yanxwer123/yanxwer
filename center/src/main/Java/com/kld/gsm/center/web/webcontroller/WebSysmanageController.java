@@ -1,5 +1,6 @@
 package com.kld.gsm.center.web.webcontroller;
 
+import com.kld.gsm.center.dao.oss_daily_SelfOilMapper;
 import com.kld.gsm.center.domain.*;
 import com.kld.gsm.center.service.*;
 import com.sun.org.apache.xpath.internal.SourceTree;
@@ -47,6 +48,8 @@ public class WebSysmanageController extends WebBaseController{
     private Sys_userroleService sys_userroleService;
     @Resource
     private SysDictService sysDictService;
+    @Resource
+    private  DselfOilService dselfOilService;
 
     @RequestMapping("/loadpage")
     public ModelAndView loadpage(){
@@ -128,7 +131,32 @@ public class WebSysmanageController extends WebBaseController{
         }
     }
 
-   @ResponseBody
+    @RequestMapping( value = "/getSelfOillList",method = RequestMethod.GET)
+    @ResponseBody
+    public ResultMsg GetSelfOillList( @RequestParam(value = "cardNo",required = false) String cardNo,
+                                    @RequestParam(value = "page", required = false) Integer page,
+                                  @RequestParam(value = "rows",required = false) Integer rows
+    ) {
+        //设置当前页
+        int intPage=page==null||page<=0?1:page;
+        //设置每页显示的数量
+        int intPageSize=rows==null||rows<=0?10:rows;
+
+        List<HashMap<String,Object>> list=dselfOilService.getSelfOilList(intPage, intPageSize,cardNo);
+        if(list!=null){
+            ResultMsg result = new ResultMsg();
+            result.setData(list);
+            result.setRows(list);
+            result.setTotal(dselfOilService.getSelfOilAllList(cardNo).size());
+            return result;
+        }
+        else {
+            return null;
+        }
+    }
+
+
+    @ResponseBody
    @RequestMapping("/findallUserRole")
    public List findUserRole() {
        Tree tree = new Tree();
@@ -374,6 +402,25 @@ public class WebSysmanageController extends WebBaseController{
         return insert;
     }
 
+    @RequestMapping("/addSelf")
+    @ResponseBody
+    public int addSelf(@RequestParam(value = "cardNo", required = false) String cardNo,
+                       @RequestParam(value = "createUser", required = false) String createUser){
+        HashMap hashMap = new HashMap();
+        hashMap.put("cardNo", cardNo);
+        hashMap.put("createUser", createUser);
+        hashMap.put("updateUser", createUser);
+        hashMap.put("createDate", new Date());
+        hashMap.put("updateDate", new Date());
+        hashMap.put("status", "0");
+
+        int insert= dselfOilService.insert(hashMap);
+        return insert;
+    }
+
+
+
+
     @RequestMapping("/addRole")
     @ResponseBody
     public int addRole(@RequestParam(value = "rolecode", required = false) String rolecode,
@@ -493,6 +540,12 @@ public class WebSysmanageController extends WebBaseController{
     @ResponseBody
     public int delrole(@RequestParam(value = "rolecode", required = false) String rolecode) {
         int delte=sys_roleService.delete(rolecode);
+        return delte;
+    }
+    @RequestMapping("/delSelf")
+    @ResponseBody
+    public int delSelf(@RequestParam(value = "cardNo", required = false) String cardNo) {
+        int delte=dselfOilService.delete(cardNo);
         return delte;
     }
     @RequestMapping("/delCatalog")
