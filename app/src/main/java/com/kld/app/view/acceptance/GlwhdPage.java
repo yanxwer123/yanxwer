@@ -13,6 +13,7 @@ import com.kld.app.view.main.Main;
 import com.kld.gsm.ATG.dao.SysManageDictDao;
 import com.kld.gsm.ATG.domain.*;
 import com.kld.gsm.ATG.service.AcceptSevices;
+import com.kld.gsm.ATG.service.SysmanageService;
 import com.kld.gsm.Socket.Constants;
 import com.kld.gsm.Socket.protocol.GasMsg;
 import com.kld.gsm.Socket.protocol.ResultMsg;
@@ -43,6 +44,7 @@ public class GlwhdPage extends JOptionPane implements WindowListener,Watcher {
     private   String OIL_TYPE_1 = "01";
     private static final Logger LOG = Logger.getLogger(GlwhdPage.class);
     private AlarmOilInContrastService alarmOilInContrastService;
+    private SysmanageService sysmanageService;
     private JDialog frame;
     private JTable table;
     private AcceptSevices acceptSevices;
@@ -471,6 +473,28 @@ public class GlwhdPage extends JOptionPane implements WindowListener,Watcher {
             try {
                 iAcceptanceOdRegisterService.updateByPrimaryKey(odg);
                 addOilinContrat(odg);
+
+                try
+                {
+                    LOG.info("delivery begin");
+                    if (sysmanageService==null){
+                        sysmanageService=Context.getInstance().getBean(sysmanageService.getClass());
+                    }
+                    if (acceptSevices==null) {
+                        acceptSevices = Context.getInstance().getBean(AcceptSevices.class);
+                    }
+                    SysManageDepartment sysManageDepartment=sysmanageService.getdeptinfo();
+                    if (sysManageDepartment!=null) {
+                        acceptSevices.sendOdreg(SysConfig.regmoteIp(), sysManageDepartment.getSinopecnodeno());
+                    }
+                    LOG.info("delivery end");
+                }
+                catch (Exception ex)
+                {
+                    LOG.error("delivery failed"+ex.getMessage());
+                }
+
+
                 ckdcxPage.reLoad();
             } catch (Exception e1) {
                 e1.printStackTrace();
