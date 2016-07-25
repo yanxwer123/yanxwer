@@ -24,7 +24,7 @@
         <table>
             <tr>
                 <td style="padding-top:10px">自用油卡号</td>
-                <td style="padding-top:10px"><input class="easyui-numberbox" type="text" id="addcardNo" precision="0" maxlength="2" name="cardNo" data-options="required:true,precision:2" /></td>
+                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="addcardNo" name="cardNo" data-options="required:true,precision:2" /></td>
             </tr>
             <tr>
                 <td style="padding-top:10px">创建人</td>
