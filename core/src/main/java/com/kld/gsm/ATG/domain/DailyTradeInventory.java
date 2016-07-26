@@ -9,6 +9,8 @@ public class DailyTradeInventory extends DailyTradeInventoryKey {
 
     private String oilno;
 
+    private String cardno;
+
     private Date opetime;
 
     private String stockdate;
@@ -194,7 +196,9 @@ public class DailyTradeInventory extends DailyTradeInventoryKey {
     public void setTranstatus(String transtatus) {
         this.transtatus = transtatus == null ? null : transtatus.trim();
     }
+    public String getCardno() {return cardno;}
 
+    public void setCardno(String cardno) {this.cardno = cardno;}
 
     @JsonProperty("checkmode")
     public String getBackcanflag() {
@@ -204,12 +208,14 @@ public class DailyTradeInventory extends DailyTradeInventoryKey {
     public void setBackcanflag(String backmatchflag) {
         this.backmatchflag = backmatchflag;
     }
-     @Override
+
+    @Override
     public String toString() {
         return "DailyTradeInventory{" +
                 "oilcan=" + oilcan +
                 ", oilno='" + oilno + '\'' +
-                ", opetime='" + opetime +'\''+
+                ", cardno='" + cardno + '\'' +
+                ", opetime=" + opetime +
                 ", stockdate='" + stockdate + '\'' +
                 ", stocktime='" + stocktime + '\'' +
                 ", oill=" + oill +

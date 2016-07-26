@@ -60,6 +60,8 @@
              <ul id="MessageUl" class="easyui-tree">
                 <li id="VolumeList"><a class="three-title " onclick=" javascript: addTab('油站信息', '/web/basicdata/loadpage');">油站信息</a>
                 </li>
+                 <li id="SelfOilList"><a class="three-title " onclick=" javascript: addTab('自用油卡管理', '/web/basicdata/selfOilpage');">自用油卡管理</a>
+                 </li>
             </ul>
         </div>
         <div id="sysManage" title="系统管理"   data-options="iconCls:'icon-search'"   >
@@ -118,6 +120,7 @@ function findAll(){
                 if(result[i]=="142"){VolumeManageUl.getElementsByTagName("li")[1].style.display = "none";Vo++};//容积表分析
                // if(result[i]=="15"){ $('#Message').panel('close');};
                 if(result[i]=="151"){MessageUl.getElementsByTagName("li")[0].style.display = "none";Me++};//油站信息
+                if(result[i]=="152"){MessageUl.getElementsByTagName("li")[1].style.display = "bl";Me++};//自用油卡卡号管理
                // if(result[i]=="16"){ $('#sysManage').panel('close');};
                 if(result[i]=="161"){sysManageUl.getElementsByTagName("li")[0].style.display = "none";sy++};//功能管理
                 if(result[i]=="162"){sysManageUl.getElementsByTagName("li")[1].style.display = "none";sy++};//系统管理
@@ -127,7 +130,7 @@ function findAll(){
                 if(bu==6){$('#businessManage').panel('close');};
                 if(Al==8){$('#AlarmManage').panel('close');};
                 if(Vo==2){$('#VolumeManage').panel('close');};
-                if(Me==1){$('#Message').panel('close');};
+                if(Me==2){$('#Message').panel('close');};
                 if(sy==3){$('#sysManage').panel('close');};
 
             }

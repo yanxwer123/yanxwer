@@ -9,6 +9,8 @@ public class oss_daily_TradeInventory extends oss_daily_TradeInventoryKey {
 
     private String oilno;
 
+    private String cardno;
+
     private Date opetime;
 
     private String stockdate;
@@ -216,5 +218,13 @@ public class oss_daily_TradeInventory extends oss_daily_TradeInventoryKey {
 
     public void setOucode(String oucode) {
         this.oucode = oucode == null ? null : oucode.trim();
+    }
+
+    public String getCardno() {
+        return cardno;
+    }
+
+    public void setCardno(String cardno) {
+        this.cardno = cardno;
     }
 }

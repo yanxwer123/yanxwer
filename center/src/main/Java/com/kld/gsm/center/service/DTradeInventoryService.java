@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface DTradeInventoryService {
     int AddTradeInventory(List<oss_daily_TradeInventory> oss_daily_tradeInventories);
+    int updateTradeInventory(List<oss_daily_TradeInventory> oss_daily_tradeInventories);
 }

@@ -371,6 +371,38 @@ public class AddRCYYController {
         }
         return result;
     }
+
+    /*
+ Created by mjxu .
+ 更新交易库存表
+  */
+    @RequestMapping("/UpdateTradeInventory")
+    @ResponseBody
+    public Object UpdateTradeInventory(@RequestBody List<oss_daily_TradeInventory> TradeInventoryModelLst,@RequestParam("NodeNo") String NodeNo){
+        Result result=new Result();
+        try {
+            if(TradeInventoryModelLst!=null&&TradeInventoryModelLst.size()>0) {
+                String Oucode=new sysOrgUnit().GetOuCodeByNodeNo(NodeNo);
+                for(oss_daily_TradeInventory item:TradeInventoryModelLst) {
+                    item.setNodeno(NodeNo);
+                    item.setOucode(Oucode);
+                }
+                int resultCont=TradeInventoryService.updateTradeInventory(TradeInventoryModelLst);
+                if(resultCont>0) {
+                    result.setResult(true);
+                    PassHn_TradeInventory(TradeInventoryModelLst);
+                }
+            }
+        }
+        catch(Exception ex) {
+            result.setResult(false);
+            result.setMsg(ex.getMessage());
+        }
+        return result;
+    }
+
+
+
     private  void  PassHn_TradeInventory(List<oss_daily_TradeInventory> TradeInventoryModelLst)throws Exception{
         action ac=new action();
         String TradeInventoryPath=ac.getUri("resources.hn.RCYX.TradeInventory");
@@ -387,6 +419,7 @@ public class AddRCYYController {
 
         }
     }
+
 
     /*
       Created by fangzhun on 2015/11/19.

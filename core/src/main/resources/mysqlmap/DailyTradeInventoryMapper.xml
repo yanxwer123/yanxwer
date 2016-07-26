@@ -8,6 +8,7 @@
     <id column="OilGun" property="oilgun" jdbcType="VARCHAR" />
     <result column="OilCan" property="oilcan" jdbcType="INTEGER" />
     <result column="OilNo" property="oilno" jdbcType="VARCHAR" />
+    <result column="CardNo" property="cardno" jdbcType="VARCHAR"/>
     <result column="OpeTime" property="opetime" jdbcType="TIMESTAMP" />
     <result column="StockDate" property="stockdate" jdbcType="VARCHAR" />
     <result column="StockTime" property="stocktime" jdbcType="VARCHAR" />
@@ -28,7 +29,7 @@
     <result column="PumpNo" property="pumpno" jdbcType="DOUBLE" />
   </resultMap>
   <sql id="Base_Column_List" >
-    MacNo, TTC, TakeDate, OilGun, OilCan, OilNo, OpeTime, StockDate, StockTime, OilL, 
+    MacNo, TTC, TakeDate, OilGun, OilCan, OilNo, OpeTime, StockDate, StockTime, OilL,
     StandardL, EmptyL, HeightTotal, HeightWater, OilTemp, WaterL, Density, DensityStandard, 
     Shift, Remark, TranStatus
   </sql>
@@ -55,7 +56,7 @@
   </delete>
   <insert id="insert" parameterType="com.kld.gsm.ATG.domain.DailyTradeInventory" >
     insert into oss_daily_TradeInventory (MacNo, TTC, TakeDate, 
-      OilGun, OilCan, OilNo, 
+      OilGun, OilCan, OilNo,CardNo,
       OpeTime, StockDate, StockTime, 
       OilL, StandardL, EmptyL, 
       HeightTotal, HeightWater, OilTemp, 
@@ -63,7 +64,7 @@
       Shift, Remark, TranStatus
       )
     values (#{macno,jdbcType=INTEGER}, #{ttc,jdbcType=INTEGER}, #{takedate,jdbcType=TIMESTAMP}, 
-      #{oilgun,jdbcType=VARCHAR}, #{oilcan,jdbcType=INTEGER}, #{oilno,jdbcType=VARCHAR}, 
+      #{oilgun,jdbcType=VARCHAR}, #{oilcan,jdbcType=INTEGER}, #{oilno,jdbcType=VARCHAR}, #{cardno,jdbcType=VARCHAR},
       #{opetime,jdbcType=TIMESTAMP}, #{stockdate,jdbcType=VARCHAR}, #{stocktime,jdbcType=VARCHAR}, 
       #{oill,jdbcType=DOUBLE}, #{standardl,jdbcType=DOUBLE}, #{emptyl,jdbcType=DOUBLE}, 
       #{heighttotal,jdbcType=DOUBLE}, #{heightwater,jdbcType=DOUBLE}, #{oiltemp,jdbcType=DOUBLE}, 
@@ -296,16 +297,35 @@
   </update>
   <select id="selectByTrans" parameterType="String" resultMap="BaseResultMap">
   SELECT
-    tdi.MacNo, tdi.TTC, tdi.TakeDate, tdi.OilGun, tdi.OilCan, tdi.OilNo, tdi.OpeTime, tdi.StockDate, tdi.StockTime, tdi.OilL,
+    tdi.MacNo, tdi.TTC, tdi.TakeDate, tdi.OilGun, tdi.OilCan, tdi.OilNo, tdi.CardNo,tdi.OpeTime, tdi.StockDate, tdi.StockTime, tdi.OilL,
     tdi.StandardL, tdi.EmptyL, tdi.HeightTotal, tdi.HeightWater, tdi.OilTemp, tdi.WaterL, tdi.Density, tdi.DensityStandard,
     tdi.Shift, tdi.Remark, tdi.TranStatus,tda.Liter,tda.PumpNo,IFNULL(tda.BackCanFlag,0) as BackMatchFlag
     FROM oss_daily_TradeInventory tdi  left join  oss_daily_TradeAccount tda on tdi.MacNo=tda.MacNo
     and  tdi.TakeDate=tda.TakeDate and  tdi.TTC=tda.TTC and tdi.OilGun=tda.OilGun
      WHERE TranStatus=#{trans,jdbcType=VARCHAR}
   </select>
+  <select id="selectByTrans1" parameterType="String" resultMap="BaseResultMap">
+    SELECT
+    tdi.MacNo, tdi.TTC, tdi.TakeDate, tdi.OilGun, tdi.OilCan, tdi.OilNo, tdi.CardNo,tdi.OpeTime, tdi.StockDate, tdi.StockTime, tdi.OilL,
+    tdi.StandardL, tdi.EmptyL, tdi.HeightTotal, tdi.HeightWater, tdi.OilTemp, tdi.WaterL, tdi.Density, tdi.DensityStandard,
+    tdi.Shift, tdi.Remark, tdi.TranStatus,tda.Liter,tda.PumpNo,IFNULL(tda.BackCanFlag,0) as BackMatchFlag
+    FROM oss_daily_TradeInventory tdi  left join  oss_daily_TradeAccount tda on tdi.MacNo=tda.MacNo
+    and  tdi.TakeDate=tda.TakeDate and  tdi.TTC=tda.TTC and tdi.OilGun=tda.OilGun
+    WHERE TranStatus=#{trans,jdbcType=VARCHAR} AND Shift is NOT NULL
+  </select>
   <select id="selectOilL" parameterType="Map" resultType="String">
     SELECT  IFNULL(OilL,0.0) OilL,MAX(TakeDate)
     FROM oss_daily_TradeInventory WHERE TakeDate &lt; #{taketime,jdbcType=TIMESTAMP}
     and oilcan=#{oilcanno,jdbcType=INTEGER} group by oilcan
   </select>
+
+  <update id="updateByKey" parameterType="com.kld.gsm.ATG.domain.OilVouch">
+    UPDATE oss_daily_TradeInventory
+    <set>
+      SHIFT=#{teamvouchno},
+    </set>
+    <where>
+      CardNo = #{cardno}
+    </where>
+  </update>
 </mapper>

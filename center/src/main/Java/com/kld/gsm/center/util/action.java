@@ -45,6 +45,18 @@ public  class action {
         return "0";
 
     }
+    public String getOpenSelfOilSet(){
+        Resource base=new ClassPathResource("/conf/system.properties");
+        Properties probase = null;
+        try {
+            probase=PropertiesLoaderUtils.loadProperties(base);
+            return probase.getProperty("resource.js.OpenTrans");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "0";
+
+    }
 
 
     public String getFtpaddr(){
