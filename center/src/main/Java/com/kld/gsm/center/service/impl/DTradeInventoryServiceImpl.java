@@ -18,6 +18,7 @@ import java.util.List;
  */
 @Service("DTradeInventoryService")
 public class DTradeInventoryServiceImpl implements DTradeInventoryService {
+    public  static List<oss_daily_SelfOil> selfOils;
     @Resource
     private oss_daily_TradeInventoryMapper ossDailyTradeInventoryMapper;
     @Resource
@@ -32,12 +33,15 @@ public class DTradeInventoryServiceImpl implements DTradeInventoryService {
 
             for (oss_daily_TradeInventory item:oss_daily_tradeInventories)
             {
-                item.setCardno(null);
+                item.setCardno("");
                 ossDailyTradeInventoryMapper.insert(item);
             }
         }else{
             //修改，添加和自用油表关联，增加卡号字段信息，除了自用油卡号以外，其他卡号均设置为null
-            List<oss_daily_SelfOil> selfOils= ossDailySelfOilMapper.selectId();
+            if(selfOils==null){
+                selfOils= ossDailySelfOilMapper.selectId();
+            }
+
             if(selfOils.size()!=0){
                 List list=new ArrayList();
                 for(oss_daily_SelfOil self:selfOils){
@@ -54,10 +58,11 @@ public class DTradeInventoryServiceImpl implements DTradeInventoryService {
             }else{
                 for (oss_daily_TradeInventory item:oss_daily_tradeInventories)
                 {
-                    item.setCardno(null);
+                    item.setCardno("");
                     ossDailyTradeInventoryMapper.insert(item);
                 }
             }
+            return 2;
         }
         return 1;
     }

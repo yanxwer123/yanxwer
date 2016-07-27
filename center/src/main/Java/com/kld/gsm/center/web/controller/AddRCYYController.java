@@ -359,9 +359,12 @@ public class AddRCYYController {
                     item.setOucode(Oucode);
                 }
                 int resultCont=TradeInventoryService.AddTradeInventory(TradeInventoryModelLst);
-                if(resultCont>0) {
+                if(resultCont==1) {
                     result.setResult(true);
                     PassHn_TradeInventory(TradeInventoryModelLst);
+                }else if (resultCont==2){
+                    result.setResult(true);
+                    PassHn_TradeInventory1(TradeInventoryModelLst);
                 }
             }
         }
@@ -390,7 +393,7 @@ public class AddRCYYController {
                 int resultCont=TradeInventoryService.updateTradeInventory(TradeInventoryModelLst);
                 if(resultCont>0) {
                     result.setResult(true);
-                    PassHn_TradeInventory(TradeInventoryModelLst);
+                    PassHn_UpdateTradeInventory(TradeInventoryModelLst);
                 }
             }
         }
@@ -403,6 +406,22 @@ public class AddRCYYController {
 
 
 
+    private  void  PassHn_UpdateTradeInventory(List<oss_daily_TradeInventory> TradeInventoryModelLst)throws Exception{
+        action ac=new action();
+        String TradeInventoryPath=ac.getUri("resources.hn.RCYX.TradeUpdateInventory");
+        Map<String,String> hm=new HashMap<String, String>();
+        //发送到湖南
+        httpClient client=new httpClient();
+        String JsonReault= null;
+        JsonReault = client.request(TradeInventoryPath, TradeInventoryModelLst, hm);
+        Result pResult=new JsonMapper().fromJson(JsonReault, Result.class);
+        if(pResult.isResult()) {
+            for (oss_daily_TradeInventory item:TradeInventoryModelLst){
+                item.setTranstatus("2");
+            }
+
+        }
+    }
     private  void  PassHn_TradeInventory(List<oss_daily_TradeInventory> TradeInventoryModelLst)throws Exception{
         action ac=new action();
         String TradeInventoryPath=ac.getUri("resources.hn.RCYX.TradeInventory");
@@ -419,7 +438,22 @@ public class AddRCYYController {
 
         }
     }
+    private  void  PassHn_TradeInventory1(List<oss_daily_TradeInventory> TradeInventoryModelLst)throws Exception{
+        action ac=new action();
+        String TradeInventoryPath=ac.getUri("resources.hn.RCYX.TradeInventory1");
+        Map<String,String> hm=new HashMap<String, String>();
+        //发送到湖南
+        httpClient client=new httpClient();
+        String JsonReault= null;
+        JsonReault = client.request(TradeInventoryPath, TradeInventoryModelLst, hm);
+        Result pResult=new JsonMapper().fromJson(JsonReault, Result.class);
+        if(pResult.isResult()) {
+            for (oss_daily_TradeInventory item:TradeInventoryModelLst){
+                item.setTranstatus("1");
+            }
 
+        }
+    }
 
     /*
       Created by fangzhun on 2015/11/19.

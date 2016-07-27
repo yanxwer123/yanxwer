@@ -63,7 +63,7 @@
       DensityStandard, Shift, Remark, 
       TranStatus, OUCode,Liter,PumpNo,BackMatchFlag)
     values (#{macno,jdbcType=INTEGER}, #{ttc,jdbcType=INTEGER}, #{takedate,jdbcType=TIMESTAMP}, 
-      #{oilgun,jdbcType=VARCHAR}, #{nodeno,jdbcType=VARCHAR}, #{oilcan,jdbcType=INTEGER}, #{{cardno,jdbcType=VARCHAR},
+      #{oilgun,jdbcType=VARCHAR}, #{nodeno,jdbcType=VARCHAR}, #{oilcan,jdbcType=INTEGER}, #{cardno,jdbcType=VARCHAR},
       #{oilno,jdbcType=VARCHAR}, #{opetime,jdbcType=TIMESTAMP}, #{stockdate,jdbcType=VARCHAR}, 
       #{stocktime,jdbcType=VARCHAR}, #{oill,jdbcType=DOUBLE}, #{standardl,jdbcType=DOUBLE}, 
       #{emptyl,jdbcType=DOUBLE}, #{heighttotal,jdbcType=DOUBLE}, #{heightwater,jdbcType=DOUBLE}, 
