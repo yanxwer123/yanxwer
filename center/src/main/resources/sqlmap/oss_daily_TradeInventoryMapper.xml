@@ -72,14 +72,12 @@
       #{transtatus,jdbcType=VARCHAR}, #{oucode,jdbcType=VARCHAR},
       #{liter,jdbcType=DOUBLE},#{pumpno,jdbcType=DOUBLE},#{backmatchflag,jdbcType=VARCHAR})
   </insert>
-  <update id="update">
+  <update id="update" parameterType="com.kld.gsm.center.domain.oss_daily_TradeInventory">
     update oss_daily_TradeInventory
     set
-    <if test="shift != null" >
-      Shift = #{shift,jdbcType=VARCHAR},
-    </if>
-    WHERE
-    where MacNo = #{macno,jdbcType=INTEGER}
+      Shift = #{shift,jdbcType=VARCHAR}
+    where
+    MacNo = #{macno,jdbcType=INTEGER}
     and TTC = #{ttc,jdbcType=INTEGER}
     and TakeDate = #{takedate,jdbcType=TIMESTAMP}
     and OilGun = #{oilgun,jdbcType=VARCHAR}

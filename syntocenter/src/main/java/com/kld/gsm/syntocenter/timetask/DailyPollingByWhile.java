@@ -72,7 +72,7 @@ public class DailyPollingByWhile extends Thread {
                 }
                 LOG.info("sleepTime:"+sleepTime);
                 LOG.info("每10分钟执行一次，开始睡眠十分钟");
-                sleep(sleepTime  * 1000);
+                sleep(sleepTime  * 100);
                 LOG.info("开始执行10分钟一次的上传");
                 ten();
                 LOG.info("结束执行10分钟一次的上传");
@@ -236,7 +236,8 @@ public class DailyPollingByWhile extends Thread {
     public void aftertRadInvo(){
         try{
             LOG.info("aftertRadInvo begin");
-            syndailyrunning.AfterTradeInventoryLost();
+            synDailyRunning syn=springFactory.getInstance().getBean(synDailyRunning.class);
+            syn.AfterTradeInventoryLost();
             LOG.info("aftertRadInvo end");
         }
         catch (Exception ex)

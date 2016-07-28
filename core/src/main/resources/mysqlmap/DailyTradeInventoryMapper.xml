@@ -311,7 +311,7 @@
     tdi.Shift, tdi.Remark, tdi.TranStatus,tda.Liter,tda.PumpNo,IFNULL(tda.BackCanFlag,0) as BackMatchFlag
     FROM oss_daily_TradeInventory tdi  left join  oss_daily_TradeAccount tda on tdi.MacNo=tda.MacNo
     and  tdi.TakeDate=tda.TakeDate and  tdi.TTC=tda.TTC and tdi.OilGun=tda.OilGun
-    WHERE TranStatus=#{trans,jdbcType=VARCHAR} AND Shift is NOT NULL
+    WHERE TranStatus=#{trans,jdbcType=VARCHAR} AND tdi.Shift is NOT NULL
   </select>
   <select id="selectOilL" parameterType="Map" resultType="String">
     SELECT  IFNULL(OilL,0.0) OilL,MAX(TakeDate)
@@ -321,11 +321,12 @@
 
   <update id="updateByKey" parameterType="com.kld.gsm.ATG.domain.OilVouch">
     UPDATE oss_daily_TradeInventory
-    <set>
-      SHIFT=#{teamvouchno},
-    </set>
-    <where>
-      CardNo = #{cardno}
-    </where>
+    set
+      Shift=#{teamvouchno}
+    where
+      MacNo = #{macno,jdbcType=INTEGER}
+      and TTC = #{ttc,jdbcType=INTEGER}
+      and TakeDate = #{takedate,jdbcType=TIMESTAMP}
+      and OilGun = #{oilgun,jdbcType=VARCHAR}
   </update>
 </mapper>
