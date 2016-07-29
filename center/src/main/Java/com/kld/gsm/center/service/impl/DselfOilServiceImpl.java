@@ -1,6 +1,7 @@
 package com.kld.gsm.center.service.impl;
 
 import com.kld.gsm.center.dao.oss_daily_SelfOilMapper;
+import com.kld.gsm.center.domain.oss_daily_SelfOil;
 import com.kld.gsm.center.service.DselfOilService;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,12 @@ public class DselfOilServiceImpl implements DselfOilService {
 
     @Resource
     private  oss_daily_SelfOilMapper oss_daily_selfOilMapper;
+
+    @Override
+    public int insertAll(oss_daily_SelfOil item) {
+        return oss_daily_selfOilMapper.insertAll(item);
+    }
+
     @Override
     public int insert(HashMap map) {
 

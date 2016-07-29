@@ -35,6 +35,11 @@
         insert into oss_daily_SelfOil (cardNo, createDate, createUser, updateDate,updateUser,status)
         values (#{cardNo}, #{createDate},#{createUser}, #{updateDate},#{updateUser},#{status})
     </insert>
+
+    <insert id="insertAll" parameterType="com.kld.gsm.center.domain.oss_daily_SelfOil" >
+        insert into oss_daily_SelfOil (cardNo, createDate, createUser, updateDate,updateUser,status)
+        values (#{cardNo}, #{createDate},#{createUser}, #{updateDate},#{updateUser},#{status})
+    </insert>
     <delete id="del" parameterType="String">
         DELETE  from  oss_daily_SelfOil where CardNo=#{cardNo}
     </delete>

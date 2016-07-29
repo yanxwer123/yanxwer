@@ -1,5 +1,7 @@
 package com.kld.gsm.center.service;
 
+import com.kld.gsm.center.domain.oss_daily_SelfOil;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,6 +14,8 @@ import java.util.List;
  * @Description:
  */
 public interface DselfOilService {
+
+    int insertAll(oss_daily_SelfOil item);
 
     int insert(HashMap map);
 
