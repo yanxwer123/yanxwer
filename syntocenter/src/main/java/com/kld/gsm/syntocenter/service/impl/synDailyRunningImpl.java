@@ -138,6 +138,9 @@ public class synDailyRunningImpl implements synDailyRunning {
                 String js = client.request(path, DailyTradeInventorys, hm);
                 LOG.info(js);
                 result = new JsonMapper().fromJson(js, Result.class);
+                if(!result.isResult()){
+                    return 0;
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 return 0;
