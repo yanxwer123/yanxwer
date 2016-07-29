@@ -118,16 +118,13 @@ public class synDailyRunningImpl implements synDailyRunning {
     @Override
     public int AfterTradeInventoryLost() {
         action ac=new action();
-        LOG.info("进入预期1");
         String path=ac.getUri("resource.services.RCYX.UpdateTradeInventory");
         //获取站级数据
         List<DailyTradeInventory> DailyTradeInventorys= dailyTradeInventoryDao.selectByTrans1("1");
         if (DailyTradeInventorys==null||DailyTradeInventorys.size()==0){
-            LOG.info("进入预期111");
 
             return 0;
         }
-        LOG.info("进入预期2");
         List<SysManageDepartment> sysManageDepartments=sysManageDepartmentDao.selectfirst();
         Map<String,String> hm=new com.kld.gsm.ATG.utils.param().getparam();
         if (sysManageDepartments.size()>0){

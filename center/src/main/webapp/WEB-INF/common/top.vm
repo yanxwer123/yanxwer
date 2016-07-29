@@ -2,9 +2,9 @@
     <p class="logobox01">
         <img src="../resources/img/logo-1.png">
     </p>
-    <p class="user-messages"><a href="/web/logout"><span style="border:none;color:#000;">退出</span></a>
+    <p class="user-messages"><a href="/web"><span style="border:none;color:#000;">退出</span></a>
         #*<a href="javascript: void(0);" onclick="openEditPwd();"><span style="color: #000">修改密码</span></a>*#
-        <span>帮助文档</span>#*<span>用户中心</span>*#<span id="user">当前用户:$session.getAttribute("realname")</span>
+        <span>帮助文档</span>#*<span>用户中心</span><span id="user">当前用户:$session.getAttribute("realname")</span>*#
         <span id="txtTopDate">
         <script>
             formatDateWithWeek();
