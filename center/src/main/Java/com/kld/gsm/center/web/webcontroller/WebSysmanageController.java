@@ -3,6 +3,7 @@ package com.kld.gsm.center.web.webcontroller;
 import com.kld.gsm.center.dao.oss_daily_SelfOilMapper;
 import com.kld.gsm.center.domain.*;
 import com.kld.gsm.center.service.*;
+import com.kld.gsm.center.util.getSelfOilUntil;
 import com.sun.org.apache.xpath.internal.SourceTree;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -415,6 +416,7 @@ public class WebSysmanageController extends WebBaseController{
         hashMap.put("status", "0");
 
         int insert= dselfOilService.insert(hashMap);
+        getSelfOilUntil.selfOils=null;
         return insert;
     }
 
@@ -546,6 +548,7 @@ public class WebSysmanageController extends WebBaseController{
     @ResponseBody
     public int delSelf(@RequestParam(value = "cardNo", required = false) String cardNo) {
         int delte=dselfOilService.delete(cardNo);
+        getSelfOilUntil.selfOils=null;
         return delte;
     }
     @RequestMapping("/delCatalog")
