@@ -24,7 +24,8 @@
         <table>
             <tr>
                 <td style="padding-top:10px">自用油卡号</td>
-                <td style="padding-top:10px"><input class="easyui-textbox" type="text" id="addcardNo" name="cardNo" data-options="required:true,precision:2" /></td>
+                <td style="padding-top: 10px">
+                    <input class="easyui-textbox" type="text"  style="width:200px;" id="addcardNo" name="cardNo" data-options="required:true,precision:2" /></td>
             </tr>
             <tr>
                 <td style="padding-top:10px">创建人</td>
@@ -70,29 +71,38 @@
         $('#winSelf').window('open');
 
     }
+    $(function(){
+        $("#addcardNo").textbox('textbox').bind('keyup', function(e){
+            $("#addcardNo").textbox('setValue', $(this).val().replace(/\D/g,''));
+        });
+    });
+
 
     //新增记录
     function submitForm() {
-        //卡号校验，19位纯数字
-       /* cardNo=$("#addcardNo").val();//自用油卡号
-        if(){
-
-        }*/
-
-        $(loginForm).form('submit', {
-            url : '/web/sysmanage/addSelf',
-            dataType : 'text',
-            success : function(result) {
-                if (result>0) {
-                    $.messager.alert("提示", "恭喜您，信息添加成功！", "info");
-                    $("#addcardNo").textbox("setValue","");
-                    $('#winSelf').window('close');
-                    $('#tt').datagrid("reload",{ });
-                } else {
-                    $.messager.alert("提示", "添加失败，请重新操作！", "info");
-                }
+        $(function(){
+            if($("#addcardNo").val().length!=19){
+                //超出长度，自行处理
+                $.messager.alert("提示", "输入的卡号位数不正确", "info");
+                return;
+            }else{
+                $(loginForm).form('submit', {
+                    url : '/web/sysmanage/addSelf',
+                    dataType : 'text',
+                    success : function(result) {
+                        if (result>0) {
+                            $.messager.alert("提示", "恭喜您，信息添加成功！", "info");
+                            $("#addcardNo").textbox("setValue","");
+                            $('#winSelf').window('close');
+                            $('#tt').datagrid("reload",{ });
+                        } else {
+                            $.messager.alert("提示", "添加失败，请重新操作！", "info");
+                        }
+                    }
+                });
             }
         });
+
     }
      function dellSelf() {
          var delrow = $('#tt').datagrid('getSelected');
