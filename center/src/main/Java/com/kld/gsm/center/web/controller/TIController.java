@@ -3,6 +3,8 @@ package com.kld.gsm.center.web.controller;
 import com.fasterxml.jackson.databind.JavaType;
 import com.kld.gsm.center.common.RedisUtil;
 import com.kld.gsm.center.domain.*;
+import com.kld.gsm.center.domain.hn.HNDelivery;
+import com.kld.gsm.center.service.DselfOilService;
 import com.kld.gsm.center.util.action;
 import com.kld.gsm.center.util.httpClient;
 import com.kld.gsm.center.util.sysOrgUnit;
@@ -19,6 +21,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /*
@@ -32,6 +35,9 @@ public class TIController {
 
     @Resource
     private TimeInventoryService timeInventoryService;
+
+    @Resource
+    private DselfOilService dselfOilService;
 
     private static final Logger LOG = Logger.getLogger(TIController.class);
 
@@ -336,5 +342,29 @@ public class TIController {
             resultMsg.setRows(guns);
         }
         return resultMsg;
+    }
+
+
+    @RequestMapping(value = "/addcards")
+    @ResponseBody
+    @ApiOperation("自用油卡号导入接口")
+    public Result addbills(@RequestBody List<oss_daily_SelfOil> deliveries){
+        Result result=new Result();
+
+        try {
+            for (oss_daily_SelfOil item:deliveries) {
+                item.setCreateUser("");
+                item.setCreateDate(new Date());
+                item.setUpdateUser("");
+                item.setUpdateDate(new Date());
+                dselfOilService.insertAll(item);
+            }
+            result.setResult(true);
+        }
+        catch (Exception e){
+            result.setResult(false);
+            result.setMsg(e.getMessage());
+        }
+        return  result;
     }
 }

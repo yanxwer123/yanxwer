@@ -99,6 +99,7 @@ public class synDailyRunningImpl implements synDailyRunning {
             String js=client.request(path,DailyTradeInventorys,hm);
             LOG.info(js);
             result=new JsonMapper().fromJson(js,Result.class);
+            LOG.info(result);
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
@@ -119,34 +120,40 @@ public class synDailyRunningImpl implements synDailyRunning {
         action ac=new action();
         String path=ac.getUri("resource.services.RCYX.UpdateTradeInventory");
         //获取站级数据
-        List<DailyTradeInventory> DailyTradeInventorys= dailyTradeInventoryDao.selectByTrans1("1");
-        if (DailyTradeInventorys==null||DailyTradeInventorys.size()==0){
-            return 0;
-        }
-        List<SysManageDepartment> sysManageDepartments=sysManageDepartmentDao.selectfirst();
-        Map<String,String> hm=new com.kld.gsm.ATG.utils.param().getparam();
-        if (sysManageDepartments.size()>0){
-            hm.put("NodeNo",sysManageDepartments.get(0).getSinopecnodeno());
-        }
-        //发送站级数据
-        httpClient client=new httpClient();
-        Result result;
-        try {
-            String js=client.request(path,DailyTradeInventorys,hm);
-            LOG.info(js);
-            result=new JsonMapper().fromJson(js,Result.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;        }
-        if (result!=null&&result.isResult())
-        {
-            for (DailyTradeInventory item:DailyTradeInventorys){
-                item.setTranstatus("2");
-                dailyTradeInventoryDao.updateByPrimaryKey(item);
+
+        while(true) {
+            List<DailyTradeInventory> DailyTradeInventorys = dailyTradeInventoryDao.selectByTrans1("1");
+            if (DailyTradeInventorys == null || DailyTradeInventorys.size() == 0) {
+                return 0;
+            }
+            List<SysManageDepartment> sysManageDepartments = sysManageDepartmentDao.selectfirst();
+            Map<String, String> hm = new com.kld.gsm.ATG.utils.param().getparam();
+            if (sysManageDepartments.size() > 0) {
+                hm.put("NodeNo", sysManageDepartments.get(0).getSinopecnodeno());
+            }
+            //发送站级数据
+            httpClient client = new httpClient();
+            Result result;
+            try {
+                String js = client.request(path, DailyTradeInventorys, hm);
+                LOG.info(js);
+                result = new JsonMapper().fromJson(js, Result.class);
+                if(!result.isResult()){
+                    return 0;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return 0;
+            }
+            if (result != null && result.isResult()) {
+                for (DailyTradeInventory item : DailyTradeInventorys) {
+                    item.setTranstatus("2");
+                    dailyTradeInventoryDao.updateByPrimaryKey(item);
+                }
             }
         }
 
-        return 1;
+
     }
 
 

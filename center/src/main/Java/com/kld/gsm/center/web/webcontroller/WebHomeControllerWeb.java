@@ -79,10 +79,6 @@ public class WebHomeControllerWeb extends WebBaseController {
                         //存入session
                         System.out.println("进去" + userPwd.getPwd());
 
-                        HttpSession session = request.getSession();
-                        session.setAttribute("realname", realname);
-                        session.setAttribute("userID", userID);
-                        session.setAttribute("pwd", pwd);
                         return new ModelAndView("/index");
                     }
                 }
@@ -103,12 +99,14 @@ public class WebHomeControllerWeb extends WebBaseController {
     @RequestMapping({"","/","/index"})
     public  ModelAndView Index()
     {
-        //判断session是否有值
         HttpSession session = request.getSession();
+        session.setAttribute("realname", "admin");
+        session.setAttribute("userID", "1");
+        //判断session是否有值
         String name=(String)session.getAttribute("name");
-        if(name==null || name==""){
-            return  new ModelAndView("/login");
-        }
+       /* if(name==null || name==""){
+            name="管理员";
+        }*/
        // ArrayList<String>  list =   GetUserFuncList();
 
         //return new ModelAndView("/index","list",list);

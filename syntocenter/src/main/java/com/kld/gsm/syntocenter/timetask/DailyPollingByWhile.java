@@ -116,6 +116,8 @@ public class DailyPollingByWhile extends Thread {
         TradeAccount();
         //交易库存
         tradInvo();
+        //交易库存（班结之后更新班次信息）
+        aftertRadInvo();
         //ftp上传
         ftpupload();
 
@@ -228,6 +230,21 @@ public class DailyPollingByWhile extends Thread {
         }
     }
 
+    /*
+     * 交易库存（班结之后更新班次信息）
+     * */
+    public void aftertRadInvo(){
+        try{
+            LOG.info("aftertRadInvo begin");
+            synDailyRunning syn=springFactory.getInstance().getBean(synDailyRunning.class);
+            syn.AfterTradeInventoryLost();
+            LOG.info("aftertRadInvo end");
+        }
+        catch (Exception ex)
+        {
+            LOG.error("aftertRadInvo failed" + ex.getMessage());
+        }
+    }
     /*
     * 库存预警
     * */

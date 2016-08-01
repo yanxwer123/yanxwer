@@ -95,8 +95,6 @@ public class DailyPolling {
         TradeAccount();
         //交易库存
         tradInvo();
-        //交易库存（班结之后更新班次信息）
-        aftertRadInvo();
         //ftp上传
         ftpupload();
         //日平衡
@@ -205,20 +203,7 @@ public class DailyPolling {
             LOG.error("tradInvo failed" + ex.getMessage());
         }
     }
-    /*
-      * 交易库存（班结之后更新班次信息）
-      * */
-    public void aftertRadInvo(){
-        try{
-            LOG.info("aftertRadInvo begin");
-            syndailyrunning.AfterTradeInventoryLost();
-            LOG.info("aftertRadInvo end");
-        }
-        catch (Exception ex)
-        {
-            LOG.error("aftertRadInvo failed" + ex.getMessage());
-        }
-    }
+
 
     /*
     * 库存预警

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.kld.gsm.center.dao.oss_daily_SelfOilMapper">
     <resultMap id="BaseResultMap" type="com.kld.gsm.center.domain.oss_daily_SelfOil">
-        <id column="CardNo" property="cardno" jdbcType="VARCHAR" />
+        <id column="CardNo" property="cardNo" jdbcType="VARCHAR" />
         <result column="CreateDate" property="createdate" jdbcType="TIMESTAMP" />
         <result column="CreateUser" property="createuser" jdbcType="VARCHAR" />
         <result column="Updatedate" property="updatedate" jdbcType="TIMESTAMP" />
@@ -32,6 +32,11 @@
         </if>
     </select>
     <insert id="insert" parameterType="hashmap" >
+        insert into oss_daily_SelfOil (cardNo, createDate, createUser, updateDate,updateUser,status)
+        values (#{cardNo}, #{createDate},#{createUser}, #{updateDate},#{updateUser},#{status})
+    </insert>
+
+    <insert id="insertAll" parameterType="com.kld.gsm.center.domain.oss_daily_SelfOil" >
         insert into oss_daily_SelfOil (cardNo, createDate, createUser, updateDate,updateUser,status)
         values (#{cardNo}, #{createDate},#{createUser}, #{updateDate},#{updateUser},#{status})
     </insert>

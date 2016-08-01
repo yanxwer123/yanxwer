@@ -17,6 +17,8 @@ import java.util.List;
 @MysqlRepository
 public interface oss_daily_SelfOilMapper {
 
+    int insertAll(oss_daily_SelfOil item);
+
     List<oss_daily_SelfOil>  selectId();
 
     int insert(HashMap map);

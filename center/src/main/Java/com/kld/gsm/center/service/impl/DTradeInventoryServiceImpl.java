@@ -5,6 +5,7 @@ import com.kld.gsm.center.domain.oss_daily_SelfOil;
 import com.kld.gsm.center.domain.oss_daily_TradeInventory;
 import com.kld.gsm.center.service.DTradeInventoryService;
 import com.kld.gsm.center.util.action;
+import com.kld.gsm.center.util.getSelfOilUntil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.kld.gsm.center.dao.oss_daily_TradeInventoryMapper;
@@ -18,6 +19,7 @@ import java.util.List;
  */
 @Service("DTradeInventoryService")
 public class DTradeInventoryServiceImpl implements DTradeInventoryService {
+
     @Resource
     private oss_daily_TradeInventoryMapper ossDailyTradeInventoryMapper;
     @Resource
@@ -32,15 +34,18 @@ public class DTradeInventoryServiceImpl implements DTradeInventoryService {
 
             for (oss_daily_TradeInventory item:oss_daily_tradeInventories)
             {
-                item.setCardno(null);
+                item.setCardno("");
                 ossDailyTradeInventoryMapper.insert(item);
             }
         }else{
             //修改，添加和自用油表关联，增加卡号字段信息，除了自用油卡号以外，其他卡号均设置为null
-            List<oss_daily_SelfOil> selfOils= ossDailySelfOilMapper.selectId();
-            if(selfOils.size()!=0){
+            if(getSelfOilUntil.selfOils==null){
+                getSelfOilUntil.selfOils= ossDailySelfOilMapper.selectId();
+            }
+
+            if(getSelfOilUntil.selfOils.size()!=0){
                 List list=new ArrayList();
-                for(oss_daily_SelfOil self:selfOils){
+                for(oss_daily_SelfOil self:getSelfOilUntil.selfOils){
                     list.add(self.getCardNo());
                 }
                 for(oss_daily_TradeInventory item:oss_daily_tradeInventories)
@@ -54,10 +59,11 @@ public class DTradeInventoryServiceImpl implements DTradeInventoryService {
             }else{
                 for (oss_daily_TradeInventory item:oss_daily_tradeInventories)
                 {
-                    item.setCardno(null);
+                    item.setCardno("");
                     ossDailyTradeInventoryMapper.insert(item);
                 }
             }
+            return 2;
         }
         return 1;
     }
