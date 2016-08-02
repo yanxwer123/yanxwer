@@ -42,8 +42,8 @@ public class httpClient {
         conn.setRequestProperty("Content-Type", "application/json; charset="+ encoding);
         /*conn.setRequestProperty("Content-Type", "application/json; charset=GBK");*/
         conn.setRequestProperty("Content-Length", String.valueOf(data.length));
-        conn.setConnectTimeout(5*1000);
-        conn.setReadTimeout(5*1000);
+        conn.setConnectTimeout(90*1000);
+        conn.setReadTimeout(90*1000);
         OutputStream outStream = conn.getOutputStream();
         outStream.write(data);
         outStream.flush();

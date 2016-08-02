@@ -209,6 +209,6 @@
     FROM oss_sysmanage_cubage cubage
     WHERE cubage.OilCan = #{oilcanno,jdbcType=INTEGER}
     AND NodeNo = #{nodeno,jdbcType=VARCHAR}
-    AND cubage.Version > #{version,jdbcType=VARCHAR}
+    AND cubage.Version > #{version,jdbcType=VARCHAR} and status=1
   </select>
 </mapper>

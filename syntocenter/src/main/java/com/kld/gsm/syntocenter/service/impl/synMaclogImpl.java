@@ -197,6 +197,9 @@ public class synMaclogImpl implements synMaclog, Watcher {
                 LOG.info("add " + path);
                 pathlist.add(path);
             }
+            if (pathlist==null||pathlist.size()==0){
+                return true;
+            }
             ftpClient ftclient = new ftpClient();
             ftclient.setHost(host);
             ftclient.setPort(21);
