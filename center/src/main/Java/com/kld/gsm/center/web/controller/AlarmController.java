@@ -30,6 +30,9 @@ import java.util.*;
 @Controller
 @RequestMapping("/Alarm")
 public class AlarmController {
+    private static Integer jtgcflag;
+
+
     /**
      * 日结损溢预警表
      */
@@ -541,21 +544,22 @@ public class AlarmController {
                  for (JTGC item:tankoilgunLst){
                      item.getTankoil().setNodeno(NodeNo);
                  }
-                List<oss_monitor_tankoil> tankoils=daily.addJTGC(tankoilgunLst,NodeNo);
+                //数据量太大不再入库，湖南接口返回结果不再处理，容易造成拥堵
+                if (jtgcflag==null){
+                    jtgcflag=new action().getJTGCTrans();
+                }
+                if(jtgcflag==1) {
+                    List<oss_monitor_tankoil> tankoils=daily.addJTGC(tankoilgunLst,NodeNo);
+                }
                 //调用数据传输给湖南
                 boolean res=PassHn_JTGC(tankoilgunLst);
-                if (res){
-                  for (oss_monitor_tankoil item:tankoils){
-                    item.setTranstatus("1");
-                  }
-                  daily.Updatetankoil(tankoils);
-                }
+
                 result.setResult(true);
             }
         }
         catch (Exception ex){
             result.setMsg(ex.getMessage());
-            result.setResult(false);
+            result.setResult(true);
         }
         return result;
     }
