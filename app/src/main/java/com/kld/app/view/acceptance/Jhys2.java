@@ -319,6 +319,25 @@ public class Jhys2 extends JPanel {
                 jhysNewPage.commplete(cbill.getDeliveryno());
                 timer2.start();
                 //endregion
+                try
+                {
+                    LOG.info("delivery begin");
+                    if (sysmanageService==null){
+                        sysmanageService=Context.getInstance().getBean(sysmanageService.getClass());
+                    }
+                    if (acceptSevices==null) {
+                        acceptSevices = Context.getInstance().getBean(AcceptSevices.class);
+                    }
+                    SysManageDepartment sysManageDepartment=sysmanageService.getdeptinfo();
+                    if (sysManageDepartment!=null) {
+                        acceptSevices.sendOdreg(SysConfig.regmoteIp(), sysManageDepartment.getSinopecnodeno());
+                    }
+                    LOG.info("delivery end");
+                }
+                catch (Exception ex)
+                {
+                    LOG.error("delivery failed"+ex.getMessage());
+                }
             }
         });
     }

@@ -18,9 +18,26 @@ public class RedisUtil {
 		try {
 			pro.load(RedisUtil.class.getResourceAsStream("/redisConfig.properties"));
 			JedisPoolConfig config = new JedisPoolConfig();
-			config.setMaxTotal(50);
-			config.setMaxIdle(20);
-			config.setMaxWaitMillis(50l);
+			if (!pro.getProperty("Max_Total").equals("")){
+				Integer maxtotal=Integer.parseInt(pro.getProperty("Max_Total"));
+				config.setMaxTotal(maxtotal);
+			}else {
+				config.setMaxTotal(200);
+			}
+
+			if (!pro.getProperty("Max_Idle").equals("")){
+				Integer maxidle=Integer.parseInt(pro.getProperty("Max_Idle"));
+				config.setMaxIdle(maxidle);
+			}else{
+				config.setMaxIdle(100);
+			}
+
+			if (!pro.getProperty("Max_WaitMillis").equals("")){
+				Integer maxwaitmillis=Integer.parseInt(pro.getProperty("Max_WaitMillis"));
+				config.setMaxIdle(maxwaitmillis);
+			}else{
+				config.setMaxWaitMillis(3000);
+			}
 			pool = new JedisPool(config, pro.getProperty("REDIS_IP"),6379,100000);
 		} catch (Exception e) {
 			e.getCause();
