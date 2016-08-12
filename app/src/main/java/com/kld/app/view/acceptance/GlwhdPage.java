@@ -474,6 +474,7 @@ public class GlwhdPage extends JOptionPane implements WindowListener,Watcher {
                 iAcceptanceOdRegisterService.updateByPrimaryKey(odg);
                 addOilinContrat(odg);
 
+                //region
                 try
                 {
                     LOG.info("delivery begin");
@@ -493,6 +494,7 @@ public class GlwhdPage extends JOptionPane implements WindowListener,Watcher {
                 {
                     LOG.error("delivery failed"+ex.getMessage());
                 }
+                //endregion
 
 
                 ckdcxPage.reLoad();

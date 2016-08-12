@@ -115,4 +115,27 @@ public  class action {
         }
         return probase.getProperty("resourse.ftp.localpath");
     }
+
+    public Integer getJTGCTrans(){
+
+        Resource base=new ClassPathResource("/conf/system.properties");
+        Properties probase = null;
+        try {
+            probase=PropertiesLoaderUtils.loadProperties(base);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return 0;
+        }
+       try {
+           String jts=probase.getProperty("jtgctodb");
+           if (jts.equals("1")){
+               return 1;
+           }else{
+               return 0;
+           }
+       }catch (Exception e){
+           return 0;
+       }
+
+    }
 }
