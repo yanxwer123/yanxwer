@@ -291,5 +291,6 @@
     SELECT
     <include refid="Base_Column_List"/>
     FROM oss_monitor_TimeInventory WHERE TranStatus=#{trans,jdbcType=VARCHAR}
+    LIMIT 500
   </select>
 </mapper>

@@ -302,16 +302,23 @@ public class DailyRunningImpl implements  DailyRunning {
         action ac=new action();
         String path=ac.getUri(host, "resource.services.RCYX.AddTankoil");
         List<JTGC> Tankoilguns=new ArrayList<JTGC>();
-        List<DailyStaticOilCanInventory> MonitorTankOils=dailyStaticOilCanInventoryDao.selectBytrans("0");
-        for (DailyStaticOilCanInventory item:MonitorTankOils){
-            JTGC jtgc=new JTGC();
-            jtgc.setTankoil(item);
-            List<DailyStaticOilGunInverntory> guninfos=dailyStaticOilGunInverntoryDao.selectByid(item.getId());
-            jtgc.setOilgunLst(guninfos);
-            Tankoilguns.add(jtgc);
+        List<SysManageDepartment> sysManageDepartments = sysManageDepartmentDao.selectfirst();
+        Map<String, String> hm = new param().getparam();
+        if (sysManageDepartments.size() > 0) {
+            hm.put("NodeNo", sysManageDepartments.get(0).getSinopecnodeno());
         }
-       // List<Tankoilgun> Tankoilguns=new ArrayList<Tankoilgun>();
-        //获取站级数据
+        while(true) {
+            List<DailyStaticOilCanInventory> MonitorTankOils = dailyStaticOilCanInventoryDao.selectBytrans("0");
+            for (DailyStaticOilCanInventory item : MonitorTankOils) {
+                JTGC jtgc = new JTGC();
+                jtgc.setTankoil(item);
+                List<DailyStaticOilGunInverntory> guninfos = dailyStaticOilGunInverntoryDao.selectByid(item.getId());
+                jtgc.setOilgunLst(guninfos);
+                Tankoilguns.add(jtgc);
+            }
+            // List<Tankoilgun> Tankoilguns=new ArrayList<Tankoilgun>();
+            //获取站级数据
+            //region
        /* List<MonitorTankOil> MonitorTankOils= monitorTankOilMapper.selectByTrans("0");
         for(MonitorTankOil item:MonitorTankOils)
         {
@@ -321,25 +328,29 @@ public class DailyRunningImpl implements  DailyRunning {
             tankoilgun.setMonitorOilgun(MonitorOilguns);
             Tankoilguns.add(tankoilgun);
         }*/
-        List<SysManageDepartment> sysManageDepartments=sysManageDepartmentDao.selectfirst();
-        Map<String,String> hm=new param().getparam();
-        if (sysManageDepartments.size()>0){
-            hm.put("NodeNo",sysManageDepartments.get(0).getSinopecnodeno());
-        }
-        //发送站级数据
-        httpClient client=new httpClient();
-        try {
-            String js=client.request(path,Tankoilguns,hm);
-            for (JTGC item:Tankoilguns){
-                item.getTankoil().setTranstatus("1");
-                dailyStaticOilCanInventoryDao.updateByPrimaryKey(item.getTankoil());
-            }
+            //endregion
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
+            //发送站级数据
+            httpClient client = new httpClient();
+            try {
+                String js = client.request(path, Tankoilguns, hm);
+                for (JTGC item : Tankoilguns) {
+                    item.getTankoil().setTranstatus("1");
+                    try {
+                        dailyStaticOilCanInventoryDao.updateByPrimaryKey(item.getTankoil());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        log.error(e.getMessage());
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                log.error(e.getMessage());
+//                return 0;
+            }
         }
-        return 1;
+//        return 1;
     }
 
     @Override

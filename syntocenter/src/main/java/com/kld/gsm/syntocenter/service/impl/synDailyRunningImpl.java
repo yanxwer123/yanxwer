@@ -47,71 +47,87 @@ public class synDailyRunningImpl implements synDailyRunning {
     public int synTradeAccountLost() {
         action ac=new action();
         String path=ac.getUri("resource.services.RCYX.AddTradeAccount");
-        //获取站级数据
-        List<DailyTradeAccount> DailyTradeAccounts= dailyTradeAccountDao.selectByTrans("0");
-        if (DailyTradeAccounts==null||DailyTradeAccounts.size()==0){
-            return 0;
+        List<SysManageDepartment> sysManageDepartments = sysManageDepartmentDao.selectfirst();
+        Map<String, String> hm = new com.kld.gsm.ATG.utils.param().getparam();
+        if (sysManageDepartments.size() > 0) {
+            hm.put("NodeNo", sysManageDepartments.get(0).getSinopecnodeno());
         }
-        List<SysManageDepartment> sysManageDepartments=sysManageDepartmentDao.selectfirst();
-        Map<String,String> hm=new com.kld.gsm.ATG.utils.param().getparam();
-        if (sysManageDepartments.size()>0){
-            hm.put("NodeNo",sysManageDepartments.get(0).getSinopecnodeno());
-        }
-        //发送站级数据
-        httpClient client=new httpClient();
-        Result result;
-        try {
-            String js=client.request(path,DailyTradeAccounts,hm);
-            LOG.info(js);
-            result=new JsonMapper().fromJson(js,Result.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-            //System.out.println(e.getMessage());
-            return 0;
-        }
-        if (result!=null&&result.isResult()){
-            for (DailyTradeAccount item:DailyTradeAccounts){
-                item.setTransFlag("1");
-                dailyTradeAccountDao.updateByPrimaryKey(item);
+        while(true) {
+            //获取站级数据
+            List<DailyTradeAccount> DailyTradeAccounts = dailyTradeAccountDao.selectByTrans("0");
+            if (DailyTradeAccounts == null || DailyTradeAccounts.size() == 0) {
+                return 0;
             }
+            //发送站级数据
+            httpClient client = new httpClient();
+            Result result;
+            try {
+                String js = client.request(path, DailyTradeAccounts, hm);
+                LOG.info(js);
+                result = new JsonMapper().fromJson(js, Result.class);
+
+                if (result != null && result.isResult()) {
+                    for (DailyTradeAccount item : DailyTradeAccounts) {
+                        item.setTransFlag("1");
+                        try {
+                            dailyTradeAccountDao.updateByPrimaryKey(item);
+                        }catch(Exception e){
+                            e.printStackTrace();
+                            LOG.error(e.getMessage());
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                LOG.error(e.getMessage());
+                //System.out.println(e.getMessage());
+//                return 0;
+            }
+//            return 1;
         }
-        return 1;
     }
 
     @Override
     public int TradeInventoryLost() {
         action ac=new action();
         String path=ac.getUri("resource.services.RCYX.AddTradeInventory");
-        //获取站级数据
-        List<DailyTradeInventory> DailyTradeInventorys= dailyTradeInventoryDao.selectByTrans("0");
-        if (DailyTradeInventorys==null||DailyTradeInventorys.size()==0){
-            return 0;
+        List<SysManageDepartment> sysManageDepartments = sysManageDepartmentDao.selectfirst();
+        Map<String, String> hm = new com.kld.gsm.ATG.utils.param().getparam();
+        if (sysManageDepartments.size() > 0) {
+            hm.put("NodeNo", sysManageDepartments.get(0).getSinopecnodeno());
         }
-        List<SysManageDepartment> sysManageDepartments=sysManageDepartmentDao.selectfirst();
-        Map<String,String> hm=new com.kld.gsm.ATG.utils.param().getparam();
-        if (sysManageDepartments.size()>0){
-            hm.put("NodeNo",sysManageDepartments.get(0).getSinopecnodeno());
-        }
-        //发送站级数据
-        httpClient client=new httpClient();
-        Result result;
-        try {
-            String js=client.request(path,DailyTradeInventorys,hm);
-            LOG.info(js);
-            result=new JsonMapper().fromJson(js,Result.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
-        }
-        if (result!=null&&result.isResult())
-        {
-            for (DailyTradeInventory item:DailyTradeInventorys){
-                item.setTranstatus("1");
-                dailyTradeInventoryDao.updateByPrimaryKey(item);
+        while(true) {
+            //获取站级数据
+            List<DailyTradeInventory> DailyTradeInventorys = dailyTradeInventoryDao.selectByTrans("0");
+            if (DailyTradeInventorys == null || DailyTradeInventorys.size() == 0) {
+                return 0;
+            }
+            //发送站级数据
+            httpClient client = new httpClient();
+            Result result;
+            try {
+                String js = client.request(path, DailyTradeInventorys, hm);
+                LOG.info(js);
+                result = new JsonMapper().fromJson(js, Result.class);
+
+                if (result != null && result.isResult()) {
+                    for (DailyTradeInventory item : DailyTradeInventorys) {
+                        item.setTranstatus("1");
+                        try {
+                            dailyTradeInventoryDao.updateByPrimaryKey(item);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            LOG.error(e.getMessage());
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                LOG.error(e.getMessage());
+//                return 0;
             }
         }
-
-        return 1;
+//        return 1;
     }
 
 
