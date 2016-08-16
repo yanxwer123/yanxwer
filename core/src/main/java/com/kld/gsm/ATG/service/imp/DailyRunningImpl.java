@@ -300,7 +300,7 @@ public class DailyRunningImpl implements  DailyRunning {
     @Override
     public int tankoilLost(String host) {
         action ac=new action();
-        String path=ac.getUri(host, "resource.services.RCYX.AddTankoil");
+        String path=ac.getUri(host, "resource.switch.RCYX.AddTankoil");
         List<JTGC> Tankoilguns=new ArrayList<JTGC>();
         List<DailyStaticOilCanInventory> MonitorTankOils=dailyStaticOilCanInventoryDao.selectBytrans("0");
         for (DailyStaticOilCanInventory item:MonitorTankOils){

@@ -149,6 +149,9 @@ public class AddRCYYController {
     @ResponseBody
     public  Object AddDailyBalance(@RequestBody List<oss_daily_DailyBalance> DailyBalanceModelLst,@RequestParam("NodeNo") String NodeNo){
         Result result=new Result();
+        action ac=new action();
+        int flag=ac.getSwitch("resource.switch.RCYX.AddDailyBalance");
+        result.setResult(true);
         try {
                 String Oucode = new sysOrgUnit().GetOuCodeByNodeNo(NodeNo);
                 if (DailyBalanceModelLst != null && DailyBalanceModelLst.size() > 0) {
@@ -157,6 +160,39 @@ public class AddRCYYController {
                         item.setOucode(Oucode);
                     }
                     //DDailyBalanceService DailyBalanceService = new DDailyBalanceServiceImpl();
+                    if (flag==0){
+                        result.setResult(true);
+                    }
+                    if (flag==1){
+                        int resultCont = DailyBalanceService.AddDailyBalance(DailyBalanceModelLst);
+                        if (resultCont > 0) {
+                            result.setResult(true);
+                        }else{
+                            result.setResult(false);
+                        }
+                    }
+                    if (flag==2){
+                        try {
+                            PassHn_DailyBalance(DailyBalanceModelLst);
+                            result.setResult(true);
+                        }catch (Exception e){
+                            result.setResult(false);
+                            result.setMsg(e.getMessage());
+                        }
+                    }
+                    if (flag==3){
+                        try {
+                            int resultCont = DailyBalanceService.AddDailyBalance(DailyBalanceModelLst);
+                            if (resultCont > 0) {
+                                result.setResult(true);
+                                PassHn_DailyBalance(DailyBalanceModelLst);
+                            }
+                        }catch (Exception e){
+                            result.setResult(false);
+                            result.setMsg(e.getMessage());
+                        }
+                    }
+
                     int resultCont = DailyBalanceService.AddDailyBalance(DailyBalanceModelLst);
                     if (resultCont > 0) {
                         result.setResult(true);
@@ -303,6 +339,9 @@ public class AddRCYYController {
     @ResponseBody
     public  Object AddTradeAccount(@RequestBody List<oss_daily_TradeAccount> TradeAccountModelLst,@RequestParam("NodeNo") String NodeNo){
         Result result=new Result();
+        action ac=new action();
+        int flag=ac.getSwitch("resource.switch.RCYX.AddTradeAccount");
+        result.setResult(true);
         try {
             if(TradeAccountModelLst!=null&&TradeAccountModelLst.size()>0) {
                 String Oucode=new sysOrgUnit().GetOuCodeByNodeNo(NodeNo);
@@ -310,12 +349,16 @@ public class AddRCYYController {
                         item.setNodeno(NodeNo);
                         item.setOucode(Oucode);
                 }
-                //DTradeAccountService TradeAccountService = new DTradeAccountServiceImpl();
-                int resultCont=TradeAccountService.AddTradeAccount(TradeAccountModelLst);
-                if(resultCont>0) {
-                    result.setResult(true);
-                    //passHn_TradeAccount(TradeAccountModelLst);
+                if (flag==0){
+                   result.setResult(true);
                 }
+                if (flag==1){
+                    int resultCont=TradeAccountService.AddTradeAccount(TradeAccountModelLst);
+                    if(resultCont>0) {
+                        result.setResult(true);
+                    }
+                }
+
             }
         }
         catch(Exception ex) {
@@ -350,6 +393,9 @@ public class AddRCYYController {
     @ResponseBody
     public Object AddTradeInventory(@RequestBody List<oss_daily_TradeInventory> TradeInventoryModelLst,@RequestParam("NodeNo") String NodeNo){
         Result result=new Result();
+        action ac=new action();
+        int flag=ac.getSwitch("resource.switch.RCYX.AddTradeInventory");
+        result.setResult(true);
         try {
             if(TradeInventoryModelLst!=null&&TradeInventoryModelLst.size()>0) {
                 String Oucode=new sysOrgUnit().GetOuCodeByNodeNo(NodeNo);
@@ -358,11 +404,26 @@ public class AddRCYYController {
                     item.setNodeno(NodeNo);
                     item.setOucode(Oucode);
                 }
-                int resultCont=TradeInventoryService.AddTradeInventory(TradeInventoryModelLst);
-                if(resultCont>0) {
+                if (flag==0){
                     result.setResult(true);
+                }
+                if (flag==1){
+                    int resultCont=TradeInventoryService.AddTradeInventory(TradeInventoryModelLst);
+                    if(resultCont>0) {
+                        result.setResult(true);
+                    }
+                }
+                if (flag==2){
                     PassHn_TradeInventory(TradeInventoryModelLst);
                 }
+                if (flag==3){
+                    int resultCont=TradeInventoryService.AddTradeInventory(TradeInventoryModelLst);
+                    if(resultCont>0) {
+                        result.setResult(true);
+                        PassHn_TradeInventory(TradeInventoryModelLst);
+                    }
+                }
+
             }
         }
         catch(Exception ex) {
@@ -380,6 +441,9 @@ public class AddRCYYController {
     @ResponseBody
     public Object UpdateTradeInventory(@RequestBody List<oss_daily_TradeInventory> TradeInventoryModelLst,@RequestParam("NodeNo") String NodeNo){
         Result result=new Result();
+        action ac=new action();
+        int flag=ac.getSwitch("resource.switch.RCYX.UpdateTradeInventory");
+        result.setResult(true);
         try {
             if(TradeInventoryModelLst!=null&&TradeInventoryModelLst.size()>0) {
                 String Oucode=new sysOrgUnit().GetOuCodeByNodeNo(NodeNo);
@@ -387,10 +451,39 @@ public class AddRCYYController {
                     item.setNodeno(NodeNo);
                     item.setOucode(Oucode);
                 }
-                int resultCont=TradeInventoryService.updateTradeInventory(TradeInventoryModelLst);
-                if(resultCont>0) {
+                if(flag==0){
                     result.setResult(true);
-                    PassHn_TradeInventory(TradeInventoryModelLst);
+                }
+                if (flag==1){
+                    try {
+                        int resultCont=TradeInventoryService.updateTradeInventory(TradeInventoryModelLst);
+                        if(resultCont>0) {
+                            result.setResult(true);
+                        }
+                    }catch (Exception e){
+                        result.setResult(false);
+                        result.setMsg(e.getMessage());
+                    }
+                }
+                if(flag==2){
+                    try {
+                        PassHn_TradeInventory(TradeInventoryModelLst);
+                    }catch (Exception e){
+                        result.setResult(true);
+                        result.setMsg(e.getMessage());
+                    }
+                }
+                if(flag==3){
+                    try {
+                        int resultCont = TradeInventoryService.updateTradeInventory(TradeInventoryModelLst);
+                        if (resultCont > 0) {
+                            result.setResult(true);
+                            PassHn_TradeInventory(TradeInventoryModelLst);
+                        }
+                    }catch (Exception e){
+                        result.setResult(false);
+                        result.setMsg(e.getMessage());
+                    }
                 }
             }
         }
@@ -538,6 +631,10 @@ public class AddRCYYController {
     @Transactional(rollbackFor=Exception.class)
     public Object AddTankoil(@RequestBody List<oss_monitor_tankOilGun> oss_monitor_tankoilguns,@RequestParam("NodeNo") String NodeNo){
         Result result=new Result();
+        action ac=new action();
+        int flag=ac.getSwitch("resource.switch.RCYX.AddTankoil");
+        result.setResult(true);
+
         try {
             if(oss_monitor_tankoilguns!=null&&oss_monitor_tankoilguns.size()>0) {
                 for (oss_monitor_tankOilGun itemoil:oss_monitor_tankoilguns)
@@ -576,7 +673,14 @@ public class AddRCYYController {
     @Transactional(rollbackFor=Exception.class)
     public Object AddClassKnotData(@RequestBody oss_daily_ClassKnotData classknotdata,@RequestParam("NodeNo") String NodeNo){
         Result result=new Result();
+        action ac=new action();
+        int flag=ac.getSwitch("resource.switch.RCYX.AddClassKnotData");
+        result.setResult(true);
         try {
+            if (flag==0){
+                result.setResult(true);
+                return result;
+            }
             if(classknotdata!=null) {
                 String Oucode=new sysOrgUnit().GetOuCodeByNodeNo(NodeNo);
                     //付油量分类统计表名

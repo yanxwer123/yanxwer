@@ -33,6 +33,19 @@ public  class action {
         return filepath;
     }
 
+    public int getSwitch(String propertyName){
+        Resource base=new ClassPathResource("/conf/switch.properties");
+        Properties probase = null;
+        Integer ss=-1;
+        try {
+            probase=PropertiesLoaderUtils.loadProperties(base);
+            ss = Integer.parseInt(probase.getProperty(propertyName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ss;
+    }
+
     public String getOpenSet(){
         Resource base=new ClassPathResource("/conf/system.properties");
         Properties probase = null;

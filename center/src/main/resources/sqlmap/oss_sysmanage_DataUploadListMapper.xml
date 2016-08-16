@@ -139,6 +139,6 @@
   <select id="selectbystatus" parameterType="String" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
-    FROM oss_sysmanage_DataUploadList where TranStatus= #{transtatus,jdbcType=VARCHAR}
+    FROM oss_sysmanage_DataUploadList where TranStatus= #{transtatus,jdbcType=VARCHAR} limit 50
   </select>
 </mapper>

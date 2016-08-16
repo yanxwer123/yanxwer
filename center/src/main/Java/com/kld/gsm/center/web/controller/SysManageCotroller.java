@@ -811,11 +811,42 @@ public class SysManageCotroller {
     public Object synSys(@RequestBody SysmanageSynMain main,@RequestParam("NodeNo") String NodeNo){
 
          Result rs=new Result();
+        action ac=new action();
+        int flag=ac.getSwitch("resource.switch.sys.synsys");
+        rs.setResult(true);
         try {
-            systemManage.synMain(main,NodeNo);
-            sendoligun(main.getOilGunInfos());
-            sendtankinfo(main.getTankInfos());
-            rs.setResult(true);
+            if (flag==0){
+                rs.setResult(true);
+            }
+            if (flag==1){
+                try {
+                    systemManage.synMain(main,NodeNo);
+                    rs.setResult(true);
+                }catch (Exception e){
+                    rs.setResult(false);
+                    rs.setMsg(e.getMessage());
+                }
+            }
+            if (flag==2) {
+                try {
+                    sendoligun(main.getOilGunInfos());
+                    sendtankinfo(main.getTankInfos());
+                    rs.setResult(true);
+                }catch (Exception e){
+                    rs.setResult(false);
+                    rs.setMsg(e.getMessage());
+                }
+            }
+            if(flag==3){
+                try {
+                    systemManage.synMain(main, NodeNo);
+                    sendoligun(main.getOilGunInfos());
+                    sendtankinfo(main.getTankInfos());
+                }catch (Exception e){
+                    rs.setResult(false);
+                    rs.setMsg(e.getMessage());
+                }
+            }
         }
         catch (Exception e){
             rs.setResult(false);

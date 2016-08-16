@@ -237,14 +237,34 @@ catch (Exception e){
     @ApiOperation("站级系统上传卸油数据，并转发湖南")
     public Object addOdReg(@RequestBody List<AcceptOdRegMain> acceptOdRegMains,@RequestParam("NodeNo") String NodeNo){
         Result result=new Result();
+        action ac=new action();
+        int flag=ac.getSwitch("resource.switch.accept.addOdReg");
+        result.setResult(true);
         try {
             String oucode="";
             oss_sys_OrgUnit oss=sysOrgUnitService.GetOrgByNodeNo(NodeNo);
             if (oss!=null){
                 oucode=oss.getOucode();
             }
-            acceptanceService.addOdregAndregInfo(acceptOdRegMains,NodeNo,oucode);
-            return addOdReg(acceptOdRegMains);
+            if (flag==0){
+                result.setResult(true);
+            }
+            if (flag==1){
+                try {
+                    acceptanceService.addOdregAndregInfo(acceptOdRegMains, NodeNo, oucode);
+                    result.setResult(true);
+                }catch (Exception e){
+                    result.setResult(false);
+                    result.setMsg(e.getMessage());
+                }
+            }
+            if (flag==2){
+                return addOdReg(acceptOdRegMains);
+            }
+            if(flag==3){
+                acceptanceService.addOdregAndregInfo(acceptOdRegMains,NodeNo,oucode);
+                return addOdReg(acceptOdRegMains);
+            }
             //result.setResult(true);
         }catch (Exception e){
             result.setMsg(e.getMessage());
