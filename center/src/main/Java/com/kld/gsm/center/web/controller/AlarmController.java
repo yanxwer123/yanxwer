@@ -42,19 +42,26 @@ public class AlarmController {
     @ResponseBody
     public Object InsertDailyLost(@RequestBody List<oss_alarm_DailyLost> dailyLost,@RequestParam("NodeNo") String NodeNo){
         Result result=new Result();
+        action ac=new action();
+        int flag=ac.getSwitch("resource.switch.Alarm.AddDayLost");
+        result.setResult(true);
         try {
+
             for (oss_alarm_DailyLost item:dailyLost) {
                 sysOrgUnit orgUnit=new sysOrgUnit();
                 item.setOucode(orgUnit.GetOuCodeByNodeNo(NodeNo));
                 item.setNodeno(NodeNo);
             }
-            int num = alermService.AddDailyLost(dailyLost);
-            if (num > 0) {
-
-               result.setResult(true);
-                //PassHn_DailyLost(dailyLost);//调用传输数据
-            } else {
-                result.setResult(false);
+            if (flag==0){
+                result.setResult(true);
+            }
+            if (flag==1){
+                int num = alermService.AddDailyLost(dailyLost);
+                if (num > 0) {
+                    result.setResult(true);
+                } else {
+                    result.setResult(false);
+                }
             }
             return result;
         }
@@ -116,19 +123,29 @@ public class AlarmController {
     public Object AddShifLost(@RequestBody List<oss_alarm_ShiftLost> shiftLosts,@RequestParam("NodeNo") String NodeNo)
     {
         Result result=new Result();
+        action ac=new action();
+        int flag=ac.getSwitch("resource.switch.Alarm.AddShiftLost");
+        result.setResult(true);
         try {
             for (oss_alarm_ShiftLost item:shiftLosts) {
                 sysOrgUnit orgUnit=new sysOrgUnit();
                 item.setOucode(orgUnit.GetOuCodeByNodeNo(NodeNo));
                 item.setNodeno(NodeNo);
             }
-            int num = ShiftLostService.AddAlarmShiftLost(shiftLosts);
-            if (num > 0) {
+
+            if (flag==0){
                 result.setResult(true);
-                //PassHN_ShiftLost(shiftLosts);//调用传输方法
-            } else {
-                result.setResult(false);
             }
+            if (flag==1){
+                int num = ShiftLostService.AddAlarmShiftLost(shiftLosts);
+                if (num > 0) {
+                    result.setResult(true);
+                } else {
+                    result.setResult(false);
+                }
+            }
+
+
             return result;
         }
 
@@ -237,6 +254,10 @@ public class AlarmController {
     public Object AddGaTContrast(@RequestBody List<oss_alarm_GaTContrast> gaTContrasts,@RequestParam("NodeNo") String NodeNo)
     {
         Result result=new Result();
+        action ac=new action();
+        int flag=ac.getSwitch("resource.switch.Alarm.AddGaTContrast");
+        result.setResult(true);
+
         try {
             for (oss_alarm_GaTContrast item:gaTContrasts) {
 
@@ -244,13 +265,29 @@ public class AlarmController {
                 item.setOucode(orgUnit.GetOuCodeByNodeNo(NodeNo));
                 item.setNodeno(NodeNo);
             }
-            int num = GaTContrastService.AddGaTContrastService(gaTContrasts);
-            if (num > 0) {
-                /*result.setResult(true);*/
-                return PassHn_GaTContrast(gaTContrasts);
-            } else {
-                result.setResult(false);
+            if (flag==0){
+                result.setResult(true);
             }
+            if (flag==1){
+                int num = GaTContrastService.AddGaTContrastService(gaTContrasts);
+                if (num > 0) {
+                    result.setResult(true);
+                } else {
+                    result.setResult(false);
+                }
+            }
+            if (flag==2){
+                return PassHn_GaTContrast(gaTContrasts);
+            }
+            if (flag==3){
+                int num = GaTContrastService.AddGaTContrastService(gaTContrasts);
+                if (num > 0) {
+                    return PassHn_GaTContrast(gaTContrasts);
+                } else {
+                    result.setResult(false);
+                }
+            }
+
             return result;
         }
 
@@ -284,7 +321,7 @@ public class AlarmController {
         catch(Exception e)
         {
             result.setMsg(e.getMessage());
-            result.setResult(false);
+            result.setResult(true);
         }
         return result;
     }
@@ -298,6 +335,9 @@ public class AlarmController {
     public Object AddMeasureLeak(@RequestBody List<oss_alarm_measureLeak> measureLeaks,@RequestParam("NodeNo") String NodeNo)
     {
         Result result=new Result();
+        action ac=new action();
+        int flag=ac.getSwitch("resource.switch.Alarm.AddMeasureLeak");
+        result.setResult(true);
         try {
             for (oss_alarm_measureLeak item:measureLeaks) {
 
@@ -305,12 +345,16 @@ public class AlarmController {
                 item.setOucode(orgUnit.GetOuCodeByNodeNo(NodeNo));
                 item.setNodeno(NodeNo);
             }
-            int num = MeasureLeakService.AddMeasureLeak(measureLeaks);
-            if (num > 0) {
+            if (flag==0){
                 result.setResult(true);
-                //PassHn_MeasureLeak(measureLeaks);//调用数据传输
-            } else {
-                result.setResult(false);
+            }
+            if (flag==1) {
+                int num = MeasureLeakService.AddMeasureLeak(measureLeaks);
+                if (num > 0) {
+                    result.setResult(true);
+                } else {
+                    result.setResult(false);
+                }
             }
             return result;
         }
@@ -358,20 +402,25 @@ public class AlarmController {
     public Object AddSaleOut(@RequestBody List<oss_alarm_SaleOut> saleOuts,@RequestParam("NodeNo") String NodeNo)
     {
         Result result=new Result();
+        action ac=new action();
+        int flag=ac.getSwitch("resource.switch.Alarm.AddSaleOut");
+        result.setResult(true);
         try {
             for (oss_alarm_SaleOut item:saleOuts) {
-
                 sysOrgUnit orgUnit=new sysOrgUnit();
                 item.setOucode(orgUnit.GetOuCodeByNodeNo(NodeNo));
                 item.setNodeno(NodeNo);
             }
-            int num = SaleOutService.AddSaleOut(saleOuts);
-            if (num > 0) {
-
+            if (flag==0){
                 result.setResult(true);
-                //PassSaleOut(saleOuts);//调用传输数据
-            } else {
-                result.setResult(false);
+            }
+            if (flag==1){
+                int num = SaleOutService.AddSaleOut(saleOuts);
+                if (num > 0) {
+                    result.setResult(true);
+                } else {
+                    result.setResult(false);
+                }
             }
             return result;
         }
@@ -420,21 +469,38 @@ public class AlarmController {
     public Object AddEquipment(@RequestBody List<oss_alarm_Equipment> equipments,@RequestParam("NodeNo") String NodeNo)
     {
         Result result=new Result();
+        action ac=new action();
+        int flag=ac.getSwitch("resource.switch.Alarm.AddEquipment");
+        result.setResult(true);
         try {
             for (oss_alarm_Equipment item:equipments) {
-
                 sysOrgUnit orgUnit=new sysOrgUnit();
                 item.setOucode(orgUnit.GetOuCodeByNodeNo(NodeNo));
                 item.setNodeno(NodeNo);
             }
-            int num = EquipmentService.AddEquipment(equipments);
-            if (num > 0) {
-
+            if (flag==0){
                 result.setResult(true);
-                //调用传输数据
+            }
+            if (flag==1){
+                int num = EquipmentService.AddEquipment(equipments);
+                if (num > 0) {
+                    result.setResult(true);
+                } else {
+                    result.setResult(false);
+                }
+            }
+            if (flag==2) {
                 return PassHn_Equipment(equipments);
-            } else {
-                result.setResult(false);
+            }
+            if (flag==3){
+                int num = EquipmentService.AddEquipment(equipments);
+                if (num > 0) {
+                    result.setResult(true);
+                    //调用传输数据
+                    return PassHn_Equipment(equipments);
+                } else {
+                    result.setResult(false);
+                }
             }
             return result;
         }
@@ -476,6 +542,9 @@ public class AlarmController {
     public Object AddOilInContrast(@RequestBody List<oss_alarm_OilInContrast> oilInContrasts,@RequestParam("NodeNo") String NodeNo)
     {
         Result result=new Result();
+        action ac=new action();
+        int flag=ac.getSwitch("resource.switch.Alarm.AddOilInContrast");
+        result.setResult(true);
         try {
             for (oss_alarm_OilInContrast item:oilInContrasts) {
 
@@ -483,14 +552,16 @@ public class AlarmController {
                 item.setOucode(orgUnit.GetOuCodeByNodeNo(NodeNo));
                 item.setNodeno(NodeNo);
             }
-            int num = OilInContrastService.AddOilInContrast(oilInContrasts);
-            if (num > 0) {
-
+            if (flag==0){
                 result.setResult(true);
-                //调用数据传输
-                //PassHn_OilInContrast(oilInContrasts);
-            } else {
-                result.setResult(false);
+            }
+            if (flag==1){
+                int num = OilInContrastService.AddOilInContrast(oilInContrasts);
+                if (num > 0) {
+                    result.setResult(true);
+                } else {
+                    result.setResult(false);
+                }
             }
             return result;
         }

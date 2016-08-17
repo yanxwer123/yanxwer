@@ -31,8 +31,8 @@
     <include refid="Base_Column_List" />
     from oss_monitor_Inventory
     where OilCanNo = #{oilcanno,jdbcType=INTEGER}
-      and Date = #{date,jdbcType=VARCHAR}
-      and Time = #{time,jdbcType=VARCHAR}
+    and Date = #{date,jdbcType=VARCHAR}
+    and Time = #{time,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.MonitorInventoryKey" >
     delete from oss_monitor_Inventory
@@ -222,8 +222,8 @@
       </if>
     </set>
     where OilCanNo = #{oilcanno,jdbcType=INTEGER}
-      and Date = #{date,jdbcType=VARCHAR}
-      and Time = #{time,jdbcType=VARCHAR}
+    and Date = #{date,jdbcType=VARCHAR}
+    and Time = #{time,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.MonitorInventory" >
     update oss_monitor_Inventory
@@ -250,5 +250,6 @@
     SELECT
     <include refid="Base_Column_List"/>
     FROM oss_monitor_Inventory WHERE TranStatus=#{trans,jdbcType=VARCHAR}
+    LIMIT 500
   </select>
 </mapper>

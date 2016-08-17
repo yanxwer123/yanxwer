@@ -419,6 +419,9 @@ public class JhysTank  extends JPanel{
         LOG.info("UpdateGun begin:"+new Date());
         if (gunmap != null && !gunmap.isEmpty()) {
          int guncount=0;
+         if (macLogInfos==null||macLogInfos.size()==0){
+             return;
+         }
         for (int i=0;i<macLogInfos.size();i++) {
                 int gunno=Integer.parseInt(macLogInfos.get(i).get("GunNum").toString());
                 JButton gun=gunmap.get(gunno);

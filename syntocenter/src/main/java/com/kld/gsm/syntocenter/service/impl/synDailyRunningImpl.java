@@ -9,7 +9,6 @@ import com.kld.gsm.util.JsonMapper;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.awt.datatransfer.DataTransferer;
 
 import java.util.List;
 import java.util.Map;
@@ -47,89 +46,60 @@ public class synDailyRunningImpl implements synDailyRunning {
     public int synTradeAccountLost() {
         action ac=new action();
         String path=ac.getUri("resource.services.RCYX.AddTradeAccount");
-        //获取站级数据
-        List<DailyTradeAccount> DailyTradeAccounts= dailyTradeAccountDao.selectByTrans("0");
-        if (DailyTradeAccounts==null||DailyTradeAccounts.size()==0){
-            return 0;
+        List<SysManageDepartment> sysManageDepartments = sysManageDepartmentDao.selectfirst();
+        Map<String, String> hm = new com.kld.gsm.ATG.utils.param().getparam();
+        if (sysManageDepartments.size() > 0) {
+            hm.put("NodeNo", sysManageDepartments.get(0).getSinopecnodeno());
         }
-        List<SysManageDepartment> sysManageDepartments=sysManageDepartmentDao.selectfirst();
-        Map<String,String> hm=new com.kld.gsm.ATG.utils.param().getparam();
-        if (sysManageDepartments.size()>0){
-            hm.put("NodeNo",sysManageDepartments.get(0).getSinopecnodeno());
-        }
-        //发送站级数据
-        httpClient client=new httpClient();
-        Result result;
-        try {
-            String js=client.request(path,DailyTradeAccounts,hm);
-            LOG.info(js);
-            result=new JsonMapper().fromJson(js,Result.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-            //System.out.println(e.getMessage());
-            return 0;
-        }
-        if (result!=null&&result.isResult()){
-            for (DailyTradeAccount item:DailyTradeAccounts){
-                item.setTransFlag("1");
-                dailyTradeAccountDao.updateByPrimaryKey(item);
+        while(true) {
+            //获取站级数据
+            List<DailyTradeAccount> DailyTradeAccounts = dailyTradeAccountDao.selectByTrans("0");
+            if (DailyTradeAccounts == null || DailyTradeAccounts.size() == 0) {
+                return 0;
             }
+            //发送站级数据
+            httpClient client = new httpClient();
+            Result result;
+            try {
+                String js = client.request(path, DailyTradeAccounts, hm);
+                LOG.info(js);
+                result = new JsonMapper().fromJson(js, Result.class);
+
+                if (result != null && result.isResult()) {
+                    for (DailyTradeAccount item : DailyTradeAccounts) {
+                        item.setTransFlag("1");
+                        try {
+                            dailyTradeAccountDao.updateByPrimaryKey(item);
+                        }catch(Exception e){
+                            e.printStackTrace();
+                            LOG.error(e.getMessage());
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                LOG.error(e.getMessage());
+                //System.out.println(e.getMessage());
+//                return 0;
+            }
+//            return 1;
         }
-        return 1;
     }
 
     @Override
     public int TradeInventoryLost() {
         action ac=new action();
         String path=ac.getUri("resource.services.RCYX.AddTradeInventory");
-        //获取站级数据
-        List<DailyTradeInventory> DailyTradeInventorys= dailyTradeInventoryDao.selectByTrans("0");
-        if (DailyTradeInventorys==null||DailyTradeInventorys.size()==0){
-            return 0;
+        List<SysManageDepartment> sysManageDepartments = sysManageDepartmentDao.selectfirst();
+        Map<String, String> hm = new com.kld.gsm.ATG.utils.param().getparam();
+        if (sysManageDepartments.size() > 0) {
+            hm.put("NodeNo", sysManageDepartments.get(0).getSinopecnodeno());
         }
-        List<SysManageDepartment> sysManageDepartments=sysManageDepartmentDao.selectfirst();
-        Map<String,String> hm=new com.kld.gsm.ATG.utils.param().getparam();
-        if (sysManageDepartments.size()>0){
-            hm.put("NodeNo",sysManageDepartments.get(0).getSinopecnodeno());
-        }
-        //发送站级数据
-        httpClient client=new httpClient();
-        Result result;
-        try {
-            String js=client.request(path,DailyTradeInventorys,hm);
-            LOG.info(js);
-            result=new JsonMapper().fromJson(js,Result.class);
-            LOG.info(result);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
-        }
-        if (result!=null&&result.isResult())
-        {
-            for (DailyTradeInventory item:DailyTradeInventorys){
-                item.setTranstatus("1");
-                dailyTradeInventoryDao.updateByPrimaryKey(item);
-            }
-        }
-
-        return 1;
-    }
-
-    @Override
-    public int AfterTradeInventoryLost() {
-        action ac=new action();
-        String path=ac.getUri("resource.services.RCYX.UpdateTradeInventory");
-        //获取站级数据
-
         while(true) {
-            List<DailyTradeInventory> DailyTradeInventorys = dailyTradeInventoryDao.selectByTrans1("1");
+            //获取站级数据
+            List<DailyTradeInventory> DailyTradeInventorys = dailyTradeInventoryDao.selectByTrans("0");
             if (DailyTradeInventorys == null || DailyTradeInventorys.size() == 0) {
                 return 0;
-            }
-            List<SysManageDepartment> sysManageDepartments = sysManageDepartmentDao.selectfirst();
-            Map<String, String> hm = new com.kld.gsm.ATG.utils.param().getparam();
-            if (sysManageDepartments.size() > 0) {
-                hm.put("NodeNo", sysManageDepartments.get(0).getSinopecnodeno());
             }
             //发送站级数据
             httpClient client = new httpClient();
@@ -138,22 +108,25 @@ public class synDailyRunningImpl implements synDailyRunning {
                 String js = client.request(path, DailyTradeInventorys, hm);
                 LOG.info(js);
                 result = new JsonMapper().fromJson(js, Result.class);
-                if(!result.isResult()){
-                    return 0;
+
+                if (result != null && result.isResult()) {
+                    for (DailyTradeInventory item : DailyTradeInventorys) {
+                        item.setTranstatus("1");
+                        try {
+                            dailyTradeInventoryDao.updateByPrimaryKey(item);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            LOG.error(e.getMessage());
+                        }
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                return 0;
-            }
-            if (result != null && result.isResult()) {
-                for (DailyTradeInventory item : DailyTradeInventorys) {
-                    item.setTranstatus("2");
-                    dailyTradeInventoryDao.updateByPrimaryKey(item);
-                }
+                LOG.error(e.getMessage());
+//                return 0;
             }
         }
-
-
+//        return 1;
     }
 
 
@@ -255,7 +228,7 @@ public class synDailyRunningImpl implements synDailyRunning {
             LOG.info(js);
             result=new JsonMapper().fromJson(js,Result.class);
         } catch (Exception e) {
-           LOG.error(e.getMessage());
+            LOG.error(e.getMessage());
             return 0;
         }
 
@@ -283,4 +256,45 @@ public class synDailyRunningImpl implements synDailyRunning {
         }
         return 1;
     }
+    @Override
+    public int AfterTradeInventoryLost() {
+        action ac=new action();
+        String path=ac.getUri("resource.services.RCYX.UpdateTradeInventory");
+        //获取站级数据
+
+        while(true) {
+            List<DailyTradeInventory> DailyTradeInventorys = dailyTradeInventoryDao.selectByTrans1("1");
+            if (DailyTradeInventorys == null || DailyTradeInventorys.size() == 0) {
+                return 0;
+            }
+            List<SysManageDepartment> sysManageDepartments = sysManageDepartmentDao.selectfirst();
+            Map<String, String> hm = new com.kld.gsm.ATG.utils.param().getparam();
+            if (sysManageDepartments.size() > 0) {
+                hm.put("NodeNo", sysManageDepartments.get(0).getSinopecnodeno());
+            }
+            //发送站级数据
+            httpClient client = new httpClient();
+            Result result;
+            try {
+                String js = client.request(path, DailyTradeInventorys, hm);
+                LOG.info(js);
+                result = new JsonMapper().fromJson(js, Result.class);
+                if(!result.isResult()){
+                    return 0;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return 0;
+            }
+            if (result != null && result.isResult()) {
+                for (DailyTradeInventory item : DailyTradeInventorys) {
+                    item.setTranstatus("2");
+                    dailyTradeInventoryDao.updateByPrimaryKey(item);
+                }
+            }
+        }
+
+
+    }
+
 }

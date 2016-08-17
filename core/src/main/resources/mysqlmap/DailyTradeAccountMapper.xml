@@ -535,6 +535,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM oss_daily_TradeAccount WHERE TransFlag=#{trans,jdbcType=VARCHAR}
+        LIMIT 500
     </select>
     <select id="selectFyxx" parameterType="hashmap" resultType="hashmap">
     SELECT count(Liter) as Liter,TraCode,count(Amount) as Amount

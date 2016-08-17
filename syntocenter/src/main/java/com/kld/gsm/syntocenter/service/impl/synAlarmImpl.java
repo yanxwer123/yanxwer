@@ -2,7 +2,6 @@ package com.kld.gsm.syntocenter.service.impl;
 
 import com.kld.gsm.ATG.domain.*;
 import com.kld.gsm.syntocenter.service.synAlarm;
-import com.kld.gsm.syntocenter.util.Station;
 import com.kld.gsm.syntocenter.util.action;
 import com.kld.gsm.syntocenter.util.httpClient;
 import com.kld.gsm.syntocenter.util.param;
@@ -11,8 +10,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,7 +51,7 @@ public class synAlarmImpl implements synAlarm {
         return 1;
     }
     //交接班损溢预警
-  @Autowired
+    @Autowired
     private com.kld.gsm.ATG.dao.AlarmShiftLostDao alarmShiftLostDao;
     @Override
     public int synShiftLost() {
@@ -113,7 +110,7 @@ public class synAlarmImpl implements synAlarm {
                 }
             }
         } catch (Exception e) {
-           LOG.error(e.getMessage());
+            LOG.error(e.getMessage());
             return 0;
         }
         return 1;
@@ -126,29 +123,37 @@ public class synAlarmImpl implements synAlarm {
         //获取action地址
         action ac=new action();
         String path=ac.getUri("resource.services.Alarm.AddGaTContrast");
-        //获取站级数据
-        List<AlarmGaTContrast>  alarmInventory= alarmGaTContrastDao.selectByTrans("0");
-        if (alarmInventory==null||alarmInventory.size()==0){
-            return 0;
-        }
-        Map<String,String> hm=new param().getparam();
-        //发送站级数据
-        httpClient client=new httpClient();
-        Result result;
-        try {
-            String js=client.request(path,alarmInventory,hm);
-            result=new JsonMapper().fromJson(js,Result.class);
-            if (result!=null&&result.isResult()) {
-                for (AlarmGaTContrast item : alarmInventory) {
-                    item.setTranstatus("1");
-                    alarmGaTContrastDao.updateByPrimaryKey(item);
-                }
+        Map<String, String> hm = new param().getparam();
+        while(true) {
+            //获取站级数据
+            List<AlarmGaTContrast> alarmInventory = alarmGaTContrastDao.selectByTrans("0");
+            if (alarmInventory == null || alarmInventory.size() == 0) {
+                return 0;
             }
-        } catch (Exception e) {
-           LOG.error("枪出罐出"+e.getMessage(),e);
-            return 0;
+
+            //发送站级数据
+            httpClient client = new httpClient();
+            Result result;
+            try {
+                String js = client.request(path, alarmInventory, hm);
+                result = new JsonMapper().fromJson(js, Result.class);
+                if (result != null && result.isResult()) {
+                    for (AlarmGaTContrast item : alarmInventory) {
+                        item.setTranstatus("1");
+                        try {
+                            alarmGaTContrastDao.updateByPrimaryKey(item);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            LOG.error(e.getMessage());
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                LOG.error("枪出罐出" + e.getMessage(), e);
+//                return 0;
+            }
+//            return 1;
         }
-        return 1;
     }
     //测漏表
     @Autowired
@@ -178,9 +183,9 @@ public class synAlarmImpl implements synAlarm {
         }
         return 1;
     }
-   //脱销预警
-   @Autowired
-   private com.kld.gsm.ATG.dao.AlarmSaleOutDao alarmSaleOutDao;
+    //脱销预警
+    @Autowired
+    private com.kld.gsm.ATG.dao.AlarmSaleOutDao alarmSaleOutDao;
     @Override
     public int synSaleOut() {
         //获取action地址

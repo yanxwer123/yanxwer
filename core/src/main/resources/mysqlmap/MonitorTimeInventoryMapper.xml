@@ -33,16 +33,16 @@
     <include refid="Base_Column_List" />
     from oss_monitor_TimeInventory
     where OilCan = #{oilcan,jdbcType=INTEGER}
-      and StoreTime = #{storetime,jdbcType=TIMESTAMP}
+    and StoreTime = #{storetime,jdbcType=TIMESTAMP}
   </select>
   <select id="selectAllOilCanInfoByOilNo" resultMap="BaseResultMap" parameterType="string">
-	select t.* from (select <include refid="Base_Column_List" /> from oss_monitor_TimeInventory where oilno=#{oilNo}order by createtime desc) t group by t.oilcan order by t.oilcan;
+    select t.* from (select <include refid="Base_Column_List" /> from oss_monitor_TimeInventory where oilno=#{oilNo}order by createtime desc) t group by t.oilcan order by t.oilcan;
   </select>
   <select id="selectOilCanInfoByCanNo" resultMap="BaseResultMap" parameterType="string">
-	select t.* from (select <include refid="Base_Column_List" /> from oss_monitor_TimeInventory where canno=#{canNo}order by createtime desc) t group by t.oilcan order by t.oilcan;
+    select t.* from (select <include refid="Base_Column_List" /> from oss_monitor_TimeInventory where canno=#{canNo}order by createtime desc) t group by t.oilcan order by t.oilcan;
   </select>
   <select id="selectBeginDataByCanNo" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-  	select <include refid="Base_Column_List" /> from oss_monitor_TimeInventory where oilcan=#{canNo} order by createtime desc limit 1
+    select <include refid="Base_Column_List" /> from oss_monitor_TimeInventory where oilcan=#{canNo} order by createtime desc limit 1
   </select>
   <delete id="deleteByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.MonitorTimeInventoryKey" >
     delete from oss_monitor_TimeInventory
@@ -251,7 +251,7 @@
       </if>
     </set>
     where OilCan = #{oilcan,jdbcType=INTEGER}
-      and StoreTime = #{storetime,jdbcType=TIMESTAMP}
+    and StoreTime = #{storetime,jdbcType=TIMESTAMP}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.kld.gsm.ATG.domain.MonitorTimeInventory" >
     update oss_monitor_TimeInventory
@@ -291,5 +291,6 @@
     SELECT
     <include refid="Base_Column_List"/>
     FROM oss_monitor_TimeInventory WHERE TranStatus=#{trans,jdbcType=VARCHAR}
+    LIMIT 500
   </select>
 </mapper>

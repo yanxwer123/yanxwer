@@ -100,17 +100,36 @@ public class TIController {
     {
         //System.out.println("整点库存开始");
         Result result=new Result();
+        action ac=new action();
+        int flag=ac.getSwitch("resource.switch.TI.InsertInventory");
+        result.setResult(true);
         try {
             for (oss_monitor_Inventory item:monitorInventories) {
                 item.setNodeno(NodeNo);
             }
-            int num = timeInventoryService.InsertInventory(monitorInventories);
-            if (num > 0) {
-                //调用数据传输
+            if(flag==0){
+                result.setResult(true);
+            }
+            if (flag==1){
+                int num = timeInventoryService.InsertInventory(monitorInventories);
+                if (num > 0) {
+                  result.setResult(true);
+                } else {
+                    result.setResult(false);
+                }
+            }
+            if (flag==2){
                 return PassHn_Inventory(monitorInventories);
+            }
 
-            } else {
-                result.setResult(false);
+            if (flag==3) {
+                int num = timeInventoryService.InsertInventory(monitorInventories);
+                if (num > 0) {
+                    //调用数据传输
+                    return PassHn_Inventory(monitorInventories);
+                } else {
+                    result.setResult(false);
+                }
             }
             return result;
         }catch (Exception e)
@@ -158,19 +177,37 @@ public class TIController {
     public Object AddTimeInventory(@RequestBody List<oss_monitor_TimeInventory> monitorTimeInventories,@RequestParam("NodeNo") String NodeNo)
     {
         //System.out.println("时点库存开始");
+        action ac=new action();
         Result result=new Result();
+        int flag=ac.getSwitch("resource.switch.TI.AddTimeInventory");
         try {
             for (oss_monitor_TimeInventory item:monitorTimeInventories) {
                 item.setNodeno(NodeNo);
-                //item.setVersion(Version);
             }
-            int num = timeInventoryService.AddTimeInventory(monitorTimeInventories);
-            //int num=1;
-            if (num > 0) {
+            if(flag==0){
                 result.setResult(true);
-               return PassHn_TimeInventory(monitorTimeInventories);//调用数据传输
-            } else {
-                result.setResult(false);
+            }
+            if (flag==1){
+                int num = timeInventoryService.AddTimeInventory(monitorTimeInventories);
+                //int num=1;
+                if (num > 0) {
+                    result.setResult(true);
+                } else {
+                    result.setResult(false);
+                }
+            }
+            if (flag==2){
+                return PassHn_TimeInventory(monitorTimeInventories);//调用数据传输
+            }
+            if (flag==3){
+                int num = timeInventoryService.AddTimeInventory(monitorTimeInventories);
+                //int num=1;
+                if (num > 0) {
+                    result.setResult(true);
+                    return PassHn_TimeInventory(monitorTimeInventories);//调用数据传输
+                } else {
+                    result.setResult(false);
+                }
             }
             return result;
         }
