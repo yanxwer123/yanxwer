@@ -395,6 +395,13 @@ public class AddRCYYController {
     @ResponseBody
     public Object AddTradeInventory(@RequestBody List<oss_daily_TradeInventory> TradeInventoryModelLst,@RequestParam("NodeNo") String NodeNo){
         Result result=new Result();
+        action ac=new action();
+        int flag=ac.getSwitch("resource.switch.RCYX.AddTradeInventory");
+
+        result.setResult(true);
+        if(flag==0){
+            return result;
+        }
         try {
             if(TradeInventoryModelLst!=null&&TradeInventoryModelLst.size()>0) {
                 String Oucode=new sysOrgUnit().GetOuCodeByNodeNo(NodeNo);
@@ -403,44 +410,54 @@ public class AddRCYYController {
                     item.setNodeno(NodeNo);
                     item.setOucode(Oucode);
                 }
-                int resultCont=TradeInventoryService.AddTradeInventory(TradeInventoryModelLst);
-                if(resultCont==1) {
-                    result.setResult(true);
-                    List<oss_daily_TradeInventoryOld> TradeInventoryModelOldList=new ArrayList<oss_daily_TradeInventoryOld>();
-                    for(oss_daily_TradeInventory oss:TradeInventoryModelLst){
-                        oss_daily_TradeInventoryOld old=new oss_daily_TradeInventoryOld();
-                        old.setMacno(oss.getMacno());
-                        old.setTtc(oss.getTtc());
-                        old.setTakedate(oss.getTakedate());
-                        old.setOilgun(oss.getOilgun());
-                        old.setNodeno(oss.getNodeno());
-                        old.setOilcan(oss.getOilcan());
-                        old.setOilno(oss.getOilno());
-                        old.setOpetime(oss.getOpetime());
-                        old.setStockdate(oss.getStockdate());
-                        old.setStocktime(oss.getStocktime());
-                        old.setOill(oss.getOill());
-                        old.setStandardl(oss.getStandardl());
-                        old.setEmptyl(oss.getEmptyl());
-                        old.setHeighttotal(oss.getHeighttotal());
-                        old.setHeightwater(oss.getHeightwater());
-                        old.setOiltemp(oss.getOiltemp());
-                        old.setWaterl(oss.getWaterl());
-                        old.setDensity(oss.getDensity());
-                        old.setDensitystandard(oss.getDensitystandard());
-                        old.setShift(oss.getShift());
-                        old.setRemark(oss.getRemark());
-                        old.setTranstatus(oss.getTranstatus());
-                        old.setOucode(oss.getOucode());
-                        old.setLiter(oss.getLiter());
-                        old.setPumpno(oss.getPumpno());
-                        old.setBackmatchflag(oss.getBackmatchflag());
-                        TradeInventoryModelOldList.add(old);
+
+                if (flag==1) {
+                    try {
+                        int resultCont = TradeInventoryService.AddTradeInventory(TradeInventoryModelLst);
+                        return result;
+                    }catch (Exception e){
+                        result.setResult(false);
+                        result.setMsg(e.getMessage());
+                        return result;
                     }
-                    PassHn_TradeInventory(TradeInventoryModelOldList);
-                }else if (resultCont==2){
-                    result.setResult(true);
-                    PassHn_TradeInventory1(TradeInventoryModelLst);
+
+                }
+                if (flag==2){
+                    try {
+                        if (ac.getOpenSelfOilSet()=="0") {
+                            List<oss_daily_TradeInventoryOld> TradeInventoryModelOldList = trans(TradeInventoryModelLst);
+                            PassHn_TradeInventory(TradeInventoryModelOldList);
+                        }
+                        if (ac.getOpenSelfOilSet()=="1"){
+                            PassHn_TradeInventory1(TradeInventoryModelLst);
+                        }
+                        result.setResult(false);
+                        return result;
+                    }catch (Exception e){
+                        result.setResult(false);
+                        result.setMsg(e.getMessage());
+                        return result;
+                    }
+                }
+                if (flag==3) {
+                    try {
+                        int resultCont = TradeInventoryService.AddTradeInventory(TradeInventoryModelLst);
+                        if (resultCont == 1) {
+                            result.setResult(true);
+                            List<oss_daily_TradeInventoryOld> TradeInventoryModelOldList = trans(TradeInventoryModelLst);
+                            PassHn_TradeInventory(TradeInventoryModelOldList);
+                        }
+                        if (resultCont == 2) {
+                            result.setResult(true);
+                            PassHn_TradeInventory1(TradeInventoryModelLst);
+                        }
+                        result.setResult(true);
+                        return  result;
+                    }catch (Exception e){
+                        result.setResult(false);
+                        result.setMsg(e.getMessage());
+                        return result;
+                    }
                 }
             }
         }
@@ -449,6 +466,42 @@ public class AddRCYYController {
             result.setMsg(ex.getMessage());
         }
         return result;
+    }
+
+
+    public List<oss_daily_TradeInventoryOld>  trans(List<oss_daily_TradeInventory> TradeInventoryModelLst) {
+        List<oss_daily_TradeInventoryOld> TradeInventoryModelOldList = new ArrayList<oss_daily_TradeInventoryOld>();
+        for (oss_daily_TradeInventory oss : TradeInventoryModelLst) {
+            oss_daily_TradeInventoryOld old = new oss_daily_TradeInventoryOld();
+            old.setMacno(oss.getMacno());
+            old.setTtc(oss.getTtc());
+            old.setTakedate(oss.getTakedate());
+            old.setOilgun(oss.getOilgun());
+            old.setNodeno(oss.getNodeno());
+            old.setOilcan(oss.getOilcan());
+            old.setOilno(oss.getOilno());
+            old.setOpetime(oss.getOpetime());
+            old.setStockdate(oss.getStockdate());
+            old.setStocktime(oss.getStocktime());
+            old.setOill(oss.getOill());
+            old.setStandardl(oss.getStandardl());
+            old.setEmptyl(oss.getEmptyl());
+            old.setHeighttotal(oss.getHeighttotal());
+            old.setHeightwater(oss.getHeightwater());
+            old.setOiltemp(oss.getOiltemp());
+            old.setWaterl(oss.getWaterl());
+            old.setDensity(oss.getDensity());
+            old.setDensitystandard(oss.getDensitystandard());
+            old.setShift(oss.getShift());
+            old.setRemark(oss.getRemark());
+            old.setTranstatus(oss.getTranstatus());
+            old.setOucode(oss.getOucode());
+            old.setLiter(oss.getLiter());
+            old.setPumpno(oss.getPumpno());
+            old.setBackmatchflag(oss.getBackmatchflag());
+            TradeInventoryModelOldList.add(old);
+        }
+        return TradeInventoryModelOldList;
     }
 
     /*
