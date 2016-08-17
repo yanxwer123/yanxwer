@@ -2,6 +2,7 @@ package com.kld.gsm.syntocenter.util;
 
 
 import com.kld.gsm.util.JsonMapper;
+import org.apache.log4j.Logger;
 
 import javax.xml.crypto.dsig.keyinfo.KeyValue;
 import java.io.*;
@@ -16,6 +17,8 @@ Created BY niyang
 Created Date 2015/11/18
 */
 public class httpClient {
+    //private static final Logger LOG = Logger.getLogger("synDailyRunning");
+
     private String result;
 
     public String GetResult(){return result;}
@@ -28,7 +31,7 @@ public class httpClient {
         String encoding="UTF-8";
         String params =new JsonMapper().toJson(json);
         //System.out.println(path);
-        //System.out.println(params);
+        //LOG.info("打印此处的字符串"+params);
         byte[] data = params.getBytes(encoding);
         URL url =new URL(path);
         HttpURLConnection conn = (HttpURLConnection)url.openConnection();

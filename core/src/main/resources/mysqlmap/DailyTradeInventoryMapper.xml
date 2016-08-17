@@ -301,8 +301,8 @@
     tdi.Shift, tdi.Remark, tdi.TranStatus,tda.Liter,tda.PumpNo,IFNULL(tda.BackCanFlag,0) as BackMatchFlag
     FROM oss_daily_TradeInventory tdi  left join  oss_daily_TradeAccount tda on tdi.MacNo=tda.MacNo
     and  tdi.TakeDate=tda.TakeDate and  tdi.TTC=tda.TTC and tdi.OilGun=tda.OilGun
-    WHERE TranStatus=#{trans,jdbcType=VARCHAR}
-    LIMIT 500
+
+    WHERE TranStatus=#{trans,jdbcType=VARCHAR} AND tdi.Shift is NOT NULL and tdi.Shift!=""  limit 0,500
   </select>
   <select id="selectOilL" parameterType="Map" resultType="String">
     SELECT  IFNULL(OilL,0.0) OilL,MAX(TakeDate)

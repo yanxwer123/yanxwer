@@ -1,12 +1,11 @@
 package com.kld.gsm.center.web.controller;
+
 import com.kld.gsm.center.domain.*;
 import com.kld.gsm.center.service.*;
-import com.kld.gsm.center.service.impl.DOilGunServiceImpl;
+import com.kld.gsm.center.util.JsonMapper;
 import com.kld.gsm.center.util.action;
 import com.kld.gsm.center.util.httpClient;
 import com.kld.gsm.center.util.sysOrgUnit;
-/*import com.kld.gsm.util.JsonMapper;*/
-import com.kld.gsm.center.util.JsonMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+/*import com.kld.gsm.util.JsonMapper;*/
 
 /**
  * Created by 5 on 2015/11/18.
@@ -57,36 +59,36 @@ public class AddRCYYController {
     private DOilGunService dOilGunService;
 
 
-   /** @RequestMapping("/AddTest")
+    /** @RequestMapping("/AddTest")
     public  void AddTest(@RequestParam("Name")String Name,HttpServletResponse response){
-        try {
-            //DopotCountService opotCountServices=new DopotCountServiceImpl();
-            List<oss_daily_opotCount> testopotCountLst=new ArrayList<oss_daily_opotCount>();
-            oss_daily_opotCount testopotCount=new oss_daily_opotCount();
-            testopotCount.setAmount(1.1);
-            testopotCount.setLiter(2.2);
-            testopotCount.setNodeno(Name);
-            testopotCount.setOilname(Name);
-            testopotCount.setOucode(Name);
-            testopotCount.setPrice(1.1);
-            testopotCount.setTranstatus("1");
-            testopotCount.setShift(Name);
-            testopotCount.setOilno(Name);
-            testopotCount.setType("1");
-            testopotCountLst.add(testopotCount);
-            int result=   opotCountService.AddDopotCount(testopotCountLst);
-            if (result>0)
-            {
-                response.getWriter().write("success");
-            }
-            else
-            {
-                response.getWriter().write("fail");
-            }
-        }
-        catch(IOException ex) {
-            ex.printStackTrace();
-        }
+    try {
+    //DopotCountService opotCountServices=new DopotCountServiceImpl();
+    List<oss_daily_opotCount> testopotCountLst=new ArrayList<oss_daily_opotCount>();
+    oss_daily_opotCount testopotCount=new oss_daily_opotCount();
+    testopotCount.setAmount(1.1);
+    testopotCount.setLiter(2.2);
+    testopotCount.setNodeno(Name);
+    testopotCount.setOilname(Name);
+    testopotCount.setOucode(Name);
+    testopotCount.setPrice(1.1);
+    testopotCount.setTranstatus("1");
+    testopotCount.setShift(Name);
+    testopotCount.setOilno(Name);
+    testopotCount.setType("1");
+    testopotCountLst.add(testopotCount);
+    int result=   opotCountService.AddDopotCount(testopotCountLst);
+    if (result>0)
+    {
+    response.getWriter().write("success");
+    }
+    else
+    {
+    response.getWriter().write("fail");
+    }
+    }
+    catch(IOException ex) {
+    ex.printStackTrace();
+    }
 
     }**/
 /*
@@ -101,7 +103,7 @@ public class AddRCYYController {
             if (opotCountModelLst != null && opotCountModelLst.size() > 0) {
                 String Oucode=new sysOrgUnit().GetOuCodeByNodeNo(NodeNo);
                 for (oss_daily_opotCount item:opotCountModelLst) {
-                     item.setNodeno(NodeNo);
+                    item.setNodeno(NodeNo);
                     item.setOucode(Oucode);
                 }
                 int resultCont = opotCountService.AddDopotCount(opotCountModelLst);
@@ -126,12 +128,12 @@ public class AddRCYYController {
         try {
             if(opotDailyStatementModelLst!=null&&opotDailyStatementModelLst.size()>0) {
                 String Oucode=new sysOrgUnit().GetOuCodeByNodeNo(NodeNo);
-               for(oss_daily_opotDailyStatement item:opotDailyStatementModelLst) {
-                   item.setNodeno(NodeNo);
-                   item.setOucode(Oucode);
-               }
+                for(oss_daily_opotDailyStatement item:opotDailyStatementModelLst) {
+                    item.setNodeno(NodeNo);
+                    item.setOucode(Oucode);
+                }
                 int resultCont=opotDailyStatementService.AddDopotDailyStatement(opotDailyStatementModelLst);
-                if(resultCont>0)
+                if (resultCont>0)
                     result.setResult(true);
             }
         }
@@ -153,51 +155,51 @@ public class AddRCYYController {
         int flag=ac.getSwitch("resource.switch.RCYX.AddDailyBalance");
         result.setResult(true);
         try {
-                String Oucode = new sysOrgUnit().GetOuCodeByNodeNo(NodeNo);
-                if (DailyBalanceModelLst != null && DailyBalanceModelLst.size() > 0) {
-                    for (oss_daily_DailyBalance item : DailyBalanceModelLst) {
-                        item.setNodeno(NodeNo);
-                        item.setOucode(Oucode);
-                    }
-                    //DDailyBalanceService DailyBalanceService = new DDailyBalanceServiceImpl();
-                    if (flag==0){
-                        result.setResult(true);
-                    }
-                    if (flag==1){
-                        int resultCont = DailyBalanceService.AddDailyBalance(DailyBalanceModelLst);
-                        if (resultCont > 0) {
-                            result.setResult(true);
-                        }else{
-                            result.setResult(false);
-                        }
-                    }
-                    if (flag==2){
-                        try {
-                            PassHn_DailyBalance(DailyBalanceModelLst);
-                            result.setResult(true);
-                        }catch (Exception e){
-                            result.setResult(false);
-                            result.setMsg(e.getMessage());
-                        }
-                    }
-                    if (flag==3){
-                        try {
-                            int resultCont = DailyBalanceService.AddDailyBalance(DailyBalanceModelLst);
-                            if (resultCont > 0) {
-                                result.setResult(true);
-                                PassHn_DailyBalance(DailyBalanceModelLst);
-                            }
-                        }catch (Exception e){
-                            result.setResult(false);
-                            result.setMsg(e.getMessage());
-                        }
-                    }
-
+            String Oucode = new sysOrgUnit().GetOuCodeByNodeNo(NodeNo);
+            if (DailyBalanceModelLst != null && DailyBalanceModelLst.size() > 0) {
+                for (oss_daily_DailyBalance item : DailyBalanceModelLst) {
+                    item.setNodeno(NodeNo);
+                    item.setOucode(Oucode);
+                }
+                //DDailyBalanceService DailyBalanceService = new DDailyBalanceServiceImpl();
+                if (flag==0){
+                    result.setResult(true);
+                }
+                if (flag==1){
                     int resultCont = DailyBalanceService.AddDailyBalance(DailyBalanceModelLst);
                     if (resultCont > 0) {
                         result.setResult(true);
-                        PassHn_DailyBalance(DailyBalanceModelLst);
+                    }else{
+                        result.setResult(false);
                     }
+                }
+                if (flag==2){
+                    try {
+                        PassHn_DailyBalance(DailyBalanceModelLst);
+                        result.setResult(true);
+                    }catch (Exception e){
+                        result.setResult(false);
+                        result.setMsg(e.getMessage());
+                    }
+                }
+                if (flag==3){
+                    try {
+                        int resultCont = DailyBalanceService.AddDailyBalance(DailyBalanceModelLst);
+                        if (resultCont > 0) {
+                            result.setResult(true);
+                            PassHn_DailyBalance(DailyBalanceModelLst);
+                        }
+                    }catch (Exception e){
+                        result.setResult(false);
+                        result.setMsg(e.getMessage());
+                    }
+                }
+
+                int resultCont = DailyBalanceService.AddDailyBalance(DailyBalanceModelLst);
+                if (resultCont > 0) {
+                    result.setResult(true);
+                    PassHn_DailyBalance(DailyBalanceModelLst);
+                }
             }
         }
         catch(Exception ex) {
@@ -240,7 +242,7 @@ public class AddRCYYController {
                 }
                 //DOilDailyRecordService OilDailyRecordService = new DOilDailyRecordServiceImpl();
                 int resultCont=OilDailyRecordService.AddOilDailyRecord(OilDailyRecordModelLst);
-                if(resultCont>0)
+                if (resultCont>0)
                     result.setResult(true);
             }
         }catch (Exception ex) {
@@ -266,7 +268,7 @@ public class AddRCYYController {
                 }
                 //DOilTankRegisterService OilTankRegisterService = new DOilTankRegisterServiceImpl();
                 int resultCont=OilTankRegisterService.AddOilTankRegister(OilTankRegisterModelLst);
-                if(resultCont>0)
+                if (resultCont>0)
                     result.setResult(true);
             }
 
@@ -294,7 +296,7 @@ public class AddRCYYController {
                 }
                 //DopoCountService opoCountService = new DopoCountServiceImpl();
                 int resultCont=opoCountService.AddOPOCount(opoCountModelLst);
-                if(resultCont>0)
+                if (resultCont>0)
                     result.setResult(true);
             }
         }
@@ -346,11 +348,11 @@ public class AddRCYYController {
             if(TradeAccountModelLst!=null&&TradeAccountModelLst.size()>0) {
                 String Oucode=new sysOrgUnit().GetOuCodeByNodeNo(NodeNo);
                 for (oss_daily_TradeAccount item : TradeAccountModelLst) {
-                        item.setNodeno(NodeNo);
-                        item.setOucode(Oucode);
+                    item.setNodeno(NodeNo);
+                    item.setOucode(Oucode);
                 }
                 if (flag==0){
-                   result.setResult(true);
+                    result.setResult(true);
                 }
                 if (flag==1){
                     int resultCont=TradeAccountService.AddTradeAccount(TradeAccountModelLst);
@@ -393,9 +395,6 @@ public class AddRCYYController {
     @ResponseBody
     public Object AddTradeInventory(@RequestBody List<oss_daily_TradeInventory> TradeInventoryModelLst,@RequestParam("NodeNo") String NodeNo){
         Result result=new Result();
-        action ac=new action();
-        int flag=ac.getSwitch("resource.switch.RCYX.AddTradeInventory");
-        result.setResult(true);
         try {
             if(TradeInventoryModelLst!=null&&TradeInventoryModelLst.size()>0) {
                 String Oucode=new sysOrgUnit().GetOuCodeByNodeNo(NodeNo);
@@ -404,34 +403,45 @@ public class AddRCYYController {
                     item.setNodeno(NodeNo);
                     item.setOucode(Oucode);
                 }
-<<<<<<< HEAD
                 int resultCont=TradeInventoryService.AddTradeInventory(TradeInventoryModelLst);
                 if(resultCont==1) {
-=======
-                if (flag==0){
->>>>>>> 0ef3771848ce0ae569cfea478f0874dcee214c38
                     result.setResult(true);
-                }
-                if (flag==1){
-                    int resultCont=TradeInventoryService.AddTradeInventory(TradeInventoryModelLst);
-                    if(resultCont>0) {
-                        result.setResult(true);
+                    List<oss_daily_TradeInventoryOld> TradeInventoryModelOldList=new ArrayList<oss_daily_TradeInventoryOld>();
+                    for(oss_daily_TradeInventory oss:TradeInventoryModelLst){
+                        oss_daily_TradeInventoryOld old=new oss_daily_TradeInventoryOld();
+                        old.setMacno(oss.getMacno());
+                        old.setTtc(oss.getTtc());
+                        old.setTakedate(oss.getTakedate());
+                        old.setOilgun(oss.getOilgun());
+                        old.setNodeno(oss.getNodeno());
+                        old.setOilcan(oss.getOilcan());
+                        old.setOilno(oss.getOilno());
+                        old.setOpetime(oss.getOpetime());
+                        old.setStockdate(oss.getStockdate());
+                        old.setStocktime(oss.getStocktime());
+                        old.setOill(oss.getOill());
+                        old.setStandardl(oss.getStandardl());
+                        old.setEmptyl(oss.getEmptyl());
+                        old.setHeighttotal(oss.getHeighttotal());
+                        old.setHeightwater(oss.getHeightwater());
+                        old.setOiltemp(oss.getOiltemp());
+                        old.setWaterl(oss.getWaterl());
+                        old.setDensity(oss.getDensity());
+                        old.setDensitystandard(oss.getDensitystandard());
+                        old.setShift(oss.getShift());
+                        old.setRemark(oss.getRemark());
+                        old.setTranstatus(oss.getTranstatus());
+                        old.setOucode(oss.getOucode());
+                        old.setLiter(oss.getLiter());
+                        old.setPumpno(oss.getPumpno());
+                        old.setBackmatchflag(oss.getBackmatchflag());
+                        TradeInventoryModelOldList.add(old);
                     }
-                }
-                if (flag==2){
-                    PassHn_TradeInventory(TradeInventoryModelLst);
+                    PassHn_TradeInventory(TradeInventoryModelOldList);
                 }else if (resultCont==2){
                     result.setResult(true);
                     PassHn_TradeInventory1(TradeInventoryModelLst);
                 }
-                if (flag==3){
-                    int resultCont=TradeInventoryService.AddTradeInventory(TradeInventoryModelLst);
-                    if(resultCont>0) {
-                        result.setResult(true);
-                        PassHn_TradeInventory(TradeInventoryModelLst);
-                    }
-                }
-
             }
         }
         catch(Exception ex) {
@@ -461,9 +471,6 @@ public class AddRCYYController {
                 }
                 if(flag==0){
                     result.setResult(true);
-<<<<<<< HEAD
-                    PassHn_UpdateTradeInventory(TradeInventoryModelLst);
-=======
                 }
                 if (flag==1){
                     try {
@@ -478,7 +485,7 @@ public class AddRCYYController {
                 }
                 if(flag==2){
                     try {
-                        PassHn_TradeInventory(TradeInventoryModelLst);
+                        PassHn_UpdateTradeInventory(TradeInventoryModelLst);
                     }catch (Exception e){
                         result.setResult(true);
                         result.setMsg(e.getMessage());
@@ -489,13 +496,12 @@ public class AddRCYYController {
                         int resultCont = TradeInventoryService.updateTradeInventory(TradeInventoryModelLst);
                         if (resultCont > 0) {
                             result.setResult(true);
-                            PassHn_TradeInventory(TradeInventoryModelLst);
+                            PassHn_UpdateTradeInventory(TradeInventoryModelLst);
                         }
                     }catch (Exception e){
                         result.setResult(false);
                         result.setMsg(e.getMessage());
                     }
->>>>>>> 0ef3771848ce0ae569cfea478f0874dcee214c38
                 }
             }
         }
@@ -505,9 +511,6 @@ public class AddRCYYController {
         }
         return result;
     }
-
-
-
     private  void  PassHn_UpdateTradeInventory(List<oss_daily_TradeInventory> TradeInventoryModelLst)throws Exception{
         action ac=new action();
         String TradeInventoryPath=ac.getUri("resources.hn.RCYX.TradeUpdateInventory");
@@ -524,17 +527,19 @@ public class AddRCYYController {
 
         }
     }
-    private  void  PassHn_TradeInventory(List<oss_daily_TradeInventory> TradeInventoryModelLst)throws Exception{
+
+
+    private  void  PassHn_TradeInventory(List<oss_daily_TradeInventoryOld> TradeInventoryModelOldList)throws Exception{
         action ac=new action();
         String TradeInventoryPath=ac.getUri("resources.hn.RCYX.TradeInventory");
         Map<String,String> hm=new HashMap<String, String>();
         //发送到湖南
         httpClient client=new httpClient();
         String JsonReault= null;
-        JsonReault = client.request(TradeInventoryPath, TradeInventoryModelLst, hm);
+        JsonReault = client.request(TradeInventoryPath, TradeInventoryModelOldList, hm);
         Result pResult=new JsonMapper().fromJson(JsonReault, Result.class);
         if(pResult.isResult()) {
-            for (oss_daily_TradeInventory item:TradeInventoryModelLst){
+            for (oss_daily_TradeInventoryOld item:TradeInventoryModelOldList){
                 item.setTranstatus("1");
             }
 
@@ -681,19 +686,19 @@ public class AddRCYYController {
         try {
             if(oss_monitor_tankoilguns!=null&&oss_monitor_tankoilguns.size()>0) {
                 for (oss_monitor_tankOilGun itemoil:oss_monitor_tankoilguns)
-                if (itemoil.getMonitorTankOil() != null) {
-                    String Oucode = new sysOrgUnit().GetOuCodeByNodeNo(NodeNo);
-                    oss_monitor_tankoil tankoil=itemoil.getMonitorTankOil();
-                    tankoil.setNodeno(NodeNo);
-                    tankoil.setOucode(Oucode);
-                    dTrankOilService.AddTankoil(tankoil);
-                    for (oss_monitor_oilgun item :itemoil.getMonitorOilgun())
-                    {
-                        item.setNodeno(NodeNo);
-                        item.setOucode(Oucode);
-                        dOilGunService.AddOilgun(item);
+                    if (itemoil.getMonitorTankOil() != null) {
+                        String Oucode = new sysOrgUnit().GetOuCodeByNodeNo(NodeNo);
+                        oss_monitor_tankoil tankoil=itemoil.getMonitorTankOil();
+                        tankoil.setNodeno(NodeNo);
+                        tankoil.setOucode(Oucode);
+                        dTrankOilService.AddTankoil(tankoil);
+                        for (oss_monitor_oilgun item :itemoil.getMonitorOilgun())
+                        {
+                            item.setNodeno(NodeNo);
+                            item.setOucode(Oucode);
+                            dOilGunService.AddOilgun(item);
+                        }
                     }
-                }
             }
             result.setResult(true);
         }
@@ -726,38 +731,38 @@ public class AddRCYYController {
             }
             if(classknotdata!=null) {
                 String Oucode=new sysOrgUnit().GetOuCodeByNodeNo(NodeNo);
-                    //付油量分类统计表名
-                    for (oss_daily_opoCount item : classknotdata.getOpoCountLost()) {
-                        item.setNodeno(NodeNo);
-                        item.setOucode(Oucode);
-                    }
-                    opoCountService.AddOPOCount(classknotdata.getOpoCountLost());
-                    //付油数量统计交接表
-                    for (oss_daily_opotCount item : classknotdata.getOpotCountLst()) {
-                        item.setNodeno(NodeNo);
-                        item.setOucode(Oucode);
-                    }
-                    opotCountService.AddDopotCount(classknotdata.getOpotCountLst());
-                    //泵码交接表名
-                    for (oss_daily_pumpDigitShift item : classknotdata.getPumpDigitShiftLost()) {
-                        item.setNodeno(NodeNo);
-                        item.setOucode(Oucode);
-                    }
-                    PumpDigitShiftService.AddPumpDigitShift(classknotdata.getPumpDigitShiftLost());
-                    //油罐交接表
-                    for (oss_daily_tankshift item : classknotdata.getTankShiftLost()) {
-                        item.setNodeno(NodeNo);
-                        item.setOucode(Oucode);
-                    }
-                   TankShiftService.AddTankShift(classknotdata.getTankShiftLost());
-                    //油站班报表名
-                    for (oss_daily_StationShiftInfo item : classknotdata.getStationShiftInfoLst()) {
-                        item.setNodeno(NodeNo);
-                        item.setOucode(Oucode);
-                    }
-                    StationShiftInfoService.AddStationShiftInfo(classknotdata.getStationShiftInfoLst());
-                    result.setResult(true);
-                    return PassHn_SJSJ(classknotdata);
+                //付油量分类统计表名
+                for (oss_daily_opoCount item : classknotdata.getOpoCountLost()) {
+                    item.setNodeno(NodeNo);
+                    item.setOucode(Oucode);
+                }
+                opoCountService.AddOPOCount(classknotdata.getOpoCountLost());
+                //付油数量统计交接表
+                for (oss_daily_opotCount item : classknotdata.getOpotCountLst()) {
+                    item.setNodeno(NodeNo);
+                    item.setOucode(Oucode);
+                }
+                opotCountService.AddDopotCount(classknotdata.getOpotCountLst());
+                //泵码交接表名
+                for (oss_daily_pumpDigitShift item : classknotdata.getPumpDigitShiftLost()) {
+                    item.setNodeno(NodeNo);
+                    item.setOucode(Oucode);
+                }
+                PumpDigitShiftService.AddPumpDigitShift(classknotdata.getPumpDigitShiftLost());
+                //油罐交接表
+                for (oss_daily_tankshift item : classknotdata.getTankShiftLost()) {
+                    item.setNodeno(NodeNo);
+                    item.setOucode(Oucode);
+                }
+                TankShiftService.AddTankShift(classknotdata.getTankShiftLost());
+                //油站班报表名
+                for (oss_daily_StationShiftInfo item : classknotdata.getStationShiftInfoLst()) {
+                    item.setNodeno(NodeNo);
+                    item.setOucode(Oucode);
+                }
+                StationShiftInfoService.AddStationShiftInfo(classknotdata.getStationShiftInfoLst());
+                result.setResult(true);
+                return PassHn_SJSJ(classknotdata);
             }
         }
         catch(Exception ex) {
