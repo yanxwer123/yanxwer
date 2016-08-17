@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -361,7 +362,38 @@ public class AddRCYYController {
                 int resultCont=TradeInventoryService.AddTradeInventory(TradeInventoryModelLst);
                 if(resultCont==1) {
                     result.setResult(true);
-                    PassHn_TradeInventory(TradeInventoryModelLst);
+                    List<oss_daily_TradeInventoryOld> TradeInventoryModelOldList=new ArrayList<oss_daily_TradeInventoryOld>();
+                    for(oss_daily_TradeInventory oss:TradeInventoryModelLst){
+                        oss_daily_TradeInventoryOld old=new oss_daily_TradeInventoryOld();
+                        old.setMacno(oss.getMacno());
+                        old.setTtc(oss.getTtc());
+                        old.setTakedate(oss.getTakedate());
+                        old.setOilgun(oss.getOilgun());
+                        old.setNodeno(oss.getNodeno());
+                        old.setOilcan(oss.getOilcan());
+                        old.setOilno(oss.getOilno());
+                        old.setOpetime(oss.getOpetime());
+                        old.setStockdate(oss.getStockdate());
+                        old.setStocktime(oss.getStocktime());
+                        old.setOill(oss.getOill());
+                        old.setStandardl(oss.getStandardl());
+                        old.setEmptyl(oss.getEmptyl());
+                        old.setHeighttotal(oss.getHeighttotal());
+                        old.setHeightwater(oss.getHeightwater());
+                        old.setOiltemp(oss.getOiltemp());
+                        old.setWaterl(oss.getWaterl());
+                        old.setDensity(oss.getDensity());
+                        old.setDensitystandard(oss.getDensitystandard());
+                        old.setShift(oss.getShift());
+                        old.setRemark(oss.getRemark());
+                        old.setTranstatus(oss.getTranstatus());
+                        old.setOucode(oss.getOucode());
+                        old.setLiter(oss.getLiter());
+                        old.setPumpno(oss.getPumpno());
+                        old.setBackmatchflag(oss.getBackmatchflag());
+                        TradeInventoryModelOldList.add(old);
+                    }
+                    PassHn_TradeInventory(TradeInventoryModelOldList);
                 }else if (resultCont==2){
                     result.setResult(true);
                     PassHn_TradeInventory1(TradeInventoryModelLst);
@@ -422,17 +454,17 @@ public class AddRCYYController {
 
         }
     }
-    private  void  PassHn_TradeInventory(List<oss_daily_TradeInventory> TradeInventoryModelLst)throws Exception{
+    private  void  PassHn_TradeInventory(List<oss_daily_TradeInventoryOld> TradeInventoryModelOldList)throws Exception{
         action ac=new action();
         String TradeInventoryPath=ac.getUri("resources.hn.RCYX.TradeInventory");
         Map<String,String> hm=new HashMap<String, String>();
         //发送到湖南
         httpClient client=new httpClient();
         String JsonReault= null;
-        JsonReault = client.request(TradeInventoryPath, TradeInventoryModelLst, hm);
+        JsonReault = client.request(TradeInventoryPath, TradeInventoryModelOldList, hm);
         Result pResult=new JsonMapper().fromJson(JsonReault, Result.class);
         if(pResult.isResult()) {
-            for (oss_daily_TradeInventory item:TradeInventoryModelLst){
+            for (oss_daily_TradeInventoryOld item:TradeInventoryModelOldList){
                 item.setTranstatus("1");
             }
 
