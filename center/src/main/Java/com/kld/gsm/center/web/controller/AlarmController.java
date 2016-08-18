@@ -317,6 +317,7 @@ public class AlarmController {
                     item.setTranstatus("1");
                 }
             }*/
+            result.setResult(true);
         }
         catch(Exception e)
         {

@@ -571,7 +571,7 @@
       and NodeNo = #{nodeno,jdbcType=VARCHAR}
   </update>
   <delete id="deleteByDeliveryNo" parameterType="String">
-     DELETE FROM oss_acceptance_odRegisterInfo WHERE DeliveryNo=#{0,jdbcType=VARCHAR}
+     DELETE FROM oss_acceptance_odRegisterInfo WHERE ManualNo=#{0,jdbcType=VARCHAR}
   </delete>
   <select id="selectAcceptanceServicePage" parameterType="hashmap" resultType="hashmap">
     select *
