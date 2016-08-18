@@ -51,7 +51,9 @@ public class synDailyRunningImpl implements synDailyRunning {
         if (sysManageDepartments.size() > 0) {
             hm.put("NodeNo", sysManageDepartments.get(0).getSinopecnodeno());
         }
-        while(true) {
+        int i=0;
+        while(i<20) {
+            i++;
             //获取站级数据
             List<DailyTradeAccount> DailyTradeAccounts = dailyTradeAccountDao.selectByTrans("0");
             if (DailyTradeAccounts == null || DailyTradeAccounts.size() == 0) {
@@ -80,10 +82,10 @@ public class synDailyRunningImpl implements synDailyRunning {
                 e.printStackTrace();
                 LOG.error(e.getMessage());
                 //System.out.println(e.getMessage());
-//                return 0;
+                return 0;
             }
-//            return 1;
         }
+        return 1;
     }
 
     @Override
