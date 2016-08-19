@@ -176,6 +176,8 @@ public class Jhys2 extends JPanel {
         this.add(line);
         dgrbutton=new JRadioButton("地罐交接",true);
         gcrbutton=new JRadioButton("罐车交接",false);
+        //罐车交接隐藏
+        gcrbutton.setVisible(false);
         dgrbutton.setBounds(2,60,90,20);
         gcrbutton.setBounds(95,60,90,20);
         bg=new ButtonGroup();
