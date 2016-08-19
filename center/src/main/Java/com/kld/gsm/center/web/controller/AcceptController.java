@@ -369,11 +369,15 @@ catch (Exception e){
                     item.getAcceptanceOdRegister().setTranstatus("1");
                     acceptanceService.updateByPrimaryKeySelective(item.getAcceptanceOdRegister());
                 }
+
             }
+
+
         }
         catch(Exception e)
         {
-
+            result.setResult(true);
+            result.setMsg(e.getMessage());
         }
         return result;
     }

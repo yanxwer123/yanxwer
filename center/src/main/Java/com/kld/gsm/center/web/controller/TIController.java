@@ -227,7 +227,7 @@ public class TIController {
         String path=ac.getUri("resource.hn.TI.PassTimeInventory");
         httpClient client=new httpClient();
         Map<String,String> hm=new HashMap<String, String>();
-        Result result;
+        Result result=new Result();
         try {
             String jsonResult= client.request(path, monitorTimeInventories, hm);
             result=new JsonMapper().fromJson(jsonResult,Result.class);
@@ -238,11 +238,11 @@ public class TIController {
                     item.setTranstatus("1");
                     //timeInventoryService
                 }
+                result.setResult(true);
             }
         }
         catch(Exception e)
         {
-            result=new Result();
             result.setResult(false);
             result.setMsg(e.getMessage());
         }
