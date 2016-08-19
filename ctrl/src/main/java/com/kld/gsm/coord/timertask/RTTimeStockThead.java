@@ -9,6 +9,7 @@ import com.kld.gsm.ATGDevice.atg_stock_data_out_t;
 import com.kld.gsm.ATGDevice.atg_timestock_data_in_t;
 import com.kld.gsm.MacLog.util.EhCacheHelper;
 import com.kld.gsm.coord.Context;
+import com.kld.gsm.coord.server.ApplicationMain;
 import org.apache.log4j.Logger;
 import org.apache.log4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,14 @@ public class RTTimeStockThead extends Thread{
                 logger.info("begin");
                 sleep(200);
                 logger.info("200ms wakeup");
+                //获取实时罐存失败次数加1，如果超过50，则重新清理，初始化液位仪
+                if(ATGManager.STOCKFAILE_COUNT>=50){
+                    ATGManager.clear();//清理
+                    ApplicationMain.init();//初始化
+                    ATGManager.STOCKFAILE_COUNT=0;
+                    sleep(5000);
+                    continue;
+                }
                 boolean res=getstock();
                 logger.info("获取实时罐存end："+res+","+new Date().toString());
                 if (res){
@@ -102,10 +111,14 @@ public class RTTimeStockThead extends Thread{
             result = future.get(1000 * (iSleep-1), TimeUnit.MILLISECONDS);
             logger.info("获取实时罐存 value from call is :" + result);
         } catch (TimeoutException ex) {
+            ATGManager.STOCKFAILE_COUNT++;//获取实时罐存失败次数加1，如果超过50，则重新清理，初始化液位仪
+            logger.error("===============获取实时罐存 task time out===============ATGManager.STOCKFAILE_COUNT="+ATGManager.STOCKFAILE_COUNT);
             logger.error("===============获取实时罐存 task time out===============\n" + new Date().toString());
             future.cancel(true);//
             logger.info("超时取消线程：" + future.isCancelled());
         } catch (Exception e) {
+            ATGManager.STOCKFAILE_COUNT++;//获取实时罐存失败次数加1，如果超过50，则重新清理，初始化液位仪
+            logger.error("===============获取实时罐存异常===============ATGManager.STOCKFAILE_COUNT="+ATGManager.STOCKFAILE_COUNT);
             logger.error("===============获取实时罐存异常==============\n" + e.getMessage());
             future.cancel(true);
             logger.info("异常取消线程：" + future.isCancelled());
