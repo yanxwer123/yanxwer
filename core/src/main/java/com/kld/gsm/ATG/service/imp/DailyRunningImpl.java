@@ -307,7 +307,9 @@ public class DailyRunningImpl implements  DailyRunning {
         if (sysManageDepartments.size() > 0) {
             hm.put("NodeNo", sysManageDepartments.get(0).getSinopecnodeno());
         }
-        while(true) {
+        int i=0;
+        while(i<20) {
+            i++;
             List<DailyStaticOilCanInventory> MonitorTankOils = dailyStaticOilCanInventoryDao.selectBytrans("0");
             for (DailyStaticOilCanInventory item : MonitorTankOils) {
                 JTGC jtgc = new JTGC();
@@ -342,16 +344,17 @@ public class DailyRunningImpl implements  DailyRunning {
                         e.printStackTrace();
                         //日志
                         log.error(e.getMessage());
+                        return 0;
                     }
                 }
 
             } catch (Exception e) {
                 e.printStackTrace();
                 log.error(e.getMessage());
-//                return 0;
+               return 0;
             }
         }
-//        return 1;
+        return 1;
     }
 
     @Override

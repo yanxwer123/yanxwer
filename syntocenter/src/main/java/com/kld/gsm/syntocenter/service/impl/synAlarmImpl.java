@@ -124,7 +124,9 @@ public class synAlarmImpl implements synAlarm {
         action ac=new action();
         String path=ac.getUri("resource.services.Alarm.AddGaTContrast");
         Map<String, String> hm = new param().getparam();
-        while(true) {
+        int i=0;
+        while(i<20) {
+            i++;
             //获取站级数据
             List<AlarmGaTContrast> alarmInventory = alarmGaTContrastDao.selectByTrans("0");
             if (alarmInventory == null || alarmInventory.size() == 0) {
@@ -150,10 +152,10 @@ public class synAlarmImpl implements synAlarm {
                 }
             } catch (Exception e) {
                 LOG.error("枪出罐出" + e.getMessage(), e);
-//                return 0;
+                return 0;
             }
-//            return 1;
         }
+        return 1;
     }
     //测漏表
     @Autowired

@@ -24,6 +24,7 @@ public class ATGManager {
     static Logger logger = Logger.getLogger(ATGManager.class);
     static ISaleOutAlarmService saleOutAlarmService = Context.getInstance().getBean(ISaleOutAlarmService.class);
     static int is_init = 1;//是否已经初始化液位仪，初始化成功以后改为0
+    public static int STOCKFAILE_COUNT = 0;//实时库存失败次数，超过50则进行清理并初始化
     static atg_init_in_t inputdata;//参数
 
     /**
