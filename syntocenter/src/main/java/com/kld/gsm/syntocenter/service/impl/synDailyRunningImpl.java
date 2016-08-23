@@ -97,7 +97,9 @@ public class synDailyRunningImpl implements synDailyRunning {
         if (sysManageDepartments.size() > 0) {
             hm.put("NodeNo", sysManageDepartments.get(0).getSinopecnodeno());
         }
-        while(true) {
+        int i=0;
+        while(i<20) {
+            i++;
             //获取站级数据
             List<DailyTradeInventory> DailyTradeInventorys = dailyTradeInventoryDao.selectByTrans("0");
             if (DailyTradeInventorys == null || DailyTradeInventorys.size() == 0) {
@@ -125,10 +127,10 @@ public class synDailyRunningImpl implements synDailyRunning {
             } catch (Exception e) {
                 e.printStackTrace();
                 LOG.error(e.getMessage());
-//                return 0;
+                return 0;
             }
         }
-//        return 1;
+        return 1;
     }
 
 
