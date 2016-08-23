@@ -83,7 +83,9 @@ public class synMonitorImpl implements synMonitor {
         action ac=new action();
         String path=ac.getUri("resource.services.TI.InsertInventory");
         Map<String, String> hm = new param().getparam();
-        while(true) {
+        int i=0;
+        while(i<20) {
+            i++;
             //获取站级数据
             List<MonitorInventory> monitorInventories = monitorInventoryDao.selectByTrans("0");
             if (monitorInventories.isEmpty()) return 1;
@@ -113,9 +115,9 @@ public class synMonitorImpl implements synMonitor {
             } catch (Exception e) {
                 e.printStackTrace();
                 LOG.error(e.getMessage());
-//                return 0;
+                return 0;
             }
         }
-//        return 1;
+        return 1;
     }
 }
