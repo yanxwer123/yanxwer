@@ -30,7 +30,7 @@ public class DTradeInventoryServiceImpl implements DTradeInventoryService {
 
         //添加开关，配置文件控制,调用不同的接口
         action ac=new action();
-        if(ac.getOpenSelfOilSet()=="0"){
+        if("0".equals(ac.getOpenSelfOilSet())){
 
             for (oss_daily_TradeInventory item:oss_daily_tradeInventories)
             {
