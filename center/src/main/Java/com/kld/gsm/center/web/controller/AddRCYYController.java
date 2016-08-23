@@ -424,11 +424,11 @@ public class AddRCYYController {
                 }
                 if (flag==2){
                     try {
-                        if (ac.getOpenSelfOilSet()=="0") {
+                        if ("0".equals(ac.getOpenSelfOilSet())) {
                             List<oss_daily_TradeInventoryOld> TradeInventoryModelOldList = trans(TradeInventoryModelLst);
                             PassHn_TradeInventory(TradeInventoryModelOldList);
                         }
-                        if (ac.getOpenSelfOilSet()=="1"){
+                        if ("1".equals(ac.getOpenSelfOilSet())){
                             PassHn_TradeInventory1(TradeInventoryModelLst);
                         }
                         result.setResult(false);
