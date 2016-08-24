@@ -30,6 +30,9 @@ public class InitThread extends Thread {
                 }
                 try {
                     if(ATGManager.is_init==1){
+                        log.info("start clear...");
+                        ATGManager.clear();
+                        log.info("end clear...");
                         log.info("start reload...");
                         ApplicationMain.init();
                         log.info("end reload...");
