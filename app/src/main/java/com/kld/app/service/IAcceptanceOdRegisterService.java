@@ -19,6 +19,8 @@ public interface IAcceptanceOdRegisterService {
 
     AcceptanceOdRegister selectByPrimaryKey(String deliveryno);
 
+    AcceptanceOdRegister selectByManualNoADeliveryNo(String deliveryno);
+
     int updateByPrimaryKeySelective(AcceptanceOdRegister record);
 
     int updateByPrimaryKey(AcceptanceOdRegister record);

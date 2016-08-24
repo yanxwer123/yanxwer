@@ -429,7 +429,7 @@ public class JhyscxPage extends  JPanel implements Watcher {
                 if (registerService == null) {
                     registerService = Context.getInstance().getBean(IAcceptanceOdRegisterService.class);
                 }
-                AcceptanceOdRegister odRegister=registerService.selectByPrimaryKey(bill.get("DeliveryNo").toString());
+                AcceptanceOdRegister odRegister=registerService.selectByManualNoADeliveryNo(bill.get("DeliveryNo").toString());
                 if (odRegister!=null){
                     billArray[i][16]=odRegister.getPlumbunbankoperator();
                 }

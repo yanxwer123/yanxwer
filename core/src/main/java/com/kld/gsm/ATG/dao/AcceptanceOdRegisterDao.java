@@ -17,6 +17,7 @@ public interface AcceptanceOdRegisterDao {
     int insertSelective(com.kld.gsm.ATG.domain.AcceptanceOdRegister record);
 
     AcceptanceOdRegister selectByPrimaryKey(String deliveryno);
+    AcceptanceOdRegister selectByManualNoADeliveryNo (String deliveryno);
 
     int updateByPrimaryKeySelective(com.kld.gsm.ATG.domain.AcceptanceOdRegister record);
 
@@ -33,5 +34,6 @@ public interface AcceptanceOdRegisterDao {
     //根据日结  最小班次号和最大班次号 查询到每种油品的标准体积
     List<HashMap> findByShift(Map map);
     int updateByManualNo(HashMap map);
+
 
 }

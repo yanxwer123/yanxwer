@@ -59,6 +59,10 @@ public class AcceptanceOdRegisterServiceImpl implements IAcceptanceOdRegisterSer
     }
 
     @Override
+    public AcceptanceOdRegister selectByManualNoADeliveryNo(String deliveryno) {
+        return this.dao.selectByManualNoADeliveryNo(deliveryno);
+    }
+    @Override
     public int updateByPrimaryKeySelective(AcceptanceOdRegister record) {
         return this.dao.updateByPrimaryKeySelective(record);
     }

@@ -83,7 +83,15 @@
     from oss_acceptance_odRegister
     where ManualNo = #{manualNo,jdbcType=VARCHAR} or DeliveryNo = #{manualNo,jdbcType=VARCHAR}
   </select>
-<select id="getOdregRate" resultType="Map" parameterType="Map">
+  <select id="selectByManualNoADeliveryNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from oss_acceptance_odRegister
+    where (ManualNo = #{manualNo,jdbcType=VARCHAR} or DeliveryNo = #{manualNo,jdbcType=VARCHAR})
+    AND begintime IS NOT NULL AND endtime IS NOT NULL
+  </select>
+
+  <select id="getOdregRate" resultType="Map" parameterType="Map">
   SELECT
 	IFNULL(SUM(EndOilL),0)-IFNULL(SUM(BeginoilL),0)+IFNULL(SUM(DuringSales),0) AS Dischargel,
 	IFNULL(SUM(DischargeL),0) AS V20,
