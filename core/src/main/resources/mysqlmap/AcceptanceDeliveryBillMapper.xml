@@ -411,6 +411,7 @@
     SELECT
     <include refid="Base_Column_List"/>,Type,beginTime
     FROM View_uncompletedebill WHERE  IsComplete = #{iscomplete,jdbcType=VARCHAR}
+    ORDER BY deliverytime desc
   </select>
   <select id="selectByDeliveryNoDate" resultMap="ADBBaseResultMap" parameterType="hashmap">
     select
