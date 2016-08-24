@@ -43,6 +43,8 @@ public class TimeTask {
     static ShiftStockThread shiftStockThread;
     //罐枪同步
     static synCanAndGunInfo synCanAndGunInfoThread;
+    //初始化液位仪
+    static InitThread initThread;
 
     /**
      * 开始线程
@@ -79,12 +81,13 @@ public class TimeTask {
             TimeTaskPar.put("rtstockjg",Integer.parseInt(sysManageDic.GetByCode("rtstockjg").getValue()));
             //实时库存超时
             TimeTaskPar.put("rtstockcs",Integer.parseInt(sysManageDic.GetByCode("rtstockcs").getValue()));
+            //初始化液位仪
+            TimeTaskPar.put("cshywysjjg",Integer.parseInt(sysManageDic.GetByCode("cshywysjjg").getValue()));
             //同步班结，日结信息
             if(null == sysManageDic.GetByCode("bjrjtb")){
                 TimeTaskPar.put("bjrjtb",0);
             }else{
                 TimeTaskPar.put("bjrjtb",Integer.parseInt(sysManageDic.GetByCode("bjrjtb").getValue()));
-
             }
 
             logger.error("开始计划任务调度配置");
@@ -103,6 +106,7 @@ public class TimeTask {
             logger.error("实时库存间隔:" + TimeTaskPar.get("rtstockjg"));
             logger.error("实时库存超时:" + TimeTaskPar.get("rtstockcs"));
             logger.error("同步班结日结:" + TimeTaskPar.get("bjrjtb"));
+            logger.error("初始化液位仪:" + TimeTaskPar.get("cshywysjjg"));
             logger.error("~~~~~~~~~~~~~~~~~~end~~~~~~~~~~~~");
             //液位仪对时
             checkTimePolling = new CheckTimePolling();
@@ -152,6 +156,9 @@ public class TimeTask {
             //罐枪同步
             synCanAndGunInfoThread=new synCanAndGunInfo();
             synCanAndGunInfoThread.start();
+            //初始化液位仪
+            initThread=new InitThread();
+            initThread.start();
         }catch(Exception e){
             logger.error(e.getMessage());
         }
