@@ -458,7 +458,7 @@ WHERE
     FROM oss_acceptance_odRegister
     WHERE BeginTime IS NOT NULL
     AND EndTime IS NOT NULL
-    AND TranStatus=#{0,jdbcType=VARCHAR} AND DeliveryNo IS NOT NULL
+    AND TranStatus=0 AND DeliveryNo IS NOT NULL AND DischargeLoss IS NOT NULL
   </select>
   <select id="selectWHDByoil" parameterType="String" resultMap="BaseResultMap">
      SELECT
