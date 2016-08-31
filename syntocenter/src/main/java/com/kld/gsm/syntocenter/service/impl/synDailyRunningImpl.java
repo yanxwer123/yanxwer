@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -101,7 +102,13 @@ public class synDailyRunningImpl implements synDailyRunning {
         while(i<20) {
             i++;
             //获取站级数据
-            List<DailyTradeInventory> DailyTradeInventorys = dailyTradeInventoryDao.selectByTrans("0");
+            List<DailyTradeInventory> DailyTradeInventorys=new ArrayList<DailyTradeInventory>();
+            try {
+                DailyTradeInventorys = dailyTradeInventoryDao.selectByTrans("0");
+            }catch (Exception e){
+                LOG.error("缺少CardNo字段，执行原方法……");
+                DailyTradeInventorys = dailyTradeInventoryDao.selectByTransOld("0");
+            }
             if (DailyTradeInventorys == null || DailyTradeInventorys.size() == 0) {
                 return 0;
             }

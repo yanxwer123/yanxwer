@@ -24,6 +24,8 @@ public interface DailyTradeInventoryDao {
 
     List<DailyTradeInventory> selectByTrans(String stauts);
 
+    List<DailyTradeInventory> selectByTransOld(String stauts);
+
     List<DailyTradeInventory> selectByTrans1(String stauts);
 
     String selectOilL(Map map);
