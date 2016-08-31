@@ -108,6 +108,7 @@ public class synDailyRunningImpl implements synDailyRunning {
             }catch (Exception e){
                 LOG.error("缺少CardNo字段，执行原方法……");
                 DailyTradeInventorys = dailyTradeInventoryDao.selectByTransOld("0");
+                LOG.error("执行原表方法结束，处理条数为:"+DailyTradeInventorys.size()+"条");
             }
             if (DailyTradeInventorys == null || DailyTradeInventorys.size() == 0) {
                 return 0;

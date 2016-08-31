@@ -14,6 +14,8 @@ public interface DailyTradeInventoryDao {
 
     int insert(DailyTradeInventory record);
 
+    int insertOld(DailyTradeInventory record);
+
     int insertSelective(DailyTradeInventory record);
 
     DailyTradeInventory selectByPrimaryKey(DailyTradeInventoryKey key);
