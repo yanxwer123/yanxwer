@@ -72,24 +72,6 @@
     #{shift,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{transtatus,jdbcType=VARCHAR}
     )
   </insert>
-  <insert id="insertOld" parameterType="com.kld.gsm.ATG.domain.DailyTradeInventory" >
-    insert into oss_daily_TradeInventory (MacNo, TTC, TakeDate,
-    OilGun, OilCan, OilNo,
-    OpeTime, StockDate, StockTime,
-    OilL, StandardL, EmptyL,
-    HeightTotal, HeightWater, OilTemp,
-    WaterL, Density, DensityStandard,
-    Shift, Remark, TranStatus
-    )
-    values (#{macno,jdbcType=INTEGER}, #{ttc,jdbcType=INTEGER}, #{takedate,jdbcType=TIMESTAMP},
-    #{oilgun,jdbcType=VARCHAR}, #{oilcan,jdbcType=INTEGER}, #{oilno,jdbcType=VARCHAR},
-    #{opetime,jdbcType=TIMESTAMP}, #{stockdate,jdbcType=VARCHAR}, #{stocktime,jdbcType=VARCHAR},
-    #{oill,jdbcType=DOUBLE}, #{standardl,jdbcType=DOUBLE}, #{emptyl,jdbcType=DOUBLE},
-    #{heighttotal,jdbcType=DOUBLE}, #{heightwater,jdbcType=DOUBLE}, #{oiltemp,jdbcType=DOUBLE},
-    #{waterl,jdbcType=DOUBLE}, #{density,jdbcType=DOUBLE}, #{densitystandard,jdbcType=DOUBLE},
-    #{shift,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{transtatus,jdbcType=VARCHAR}
-    )
-  </insert>
   <insert id="insertSelective" parameterType="com.kld.gsm.ATG.domain.DailyTradeInventory" >
     insert into oss_daily_TradeInventory
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -322,18 +304,9 @@
     and  tdi.TakeDate=tda.TakeDate and  tdi.TTC=tda.TTC and tdi.OilGun=tda.OilGun
     WHERE TranStatus=#{trans,jdbcType=VARCHAR} limit 500
   </select>
-  <select id="selectByTransOld" parameterType="String" resultMap="BaseResultMap">
-    SELECT
-    tdi.MacNo, tdi.TTC, tdi.TakeDate, tdi.OilGun, tdi.OilCan, tdi.OilNo,tdi.OpeTime, tdi.StockDate, tdi.StockTime, tdi.OilL,
-    tdi.StandardL, tdi.EmptyL, tdi.HeightTotal, tdi.HeightWater, tdi.OilTemp, tdi.WaterL, tdi.Density, tdi.DensityStandard,
-    tdi.Shift, tdi.Remark, tdi.TranStatus,tda.Liter,tda.PumpNo,IFNULL(tda.BackCanFlag,0) as BackMatchFlag
-    FROM oss_daily_TradeInventory tdi  left join  oss_daily_TradeAccount tda on tdi.MacNo=tda.MacNo
-    and  tdi.TakeDate=tda.TakeDate and  tdi.TTC=tda.TTC and tdi.OilGun=tda.OilGun
-    WHERE TranStatus=#{trans,jdbcType=VARCHAR} limit 500
-  </select>
   <select id="selectByTrans1" parameterType="String" resultMap="BaseResultMap">
     SELECT
-    tdi.MacNo, tdi.TTC, tdi.TakeDate, tdi.OilGun, tdi.OilCan, tdi.OilNo, tdi.OpeTime, tdi.StockDate, tdi.StockTime, tdi.OilL,
+    tdi.MacNo, tdi.TTC, tdi.TakeDate, tdi.OilGun, tdi.OilCan, tdi.OilNo, tdi.CardNo,tdi.OpeTime, tdi.StockDate, tdi.StockTime, tdi.OilL,
     tdi.StandardL, tdi.EmptyL, tdi.HeightTotal, tdi.HeightWater, tdi.OilTemp, tdi.WaterL, tdi.Density, tdi.DensityStandard,
     tdi.Shift, tdi.Remark, tdi.TranStatus,tda.Liter,tda.PumpNo,IFNULL(tda.BackCanFlag,0) as BackMatchFlag
     FROM oss_daily_TradeInventory tdi  left join  oss_daily_TradeAccount tda on tdi.MacNo=tda.MacNo

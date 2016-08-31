@@ -158,15 +158,8 @@ public class TransacServiceImpl implements ITransacService {
                    getDailyTradeInventory(oilVouch, ret, dailyTradeInventory,oilCanNo.get(0));
                }
                 //保存mysql交易库存表
-                log.info("dailyTradeInventory:" + dailyTradeInventory.toString());
-               try{
-                   dailyTradeInventoryDao.insert(dailyTradeInventory);
-               }catch (Exception e){
-                   log.error("缺乏CarNo字段，执行原表方法");
-                   int a= dailyTradeInventoryDao.insertOld(dailyTradeInventory);
-                   log.error("执行原表方法结束，处理条数为:"+a+"条");
-               }
-
+                log.info("dailyTradeInventory:"+dailyTradeInventory.toString());
+                dailyTradeInventoryDao.insert(dailyTradeInventory);
 
                 //把读取液位仪的实时库存赋值到sybase的实时库存vouchStock
                 VouchStock vouchStock = new VouchStock();
@@ -176,7 +169,7 @@ public class TransacServiceImpl implements ITransacService {
                }else{
                    getVouchStock(oilVouch, ret, vouchStock,oilCanNo.get(0));
                }
-               log.info("vouchStock:" + vouchStock);
+               log.info("vouchStock:"+vouchStock);
                 //
                sql = vouchStock.getInsertSql("atgvouchstock");
                log.info("vouchStockDao.insert1"+sql);

@@ -14,8 +14,6 @@ public interface DailyTradeInventoryDao {
 
     int insert(DailyTradeInventory record);
 
-    int insertOld(DailyTradeInventory record);
-
     int insertSelective(DailyTradeInventory record);
 
     DailyTradeInventory selectByPrimaryKey(DailyTradeInventoryKey key);
@@ -25,8 +23,6 @@ public interface DailyTradeInventoryDao {
     int updateByPrimaryKey(DailyTradeInventory record);
 
     List<DailyTradeInventory> selectByTrans(String stauts);
-
-    List<DailyTradeInventory> selectByTransOld(String stauts);
 
     List<DailyTradeInventory> selectByTrans1(String stauts);
 
