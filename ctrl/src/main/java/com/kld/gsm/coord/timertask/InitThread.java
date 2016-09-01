@@ -23,13 +23,14 @@ public class InitThread extends Thread {
         while (true){
             try {
                 int iSleep=TimeTaskPar.get("cshywysjjg");
+                System.out.println("打印isslppp："+iSleep);
                 if(iSleep>1){
                     sleep(TimeTaskPar.get("cshywysjjg")*1000);
                 }else{
                     sleep(15*60*1000);
                 }
                 try {
-                    if(ATGManager.is_init==1){
+                    if(ATGManager.is_init!=0){
                         log.info("start clear...");
                         ATGManager.clear();
                         log.info("end clear...");
