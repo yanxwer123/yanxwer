@@ -57,6 +57,7 @@ public class RTTimeStockThead extends Thread{
                 logger.info("200ms wakeup");
                 //获取实时罐存失败次数加1，如果超过50，则重新清理，初始化液位仪
                 if(ATGManager.STOCKFAILE_COUNT>=50){
+                    ATGManager.is_init=1;//初始化状态设置为失败，后重新初始化
                     ATGManager.clear();//清理
                     ApplicationMain.init();//初始化
                     ATGManager.STOCKFAILE_COUNT=0;
