@@ -479,7 +479,7 @@ public class GlwhdPage extends JOptionPane implements WindowListener,Watcher {
                 {
                     LOG.info("delivery begin");
                     if (sysmanageService==null){
-                        sysmanageService=Context.getInstance().getBean(sysmanageService.getClass());
+                        sysmanageService=Context.getInstance().getBean(SysmanageService.class);
                     }
                     if (acceptSevices==null) {
                         acceptSevices = Context.getInstance().getBean(AcceptSevices.class);

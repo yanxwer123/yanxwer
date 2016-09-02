@@ -325,7 +325,7 @@ public class Jhys2 extends JPanel {
                 {
                     LOG.info("delivery begin");
                     if (sysmanageService==null){
-                        sysmanageService=Context.getInstance().getBean(sysmanageService.getClass());
+                        sysmanageService=Context.getInstance().getBean(SysmanageService.class);
                     }
                     if (acceptSevices==null) {
                         acceptSevices = Context.getInstance().getBean(AcceptSevices.class);
@@ -334,6 +334,7 @@ public class Jhys2 extends JPanel {
                     if (sysManageDepartment!=null) {
                         acceptSevices.sendOdreg(SysConfig.regmoteIp(), sysManageDepartment.getSinopecnodeno());
                     }
+
                     LOG.info("delivery end");
                 }
                 catch (Exception ex)
